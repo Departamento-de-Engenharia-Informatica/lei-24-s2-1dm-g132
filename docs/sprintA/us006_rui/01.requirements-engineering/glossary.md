@@ -1,0 +1,50 @@
+# Glossary
+
+**Terms, Expressions and Acronyms (TEA) must be organized alphabetically.**
+
+| **_TEA_** (EN)              | **_Description_** (EN)                                                                                                                                                                                                             |                                       
+|:----------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Amenity**                 | A desirable or useful feature or facility of a building or place (of green spaces in the scope of this project).                                                                                                                   |
+| **Collaborator**            | A person who is an employee of the organization and carries out design, construction and/or maintenance tasks for green areas, depending on their skills.                                                                          |
+| **Diary**                   | A book in which one keeps a daily record of events and experiences.                                                                                                                                                                |
+| **Drinking fountain**       | A device, usually in a public place, that supplies water for drinking.                                                                                                                                                             |
+| **Employee**                | A person who is hired to work for another or for a business, firm, etc, in return for payment.                                                                                                                                     |
+| **Equipment**               | The necessary items for a particular purpose.                                                                                                                                                                                      |
+| **Fault**                   | Any malfunction or imperfection in equipment occurring within the green space.                                                                                                                                                     |
+| **Fleet Manager**           | A person who manages the fleet park, the machines, equipment and vehicles, ensuring their good condition and assigning them to the tasks to be carried out.                                                                        |
+| **FM**                      | Acronym for _Fleet Manager_.                                                                                                                                                                                                       |
+| **Garden**                  | Garden space with or without trees with little or no equipment (may have a basic irrigation system).                                                                                                                               |
+| **Green area**              | Same as _Green space_.                                                                                                                                                                                                             |
+| **Green space**             | Refers to urban parks and wetlands that comprise some vegetation.                                                                                                                                                                  |
+| **Green Spaces Manager**    | The person responsible for managing the green spaces in charge of the organization.                                                                                                                                                |
+| **Green Spaces User**       | A person who uses the green spaces managed by the organization and who can through the Portal, make comments or report faults in parks and gardens on the Portal.                                                                  |
+| **GSM**                     | Acronym for _Green Spaces Manager_.                                                                                                                                                                                                |
+| **GSU**                     | Acronym for _Green Spaces User_.                                                                                                                                                                                                   |
+| **HRM**                     | Acronym for _Human Resources Manager_.                                                                                                                                                                                             |
+| **Human Resources Manager** | A person who manages human resources and defines teams based on the needs of ongoing projects and the skills of the employees.                                                                                                     |
+| **Irrigation**              | Artificial application of water to the soil through various systems of tubes, pumps, and sprays.                                                                                                                                   |
+| **Job**                     | The regular work that a person does to earn money.                                                                                                                                                                                 |
+| **Large-sized park**        | Multi-function space with diverse garden spaces, and woods, including varied equipment and services.                                                                                                                               |
+| **Machine**                 | An apparatus using mechanical power and having several parts, each with a definite function and together performing a particular task.                                                                                             |
+| **Medium-sized park**       | Green space with a few hundred or thousands of square meters with a wooded garden area, it includes some infrastructures such as toilets, drinking fountains, irrigation system, lighting, children’s playground.                  |
+| **Municipal Master Plan**   | Statement designed to provide a basis for decision making regarding the long-term physical development of the municipality.                                                                                                        |
+| **Plant material**          | Material derived from plants.                                                                                                                                                                                                      |
+| **Portal**                  | A website or web page providing access or links to other sites.                                                                                                                                                                    |
+| **Rural**                   | Characteristic of the countryside rather than the town.                                                                                                                                                                            |
+| **Semi-urban**              | Partly _urban_.                                                                                                                                                                                                                    |
+| **Skill**                   | The ability to do something well.                                                                                                                                                                                                  |
+| **Task**                    | A piece of work to be done or undertaken.                                                                                                                                                                                          |
+| **Tree pruning**            | Selectively remove branches from a tree.                                                                                                                                                                                           |
+| **Urban**                   | Belonging to, or relating to, a town or city.                                                                                                                                                                                      |
+| **Urban furniture**         | Same as _Amenity_.                                                                                                                                                                                                                 |
+| **Vehicle**                 | A thing used for transporting people or goods, especially on land.                                                                                                                                                                 |
+| **...**                     | ...                                                                                                                                                                                                                                |
+| **...**                     | ...                                                                                                                                                                                                                                |
+
+
+
+
+
+
+
+

@@ -1,35 +1,26 @@
-@startuml
-'skinparam monochrome true
+startuml
+skinparam monochrome true
 skinparam packageStyle rectangle
-'skinparam shadowing false
+skinparam shadowing false
 
-skinparam rectangle{
-    BorderColor yellow
-}
+title System Sequence Diagram (SSD) - US002
 
-'title Use Case Diagram Example
+autonumber
 
-left to right direction
+actor "HRM" as Admin
+participant ":System" as System
 
-rectangle "System Actors" as actors {
-    actor Freelancer
-    actor "Organization\nEmployee" as Employee
-}
+activate Admin
 
+    Admin -> System : Requests to register new store
+    activate System
 
-note right of Freelancer
-    Actor identified but still
-    no concrete use cases
-end note
+        System --> Admin : Requests data
+    deactivate System
 
-rectangle "Use Cases" as usecases{
-    usecase "UC6 - Create a Task" as UC6
-    Employee --> UC6
-}
-note right of actors
-    Rectangles and Titles are for
-    demonstration purposes only.
-    Omitt on your diagrams.
-end note
+    Admin -> System : Enter required data (name, location, phone number, e-mail address)
+    activate System
 
+        System --> Admin : Displays operation success
+    deactivate System
 @enduml
