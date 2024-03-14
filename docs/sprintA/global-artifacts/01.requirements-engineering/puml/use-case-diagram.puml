@@ -1,35 +1,21 @@
 @startuml
-'skinparam monochrome true
-skinparam packageStyle rectangle
-'skinparam shadowing false
-
-skinparam rectangle{
-    BorderColor yellow
-}
-
-'title Use Case Diagram Example
 
 left to right direction
 
-rectangle "System Actors" as actors {
-    actor Freelancer
-    actor "Organization\nEmployee" as Employee
+actor "Human Resources Manager" as HRM
+actor "Fleet Manager" as FM
+
+
+rectangle RealEstateUSA {
+  HRM --> (US 01 - Register skills that might be appointed to a collaborator)
+  HRM --> (US 02 - Register a job)
+  HRM --> (US 03 - register a collaborator with a job and fundamental characteristics)
+  HRM --> (US 04 - Assign one or more skills to a collaborator)
+  HRM --> (US 05 - Generate a team proposal automatically)
+  FM --> (US 06 - Register a vehicle's information)
+  FM --> (US 07 - Register a vehicle’s check-up)
+
+
 }
-
-
-note right of Freelancer
-    Actor identified but still
-    no concrete use cases
-end note
-
-rectangle "Use Cases" as usecases{
-    usecase "UC6 - Create a Task" as UC6
-    Employee --> UC6
-}
-note right of actors
-    Rectangles and Titles are for
-    demonstration purposes only.
-    Omitt on your diagrams.
-end note
 
 @enduml
