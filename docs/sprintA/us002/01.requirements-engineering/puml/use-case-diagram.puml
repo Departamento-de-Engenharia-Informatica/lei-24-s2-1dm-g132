@@ -1,26 +1,24 @@
-startuml
-skinparam monochrome true
+@startuml
+'skinparam monochrome true
 skinparam packageStyle rectangle
-skinparam shadowing false
+'skinparam shadowing false
 
-title System Sequence Diagram (SSD) - US002
+skinparam rectangle{
+    BorderColor yellow
+}
 
-autonumber
+title Use Case Diagram us002 - as a HRM I want to register a new job
 
-actor "HRM" as Admin
-participant ":System" as System
+left to right direction
 
-activate Admin
+rectangle "System Actor" as actor {
+    actor "HRM" as HumanResourceManager
+}
 
-    Admin -> System : Requests to register new store
-    activate System
 
-        System --> Admin : Requests data
-    deactivate System
+rectangle "Use Cases" as usecases{
+    usecase "UC2 - Registers a new job" as UC2
+    HumanResourceManager --> UC2
+}
 
-    Admin -> System : Enter required data (name, location, phone number, e-mail address)
-    activate System
-
-        System --> Admin : Displays operation success
-    deactivate System
 @enduml

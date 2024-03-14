@@ -1,4 +1,5 @@
 @startuml
+
 'skinparam monochrome true
 skinparam packageStyle rectangle
 'skinparam shadowing false
@@ -7,29 +8,22 @@ skinparam rectangle{
     BorderColor yellow
 }
 
-'title Use Case Diagram Example
-
+title Use Case Diagram us006 - As an FM, I wish to register a vehicle
 left to right direction
 
-rectangle "System Actors" as actors {
-    actor Freelancer
-    actor "Organization\nEmployee" as Employee
+rectangle "System Actor" as actor {
+    actor "FM" as FleetManager
 }
 
-
-note right of Freelancer
-    Actor identified but still
-    no concrete use cases
-end note
 
 rectangle "Use Cases" as usecases{
-    usecase "UC6 - Create a Task" as UC6
-    Employee --> UC6
-}
-note right of actors
-    Rectangles and Titles are for
-    demonstration purposes only.
-    Omitt on your diagrams.
-end note
+    usecase "UC6_1 - Request to register a new vehicle" as UC6_1
+    FleetManager --> UC6_1
 
+}
+rectangle "Use Cases" as usecases{
+    usecase "UC6_2 - Registers vehicle specifications" as UC6_2
+    FleetManager --> UC6_2
+
+}
 @enduml
