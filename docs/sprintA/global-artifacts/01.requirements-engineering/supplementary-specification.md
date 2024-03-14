@@ -17,18 +17,22 @@ among them: error prevention; interface aesthetics and design; help and
 documentation; consistency and standards._
 
 - The application must support the English language. All project artifacts must also be produced in English.
+- The application should provide relevant feedback to users after each operation.
 
 ## Reliability
 
 _Refers to the integrity, compliance and interoperability of the software. The requirements to be considered are: frequency and severity of failure, possibility of recovery, possibility of prediction, accuracy, average time between failures._
 
-(fill in here )
+- The system must have a high availability rate, allowing users to access the application at any time.
+- The application should be resilient to crashes and prevent data loss.
+- The system must be capable of handling multiple users concurrently without performance degradation.
 
 ## Performance
 
 _Evaluates the performance requirements of the software, namely: response time, start-up time, recovery time, memory consumption, CPU usage, load capacity and application availability._
 
-(fill in here )
+- The application must be capable of handling large amounts of data and users.
+- The system must be able to generate reports in a timely and efficient manner.
 
 ## Supportability
 
@@ -38,6 +42,8 @@ configurability, installability, scalability and more._
 
 - The class structure must be conceived to allow its easy maintenance and addition of new functionalities, considering the best practices of OO.
 - The development team must implement unit tests for all methods, except for methods that implement Input/Output operations.
+- The application must be easy to maintain and update.
+- The system must provide useful error messages and logs for debugging purposes.
 
 ## +
 
@@ -67,10 +73,12 @@ database integrity, resource limits, operating system._
 _Specifies or constraints the features inherent to the interaction of the
 system being developed with other external systems._
 
-(fill in here )
+- The application must provide clear feedback to users when they perform actions.
+
+
 
 ### Physical Constraints
 
 _Specifies a limitation or physical requirement regarding the hardware used to house the system, as for example: material, shape, size or weight._
 
-(fill in here )
+The application must be backed up regularly to ensure data integrity and availability in the event of a system failure or disaster.
