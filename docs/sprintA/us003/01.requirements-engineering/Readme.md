@@ -21,9 +21,14 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 >
 > **Answer:** The minimal required data to characterize a collaborator is their name, birthdate, admission date, address, contact (email or phone number), identification document and number. Other relevant data can also be considered.
 
+> **Question:** When creating a collaborator with an existing name ... What does the system do?
+> 
+> **Answer:** It's not common and most improbable to have different individual with same name in the same context, however it’s ID documentation number should be unique for sure.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
+* **AC2:** When registering a collaborator with an existing ID documentation number, the system must reject such operation.
 
 ### 1.4. Found out Dependencies
 
