@@ -47,19 +47,13 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 
 **Output Data:**
 
-* (Don't know yet)
+* List of existing jobs
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
 
-#### Alternative One
+![System Sequence Diagram](svg/us003-system-sequence-diagram.svg)
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
-
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
