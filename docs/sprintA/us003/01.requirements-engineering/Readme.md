@@ -17,17 +17,21 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 
 **From the client clarifications:**
 
-> **Question:** What are the fundamental characteristics of a collaborator?
+> **Question:** Which information is mandatory to insert a collaborator in the program (fundamental characteristics)?
 >
-> **Answer:** The minimal required data to characterize a collaborator is their name, birthdate, admission date, address, contact (email or phone number), identification document and number. Other relevant data can also be considered.
+> **Answer:** name, birthdate, admission date, address, contact info (mobile and email), taxpayer number, ID doc type and respective number.
 
 > **Question:** When creating a collaborator with an existing name ... What does the system do?
 > 
 > **Answer:** It's not common and most improbable to have different individual with same name in the same context, however it’s ID documentation number should be unique for sure.
 
+> **Question:** Does the HRM select the job from a list that we display?
+>
+> **Answer:** Displaying or not, It's a matter of UX, the dev team should decide about it, but the valid jobs are the ones created within the US02.
+
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
+* **AC1:** job, name, birthdate, admission date, address, contact info (mobile and email), taxpayer number, ID doc type(CC, BI, passport) and respective number should be provided by the HRM.
 * **AC2:** When registering a collaborator with an existing ID documentation number, the system must reject such operation.
 
 ### 1.4. Found out Dependencies
@@ -43,9 +47,10 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
     * a birthdate
     * an admission date
     * an address
-    * a contact
-    * an identification document
-    * a number
+    * a mobile phone number
+    * an email
+    * a taxpayer number
+    * an identification document type and its number
 	
 * Selected data:
     * a job
@@ -62,3 +67,5 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 
 
 ### 1.7 Other Relevant Remarks
+
+* The way the job selection is done can be decided by the development team (displaying the valid jobs or confirming if the job entered is valid).
