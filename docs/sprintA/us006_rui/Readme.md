@@ -21,9 +21,27 @@ Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Checkup F
 >
 > **Answer:** Ainda Sem Resposta
 
-> **Question:** Ainda sem pergunta
+> **Question:** Quando estamos a registar um veiculo ao inserir a marca, deve-se verificar se essa marca existe? igualmente com o modelo e o tipo do veiculo?
+Deve-se verificar que os kms introduzidos, tara e valores numéricos, não sejam negativos?
 >
 > **Answer:** Ainda Sem Resposta
+
+> **Question** Should the application identify a registered vehicle by a serial number or other attribute?
+-Should the application a group the vehicles by their brand, serial number or other attribute?
+-If the Fm inserts the same vehicle by mistake, should it inform ther user of the mistake and give him the option to add another vehicle?
+>
+> **Answer:** - By plate id;
+no requirements were set concerning groups of vehicles;
+again, duplication of data is not a business rule is technical one, since by definition in a set you cant have duplicates.
+
+>**Question** For the application to work does the FM need to fill all the attributes of the vehicle?
+> 
+> **Answer:** yes, besides the vehicle plate that by mistake doesn't appear on the text.
+
+> **Question** 
+> 
+> **Answer:** Ainda Sem Resposta
+ 
 
 ### 1.3. Acceptance Criteria
 
