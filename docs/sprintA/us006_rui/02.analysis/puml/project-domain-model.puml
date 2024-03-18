@@ -11,43 +11,42 @@ hide methods
 title Domain Model us006
 
 class FM {
-    name
-    vatNumber
-    website
-    phoneNumber
-    email
+    name : string
+    id : int
 }
 
-class JobType {
-    reference
-    description
-    informalDesc
-    technicalDesc
-    duration
-    cost
+class Job {
+    jobName : string
+    jobDescription : string
 }
 
 
 
 class Vehicle {
-    name
-    email
-    position
-    phone
+    brand : string
+    Tare : int
+    GrossWeight : int
+    CurrentKm : int
+    RegisterDate : date
+    AcquisitionDate : date
 }
 
 class VehicleType {
-    shortDescription
-    fullDescription
+     model : string
+     type : string
+     MaintenanceCheckupFrequency : int
+
 }
 
 
-
-
-Vehicle "1" - "*" VehicleType: has >
-JobType "1" -- "*" FM : creates >
-FM "1" -- "*" Vehicle : has >
+Vehicle "1" - "1" VehicleType: has >
+FM "1.." -- "1" Job : is a >
+FM "1" -- "1.." Vehicle : Register >
 
 
 
 @enduml
+
+As an FM, I wish to register a vehicle including Brand,
+ Model, Type, Tare, Gross Weight, Current Km, Register Date,
+  Acquisition Date, Maintenance/Checkup Frequency (in Kms)

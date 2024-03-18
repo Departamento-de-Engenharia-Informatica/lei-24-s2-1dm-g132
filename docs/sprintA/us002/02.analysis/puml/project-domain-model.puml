@@ -13,26 +13,29 @@ title Domain Model us002
 
 
 class HRM {
-    name
-    vatNumber
-    website
-    phoneNumber
-    email
+    name : string
+    id : int
 }
 
-class jobType {
-    reference
-    description
-    informalDesc
-    technicalDesc
-    duration
-    cost
+class Job {
+    jobName : string
+    jobDescription : string
+
 }
+class Employee {
+    name : string
+    id : int
+    birthDate : date
+    }
 
-
-'Platform "1" -- "*" Organization : has registered >
-'Platform "1" -- "*" Category : defines >
-'jobType "1" - "1..*" HRM : has >
+class Team {
+     name: string
+     id: int
+     TeamDescription: string
+}
+Employee "*" -- "1" Team : form >
+HRM "1" -- "1..." Job : creates >
+Employee "*" - "1..*" Job : do >
 'Organization "1" - "0..*" Task: owns >
 'Task "*" -- "1" Employee: created by >
 'Employee "1" -- "*" Task : creates >
