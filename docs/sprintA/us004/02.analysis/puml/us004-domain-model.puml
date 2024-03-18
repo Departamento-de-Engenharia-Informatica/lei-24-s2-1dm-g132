@@ -16,6 +16,12 @@ hide methods
 '  -description
 '}
 
+class Collaborator {
+    name
+    phoneNumber
+    email
+}
+
 class Organization {
     name
     vatNumber
