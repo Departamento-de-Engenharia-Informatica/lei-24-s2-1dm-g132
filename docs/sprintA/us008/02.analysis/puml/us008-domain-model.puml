@@ -24,7 +24,12 @@ class FM {
 
 }
 
-'Platform "1" -- "*" Organization : has registered >
-'Platform "1" -- "*" Category : defines >
+class Checkup {
+
+}
+
+FM "1" -- "*" Vehicle : has >
+Vehicle "1" -- "*" Checkup : has >
+
 
 @enduml
