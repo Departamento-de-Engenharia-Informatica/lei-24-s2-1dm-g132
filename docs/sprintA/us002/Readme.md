@@ -23,7 +23,11 @@ Deve-se incluir informações como salário, tipo de contratação (full-time ou
 Que outras informações acha necessárias associar ao Job?
 Agradeço a atenção dispensada.
 >
-> **Answer:** Ainda Sem Resposta
+> **Answer:** Bom dia,
+não é necessário na medida que não existem US que sugiram que isso possa vir a ser necessário;
+idem
+para já nenhumas
+De nada.
 
 > **Question:** 1.What should the output of the automation be? (should it just store the team proposal or show it to the customer?)
 > Will the team proposal be a document about all the instructions of each team member/worker?
@@ -35,6 +39,40 @@ Que tipo de informação uma skill tem?
 Quando é criado uma skill que ja existe o que sistema devera fazer ?
 > 
 > **Answer:** Ainda Sem Resposta
+
+> **Question:** -When the user registers a job does he select a job from a list or does he type out a custom job name?
+What data is introduced by the user when creating a job?
+>
+> **Answer:** Ainda Sem Resposta
+
+> **Question:** Boa dia,
+Quando se regista uma skill ou trabalho, que campos são preenchidos, por exemplo, designação, descrição mais concreta, número de identificação, ...
+É desejado que todos os campos, no caso de haver mais que um, dependendo da resposta à questão anterior, sejam de preenchimento obrigatório ou facultativo, e quais?
+No caso do número de identificação, o cliente pretende fornecer um, ou que um seja atribuído pelo sistema
+Sempre que algo é registado com sucesso, é pretendido apenas observar uma mensagem de sucesso, ou também uma lista do que já foi registado anteriormente?
+>
+> **Answer:** Ainda Sem Resposta
+
+> **Question**  Quais são os dados de entrada para a criação de uma profissão?
+> 
+> **Answer:** o Nome da profissão:
+jardineiro
+calceteiro
+electricista
+condutor
+...
+
+> **Question1** What are the acceptance criteria?
+When are creating a job that already exit, what the system do?
+>
+> **Answer:** By definition a set can´t have duplicates. Assuring no duplicates is not a business rule is a tecnichal issue.
+>
+> **Question2** What are the criteries to accept a job category regist?
+Any bussiness rule?
+>
+> **Answer2:** Ainda Sem Resposta
+> 
+
 
 
 
