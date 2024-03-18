@@ -16,16 +16,15 @@ hide methods
 '  -description
 '}
 
-class Collaborator {
-    name
-    phoneNumber
-    email
+class Vehicle {
+
 }
 
-class Skill {
-    name
+class FM {
+
 }
 
+'Platform "1" -- "*" Organization : has registered >
+'Platform "1" -- "*" Category : defines >
 
-Collaborator "1" -- "1*" Skill : has >
 @enduml
