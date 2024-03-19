@@ -22,10 +22,15 @@ class Job {
     jobDescription : string
 
 }
-class Employee {
+class Collaborator {
     name : string
     id : int
+    phoneNumber : string
+    email : string
     birthDate : date
+    admissionDate : date
+    adress : string
+    number : int
     }
 
 class Team {
@@ -33,19 +38,8 @@ class Team {
      id: int
      TeamDescription: string
 }
-Employee "*" -- "1" Team : form >
+Collaborator "*" -- "1" Team : form >
 HRM "1" -- "1..." Job : creates >
-Employee "*" - "1..*" Job : do >
-'Organization "1" - "0..*" Task: owns >
-'Task "*" -- "1" Employee: created by >
-'Employee "1" -- "*" Task : creates >
-'Employee "0..1" -- "1" User: acts as >
-'Task "*" - "1" Category: cataloged as >
-'TechnicalSkill "*" - "1" ActivityArea: regarding an >
-
-'Category "*" - "*" TechnicalSkill :  : requires >
-'(Category, TechnicalSkill) . FeatureTS
-
-'Organization "1" -left "1" PostalAddress : located At >
+Collaborator "*" - "1..*" Job : do >
 
 @enduml
