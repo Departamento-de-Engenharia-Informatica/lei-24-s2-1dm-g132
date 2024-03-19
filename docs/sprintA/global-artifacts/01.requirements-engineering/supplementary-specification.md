@@ -56,7 +56,7 @@ _Specifies or constraints the system design process. Examples may include: progr
 
 ### Implementation Constraints
 
-_Specifies or constraints the code or construction of a system such
+_Specifies or constraints the code or construction of a system 
 such as: mandatory standards/patterns, implementation languages,
 database integrity, resource limits, operating system._
 
@@ -72,7 +72,6 @@ database integrity, resource limits, operating system._
 
 _Specifies or constraints the features inherent to the interaction of the
 system being developed with other external systems._
-
 - The application must provide clear feedback to users when they perform actions.
 
 

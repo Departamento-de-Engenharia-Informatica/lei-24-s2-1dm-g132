@@ -14,7 +14,7 @@ rectangle RealEstateUSA {
   HRM --> (US 05 - Generate a team proposal automatically)
   FM --> (US 06 - Register a vehicle's information)
   FM --> (US 07 - Register a vehicle’s check-up)
-
+  FM --> (US 08 - List the vehicles needing the check-up)
 
 }
 
