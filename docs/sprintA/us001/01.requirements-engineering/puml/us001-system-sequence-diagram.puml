@@ -12,15 +12,12 @@ participant ":System" as System
 
 activate HRM
 
-    HRM -> System: Asks to set skills of collaborators
+    HRM -> System: Asks to set skills for collaborators
     activate System
- System --> HRM: Shows avaiable collaborators and asks to select one
-    deactivate System
-    HRM -> System: selects a collaborator
-        activate System
-         System --> HRM: asks to set a skill
+  
+         System --> HRM: asks to input a skill
             deactivate System
-                HRM -> System: sets a skill
+                HRM -> System: inputs a skill
                     activate System
                        System --> HRM: shows operation success
                                 deactivate System
