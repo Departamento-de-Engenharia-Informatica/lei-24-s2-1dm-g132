@@ -11,6 +11,8 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 
 **From the specifications document:**
 
+>   A collaborator a person who is an employee of the organization and carries out design, construction and/or maintenance tasks for green areas, depending on their skills.
+
 >	Each collaborator has a main job (exclusively one).
 
 >   Each collaborator is characterized by a set of characteristics.

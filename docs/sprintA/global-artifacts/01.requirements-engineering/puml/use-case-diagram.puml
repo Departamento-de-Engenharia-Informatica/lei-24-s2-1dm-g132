@@ -6,16 +6,15 @@ actor "Human Resources Manager" as HRM
 actor "Fleet Manager" as FM
 
 
-rectangle RealEstateUSA {
-  HRM --> (US 01 - Register skills that might be appointed to a collaborator)
-  HRM --> (US 02 - Register a job)
-  HRM --> (US 03 - register a collaborator with a job and fundamental characteristics)
-  HRM --> (US 04 - Assign one or more skills to a collaborator)
-  HRM --> (US 05 - Generate a team proposal automatically)
-  FM --> (US 06 - Register a vehicle's information)
-  FM --> (US 07 - Register a vehicle’s check-up)
-  FM --> (US 08 - List the vehicles needing the check-up)
-
+rectangle GreenSpaceManagement {
+  HRM --> (US 001 - Register skills)
+  HRM --> (US 002 - Register a job)
+  HRM --> (US 003 - Register a collaborator)
+  HRM --> (US 004 - Assign skills to a collaborator)
+  HRM --> (US 005 - Generate a team proposal)
+  FM --> (US 006 - Register a vehicle)
+  FM --> (US 007 - Register a vehicle’s check-up)
+  FM --> (US 008 - List vehicles needing check-up)
 }
 
 @enduml
