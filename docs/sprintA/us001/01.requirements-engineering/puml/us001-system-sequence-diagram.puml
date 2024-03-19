@@ -14,7 +14,7 @@ activate HRM
 
     HRM -> System: Asks to set skills for collaborators
     activate System
-  
+
          System --> HRM: asks to input a skill
             deactivate System
                 HRM -> System: inputs a skill
