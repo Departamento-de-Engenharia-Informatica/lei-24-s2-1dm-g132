@@ -1,0 +1,24 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US 007
+
+autonumber
+
+actor "FM" as FM
+participant ":System" as System
+
+activate FM
+
+    FM -> System: Asks to set skills for collaborators
+    activate System
+
+         System --> FM: asks to input a skill
+            deactivate System
+                FM -> System: inputs a skill
+                    activate System
+                       System --> FM: shows operation success
+                                deactivate System
+@enduml
