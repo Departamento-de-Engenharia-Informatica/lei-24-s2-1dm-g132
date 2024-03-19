@@ -80,4 +80,4 @@ system being developed with other external systems._
 
 _Specifies a limitation or physical requirement regarding the hardware used to house the system, as for example: material, shape, size or weight._
 
-The application must be backed up regularly to ensure data integrity and availability in the event of a system failure or disaster.
+- The application must be backed up regularly to ensure data integrity and availability in the event of a system failure or disaster.
