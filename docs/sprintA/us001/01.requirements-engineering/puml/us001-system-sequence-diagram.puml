@@ -7,12 +7,21 @@ title System Sequence Diagram (SSD) - US 001
 
 autonumber
 
-actor "Unregistered User" as User
+actor "HRM" as HRM
 participant ":System" as System
 
-activate User
+activate HRM
 
-    User -> System: Asks to list properties
+    HRM -> System: Asks to set skills of collaborators
     activate System
-
+ System --> HRM: Shows avaiable collaborators and asks to select one
+    deactivate System
+    HRM -> System: selects a collaborator
+        activate System
+         System --> HRM: asks to set a skill
+            deactivate System
+                HRM -> System: sets a skill
+                    activate System
+                       System --> HRM: shows operation success
+                                deactivate System
 @enduml
