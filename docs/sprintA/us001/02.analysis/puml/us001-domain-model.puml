@@ -4,9 +4,26 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 skinparam classAttributeIconSize 0
+
 hide circle
 hide methods
-class Park{
- Area
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+class HRM {
+    name
+    id
 }
+
+class Skill {
+    skillName
+    skillDescription
+
+}
+
+HRM "1" -- "1*" Skill : creates >
 @enduml
