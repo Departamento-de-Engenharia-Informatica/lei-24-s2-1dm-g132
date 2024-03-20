@@ -15,10 +15,10 @@ activate HRM
     HRM -> System : asks for a team proposal
     activate System
 
-        System --> HRM : asks for maximum team size and to select the required skills
+        System --> HRM : asks for minimum and maximum team size and to select the required skills
     deactivate System
 
-    HRM -> System : enters maximum team size and selects the skills required
+    HRM -> System : enters  minimum and maximum team size and selects the skills required
     activate System
 
     loop for each skill

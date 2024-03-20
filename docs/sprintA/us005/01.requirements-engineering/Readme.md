@@ -20,7 +20,7 @@ As an HRM, I want to generate a team proposal automatically.
 
 > **Question:** What information will the customer provide?
 >
-> **Answer:** The customer provides the max size of the team and a set of skills.
+> **Answer:** The customer provides the minimum and maximum size of the team, and a set of skills.
 
 > **Question:** What should the output of the automation be?
 > 
@@ -32,7 +32,7 @@ As an HRM, I want to generate a team proposal automatically.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The maximum team size and the set of skills need to be supplied by the HRM.
+* **AC1:** The minimum and maximum team size, and the set of skills need to be supplied by the HRM.
 
 ### 1.4. Found out Dependencies
 
@@ -44,6 +44,7 @@ As an HRM, I want to generate a team proposal automatically.
 **Input Data:**
 
 * Typed data:
+    * minimum team size
     * maximum team size
     * number of collaborators for each skill
 	
