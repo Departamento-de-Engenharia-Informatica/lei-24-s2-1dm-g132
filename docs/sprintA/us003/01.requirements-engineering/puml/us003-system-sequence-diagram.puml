@@ -21,7 +21,7 @@ activate HRM
     HRM -> System : selects a job
     activate System
 
-        System --> HRM : requests data (i.e. name, birthdate,\nadmission date, address, mobile\nphone number, email, taxpayer number,\nidentification document type and respective number)
+        System --> HRM : requests data (i.e. name, birthdate,\nadmission date, address, phone\nnumber, email, taxpayer number,\nidentification document type and respective number)
     deactivate System
 
     HRM -> System : types requested data
