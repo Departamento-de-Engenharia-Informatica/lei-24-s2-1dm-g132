@@ -35,6 +35,7 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 
 * **AC1:** job, name, birthdate, admission date, address, contact info (mobile and email), taxpayer number, ID doc type(CC, BI, passport) and respective number should be provided by the HRM.
 * **AC2:** When registering a collaborator with an existing ID documentation number, the system must reject such operation.
+* **AC3:** The mobile phone numbers provided must have 9 digits.
 
 ### 1.4. Found out Dependencies
 
@@ -49,10 +50,11 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
     * a birthdate
     * an admission date
     * an address
-    * a mobile phone number
+    * a phone number
     * an email
     * a taxpayer number
-    * an identification document type and its number
+    * an identification document type
+    * an identification document number
 	
 * Selected data:
     * a job
