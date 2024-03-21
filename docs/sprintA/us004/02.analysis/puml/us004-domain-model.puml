@@ -18,14 +18,25 @@ hide methods
 
 class Collaborator {
     name
+    birthdate
+    admissionDate
+    address
     phoneNumber
     email
+    IDDocType
+    number
+    taxpayerNumber
 }
 
 class Skill {
     name
 }
 
+class HRM {
+    name
+}
 
-Collaborator "1" -- "1*" Skill : has >
+
+Collaborator "1" -- "*" Skill : has >
+HRM "1" -- "*" Skill : assignes >
 @enduml

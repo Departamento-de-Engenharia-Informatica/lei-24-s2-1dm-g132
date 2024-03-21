@@ -10,11 +10,8 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-'title Domain Model
+title Domain Model - US 08
 
-'class Platform {
-'  -description
-'}
 
 class Vehicle {
 
@@ -25,10 +22,12 @@ class FM {
 }
 
 class Checkup {
-
+    plateNumber
+    date
+    currentKms
 }
 
-FM "1" -- "*" Vehicle : has >
+FM "1" -- "*" Vehicle : manages >
 Vehicle "1" -- "*" Checkup : has >
 
 
