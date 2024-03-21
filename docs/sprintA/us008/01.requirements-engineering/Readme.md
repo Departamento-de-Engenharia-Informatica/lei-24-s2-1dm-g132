@@ -1,11 +1,11 @@
-# US006 - Create a Task 
+# US008 - list the vehicles needing the check-up
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
+As an FM, I want to list the vehicles needing the check-up.
 
 ### 1.2. Customer Specifications and Clarifications 
 
@@ -61,7 +61,7 @@ As an organization employee, I want to create a new task in order to be further 
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us008-system-sequence-diagram.svg)
 
 #### Alternative Two
 
