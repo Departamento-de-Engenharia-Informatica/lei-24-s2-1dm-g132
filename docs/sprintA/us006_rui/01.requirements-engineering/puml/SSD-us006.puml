@@ -21,6 +21,12 @@ activate Admin
     Admin -> System : Enter required data (Brand, Model, Type, Tare, Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance or Checkup Frequency in Kms)
     activate System
 
+    System --> Admin : Lists all the inputed data
+        deactivate System
+
+    Admin -> System : Confirms data
+        activate System
+
         System --> Admin : Displays operation success
     deactivate System
 @enduml
