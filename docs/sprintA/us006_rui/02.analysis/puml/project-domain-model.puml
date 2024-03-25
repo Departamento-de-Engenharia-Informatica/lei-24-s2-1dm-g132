@@ -37,7 +37,6 @@ class Vehicle {
 
 
 
-
 FM "1.." -- "1" Job : is a >
 FM "1" -- "1.." Vehicle : Register >
 
