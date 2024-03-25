@@ -71,7 +71,24 @@ When are creating a job that already exit, what the system do?
 Any bussiness rule?
 >
 > **Answer2:** Ainda Sem Resposta
+
+> **Question** Good afternoon client,
+I would like to inquire about the functionalities that the system should have:
+When the HRM registers a job, is it necessary to provide a job description and inquire about the collaborator's qualifications?
+Should the system be able to display a list of all jobs currently registered?
+Does the system need to provide the capability to edit a job?
+I appreciate your attention.
+Best regards, Samara Miranda
+>
+> **Answer:** Ainda Sem Resposta
+
+> **Question** When creating a job:
+Can a job be anything?
+should numbers or special char be allowed?
+Is there a minim or max number of char?
 > 
+> **Answer:** Ainda Sem Resposta
+
 
 
 
