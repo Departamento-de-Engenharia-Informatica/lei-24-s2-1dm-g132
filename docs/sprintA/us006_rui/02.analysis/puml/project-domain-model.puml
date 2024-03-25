@@ -24,22 +24,20 @@ class Job {
 
 class Vehicle {
     brand : string
+    model : string
+    type : string
     Tare : int
     GrossWeight : int
     CurrentKm : int
     RegisterDate : date
     AcquisitionDate : date
-}
-
-class VehicleType {
-     model : string
-     type : string
-     MaintenanceCheckupFrequency : int
-
+    MaintenanceCheckupFrequency : int
 }
 
 
-Vehicle "1" - "1" VehicleType: has >
+
+
+
 FM "1.." -- "1" Job : is a >
 FM "1" -- "1.." Vehicle : Register >
 

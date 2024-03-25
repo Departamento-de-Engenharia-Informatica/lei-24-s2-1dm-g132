@@ -24,7 +24,7 @@ class Job {
 }
 class Collaborator {
     name : string
-    id : int
+    numCC : int
     phoneNumber : string
     email : string
     birthDate : date
