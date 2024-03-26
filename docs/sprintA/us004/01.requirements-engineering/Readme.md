@@ -45,7 +45,9 @@ There's no acceptance criteria for this user story.
 
 * Typed data:
     * collaborator's id
-    * skill's name
+
+* Selected data:
+  * a skill
 
 **Output Data:**
 

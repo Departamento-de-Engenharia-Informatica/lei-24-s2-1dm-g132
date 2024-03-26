@@ -15,16 +15,16 @@ activate Employee
     Employee -> System : asks to assign one skill to a collaborator
     activate System
 
-    System --> Employee : requests the number of the collaborator
+    System --> Employee : requests the collaborator's id
     deactivate System
 
-    Employee -> System : types collaborator's number
+    Employee -> System : types collaborator's id
     activate System
 
-    System --> Employee : requests the name of the skill
+    System --> Employee : shows skills list and requests to select one
     deactivate System
 
-    Employee -> System : types skill's name
+    Employee -> System : selects one skill
     activate System
 
     System --> Employee : shows all collaborator's skills and requests confirmation
