@@ -3,11 +3,11 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - US 08
+title System Sequence Diagram (SSD) - US008
 
 autonumber
 
-actor "FM" as Employee
+actor "Fleet \nManager" as Employee
 participant ":System" as System
 
 activate Employee

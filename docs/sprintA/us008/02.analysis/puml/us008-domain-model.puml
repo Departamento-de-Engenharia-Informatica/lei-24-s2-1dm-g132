@@ -14,21 +14,28 @@ title Domain Model - US 08
 
 
 class Vehicle {
-
+    vehiclePlate
+    brand
+    model
+    type
+    tare
+    grossWeight
+    currentKms
+    registerDate
+    acquisitionDate
+    checkUpFrequency
 }
 
 class FM {
-
 }
 
 class Checkup {
-    plateNumber
     date
-    currentKms
+    kms
 }
 
 FM "1" -- "*" Vehicle : manages >
-Vehicle "1" -- "*" Checkup : has >
+Vehicle "1" -- "*" Checkup : needs >
 
 
 @enduml
