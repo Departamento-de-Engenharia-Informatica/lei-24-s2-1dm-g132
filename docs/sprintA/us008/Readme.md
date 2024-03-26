@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US008 - list the vehicles needing the check-up
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
