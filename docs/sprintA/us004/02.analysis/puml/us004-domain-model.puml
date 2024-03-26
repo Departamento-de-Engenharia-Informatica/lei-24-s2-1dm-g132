@@ -10,11 +10,7 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-'title Domain Model
-
-'class Platform {
-'  -description
-'}
+title Domain Model - US004
 
 class Collaborator {
     name
@@ -33,7 +29,6 @@ class Skill {
 }
 
 class HRM {
-    name
 }
 
 
