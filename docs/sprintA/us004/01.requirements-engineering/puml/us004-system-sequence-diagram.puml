@@ -21,7 +21,13 @@ activate Employee
     Employee -> System : types skill's name
     activate System
 
-    System --> Employee : shows all collaborator's skills and displays operation success
+    System --> Employee : shows all collaborator's skills and requests confirmation
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+    System --> Employee : displays operation success
     deactivate System
 
 deactivate Employee
