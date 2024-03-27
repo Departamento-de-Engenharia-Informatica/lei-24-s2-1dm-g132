@@ -72,5 +72,7 @@ Team "1" - "1..*" Collaborator : has >
 FM "1" -- "*" Vehicle : registers >
 FM "1" -- "*" Vehicle : manages >
 Vehicle "1" -- "*" Checkup : needs >
+FM "1" -- "*" Checkup : registers >
+
 
 @enduml
