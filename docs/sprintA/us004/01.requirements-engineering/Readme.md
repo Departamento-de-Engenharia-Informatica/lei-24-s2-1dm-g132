@@ -33,7 +33,7 @@ As an HRM, I want to assign one or more skills to a collaborator.
 
 ### 1.3. Acceptance Criteria
 
-There's no acceptance criteria for this user story.
+* There's no acceptance criteria defined for this user story.
 
 ### 1.4. Found out Dependencies
 
@@ -56,9 +56,9 @@ There's no acceptance criteria for this user story.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - US 004](svg/us004-system-sequence-diagram.svg)
+![System Sequence Diagram - US004](svg/us004-system-sequence-diagram.svg)
 
 
 ### 1.7 Other Relevant Remarks
 
-There are no other relevant remarks for this user story.
+* There are no other relevant remarks for this user story.
