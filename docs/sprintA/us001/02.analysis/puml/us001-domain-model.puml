@@ -15,15 +15,13 @@ hide methods
 '}
 
 class HRM {
-    name
-    id
 }
 
 class Skill {
-    skillName
-    skillDescription
-
+    name
 }
 
-HRM "1" -- "1*" Skill : creates >
+HRM "1" -- "*" Skill : registers >
+HRM "1" --- "*" Skill : assigns >
+
 @enduml
