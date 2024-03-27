@@ -10,11 +10,11 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 **Business Transactions**
 
-* 
+* Task
 
 ---
 
-**Transaction Line Itemss**
+**Transaction Line Items**
 
 * 
 
@@ -22,43 +22,51 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 **Product/Service related to a Transaction or Transaction Line Item**
 
-* 
+* Portal
 
 ---
 
 **Transaction Records**
 
-* 
+* Agenda
 
 ---  
 
 **Roles of People or Organizations**
 
-* 
+* Human Resources Manager
+* Vehicle and Equipment Fleet Manager
+* Collaborator
+* Green Spaces Manager
+* Green Spaces User
+* Employee
 
 ---
 
 **Places**
 
-* 
+* Green Space
 
 ---
 
 **Noteworthy Events**
 
-* 
+* Check-up
 
 ---
 
 **Physical Objects**
 
-* 
+* Vehicle
+* Machine
+* Equipment
 
 ---
 
 **Descriptions of Things**
 
-* 
+* Job
+* Skill
 
 ---
 
@@ -70,7 +78,7 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 **Containers**
 
-* 
+* Team
 
 ---
 
@@ -82,7 +90,7 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 **Organizations**
 
-* 
+* MusgoSublime
 
 ---
 
@@ -124,10 +132,28 @@ An association is a relationship between instances of objects that indicates a r
 - etc.
 
 
-| Concept (A) 		|  Association   	|  Concept (B) |
-|----------	   		|:-------------:		|------:       |
-| C1  	| verb1    		 	| C2  |
-| ...  	| ...    		 	| ...  |
+| Concept (A) 		                      |      Association   	      |                 Concept (B) |
+|-------------------------------------|:-------------------------:|----------------------------:|
+| Task  	                             | is carried out by    		 	 |                Collaborator |
+| Task  	                             | is carried out in    		 	 |                 Green Space |
+| Task                                |       is defined in       |                      Agenda |
+| Collaborator                        |           has a           |                         Job |
+| Collaborator                        |           is an           |                    Employee |
+| Skill                               |      is assigned to       |                Collaborator |
+| Team                                |            has            |                Collaborator |
+| Human Resources Manager             |          defines          |                        Team |
+| Human Resources Manager             |         registers         |                       Skill |
+| Human Resources Manager             |         registers         |                         Job |
+| Human Resources Manager             |         registers         |                Collaborator |
+| Human Resources Manager             |          assigns          |                       Skill |
+| Vehicle and Equipment Fleet Manager |          manages          | Machine, Equipment, Vehicle |
+| Vehicle and Equipment Fleet Manager |         registers         |                     Vehicle |
+| Vehicle and Equipment Fleet Manager |         registers         |                    Check-up |
+| Machine, Equipment, Vehicle         |      is assigned to       |                        Task |
+| Green Spaces Manager                |          manages          |                 Green Space |
+| Green Spaces User                   |           uses            |                 Green Space |
+| Green Spaces User                   |           uses            |                      Portal |
+| Vehicle                             |           needs           |                    Check-up |
 
 
 
