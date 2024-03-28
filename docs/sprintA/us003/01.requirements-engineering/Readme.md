@@ -31,11 +31,34 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 >
 > **Answer:** Displaying or not, It's a matter of UX, the dev team should decide about it, but the valid jobs are the ones created within the US02.
 
+> **Question:** Should the system able the HRM to insert multiple collaborators in one interaction before saving them?
+>
+> **Answer:** It's not required to do so.
+
+> **Question:** Is there any limitation regarding the length of the name of the collaborator?
+>
+> **Answer:** According to the Portuguese law a name should contain at maximum six words.
+
+> **Question:** Should we consider valid only the birthdates in which the collaborator has more than 18 years?
+>
+> **Answer:** Yes.
+
+> **Question:** What should be the format for the phone number?
+>
+> **Answer:** Validating 9 digits will be acceptable. Validating with international format would be excellent.
+
+> **Question:** What is the format for the numbers from the id doc types?
+>
+> **Answer:** Each doc type has specific formats like taxpayer number, Citizen Card or passport.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** job, name, birthdate, admission date, address, contact info (mobile and email), taxpayer number, ID doc type(CC, BI, passport) and respective number should be provided by the HRM.
 * **AC2:** When registering a collaborator with an existing ID documentation number, the system must reject such operation.
-* **AC3:** The mobile phone numbers provided must have 9 digits.
+* **AC3:** The mobile phone numbers provided must have 9 digits. Optionally it could also validate numbers with international format.
+* **AC4:** The name of the collaborator should have at maximum 6 words.
+* **AC5:** The bithdate entered must indicate that the collaborator has more than 18 years.
+* **AC6:** Each doc type should validate its specific format.
 
 ### 1.4. Found out Dependencies
 
