@@ -30,9 +30,20 @@ As an HRM, I want to generate a team proposal automatically.
 >
 > **Answer:** The system should provide information why it can't generate a team.
 
+> **Question:** Can a collaborator be in more than one team at the same time?
+>
+> **Answer:** No.
+
+> **Question:** Should there be any more information in the team generated beyond the collaborators in which it consists?
+>
+> **Answer:** The information should contain each of team members and its skills.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The minimum and maximum team size, and the set of skills need to be supplied by the HRM.
+* **AC2:** Each collaborator can't belong to more than one team.
+* **AC3:** The team generated should contain the selected collaborator and its skills. The HRM can refuse or accept the proposal.
+* **AC4:** The system should provide the information why it can't generate the team, if that's the case.
 
 ### 1.4. Found out Dependencies
 
