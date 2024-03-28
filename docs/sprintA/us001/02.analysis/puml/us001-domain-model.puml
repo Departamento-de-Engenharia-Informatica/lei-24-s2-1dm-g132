@@ -22,6 +22,5 @@ class Skill {
 }
 
 HRM "1" -- "*" Skill : registers >
-HRM "1" --- "*" Skill : assigns >
 
 @enduml

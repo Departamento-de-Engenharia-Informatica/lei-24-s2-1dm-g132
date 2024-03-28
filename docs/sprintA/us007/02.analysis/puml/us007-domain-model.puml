@@ -14,16 +14,15 @@ hide methods
 '  -description
 '}
 
-class HRM {
-    name
-    id
+class FM {
 }
 
-class Skill {
-    skillName
-    skillDescription
 
+class Checkup {
+    date
+    kms
 }
 
-HRM "1" -- "1*" Skill : creates >
+FM "1" -- "*" Checkup : registers >
+
 @enduml
