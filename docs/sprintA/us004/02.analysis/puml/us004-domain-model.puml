@@ -19,9 +19,9 @@ class Collaborator {
     address
     phoneNumber
     email
-    IDDocType
-    number
     taxpayerNumber
+    identificationDocumentType
+    identificationDocumentNumber
 }
 
 class Skill {
