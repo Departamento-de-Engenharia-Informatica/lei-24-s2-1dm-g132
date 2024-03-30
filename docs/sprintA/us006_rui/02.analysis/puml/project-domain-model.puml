@@ -11,39 +11,23 @@ hide methods
 title Domain Model us006
 
 class FM {
-    name : string
-    id : int
 }
-
-class Job {
-    jobName : string
-    jobDescription : string
-}
-
-
 
 class Vehicle {
-    brand : string
-    model : string
-    type : string
-    Tare : int
-    GrossWeight : int
-    CurrentKm : int
-    RegisterDate : date
-    AcquisitionDate : date
-    MaintenanceCheckupFrequency : int
+    brand
+    model
+    type
+    Tare
+    GrossWeight
+    CurrentKm
+    RegisterDate
+    AcquisitionDate
+    MaintenanceCheckupFrequency
 }
 
 
-
-
-FM "1.." -- "1" Job : is a >
-FM "1" -- "1.." Vehicle : Register >
+FM "1" -- "*" Vehicle : Register >
 
 
 
 @enduml
-
-As an FM, I wish to register a vehicle including Brand,
- Model, Type, Tare, Gross Weight, Current Km, Register Date,
-  Acquisition Date, Maintenance/Checkup Frequency (in Kms)

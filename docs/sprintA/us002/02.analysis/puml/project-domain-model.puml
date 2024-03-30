@@ -13,33 +13,25 @@ title Domain Model us002
 
 
 class HRM {
-    name : string
-    id : int
 }
 
 class Job {
-    jobName : string
-    jobDescription : string
+    Name
 
 }
 class Collaborator {
-    name : string
-    numCC : int
-    phoneNumber : string
-    email : string
-    birthDate : date
-    admissionDate : date
-    adress : string
-    number : int
+    name
+    birthdate
+    admissionDate
+    address
+    phoneNumber
+    email
+    taxpayerNumber
+    identificationDocumentType
+    identificationDocumentNumber
     }
 
-class Team {
-     name: string
-     id: int
-     TeamDescription: string
-}
-Collaborator "*" -- "1" Team : form >
-HRM "1" -- "1..." Job : creates >
-Collaborator "*" - "1..*" Job : do >
+HRM "1" -- "*" Job :registers>
+Collaborator "*" - "1" Job : has >
 
 @enduml
