@@ -51,6 +51,10 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 >
 > **Answer:** Each doc type has specific formats like taxpayer number, Citizen Card or passport.
 
+> **Question:** What is needed for the address? Street, zipcode and a city?
+>
+> **Answer:** That would be enough.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** job, name, birthdate, admission date, address, contact info (mobile and email), taxpayer number, ID doc type(CC, BI, passport) and respective number should be provided by the HRM.
@@ -59,6 +63,7 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 * **AC4:** The name of the collaborator should have at maximum 6 words.
 * **AC5:** The bithdate entered must indicate that the collaborator has more than 18 years.
 * **AC6:** Each doc type should validate its specific format.
+* **AC7:** The address provided must include street, zipcode and city.
 
 ### 1.4. Found out Dependencies
 
