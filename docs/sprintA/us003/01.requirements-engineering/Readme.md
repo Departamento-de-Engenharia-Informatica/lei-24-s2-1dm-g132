@@ -61,9 +61,13 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 * **AC2:** When registering a collaborator with an existing ID documentation number, the system must reject such operation.
 * **AC3:** The mobile phone numbers provided must have 9 digits. Optionally it could also validate numbers with international format.
 * **AC4:** The name of the collaborator should have at maximum 6 words.
-* **AC5:** The bithdate entered must indicate that the collaborator has more than 18 years.
+* **AC5:** The birthdate entered must indicate that the collaborator has more than 18 years.
 * **AC6:** Each doc type should validate its specific format.
 * **AC7:** The address provided must include street, zipcode and city.
+
+Other questions:
+* Which should be the format for the dates?
+* What is the format of the emails? Should only specific types of email services be accepted?
 
 ### 1.4. Found out Dependencies
 
