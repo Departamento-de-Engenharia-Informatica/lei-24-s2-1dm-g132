@@ -12,7 +12,9 @@
 
 **From the specifications document:**
 
+an employee has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities
 
+When creating multipurpose teams, the number of members and the set of skills that must be covered are crucial.
 **From the client clarifications:**
 
 > **Question:** Hello, I have some questions about the US01:
@@ -35,16 +37,34 @@ Both are acceptable since the business the same the crucial difference resides i
 It will depend if you opt to insert one skil or a set of skils in a batch. Maybe some adaptation needed.
 This US is quite simple, atm a skill is simply a name.
 
-> **Question:** Que criterios sao necessarios para registar uma skill?
-Que tipo de informação uma skill tem?
-Quando é criado uma skill que ja existe o que sistema devera fazer ?
+> **Question:** What criteria are necessary to register a skill? 
+What type of information does a skill have? When a skill that already exists is created, what should the system do?
 
-> **Answer:** o nome da skill, por exemplo:
-podador,
-condutor de veiculos pesados,
-aplicador de fito-farmacos.
-Por definição não é possível ter valores duplicados num conjunto. A verificação de duplicados não é uma regra de negócio é do nível tecnológico.
+> **Answer:** The necessary criteria to register a skill include the skill's name, for example:
+pruner,
+heavy vehicle driver,
+phyto-pharmaceutical applicator.
 
+> **Question:**
+Dear client,
+The indentificator of the skill will be the name, or the system will generate authomatically and Id when the manager insert the name?
+
+> **Answer:** A skill is just a name, can be a composition os words like "Light Vehicle Driving Licence".
+I have no knowledge about systems IDs.
+
+> **Question:**
+Dear client, which is the difference between collaborator and employ? And employ could have skills? HRM, VFM, GSM and GSU are employers?
+
+> **Answer:**
+Employee and collaborator are synonyms.
+
+> **Question:**
+Hello,
+Should the system able the HRM to introduce multiple skills in one interaction before saving all of them?
+
+> **Answer:**
+Hi,
+it's not required to do so.
 
 
 
