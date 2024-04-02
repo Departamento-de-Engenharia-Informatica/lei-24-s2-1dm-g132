@@ -12,13 +12,20 @@ participant ":System" as System
 
 activate FM
 
-    FM -> System: Asks to set skills for collaborators
+activate FM
+
+    FM -> System: selects "register vehicle check-up" option
     activate System
 
-         System --> FM: asks to input a skill
+         System --> FM: request vehicle info
             deactivate System
-                FM -> System: inputs a skill
+                FM -> System: enters vehicle info
                     activate System
-                       System --> FM: shows operation success
+                       System --> FM: asks for validation of information
                                 deactivate System
+                                                FM -> System: validates information
+                                                    activate System
+                                                                           System --> FM: shows operation success
+                                                                                    deactivate System
+@enduml                   deactivate System
 @enduml

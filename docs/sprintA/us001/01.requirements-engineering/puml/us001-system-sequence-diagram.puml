@@ -7,18 +7,22 @@ title System Sequence Diagram (SSD) - US 001
 
 autonumber
 
-actor "HRM" as HRM
+actor "Human Resources Manager" as HRM
 participant ":System" as System
 
 activate HRM
 
-    HRM -> System: Asks to set skills for collaborators
+    HRM -> System: selects "create skill" option
     activate System
 
-         System --> HRM: asks to input a skill
+         System --> HRM: request skill name
             deactivate System
-                HRM -> System: inputs a skill
+                HRM -> System: enters skill name
                     activate System
-                       System --> HRM: shows operation success
+                       System --> HRM: asks for validation of skill
                                 deactivate System
+                                                HRM -> System: validates skill
+                                                    activate System
+                                                                           System --> HRM: shows operation success
+                                                                                    deactivate System
 @enduml
