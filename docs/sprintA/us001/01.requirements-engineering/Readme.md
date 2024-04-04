@@ -5,16 +5,16 @@
 
 ### 1.1. User Story Description
 
-- As a Human Resources Manager (HRM), I want to register skills that a
+- As a HRM, I want to register skills that a
   collaborator may have
 
 ### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
 
-"an employee has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities"
+> "an employee has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities"
 
-When creating multipurpose teams, the number of members and the set of skills that must be covered are crucial.
+
 **From the client clarifications:**
 
 > **Question:** Hello, I have some questions about the US01: Which information can be introduced to create a new skill?
