@@ -7,7 +7,7 @@ title System Sequence Diagram (SSD) - US 001
 
 autonumber
 
-actor "Human Resources Manager" as HRM
+actor "HRM" as HRM
 participant ":System" as System
 
 activate HRM

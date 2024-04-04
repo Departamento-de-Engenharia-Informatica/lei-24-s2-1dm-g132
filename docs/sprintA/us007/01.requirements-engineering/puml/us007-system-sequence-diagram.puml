@@ -10,7 +10,6 @@ autonumber
 actor "FM" as FM
 participant ":System" as System
 
-activate FM
 
 activate FM
 

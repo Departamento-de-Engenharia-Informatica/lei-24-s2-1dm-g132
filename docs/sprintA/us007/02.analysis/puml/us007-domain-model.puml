@@ -19,6 +19,7 @@ class FM {
 
 
 class Checkup {
+vehiclePlate
     date
     kms
 }
