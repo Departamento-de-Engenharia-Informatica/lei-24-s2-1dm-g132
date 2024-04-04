@@ -1,4 +1,4 @@
-# US 001 - register skills that a collaborator may have
+# US 001 - Register Skills
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

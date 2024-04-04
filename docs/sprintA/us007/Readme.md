@@ -1,4 +1,4 @@
-# US 001 - register skills that a collaborator may have
+# US 007 - Register a vehicle’s check-up
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

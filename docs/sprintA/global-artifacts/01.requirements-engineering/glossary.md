@@ -1,7 +1,5 @@
 # Glossary
 
-**Terms, Expressions and Acronyms (TEA) must be organized alphabetically.**
-
 | **_TEA_** (EN)              | **_Description_** (EN)                                                                                                                                                                                            |                                       
 |:----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Amenity**                 | A desirable or useful feature or facility of a green space.                                                                                                                                                       |
@@ -42,10 +40,6 @@
 | **Tree pruning**            | Selectively remove branches from a tree.                                                                                                                                                                          |
 | **Urban furniture**         | Same as _Amenity_.                                                                                                                                                                                                |
 | **Vehicle**                 | Any motorized or non-motorized mode of transportation used for various purposes within the green space.                                                                                                           |
-| **...**                     | ...                                                                                                                                                                                                               |
-| **...**                     | ...                                                                                                                                                                                                               |
-
-
 
 
 

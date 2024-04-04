@@ -1,4 +1,4 @@
-# US004 - Assign skill to a collaborator
+# US004 - Assign skills to a collaborator
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

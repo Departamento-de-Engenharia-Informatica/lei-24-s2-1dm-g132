@@ -1,4 +1,4 @@
-# US008 - list the vehicles needing the check-up
+# US008 - List vehicles needing check-up
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
