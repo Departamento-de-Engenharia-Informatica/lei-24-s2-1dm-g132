@@ -54,6 +54,12 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 > **Question:** What is needed for the address? Street, zipcode and a city?
 >
 > **Answer:** That would be enough.
+ 
+> **Question:** What should be the accepted format for the emails? Should only specific email services be accepted?
+>
+> **Answer:** A valid email address consists of an email prefix and an email domain, both in acceptable formats.
+The prefix appears to the left of the @ symbol. The domain appears to the right of the @ symbol.
+For example, in the address example@mail.com, "example" is the email prefix, and "mail.com" is the email domain.
 
 ### 1.3. Acceptance Criteria
 
@@ -64,10 +70,7 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 * **AC5:** The birthdate entered must indicate that the collaborator has more than 18 years.
 * **AC6:** Each doc type should validate its specific format.
 * **AC7:** The address provided must include street, zipcode and city.
-
-Other questions:
-* Which should be the format for the dates?
-* What is the format of the emails? Should only specific types of email services be accepted?
+* **AC8:** To validate the email both the email prefix and the email domain should have acceptable formats.
 
 ### 1.4. Found out Dependencies
 
