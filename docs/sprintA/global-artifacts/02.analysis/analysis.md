@@ -137,6 +137,7 @@ An association is a relationship between instances of objects that indicates a r
 | Task  	                             | is carried out by    		 	 |                Collaborator |
 | Task  	                             | is carried out in    		 	 |                 Green Space |
 | Task                                |       is defined in       |                      Agenda |
+| Task                                |     is carried out by     |                        Team |
 | Collaborator                        |           has a           |                         Job |
 | Collaborator                        |           is an           |                    Employee |
 | Skill                               |      is assigned to       |                Collaborator |
@@ -154,6 +155,9 @@ An association is a relationship between instances of objects that indicates a r
 | Green Spaces User                   |           uses            |                 Green Space |
 | Green Spaces User                   |           uses            |                      Portal |
 | Vehicle                             |           needs           |                    Check-up |
+| Organization                        |            has            |                Collaborator |
+| Organization                        |            has            |                     Vehicle |
+| Organization                        |            has            |                        Team |
 
 
 
