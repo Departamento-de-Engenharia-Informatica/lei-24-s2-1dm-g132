@@ -29,6 +29,13 @@ As an FM, I want to list the vehicles needing the check-up.
 > b) 33480 (there is a difference minor than 5% of the number of kms of the checkup frequency).
 > The list must clearly identify the vehicles through: plate number, brand, model and the that justified the checkup need.
 
+> **Question:** I'm not sure if I understood everything about US08. In this US we should only list the vehicles that need a check up (surpass the check up frequency in KM)
+> or that will shortly need a check up (5% to the check up frequency *already said in another post*), correct? If so, the information about the checkup frequency for each vehicle should be asked in US07?
+>
+> **Answer:**
+> - No; the Maintenance/Check-up Frequency (in km) is registered in US06.
+
+
 ### 1.3. Acceptance Criteria
 
 * There's no acceptance criteria defined for this user story.
