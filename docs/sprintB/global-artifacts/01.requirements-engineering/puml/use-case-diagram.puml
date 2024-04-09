@@ -1,0 +1,20 @@
+@startuml
+
+left to right direction
+
+actor "Human Resources Manager" as HRM
+actor "Fleet Manager" as FM
+
+
+rectangle GreenSpaceManagement {
+  HRM --> (US 001 - Register skills)
+  HRM --> (US 002 - Register a job)
+  HRM --> (US 003 - Register a collaborator)
+  HRM --> (US 004 - Assign skills to a collaborator)
+  HRM --> (US 005 - Generate a team proposal)
+  FM --> (US 006 - Register a vehicle)
+  FM --> (US 007 - Register a vehicle’s check-up)
+  FM --> (US 008 - List vehicles needing check-up)
+}
+
+@enduml

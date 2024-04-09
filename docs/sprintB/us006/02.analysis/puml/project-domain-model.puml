@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+'skinparam linetype ortho
+'left to right direction
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+title Domain Model us006
+
+class FM {
+}
+
+class Vehicle {
+    brand
+    model
+    type
+    Tare
+    GrossWeight
+    CurrentKm
+    RegisterDate
+    AcquisitionDate
+    MaintenanceCheckupFrequency
+}
+
+
+FM "1" -- "*" Vehicle : Register >
+
+@enduml
