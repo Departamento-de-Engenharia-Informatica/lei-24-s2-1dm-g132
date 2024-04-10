@@ -22,19 +22,18 @@ activate HRM
     activate System
 
     loop while continues
-        System --> HRM : shows skills list and asks to select one
+        System --> HRM : asks for a skill
     deactivate System
 
-    HRM -> System : selects a skill
-    activate System
-
-        System --> HRM : asks for the number of collaborators that should have that skill
-    deactivate System
-
-    HRM -> System : types the number of collaborators
+    HRM -> System : types a skill
     activate System
 
         System --> HRM : asks to continue
+
+    deactivate System
+
+    HRM -> System : answers positively or negatively
+    activate System
     end
 
         System --> HRM : shows all data and requests confirmation
