@@ -5,7 +5,7 @@
 
 ### 1.1. User Story Description
 
-- As an FM, I wish to register a vehicle’s check-up
+- As an VFM, I wish to register a vehicle’s check-up
 
 ### 1.2. Customer Specifications and Clarifications
 

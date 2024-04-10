@@ -18,7 +18,7 @@ hide methods
 class HRM {
 }
 
-class FM {
+class VFM {
 }
 
 class Organization{
@@ -80,11 +80,11 @@ Collaborator "*" -- "1" Job : has >
 Collaborator "1" -- "*" Skill : has >
 Team "1" - "1..*" Collaborator : has >
 Task "*" -- "1" Team : is assigned to >
-FM "1" -- "*" Vehicle : registers >
-FM "1" -- "*" Vehicle : manages >
+VFM "1" -- "*" Vehicle : registers >
+VFM "1" -- "*" Vehicle : manages >
 Vehicle "1" - "*" Checkup : needs >
 Task "1" - "*" Vehicle : has assigned >
-FM "1" -- "*" Checkup : registers >
+VFM "1" -- "*" Checkup : registers >
 Organization "1" -- "*" Vehicle : has >
 
 

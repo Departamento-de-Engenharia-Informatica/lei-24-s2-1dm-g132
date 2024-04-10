@@ -7,7 +7,7 @@ title System Sequence Diagram (SSD) - us006
 
 autonumber
 
-actor "FM" as Admin
+actor "VFM" as Admin
 participant ":System" as System
 
 activate Admin

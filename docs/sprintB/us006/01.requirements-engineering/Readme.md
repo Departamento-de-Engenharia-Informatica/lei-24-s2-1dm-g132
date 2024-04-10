@@ -4,7 +4,7 @@
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
-As an FM, I wish to register a vehicle including Brand, Model, Type, Tare,
+As an VFM, I wish to register a vehicle including Brand, Model, Type, Tare,
 Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Checkup Frequency (in Kms)
 
 ### 1.2. Customer Specifications and Clarifications 

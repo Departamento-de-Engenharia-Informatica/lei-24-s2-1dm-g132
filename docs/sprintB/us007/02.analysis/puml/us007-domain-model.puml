@@ -14,7 +14,7 @@ hide methods
 '  -description
 '}
 
-class FM {
+class VFM {
 }
 
 
@@ -24,6 +24,6 @@ vehiclePlate
     kms
 }
 
-FM "1" -- "*" Checkup : registers >
+VFM "1" -- "*" Checkup : registers >
 
 @enduml

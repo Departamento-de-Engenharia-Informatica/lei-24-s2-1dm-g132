@@ -7,7 +7,7 @@ title System Sequence Diagram (SSD) - US008
 
 autonumber
 
-actor "Fleet \nManager" as Employee
+actor "VFM" as Employee
 participant ":System" as System
 
 activate Employee

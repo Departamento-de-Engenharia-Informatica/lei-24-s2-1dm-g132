@@ -10,7 +10,7 @@ hide methods
 
 title Domain Model us006
 
-class FM {
+class VFM {
 }
 
 class Vehicle {
@@ -26,6 +26,6 @@ class Vehicle {
 }
 
 
-FM "1" -- "*" Vehicle : Register >
+VFM "1" -- "*" Vehicle : Register >
 
 @enduml
