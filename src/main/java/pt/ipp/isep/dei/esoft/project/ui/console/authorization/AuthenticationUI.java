@@ -1,8 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.authorization;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.ui.console.menu.AdminUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.menu.MenuItem;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
@@ -47,6 +46,13 @@ public class AuthenticationUI implements Runnable {
         rolesUI.add(new MenuItem(AuthenticationController.ROLE_ADMIN, new AdminUI()));
 
         //TODO: Complete with other user roles and related RoleUI
+
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_HRM, new HRMUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_VTF, new VTFUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_COLLABORATOR, new CollaboratorUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_GSM, new GSMUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_GSU, new GSUUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_QAM, new QAMUI()));
         return rolesUI;
     }
 
