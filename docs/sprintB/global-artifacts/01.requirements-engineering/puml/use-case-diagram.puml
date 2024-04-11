@@ -7,14 +7,14 @@ actor "Vehicle and Equipment Fleet Manager" as VFM
 
 
 rectangle GreenSpaceManagement {
-  HRM --> (US 001 - Register skills)
-  HRM --> (US 002 - Register a job)
-  HRM --> (US 003 - Register a collaborator)
-  HRM --> (US 004 - Assign skills to a collaborator)
-  HRM --> (US 005 - Generate a team proposal)
-  VFM --> (US 006 - Register a vehicle)
-  VFM --> (US 007 - Register a vehicle’s check-up)
-  VFM --> (US 008 - List vehicles needing check-up)
+  HRM --> (UC 001 - Register skills)
+  HRM --> (UC 002 - Register a job)
+  HRM --> (UC 003 - Register a collaborator)
+  HRM --> (UC 004 - Assign skills to a collaborator)
+  HRM --> (UC 005 - Generate a team proposal)
+  VFM --> (UC 006 - Register a vehicle)
+  VFM --> (UC 007 - Register a vehicle’s check-up)
+  VFM --> (UC 008 - List vehicles needing check-up)
 }
 
 @enduml
