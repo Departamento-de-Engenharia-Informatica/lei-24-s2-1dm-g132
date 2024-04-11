@@ -30,11 +30,11 @@
 
 **Roles of People or Organizations**
 
-* Human Resources Manager
-* Vehicle and Equipment Fleet Manager
+* HRM (Human Resources Manager)
+* VFM (Vehicle and Equipment Fleet Manager)
 * Collaborator
-* Green Spaces Manager
-* Green Spaces User
+* GSM (Green Spaces Manager)
+* GSU (Green Spaces User)
 * Employee
 
 ---
@@ -118,33 +118,22 @@
 ## Rationale to identify associations between conceptual classes
 
 
-| Concept (A) 		                      |      Association   	      |                 Concept (B) |
-|-------------------------------------|:-------------------------:|----------------------------:|
-| Task  	                             | is carried out by    		 	 |                Collaborator |
-| Task  	                             | is carried out in    		 	 |                 Green Space |
-| Task                                |       is defined in       |                      Agenda |
-| Task                                |     is carried out by     |                        Team |
-| Collaborator                        |           has a           |                         Job |
-| Collaborator                        |           is an           |                    Employee |
-| Skill                               |      is assigned to       |                Collaborator |
-| Team                                |            has            |                Collaborator |
-| Human Resources Manager             |          defines          |                        Team |
-| Human Resources Manager             |         registers         |                       Skill |
-| Human Resources Manager             |         registers         |                         Job |
-| Human Resources Manager             |         registers         |                Collaborator |
-| Human Resources Manager             |          assigns          |                       Skill |
-| Vehicle and Equipment Fleet Manager |          manages          | Machine, Equipment, Vehicle |
-| Vehicle and Equipment Fleet Manager |         registers         |                     Vehicle |
-| Vehicle and Equipment Fleet Manager |         registers         |                    Check-up |
-| Machine, Equipment, Vehicle         |      is assigned to       |                        Task |
-| Green Spaces Manager                |          manages          |                 Green Space |
-| Green Spaces User                   |           uses            |                 Green Space |
-| Green Spaces User                   |           uses            |                      Portal |
-| Vehicle                             |           needs           |                    Check-up |
-| Organization                        |            has            |                Collaborator |
-| Organization                        |            has            |                     Vehicle |
-| Organization                        |            has            |                        Team |
-
+| Concept (A) 		 | Association   	 |  Concept (B) |
+|----------------|:---------------:|-------------:|
+| Task           | is assigned to  |         Team |
+| Collaborator   |      has a      |          Job |
+| Collaborator   |       has       |        Skill |
+| Team           |       has       | Collaborator |
+| HRM            |    generates    |         Team |
+| HRM            |    registers    |        Skill |
+| HRM            |    registers    |          Job |
+| HRM            |    registers    | Collaborator |
+| HRM            |     assigns     |        Skill |
+| VFM            |     manages     |      Vehicle |
+| VFM            |    registers    |      Vehicle |
+| VFM            |    registers    |     Check-up |
+| Task           |  has assigned   |      Vehicle |
+| Vehicle        |       has       |     Check-up |
 
 
 ## Domain Model
