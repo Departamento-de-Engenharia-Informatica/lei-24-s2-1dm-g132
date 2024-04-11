@@ -18,9 +18,6 @@
 ## Supportability
 
 
-- The class structure must be designed to allow easy maintenance and the addition of new features, following the best OO practices.
-- The development team must implement unit tests for all methods, except for methods that implement Input/Output operations.
-
 ## +
 
 ### Design Constraints
@@ -38,6 +35,8 @@
 - The unit tests should be implemented using the JUnit 5 framework.
 - The JaCoCo plugin should be used to generate the coverage report.
 - All the images/figures produced during the software development process should be recorded in SVG format.
+- The class structure must be designed to allow easy maintenance and the addition of new features, following the best OO practices.
+- The development team must implement unit tests for all methods, except for methods that implement Input/Output operations.
 
 
 ### Interface Constraints
