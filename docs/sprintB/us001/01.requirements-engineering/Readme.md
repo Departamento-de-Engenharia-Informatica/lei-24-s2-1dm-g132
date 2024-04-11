@@ -1,4 +1,4 @@
-# US001 - register skills that a collaborator may have
+# US001 - Register skills that a collaborator may have
 
 
 ## 1. Requirements Engineering
@@ -71,7 +71,8 @@ it's not required to do so.
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-
+* **AC2:** The name of the skill must be filled in
+* **AC3:** The name of the skill cannot have special characters
 ### 1.4. Found out Dependencies
 
 * There are no dependencies
@@ -80,6 +81,7 @@ it's not required to do so.
 **Input Data:**
 
 * Typed data:
+
   * name of skill
 
 * Selected data:

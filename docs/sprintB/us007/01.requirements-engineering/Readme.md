@@ -65,7 +65,6 @@ already answered in the forum.
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* * **AC1:** All required fields must be filled in.
 
 
 ### 1.4. Found out Dependencies

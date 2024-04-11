@@ -17,6 +17,18 @@ hide methods
 class VFM {
 }
 
+class Vehicle {
+    vehiclePlate
+    brand
+    model
+    type
+    tare
+    grossWeight
+    currentKms
+    registerDate
+    acquisitionDate
+    checkUpFrequency
+}
 
 class Checkup {
 vehiclePlate
@@ -25,5 +37,7 @@ vehiclePlate
 }
 
 VFM "1" -- "*" Checkup : registers >
+Vehicle "1" -- "*" Checkup : has >
+
 
 @enduml

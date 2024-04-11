@@ -16,7 +16,7 @@ activate VFM
     VFM -> System: selects "register vehicle check-up" option
     activate System
 
-         System --> VFM: request vehicle info
+         System --> VFM: request vehicle info(vehiclePlate, date, kms)
             deactivate System
                 VFM -> System: enters vehicle info
                     activate System
@@ -26,5 +26,6 @@ activate VFM
                                                     activate System
                                                                            System --> VFM: shows operation success
                                                                                     deactivate System
-@enduml                   deactivate System
+
+                  deactivate System
 @enduml
