@@ -25,6 +25,12 @@ public class Bootstrap implements Runnable {
         Organization organization = new Organization("This Company");
         organization.addEmployee(new Employee("admin@this.app"));
         organization.addEmployee(new Employee("employee@this.app"));
+        organization.addEmployee(new Employee("hrm@this.app"));
+        organization.addEmployee(new Employee("vtf@this.app"));
+        organization.addEmployee(new Employee("collaborator@this.app"));
+        organization.addEmployee(new Employee("gsm@this.app"));
+        organization.addEmployee(new Employee("gsu@this.app"));
+        organization.addEmployee(new Employee("qam@this.app"));
         organizationRepository.add(organization);
     }
 
@@ -54,5 +60,17 @@ public class Bootstrap implements Runnable {
 
         authenticationRepository.addUserWithRole("Employee", "employee@this.app", "pwd",
                 AuthenticationController.ROLE_EMPLOYEE);
+        authenticationRepository.addUserWithRole("Human Resources Manager", "hrm@this.app", "pwd",
+                AuthenticationController.ROLE_HRM);
+        authenticationRepository.addUserWithRole("Vehicle and Equiment Fleet Manager", "vtf@this.app", "pwd",
+                AuthenticationController.ROLE_VTF);
+        authenticationRepository.addUserWithRole("Collaborator", "collaborator@this.app", "pwd",
+                AuthenticationController.ROLE_COLLABORATOR);
+        authenticationRepository.addUserWithRole("Green Spaces Manager", "gsm@this.app", "pwd",
+                AuthenticationController.ROLE_GSM);
+        authenticationRepository.addUserWithRole("Green Spaces User", "gsu@this.app", "pwd",
+                AuthenticationController.ROLE_GSU);
+        authenticationRepository.addUserWithRole("Software Quality Assessment Team Manager", "qam@this.app", "pwd",
+                AuthenticationController.ROLE_QAM);
     }
 }
