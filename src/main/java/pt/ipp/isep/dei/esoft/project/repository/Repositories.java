@@ -1,7 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
-
 public class Repositories {
 
     private static Repositories instance;
@@ -14,7 +12,7 @@ public class Repositories {
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
-        waterSuplyPointsCsvRepository = new WaterSuplyPointsCsvRepository();
+        waterSuplyPointsCsvRepository = new WaterSuplyPointsCsvRepository(false);
     }
 
     public static Repositories getInstance() {

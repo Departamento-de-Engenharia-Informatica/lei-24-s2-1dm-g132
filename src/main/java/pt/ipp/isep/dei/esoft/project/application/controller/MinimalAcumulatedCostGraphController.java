@@ -3,10 +3,12 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.WaterSuplyPointsCsvRepository;
 
-public class ImportWaterSupplyPointsCsvController {
+import java.util.List;
+
+public class MinimalAcumulatedCostGraphController {
     private WaterSuplyPointsCsvRepository waterSuplyPointsCsvRepository;
 
-    public ImportWaterSupplyPointsCsvController() {
+    public MinimalAcumulatedCostGraphController() {
         getWaterSuplyPointsCsvRepository();
     }
 
@@ -19,7 +21,7 @@ public class ImportWaterSupplyPointsCsvController {
         return waterSuplyPointsCsvRepository;
     }
 
-    public boolean loadGraph(String filePath){
-        return waterSuplyPointsCsvRepository.loadGraph(filePath);
+    public List<String> getMinimalCostGraph(){
+        return waterSuplyPointsCsvRepository.getMinimalCostGraph();
     }
 }

@@ -1,21 +1,33 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
+import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
 import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class WaterSuplyPointsCsvRepository {
 
     // Para já, considerei que cada edge é uma String e o custo é um Double, podem mudar mais tarde se for o caso.
-    private MatrixGraph<String, Double> csvGraph = new MatrixGraph<>(false);
+    private MatrixGraph<String, Double> csvGraph;
 
-    private boolean addEdjge(String ori, String dest, Double weight) {
+    public WaterSuplyPointsCsvRepository(boolean directed) {
+        csvGraph = new MatrixGraph<>(directed);
+    }
+
+    public WaterSuplyPointsCsvRepository() {
+        csvGraph = new MatrixGraph<>(false);
+    }
+
+    public boolean addEdge(String ori, String dest, Double weight) {
         return csvGraph.addEdge(ori, dest, weight);
     }
 
-    public double getEdgeWeight(String ori, String dest) {
+    public double getEdge(String ori, String dest) {
         Double temp = csvGraph.edge(ori, dest).getWeight();
         if (temp != null) {
             return temp;
@@ -32,10 +44,10 @@ public class WaterSuplyPointsCsvRepository {
         try {
             File file = new File(filePath);
             String reverseName = reverseString(file.getName());
-            String [] tokens = reverseName.split("\\.");
+            String[] tokens = reverseName.split("\\.");
             String extensao = reverseString(tokens[0]);
             if (!extensao.equals("csv")) {
-                throw new RuntimeException("Inválid File Format! Should be <.csv>");
+                throw new RuntimeException("Invalid File Format! Should be <.csv>");
             }
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
@@ -76,5 +88,23 @@ public class WaterSuplyPointsCsvRepository {
         }
 
         return new String(charArray);
+    }
+
+    public List<String> getMinimalCostGraph() {
+        System.out.println(csvGraph);
+        List<String> listToReturn = new ArrayList<>();
+        MatrixGraph<String, Double> graph = Algorithms.minDistGraph(getCsvGraphCopy(), Double::compareTo);
+        for (Edge<String, Double> edge : graph.edges()) {
+            String entry = edge.getVOrig() + " <-> " + edge.getVDest() + ", cost: " + edge.getWeight();
+            if (listToReturn.isEmpty()){
+                listToReturn.add(entry);
+            } else {
+                String entry2 = edge.getVDest() + " <-> " + edge.getVOrig() + ", cost: " + edge.getWeight();
+                if (!listToReturn.contains(entry) && !listToReturn.contains(entry2)){
+                    listToReturn.add(entry);
+                }
+            }
+        }
+        return listToReturn;
     }
 }

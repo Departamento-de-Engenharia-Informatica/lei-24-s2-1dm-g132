@@ -74,13 +74,14 @@ public class Algorithms {
         if (!g.validVertex(vert)) {
             return null;
         }
-        boolean [] visited = new boolean[g.numVertices()];
+        boolean[] visited = new boolean[g.numVertices()];
         LinkedList<V> qdfs = new LinkedList<>();
         DepthFirstSearch(g, vert, visited, qdfs);
         return qdfs;
     }
 
-    /** Returns all paths from vOrig to vDest
+    /**
+     * Returns all paths from vOrig to vDest
      *
      * @param g       Graph instance
      * @param vOrig   Vertex that will be the source of the path
@@ -111,7 +112,8 @@ public class Algorithms {
     }
 
 
-    /** Returns all paths from vOrig to vDest
+    /**
+     * Returns all paths from vOrig to vDest
      *
      * @param g     Graph instance
      * @param vOrig information of the Vertex origin
@@ -319,17 +321,48 @@ public class Algorithms {
     }
 
     /**
-     * Calculates the minimum distance graph using Floyd-Warshall
-     *
+     * Calculates the minimum distance graph using Kruskal. Time complexity of O(E*log(E)) where E are the number of
+     * Edges of the graph.
      * @param g   initial graph
      * @param ce  comparator between elements of type E
-     * @param sum sum two elements of type E
      * @return the minimum distance graph
      */
-    public static <V, E> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
-
-        throw new UnsupportedOperationException("Not supported yet.");
+    public static <V, E> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce) {
+        return kruskal(g, ce);
     }
 
+    private static <V, E> MatrixGraph<V, E> kruskal(Graph<V, E> graph, Comparator<E> ce) {
+        // Grafo Vazio
+        MatrixGraph<V, E> graphToReturn = new MatrixGraph<>(graph.isDirected());
+
+        // Obtém todas as arestas do gráfico e ordena-as por peso
+        List<Edge<V, E>> edges = (List<Edge<V, E>>) graph.edges();
+        edges.sort((e1, e2) -> ce.compare(e1.getWeight(), e2.getWeight()));
+
+        // Cria um mapa para guardar os componentes conectados
+        Map<V, Set<V>> components = new HashMap<>();
+        for (V v : graph.vertices()) {
+            Set<V> component = new HashSet<>();
+            component.add(v);
+            components.put(v, component);
+        }
+
+        // Itera sobre as arestas ordenadas
+        for (Edge<V, E> edge : edges) {
+            // Verifica se os vértices estão em diferentes componentes conectados
+            if (!components.get(edge.getVOrig()).equals(components.get(edge.getVDest()))) {
+                // Se estiverem, adiciona a aresta à MST e funde os componentes
+                graphToReturn.addEdge(edge.getVOrig(), edge.getVDest(), edge.getWeight());
+                Set<V> mergedComponent = new HashSet<>();
+                mergedComponent.addAll(components.get(edge.getVOrig()));
+                mergedComponent.addAll(components.get(edge.getVDest()));
+                for (V v : mergedComponent) {
+                    components.put(v, mergedComponent);
+                }
+            }
+        }
+
+        return graphToReturn;
+    }
 
 }

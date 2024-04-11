@@ -43,16 +43,16 @@ public class AuthenticationUI implements Runnable {
 
     private List<MenuItem> getMenuItemForRoles() {
         List<MenuItem> rolesUI = new ArrayList<>();
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_ADMIN, new AdminUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_ADMIN, new AdminMenuUI()));
 
         //TODO: Complete with other user roles and related RoleUI
 
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_HRM, new HRMUI()));
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_VTF, new VTFUI()));
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_COLLABORATOR, new CollaboratorUI()));
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_GSM, new GSMUI()));
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_GSU, new GSUUI()));
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_QAM, new QAMUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_HRM, new HRMMenuUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_VTF, new VTFMenuUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_COLLABORATOR, new CollaboratorMenuUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_GSM, new GSMMenuUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_GSU, new GSUMenuUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_QAM, new QAMMenuUI()));
         return rolesUI;
     }
 
