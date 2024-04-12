@@ -36,13 +36,13 @@ activate HRM
     activate System
     end
 
-        System --> HRM : shows all data and requests confirmation
+        System --> HRM : generates a team based on the data
     deactivate System
 
-    HRM -> System : confirms data
+    HRM -> System : accepts or refuses the team proposal
     activate System
 
-        System --> HRM : displays team proposal
+        System --> HRM : displays operation result
     deactivate System
 
 @enduml

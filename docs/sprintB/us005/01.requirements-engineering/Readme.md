@@ -42,9 +42,8 @@ As an HRM, I want to generate a team proposal automatically.
 
 * **AC1:** The minimum and maximum team size, and the set of skills need to be supplied by the HRM, like in the following example:<br>
 4; 3; <tree pruner; tree pruner; tree pruner; light vehicle licence>
-* **AC2:** Each collaborator can't belong to more than one team.
-* **AC3:** The team generated should contain the selected collaborator and its skills. The HRM can refuse or accept the proposal.
-* **AC4:** The system should provide the information why it can't generate the team, if that's the case.
+* **AC2:** The team generated should contain the selected collaborator and its skills. The HRM can refuse or accept the proposal.
+* **AC3:** The system should provide the information why it can't generate the team, if that's the case.
 
 ### 1.4. Found out Dependencies
 
