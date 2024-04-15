@@ -95,9 +95,7 @@ Is there a minim or max number of char?
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC1:** A job name can’t have special characters or digits.
 
 ### 1.4. Found out Dependencies
 
@@ -108,19 +106,13 @@ Is there a minim or max number of char?
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
+    * Name of the job
 	
 * Selected data:
     * a task category 
 
 **Output Data:**
 
-* List of existing task categories
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -129,11 +121,8 @@ Is there a minim or max number of char?
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+![SSD.svg](svg%2FSSD.svg)
 
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 
