@@ -15,6 +15,7 @@ class VFM {
 
 class Vehicle {
     brand
+    Plate
     model
     type
     Tare
