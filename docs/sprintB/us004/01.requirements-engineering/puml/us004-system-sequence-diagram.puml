@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - US004
+title US004 - Assign one or more skills to a collaborator
 
 autonumber
 
@@ -21,12 +21,19 @@ activate Employee
     Employee -> System : types collaborator's id
     activate System
 
+    loop while HRM wants to continue
     System --> Employee : shows skills list and requests to select one
     deactivate System
 
     Employee -> System : selects one skill
     activate System
 
+    System --> Employee : asks to continue
+    deactivate System
+
+    Employee -> System : responds yes or no
+    activate System
+    end
     System --> Employee : shows all collaborator's skills and requests confirmation
     deactivate System
 
