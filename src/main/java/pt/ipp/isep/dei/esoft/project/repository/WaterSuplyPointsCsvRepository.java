@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
+import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
 import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
 
 import java.io.File;
@@ -13,21 +14,21 @@ import java.util.Scanner;
 public class WaterSuplyPointsCsvRepository {
 
     // Para já, considerei que cada edge é uma String e o custo é um Double, podem mudar mais tarde se for o caso.
-    private MatrixGraph<String, Double> csvGraph;
+    private MatrixGraph<Vertice, Double> csvGraph;
 
     public WaterSuplyPointsCsvRepository(boolean directed) {
         csvGraph = new MatrixGraph<>(directed);
     }
 
     public WaterSuplyPointsCsvRepository() {
-        csvGraph = new MatrixGraph<>(false);
+        csvGraph = new MatrixGraph<>(true);
     }
 
     public boolean addEdge(String ori, String dest, Double weight) {
-        return csvGraph.addEdge(ori, dest, weight);
+        return csvGraph.addEdge(new Vertice(ori), new Vertice(dest), weight);
     }
 
-    public double getEdge(String ori, String dest) {
+    public double getEdge(Vertice ori, Vertice dest) {
         Double temp = csvGraph.edge(ori, dest).getWeight();
         if (temp != null) {
             return temp;
@@ -36,7 +37,7 @@ public class WaterSuplyPointsCsvRepository {
         }
     }
 
-    public MatrixGraph<String, Double> getCsvGraphCopy() {
+    public MatrixGraph<Vertice, Double> getCsvGraphCopy() {
         return csvGraph.clone();
     }
 
@@ -59,7 +60,7 @@ public class WaterSuplyPointsCsvRepository {
                     String ori = args[0].strip();
                     String dest = args[1].strip();
                     double weight = Double.parseDouble(args[2].strip());
-                    csvGraph.addEdge(ori, dest, weight);
+                    addEdge(ori, dest, weight);
                 }
             }
 
@@ -93,8 +94,8 @@ public class WaterSuplyPointsCsvRepository {
     public List<String> getMinimalCostGraph() {
         System.out.println(csvGraph);
         List<String> listToReturn = new ArrayList<>();
-        MatrixGraph<String, Double> graph = Algorithms.minDistGraph(getCsvGraphCopy(), Double::compareTo);
-        for (Edge<String, Double> edge : graph.edges()) {
+        MatrixGraph<Vertice, Double> graph = Algorithms.minDistGraph(getCsvGraphCopy(), Double::compareTo);
+        for (Edge<Vertice, Double> edge : graph.edges()) {
             String entry = edge.getVOrig() + " <-> " + edge.getVDest() + ", cost: " + edge.getWeight();
             if (listToReturn.isEmpty()){
                 listToReturn.add(entry);
