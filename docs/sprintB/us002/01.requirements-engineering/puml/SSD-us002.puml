@@ -15,10 +15,10 @@ activate Admin
     Admin -> System : Requests to register new job
     activate System
 
-        System --> Admin : Requests data
+        System --> Admin : Requests job data
     deactivate System
 
-    Admin -> System : Enter required data (.....)
+    Admin -> System : Enter required job data (.....)
     activate System
 
         System --> Admin : Displays operation success
