@@ -51,17 +51,21 @@ public class WaterSuplyPointsCsvRepository {
                 throw new RuntimeException("Invalid File Format! Should be <.csv>");
             }
             Scanner scanner = new Scanner(file);
+            int i = 0;
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 String[] args = line.split(",");
-                if (args.length != 3) {
-                    throw new RuntimeException("Invalid Entry: <" + line + ">, Should be <arg, arg, arg");
-                } else {
-                    String ori = args[0].strip();
-                    String dest = args[1].strip();
-                    double weight = Double.parseDouble(args[2].strip());
-                    addEdge(ori, dest, weight);
+                if (i > 0){
+                    if (args.length != 3) {
+                        throw new RuntimeException("Invalid Entry: <" + line + ">, Should be <arg, arg, arg");
+                    } else {
+                        String ori = args[0].strip();
+                        String dest = args[1].strip();
+                        double weight = Double.parseDouble(args[2].strip());
+                        addEdge(ori, dest, weight);
+                    }
                 }
+                i++;
             }
 
         } catch (FileNotFoundException e) {
