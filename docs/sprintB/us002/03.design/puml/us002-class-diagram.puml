@@ -1,0 +1,30 @@
+@startuml
+title Register a job  that a collaborator needs to have
+skinparam classAttributeIconSize 0
+
+class ApplicationSession
+{
+  +static getInstance()
+  +getCurrentSession()
+}
+
+class UserSession
+{
+  +isLoggedInWithRole(USER_ROLE)
+}
+
+class "RegisterJobController" {
+    + RegisterJobController()
+    + registerJob(jobName: String): String
+    + methods(...)
+}
+
+class "RegisterJobUI" {
++main(args: String[]): void
+}
+
+"RegisterJobUI" ..> "RegisterJobController": <<create>>
+"RegisterJobController" ..> ApplicationSession
+"RegisterJobController" ..> UserSession
+
+@enduml
