@@ -1,0 +1,28 @@
+@startuml
+title Register a new vehicle
+skinparam classAttributeIconSize 0
+
+class ApplicationSession
+{
+  +static getInstance()
+  +getCurrentSession()
+}
+
+class UserSession
+{
+  +isLoggedInWithRole(USER_ROLE)
+}
+
+class "RegisterNewVehicleController" {
+    + RegisterNewVehicleController()
+    + methodX(...)
+}
+
+class "RegisterNewVehicleUI" {
+}
+
+"RegisterNewVehicleUI" ..> "RegisterNewVehicleController"
+"RegisterNewVehicleController" ..> ApplicationSession
+"RegisterNewVehicleController" ..> UserSession
+
+@enduml
