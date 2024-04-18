@@ -1,0 +1,86 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "HRM" as ADM
+participant ":AssignSkillsUI" as UI
+participant ":AssignSkillsController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "task\n:Task" as TAREFA
+
+activate ADM
+
+        ADM -> UI : asks to assign skill(s) to a collaborator
+        UI -> ADM : requests the collaborator's id
+        ADM -> UI : types collaborator's id
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+            UI -> CTRL : getSkills()
+            activate CTRL
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getSkillsRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: skillsRepository
+                deactivate PLAT
+
+                CTRL -> TaskCategoryRepository : getSkills()
+                activate TaskCategoryRepository
+
+                    TaskCategoryRepository --> CTRL : skillsList
+                deactivate TaskCategoryRepository
+
+                CTRL --> UI : skillsList
+            deactivate CTRL
+
+            UI --> ADM : shows skills list and requests to select one
+        deactivate UI
+
+    ADM -> UI : selects one skill
+    activate UI
+
+        UI --> ADM : asks to continue
+    deactivate UI
+
+    ADM -> UI : responds yes or no
+    activate UI
+
+        UI --> ADM : shows all collaborator's skills and requests confirmation
+    deactivate UI
+
+    ADM -> UI : confirms data
+    activate UI
+
+        UI -> CTRL : assignSkill(collaboratorId, skill)
+        activate CTRL
+
+
+        deactivate CTRL
+
+    deactivate UI
+
+deactivate ADM
+
+@enduml
