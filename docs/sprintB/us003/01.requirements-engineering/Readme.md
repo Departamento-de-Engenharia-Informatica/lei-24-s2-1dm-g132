@@ -61,6 +61,10 @@ As an HRM, I want to register a collaborator with a job and fundamental characte
 The prefix appears to the left of the @ symbol. The domain appears to the right of the @ symbol.
 For example, in the address example@mail.com, "example" is the email prefix, and "mail.com" is the email domain.
 
+> **Question:** When registering a new collaborator, should the system keep the information about the manager who registered that collaborator?
+>
+> **Answer:** No information for later auditing is for now required.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** job, name, birthdate, admission date, address, contact info (mobile and email), taxpayer number, ID doc type(CC, BI, passport) and respective number should be provided by the HRM.
