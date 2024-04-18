@@ -12,7 +12,7 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to assign one skill to a collaborator
+    Employee -> System : asks to assign skill(s) to a collaborator
     activate System
 
     System --> Employee : requests the collaborator's id
