@@ -7,69 +7,29 @@ autonumber
 
 'hide footbox
 actor "HRM" as USER
-participant ":RegisterJobUI" as MENU
 participant ":RegisterJobUI" as RegisterJobUI
 participant ":RegisterJobController" as RegisterJobController
-participant "ApplicationSession" as APPSESSIONC
-participant "appSession\n:ApplicationSession" as APPSESSIONI
-participant "currentSession\n:UserSession" as CURSESSION
+participant ":RegisterJobRepository" as RegisterJobRepository
 
 activate USER
+USER -> RegisterJobUI : asks to register a job
+activate RegisterJobUI
+RegisterJobUI ->USER : request job information
+deactivate RegisterJobUI
 
-    USER -> MENU : selects an option
-    activate MENU
-        MENU --> RegisterJobUI** : create
-        activate RegisterJobUI
+USER -> RegisterJobUI : types requested job information
+activate RegisterJobUI
+RegisterJobUI -> RegisterJobController : Registers a new job
+activate RegisterJobController
+RegisterJobController -> RegisterJobRepository:inserts new job in the repository
+activate RegisterJobRepository
+RegisterJobRepository -> RegisterJobController : new job
+deactivate RegisterJobRepository
+RegisterJobController -> RegisterJobUI : new job
+deactivate RegisterJobController
 
-            RegisterJobUI --> RegisterJobController** : create
-        deactivate RegisterJobUI
-
-        activate RegisterJobController
-            RegisterJobController -> APPSESSIONC : getinstance()
-            note right
-                static method
-                (Singleton pattern)
-            end note
-            activate APPSESSIONC
-                APPSESSIONC --> RegisterJobController : appSession
-            deactivate APPSESSIONC
-
-            RegisterJobController -> APPSESSIONI : getCurrentSession()
-            activate APPSESSIONI
-                APPSESSIONI --> RegisterJobController : currentSession
-            deactivate APPSESSIONI
-        deactivate RegisterJobController
-
-        MENU -> RegisterJobUI : run()
-        activate RegisterJobUI
-    deactivate MENU
-
-            RegisterJobUI --> USER : requests something
-            |||
-        deactivate RegisterJobUI
-
-    loop
-        USER -> RegisterJobUI : does something
-        activate RegisterJobUI
-            RegisterJobUI -> RegisterJobController : methodX(...)
-            activate RegisterJobController
-                RegisterJobController -> APPSESSIONC : methodY(...)
-                activate APPSESSIONC
-                    ref over APPSESSIONC,APPSESSIONI,CURSESSION
-
-
-                    end ref
-                    APPSESSIONC --> RegisterJobController : answer
-                deactivate APPSESSIONC
-
-                RegisterJobController --> RegisterJobUI : answer
-            deactivate RegisterJobController
-
-            RegisterJobUI --> USER : answers/requests another thing
-            |||
-        deactivate RegisterJobUI
-    end loop
-
+RegisterJobUI -> USER : Display operation Success
+deactivate RegisterJobUI
 deactivate USER
 
 @enduml
