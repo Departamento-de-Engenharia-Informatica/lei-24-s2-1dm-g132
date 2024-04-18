@@ -3,27 +3,44 @@ title Register a new vehicle
 
 skinparam classAttributeIconSize 0
 
-class ApplicationSession
-{
-  +static getInstance()
-  +getCurrentSession()
-}
 
-class UserSession
-{
-  +isLoggedInWithRole(USER_ROLE)
-}
-
-class "RegisterNewVehicleController" {
+class RegisterNewVehicleController {
     + RegisterNewVehicleController()
-    + methodX(...)
+
+    + registerVehicle(brand : String,
+                           vehiclePlate : String,
+                           model : String,
+                           type : String,
+                           Tare : int,
+                           GrossWeight : int,
+                           CurrentKm : int,
+                           RegisterDate : Date,
+                           AcquisitionDate : Date,
+                           MaintenanceCheckupFrequency : int,)
+     }
+
+class RegisterNewVehicleUI {
+    +main(args: String[]): void
 }
 
-class "RegisterNewVehicleUI" {
+class RegisterNewVehicleRepository{
+    + saveVehicle()
 }
 
-"RegisterNewVehicleUI" ..> "RegisterNewVehicleController" : «uses»
-"RegisterNewVehicleController" ..> ApplicationSession
-"RegisterNewVehicleController" ..> UserSession
+class Vehicle {
+    brand
+    vehiclePlate
+    model
+    type
+    Tare
+    GrossWeight
+    CurrentKm
+    RegisterDate
+    AcquisitionDate
+    MaintenanceCheckupFrequency
+}
 
+RegisterNewVehicleUI ..> RegisterNewVehicleController : «uses»
+RegisterNewVehicleController ..> RegisterNewVehicleRepository : «saves in»
+Vehicle ..> RegisterNewVehicleController : «depends on»
 @enduml

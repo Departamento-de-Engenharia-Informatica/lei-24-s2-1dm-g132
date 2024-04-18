@@ -1,31 +1,37 @@
+
 @startuml
 title Register a job  that a collaborator needs to have
 
 skinparam classAttributeIconSize 0
 
-class ApplicationSession
-{
-  +static getInstance()
-  +getCurrentSession()
-}
 
-class UserSession
-{
-  +isLoggedInWithRole(USER_ROLE)
-}
-
-class "RegisterJobController" {
+class RegisterJobController {
     + RegisterJobController()
-    + registerJob(jobName: String): String
-    + methods(...)
+    + registerJob(jobName: String)
+
 }
 
-class "RegisterJobUI" {
-+main(args: String[]): void
+class RegisterJobUI {
+    +main(args: String[]): void
 }
 
-"RegisterJobUI" ..> "RegisterJobController": <<create>>
-"RegisterJobController" ..> ApplicationSession
-"RegisterJobController" ..> UserSession
+class RegisterJobRepository {
+    +saveJob()
+}
 
+class Collaborator {
+    +String name
+    +Date birthdate
+    +Date admissionDate
+    +address
+    +phoneNumber
+    +email
+    +taxpayerNumber
+    +identificationDocumentType
+    +identificationDocumentNumber
+}
+
+RegisterJobUI ..> RegisterJobController: create
+RegisterJobController ..> RegisterJobRepository : inserts job in the repository
+Collaborator ..> RegisterJobController : needs to have a collaborator
 @enduml
