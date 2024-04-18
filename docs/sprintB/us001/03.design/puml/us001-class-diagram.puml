@@ -1,27 +1,24 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-class ApplicationSession
-{
-  +static getInstance()
-  +getCurrentSession()
+class RegisterSkillController {
+    +registerSkill(name)
 }
 
-class UserSession
-{
-  +isLoggedInWithRole(USER_ROLE)
+
+class RegisterSkillUI {
 }
-
-class "{NameOfUC}Controller" {
-    + {NameOfUC}Controller()
-    + methodX(...)
+class Collaborator {
+   -String name
+   -Date birthdate
+    -Date admissionDate
+    -address
+    phoneNumber
+    email
+    taxpayerNumber
+    identificationDocumentType
+    identificationDocumentNumber
 }
-
-class "{NameOfUC}UI" {
-}
-
-"{NameOfUC}UI" ..> "{NameOfUC}Controller"
-"{NameOfUC}Controller" ..> ApplicationSession
-"{NameOfUC}Controller" ..> UserSession
-
+RegisterSkillUI ..> RegisterSkillController
+RegisterSkillController ..> Collaborator
 @enduml
