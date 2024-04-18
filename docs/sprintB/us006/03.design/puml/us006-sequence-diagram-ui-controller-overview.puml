@@ -6,68 +6,106 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "User" as USER
-participant ":{MenuX}UI" as MENU
-participant ":{NameOfUC}UI" as UCNAMEUI
-participant ":{NameOfUC}Controller" as CTRL
-participant "ApplicationSession" as APPSESSIONC
-participant "appSession\n:ApplicationSession" as APPSESSIONI
-participant "currentSession\n:UserSession" as CURSESSION
+actor "VFM" as USER
 
+participant ":RegisterNewVehicleUI" as RegisterNewVehicleUI
+participant ":RegisterNewVehicleController" as RegisterNewVehicleController
+
+
+activate USER
+USER -> RegisterNewVehicleUI : asks to register a new vehicle
+activate RegisterNewVehicleUI
+RegisterNewVehicleUI ->USER : request vehicle data
+deactivate RegisterNewVehicleUI
+
+USER -> RegisterNewVehicleUI : types requested vehicle data
+activate RegisterNewVehicleUI
+RegisterNewVehicleUI -> RegisterNewVehicleController : Registers new vehicle
+activate RegisterNewVehicleController
+RegisterNewVehicleController -> RegisterNewVehicleUI : Vehicle
+deactivate RegisterNewVehicleController
+
+RegisterNewVehicleUI -> USER : Display operation Success
+deactivate RegisterNewVehicleUI
+deactivate USER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml
 activate USER
 
     USER -> MENU : selects an option
     activate MENU
-        MENU --> UCNAMEUI** : create
-        activate UCNAMEUI
+        MENU --> RegisterNewVehicleUI** : create
+        activate RegisterNewVehicleUI
 
-            UCNAMEUI --> CTRL** : create
-        deactivate UCNAMEUI
+            RegisterNewVehicleUI --> RegisterNewVehicleController** : create
+        deactivate RegisterNewVehicleUI
 
-        activate CTRL
-            CTRL -> APPSESSIONC : getinstance()
+        activate RegisterNewVehicleController
+            RegisterNewVehicleController -> APPSESSIONC : getinstance()
             note right
                 static method
                 (Singleton pattern)
             end note
             activate APPSESSIONC
-                APPSESSIONC --> CTRL : appSession 
+                APPSESSIONC --> RegisterNewVehicleController : appSession
             deactivate APPSESSIONC
 
-            CTRL -> APPSESSIONI : getCurrentSession()
+            RegisterNewVehicleController -> APPSESSIONI : getCurrentSession()
             activate APPSESSIONI
-                APPSESSIONI --> CTRL : currentSession
+                APPSESSIONI --> RegisterNewVehicleController : currentSession
             deactivate APPSESSIONI
-        deactivate CTRL
+        deactivate RegisterNewVehicleController
 
-        MENU -> UCNAMEUI : run()
-        activate UCNAMEUI
+        MENU -> RegisterNewVehicleUI : run()
+        activate RegisterNewVehicleUI
     deactivate MENU
 
-            UCNAMEUI --> USER : requests something
+            RegisterNewVehicleUI --> USER : requests something
             |||
-        deactivate UCNAMEUI
+        deactivate RegisterNewVehicleUI
 
     loop
-        USER -> UCNAMEUI : does something
-        activate UCNAMEUI
-            UCNAMEUI -> CTRL : methodX(...)
-            activate CTRL
-                CTRL -> APPSESSIONC : methodY(...)
+        USER -> RegisterNewVehicleUI : does something
+        activate RegisterNewVehicleUI
+            RegisterNewVehicleUI -> RegisterNewVehicleController : methodX(...)
+            activate RegisterNewVehicleController
+                RegisterNewVehicleController -> APPSESSIONC : methodY(...)
                 activate APPSESSIONC
                     ref over APPSESSIONC,APPSESSIONI,CURSESSION
 
 
                     end ref
-                    APPSESSIONC --> CTRL : answer
+                    APPSESSIONC --> RegisterNewVehicleController : answer
                 deactivate APPSESSIONC
 
-                CTRL --> UCNAMEUI : answer
-            deactivate CTRL
+                RegisterNewVehicleController --> RegisterNewVehicleUI : answer
+            deactivate RegisterNewVehicleController
 
-            UCNAMEUI --> USER : answers/requests another thing
+            RegisterNewVehicleUI --> USER : answers/requests another thing
             |||
-        deactivate UCNAMEUI
+        deactivate RegisterNewVehicleUI
     end loop
 
 deactivate USER
