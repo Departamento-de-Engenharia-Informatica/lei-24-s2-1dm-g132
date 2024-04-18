@@ -15,7 +15,7 @@ public class MinimalAcumulatedCostGraphUI implements Runnable {
     public void run() {
         try {
             List<String> list = controller.getMinimalCostGraph();
-            System.out.println("Grafo de custo minimo:\nEdges: " + list.size() +"\n");
+            System.out.println("Minimal Cost Graph:\nEdges: " + list.size() + "\n");
             for (String a : list){
                 System.out.println(a);
             }
