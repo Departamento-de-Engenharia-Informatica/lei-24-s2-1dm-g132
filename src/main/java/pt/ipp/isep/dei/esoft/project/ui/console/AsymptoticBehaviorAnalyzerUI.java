@@ -54,8 +54,9 @@ public class AsymptoticBehaviorAnalyzerUI implements Runnable {
                     System.out.println("Time: " + a.getValue() + " ms");
                 }
             }
+            controller.generateGraph(entryList);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 }

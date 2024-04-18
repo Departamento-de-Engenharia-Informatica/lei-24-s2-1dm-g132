@@ -21,11 +21,15 @@ public class WaterSuplyPointsCsvRepository {
     }
 
     public WaterSuplyPointsCsvRepository() {
-        csvGraph = new MatrixGraph<>(true);
+        csvGraph = new MatrixGraph<>(false);
     }
 
     public boolean addEdge(String ori, String dest, Double weight) {
-        return csvGraph.addEdge(new Vertice(ori), new Vertice(dest), weight);
+        return addEdge(new Vertice(ori), new Vertice(dest), weight);
+    }
+
+    public boolean addEdge(Vertice ori, Vertice dest, Double weight){
+        return csvGraph.addEdge(ori, dest, weight);
     }
 
     public double getEdge(Vertice ori, Vertice dest) {
@@ -48,7 +52,10 @@ public class WaterSuplyPointsCsvRepository {
             String[] tokens = reverseName.split("\\.");
             String extensao = reverseString(tokens[0]);
             if (!extensao.equals("csv")) {
-                throw new RuntimeException("Invalid File Format! Should be <.csv>");
+                if (extensao.equals("png")){
+                    return false;
+                }
+                throw new IllegalArgumentException("Invalid File Format! Should be <.csv>");
             }
             Scanner scanner = new Scanner(file);
             int i = 0;
@@ -67,7 +74,7 @@ public class WaterSuplyPointsCsvRepository {
                 }
                 i++;
             }
-
+        scanner.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -96,15 +103,14 @@ public class WaterSuplyPointsCsvRepository {
     }
 
     public List<String> getMinimalCostGraph() {
-        System.out.println(csvGraph);
         List<String> listToReturn = new ArrayList<>();
         MatrixGraph<Vertice, Double> graph = Algorithms.minDistGraph(getCsvGraphCopy(), Double::compareTo);
         for (Edge<Vertice, Double> edge : graph.edges()) {
-            String entry = edge.getVOrig() + " <-> " + edge.getVDest() + ", cost: " + edge.getWeight();
+            String entry = edge.getVOrig().getNome() + " <-> " + edge.getVDest().getNome() + ", cost: " + edge.getWeight();
             if (listToReturn.isEmpty()){
                 listToReturn.add(entry);
             } else {
-                String entry2 = edge.getVDest() + " <-> " + edge.getVOrig() + ", cost: " + edge.getWeight();
+                String entry2 = edge.getVDest().getNome() + " <-> " + edge.getVOrig().getNome() + ", cost: " + edge.getWeight();
                 if (!listToReturn.contains(entry) && !listToReturn.contains(entry2)){
                     listToReturn.add(entry);
                 }
