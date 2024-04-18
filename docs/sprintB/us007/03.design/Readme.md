@@ -5,7 +5,7 @@
 The following sequence diagram graphically represents the intended flow for the application where there is a clear separation (decoupling) between the domain classes and the user interaction classes (_user interface_). This decoupling is performed by classes with the suffix _Controller_.
 
 
-![GeneralOverview](svg/usxx-sequence-diagram-ui-controller-overview.svg)
+![GeneralOverview](svg/us007-sequence-diagram-ui-controller-overview.svg)
 
 #### OBS:
 - **_{MenuX}UI_ :** represents an instance of a UI class that presents several menu options and/or features to the user
@@ -19,7 +19,7 @@ The execution of some functionalities by users must be preceded and verified by 
 This verification can be carried out as follows:
 
 
-![CheckingUserAuthorization](svg/usxx-sequence-diagram-controller-checking-user-authorization.svg)
+![CheckingUserAuthorization](svg/us007-sequence-diagram-controller.svg)
 
 Users' authentication and authorization processes are reutilizing an external component called **_AuthLib_**.
 Documentation regarding this component is available [here](../../../auth/Readme.md).
@@ -27,4 +27,4 @@ Documentation regarding this component is available [here](../../../auth/Readme.
 
 ## Class Diagram
 
-![Class Diagram](svg/class-diagram.svg)
+![Class Diagram](svg/us007-class-diagram.svg)

@@ -6,43 +6,34 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-participant ":{NameOfUC}Controller" as CTRL
-participant "ApplicationSession" as APPSESSIONC
-participant "appSession\n:ApplicationSession" as APPSESSIONI
-participant "currentSession\n:UserSession" as CURSESSION
+participant ":RegisterCheckUpController" as CTRL
 
-activate CTRL
-[o-> CTRL : create()
-    CTRL -> APPSESSIONC : getinstance()
 
-    activate APPSESSIONC
-        APPSESSIONC --> CTRL : appSession
-    deactivate APPSESSIONC
 
-    CTRL -> APPSESSIONI : getCurrentSession()
-    activate APPSESSIONI
-        APPSESSIONI --> CTRL : currentSession
-    deactivate APPSESSIONI
 
-    CTRL -> CURSESSION : isLoggedInWithRole(USER_ROLE)
-    activate CURSESSION
-        CURSESSION --> CTRL : answer
-    deactivate CURSESSION
 
-    alt answer = true
-        CTRL -> CTRL : doesOtherThing()
-        activate CTRL
-            [o<-- CTRL : ok
-        deactivate CTRL
-        autonumber stop
-        CTRL -[#white]> CURSESSION
-        autonumber resume
-    else
-        |||
-        [o<-- CTRL : illegalStateException("Not Authorized")
-        |||
-    end alt
+                 -> CTRL : registerCheckUp (vehiclePlate, date, kms)
+                             activate CTRL
+    group Schedule CheckUp
 
-deactivate CTRL
+                                            CTRL -> CTRL: addCheckUp(checkup)
+
+                                                                               activate CTRL
+                                                                                   CTRL -> CTRL: validateCheckUp(checkup)
+                                                                                   activate CTRL
+                                                                                       CTRL --> CTRL
+                                                                                   deactivate CTRL
+
+                                                                                   CTRL --> CTRL
+                                                                                   deactivate CTRL
+                                                                                   end
+
+             <-- CTRL : CheckUp
+            deactivate CTRL
+
+
+
+
+
 
 @enduml
