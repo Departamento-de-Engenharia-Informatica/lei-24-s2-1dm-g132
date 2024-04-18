@@ -22,7 +22,7 @@ activate HRM
     activate System
 
     loop while continues
-        System --> HRM : asks for a skill
+        System --> HRM : shows skills list and asks for a skill
     deactivate System
 
     HRM -> System : types a skill
@@ -36,7 +36,7 @@ activate HRM
     activate System
     end
 
-        System --> HRM : generates a team based on the data
+        System --> HRM : shows a team proposal
     deactivate System
 
     HRM -> System : accepts or refuses the team proposal
