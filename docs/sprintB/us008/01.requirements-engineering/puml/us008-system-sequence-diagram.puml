@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - US008
+title US008 - Produce a list of vehicles needing maintenance
 
 autonumber
 
@@ -12,10 +12,10 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to list the vehicles needing the check-up
+    Employee -> System : asks to produce a list of the vehicles needing maintenance
     activate System
 
-    System --> Employee : lists the vehicles needing the check-up
+    System --> Employee : produces a list of the vehicles needing maintenance \n(shows plate, brand, model, current kms, checkup data)
     deactivate System
 
 @enduml
