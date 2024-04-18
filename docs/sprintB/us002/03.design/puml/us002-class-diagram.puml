@@ -1,5 +1,6 @@
 @startuml
 title Register a job  that a collaborator needs to have
+
 skinparam classAttributeIconSize 0
 
 class ApplicationSession

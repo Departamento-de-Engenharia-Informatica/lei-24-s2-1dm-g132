@@ -1,5 +1,6 @@
 @startuml
 title Register a new vehicle
+
 skinparam classAttributeIconSize 0
 
 class ApplicationSession
@@ -21,7 +22,7 @@ class "RegisterNewVehicleController" {
 class "RegisterNewVehicleUI" {
 }
 
-"RegisterNewVehicleUI" ..> "RegisterNewVehicleController"
+"RegisterNewVehicleUI" ..> "RegisterNewVehicleController" : «uses»
 "RegisterNewVehicleController" ..> ApplicationSession
 "RegisterNewVehicleController" ..> UserSession
 
