@@ -13,10 +13,10 @@
 | Step 3  		     | 	... temporarily keeping the selected job?                   | RegisterCollaboratorUI         | Pure Fabrication                     |
 | Step 4  		     | 	... displaying the form for the actor to input data?        | RegisterCollaboratorUI         | Pure Fabrication                     |
 | Step 5  		     | 	... temporarily keeping the input data?                     | RegisterCollaboratorUI         | Pure Fabrication                     |
-| Step 6  		     | 	... displaying all the information before submitting?						 | RegisterCollaboratorUI         | Pure Fabrication                     |              
-| Step 7  		     | 	... validating all data (local validation)?                 | Collaborator                   | Information Expert                   | 
-| 			  		        | 	... validating all data (global validation)?                | CollaboratorRepository         | Pure Fabrication, Information Expert | 
-| 			  		        | 	... saving the created collaborator?                        | CollaboratorRepository         | Pure Fabrication, Creator (R: 1, 2)  | 
+| Step 6  		     | 	... displaying all the information before submitting?						 | RegisterCollaboratorUI         | Pure Fabrication                     | 
+| Step 7			  		  | 	... saving the created collaborator?                        | CollaboratorRepository         | Pure Fabrication, Creator (R: 1, 2)  | 
+| 		             | 	... validating all data (local validation)?                 | Collaborator                   | Information Expert                   | 
+| 			  		        | 	... validating all data (global validation)?                | CollaboratorRepository         | Pure Fabrication, Information Expert |
 | Step 8  		     | 	... informing operation success?                            | RegisterCollaboratorUI         | Pure Fabrication                     | 
 
 ####################

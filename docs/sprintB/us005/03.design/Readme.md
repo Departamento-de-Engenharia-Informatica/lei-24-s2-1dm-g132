@@ -21,13 +21,13 @@
 |                | ... checking the most suitable collaborators?               | Collaborator           | Information Expert                   |
 |                | ... creating a temporary team object?                       | Team                   | Information Expert                   |
 | Step 8         | ... showing the proposed team?                              | GenerateTeamUI         | Pure Fabrication                     |
-| Step 9  		     | 	... receiving the acceptance or refusal of the team?       | GenerateTeamUI         | Pure Fabrication                     | 
-|                | ... validating all data (global validation)?                | TeamRepository         | Pure Fabrication, Information Expert |
+| Step 9		       | 	... receiving the acceptance or refusal of the team?       | GenerateTeamUI         | Pure Fabrication                     | 
 |                | ... saving the team upon acceptance?                        | TeamRepository         | Pure Fabrication, Creator (R: 1, 2)  |
+|                | ... validating all data (global validation)?                | TeamRepository         | Pure Fabrication, Information Expert |
 | Step 10        | ... informing operation result?                             | GenerateTeamUI         | Pure Fabrication                     |
 
 ### Systematization ##
-
+up
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
 * Team
