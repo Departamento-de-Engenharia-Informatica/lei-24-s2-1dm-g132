@@ -5,8 +5,6 @@ skinparam classAttributeIconSize 0
 
 
 class RegisterNewVehicleController {
-    + RegisterNewVehicleController()
-
     + registerVehicle(brand : String,
                            vehiclePlate : String,
                            model : String,
@@ -17,15 +15,20 @@ class RegisterNewVehicleController {
                            RegisterDate : Date,
                            AcquisitionDate : Date,
                            MaintenanceCheckupFrequency : int,)
+
+                           + RegisterNewVehicleController()
      }
 
 class RegisterNewVehicleUI {
     +main(args: String[]): void
 }
 
-class RegisterNewVehicleRepository{
-    + saveVehicle()
+class Repositories{
+    + RegisterNewVehicleRepository()
 }
+class RegisterNewVehicleView {
+    displayForm() {
+    }
 
 class Vehicle {
     brand
@@ -40,7 +43,9 @@ class Vehicle {
     MaintenanceCheckupFrequency
 }
 
-RegisterNewVehicleUI ..> RegisterNewVehicleController : «uses»
-RegisterNewVehicleController ..> RegisterNewVehicleRepository : «saves in»
+RegisterNewVehicleUI ..> RegisterNewVehicleController : inputs wanted data
+RegisterNewVehicleController ..> Repositories : «saves in»
 Vehicle ..> RegisterNewVehicleController : «depends on»
+RegisterNewVehicleController ..> RegisterNewVehicleView : «uses»
+RegisterNewVehicleView..> RegisterNewVehicleUI : dysplays
 @enduml

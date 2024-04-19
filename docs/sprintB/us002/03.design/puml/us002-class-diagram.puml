@@ -15,9 +15,13 @@ class RegisterJobUI {
     +main(args: String[]): void
 }
 
-class RegisterJobRepository {
-    +saveJob()
+class Repositories {
+    RegisterJobRepository()
 }
+class RegisterJobView {
+    displayForm() {
+    }
+
 
 class Collaborator {
     +String name
@@ -31,7 +35,9 @@ class Collaborator {
     +identificationDocumentNumber
 }
 
-RegisterJobUI ..> RegisterJobController: create
-RegisterJobController ..> RegisterJobRepository : inserts job in the repository
+RegisterJobUI ..> RegisterJobController: inputs wanted data
+RegisterJobController ..> Repositories : inserts job in the repository
 Collaborator ..> RegisterJobController : needs to have a collaborator
+RegisterJobView ..> RegisterJobUI : displays
+RegisterJobController ..> RegisterJobView : uses
 @enduml
