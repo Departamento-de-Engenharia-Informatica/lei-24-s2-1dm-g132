@@ -17,12 +17,7 @@
 | Step 7			  		  | 	... saving the created collaborator?                        | CollaboratorRepository         | Pure Fabrication, Creator (R: 1, 2)  | 
 | 		             | 	... validating all data (local validation)?                 | Collaborator                   | Information Expert                   | 
 | 			  		        | 	... validating all data (global validation)?                | CollaboratorRepository         | Pure Fabrication, Information Expert |
-| Step 8  		     | 	... informing operation success?                            | RegisterCollaboratorUI         | Pure Fabrication                     | 
-
-####################
-OBS: Perguntar sobre que tipo de validações podem ser feitas na UI.
-####################
-
+| Step 8  		     | 	... informing operation success?                            | RegisterCollaboratorUI         | Pure Fabrication                     |
 
 ### Systematization ##
 
@@ -40,13 +35,11 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 ## 3.2. Sequence Diagram (SD)
 
-_**Note that SSD - Alternative Two is adopted.**_
-
 ### Full Diagram
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us006-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us003-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -54,23 +47,19 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us006-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us003-sequence-diagram-split.svg)
 
-**Get Task Category List Partial SD**
+**Get Job List**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/us006-sequence-diagram-partial-get-task-category-list.svg)
+![Sequence Diagram - Partial - Get Job List](svg/us003-sequence-diagram-partial-get-job-list.svg)
 
-**Get Task Category Object**
+**Get Job Object**
 
-![Sequence Diagram - Partial - Get Task Category Object](svg/us006-sequence-diagram-partial-get-task-category.svg)
+![Sequence Diagram - Partial - Get Job Object](svg/us003-sequence-diagram-partial-get-job-object.svg)
 
-**Get Employee**
+**Register Collaborator**
 
-![Sequence Diagram - Partial - Get Employee](svg/us006-sequence-diagram-partial-get-employee.svg)
-
-**Create Task**
-
-![Sequence Diagram - Partial - Create Task](svg/us006-sequence-diagram-partial-create-task.svg)
+![Sequence Diagram - Partial - Register Collaborator](svg/us003-sequence-diagram-partial-register-collaborator.svg)
 
 ## 3.3. Class Diagram (CD)
 

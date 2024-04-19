@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber 3
+
+'hide footbox
+participant ":RegisterCollaboratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "JobRepository:\nJobRepository" as JobRepository
+
+
+            -> CTRL : getJobs()
+            autonumber 3.1
+            activate CTRL
+            group Get Job List
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getJobRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: jobRepository
+                deactivate PLAT
+
+                CTRL -> JobRepository : getJobs()
+                activate JobRepository
+
+                    JobRepository --> CTRL : jobList
+                deactivate JobRepository
+
+            end
+            autonumber 4
+                <-- CTRL : jobList
+            deactivate CTRL
+@enduml
