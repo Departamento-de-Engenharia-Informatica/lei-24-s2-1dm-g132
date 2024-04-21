@@ -24,28 +24,30 @@ class RegisterNewVehicleUI {
 }
 
 class Repositories{
-    + RegisterNewVehicleRepository()
+    + getVehicleRepository();
+    +Repositories();
+
 }
-class RegisterNewVehicleView {
-    displayForm() {
-    }
+class VehicleRepository{
+    + VehicleRepository();
+}
 
 class Vehicle {
-    brand
-    vehiclePlate
-    model
-    type
-    Tare
-    GrossWeight
-    CurrentKm
-    RegisterDate
-    AcquisitionDate
-    MaintenanceCheckupFrequency
+    Strin brand
+    String vehiclePlate
+    String model
+    String type
+    int Tare
+    int GrossWeight
+    int CurrentKm
+    Date RegisterDate
+    Date AcquisitionDate
+    Date MaintenanceCheckupFrequency
 }
 
 RegisterNewVehicleUI ..> RegisterNewVehicleController : inputs wanted data
 RegisterNewVehicleController ..> Repositories : «saves in»
-Vehicle ..> RegisterNewVehicleController : «depends on»
-RegisterNewVehicleController ..> RegisterNewVehicleView : «uses»
-RegisterNewVehicleView..> RegisterNewVehicleUI : dysplays
+Vehicle ..> RegisterNewVehicleController : will be used in
+Repositories ..> VehicleRepository : have
+VehicleRepository ..> Vehicle : have
 @enduml

@@ -3,7 +3,10 @@ title Register a job  that a collaborator needs to have
 
 skinparam classAttributeIconSize 0
 
-
+class Repositories {
+    getJobRepository();
+    Repositories();
+}
 class RegisterJobController {
     + RegisterJobController()
     + registerJob(jobName: String)
@@ -14,29 +17,17 @@ class RegisterJobUI {
     +main(args: String[]): void
 }
 
-class Repositories {
+class RegisterJobRepository {
     RegisterJobRepository()
 }
-class RegisterJobView {
-    displayForm() {
-    }
-
-
-class Collaborator {
+class job{
     +String name
-    +Date birthdate
-    +Date admissionDate
-    +address
-    +phoneNumber
-    +email
-    +taxpayerNumber
-    +identificationDocumentType
-    +identificationDocumentNumber
 }
+
 
 RegisterJobUI ..> RegisterJobController: inputs wanted data
 RegisterJobController ..> Repositories : inserts job in the repository
-Collaborator ..> RegisterJobController : needs to have a collaborator
-RegisterJobView ..> RegisterJobUI : displays
-RegisterJobController ..> RegisterJobView : uses
+Repositories ..> RegisterJobRepository : Have
+RegisterJobRepository ..> job : Have
+job ..> RegisterJobController : will be inserted
 @enduml
