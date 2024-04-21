@@ -106,7 +106,7 @@ activate HRM
             CTRL -> CollaboratorRepository: registerCollaborator(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber, job)
             activate CollaboratorRepository
 
-                CollaboratorRepository -> COLLAB**: register(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber, job)
+                CollaboratorRepository -> COLLAB**: create(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber, job)
                 CollaboratorRepository -> CollaboratorRepository: addCollaborator(collaborator)
 
 

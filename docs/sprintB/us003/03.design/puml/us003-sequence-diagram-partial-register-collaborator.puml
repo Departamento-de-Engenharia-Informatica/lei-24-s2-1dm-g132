@@ -15,7 +15,7 @@ autonumber 18
             autonumber 18.1
                 group Register Collaborator
 
-                CollaboratorRepository -> COLLAB**: register(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber, job)
+                CollaboratorRepository -> COLLAB**: create(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber, job)
                 CollaboratorRepository -> CollaboratorRepository: addCollaborator(collaborator)
 
 
