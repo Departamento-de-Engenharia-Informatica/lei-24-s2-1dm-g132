@@ -12,7 +12,7 @@ participant "repositories\n:Repositories" as PLAT
 participant "JobRepository:\nJobRepository" as JobRepository
 
 
-            -> CTRL : getJobByDescription(jobDescription)
+            -> CTRL : getJobByName(jobName)
             activate CTRL
 
             autonumber 12.1
@@ -29,7 +29,7 @@ participant "JobRepository:\nJobRepository" as JobRepository
                     PLAT -> CTRL : jobRepository
                 deactivate PLAT
 
-                CTRL -> JobRepository : getJobByDescription(jobDescription)
+                CTRL -> JobRepository : getJobByName(jobName)
                 activate JobRepository
 
                     JobRepository --> CTRL : job

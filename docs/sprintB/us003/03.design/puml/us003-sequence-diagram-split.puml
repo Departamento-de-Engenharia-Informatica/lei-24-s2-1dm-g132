@@ -50,10 +50,10 @@ activate HRM
     HRM -> UI : submits data
     activate UI
 
-        UI -> CTRL : registerCollaborator(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber,\njobDescription)
+        UI -> CTRL : registerCollaborator(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber,\njobName)
         activate CTRL
 
-            CTRL -> CTRL : getJobByDescription(jobDescription)
+            CTRL -> CTRL : getJobByName(jobName)
             activate CTRL
 
                 ref over CTRL

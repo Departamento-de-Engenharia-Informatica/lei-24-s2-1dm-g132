@@ -65,10 +65,10 @@ activate HRM
     HRM -> UI : submits data
     activate UI
 
-        UI -> CTRL : registerCollaborator(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber,\njobDescription)
+        UI -> CTRL : registerCollaborator(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber,\njobName)
         activate CTRL
 
-            CTRL -> CTRL : getJobByDescription(jobDescription)
+            CTRL -> CTRL : getJobByName(jobName)
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -83,7 +83,7 @@ activate HRM
                     PLAT -> CTRL : jobRepository
                 deactivate PLAT
 
-                CTRL -> JobRepository : getJobByDescription(jobDescription)
+                CTRL -> JobRepository : getJobByName(jobName)
                 activate JobRepository
 
                     JobRepository --> CTRL : job
