@@ -9,25 +9,45 @@ autonumber
 actor "HRM" as USER
 participant ":RegisterJobUI" as RegisterJobUI
 participant ":RegisterJobController" as RegisterJobController
+participant "Repositories" as Repositories
 participant ":RegisterJobRepository" as RegisterJobRepository
+
 
 activate USER
 USER -> RegisterJobUI : asks to register a job
 activate RegisterJobUI
-RegisterJobUI ->USER : request job information
-deactivate RegisterJobUI
-
-USER -> RegisterJobUI : types requested job information
-activate RegisterJobUI
-RegisterJobUI -> RegisterJobController : Registers a new job
+RegisterJobUI -> RegisterJobController : RegistersJob()
 activate RegisterJobController
-RegisterJobController -> RegisterJobRepository:inserts new job in the repository
+RegisterJobController -> Repositories: getRepository()
+activate Repositories
+Repositories -> RegisterJobController : RegisterJobRepository()
+deactivate Repositories
+RegisterJobController -> RegisterJobRepository: RegisterJobRepository()
 activate RegisterJobRepository
-RegisterJobRepository -> RegisterJobController : new job
+RegisterJobRepository -> RegisterJobController : jobs
 deactivate RegisterJobRepository
-RegisterJobController -> RegisterJobUI : new job
+RegisterJobController -> RegisterJobUI : jobs
 deactivate RegisterJobController
-
+RegisterJobUI -> USER : Shows every job and asks if wants to register a new one
+deactivate RegisterJobUI
+USER -> RegisterJobUI : Request to register a job
+activate RegisterJobUI
+RegisterJobUI -> USER : Comfirms the request and asks for the job name
+deactivate RegisterJobUI
+USER -> RegisterJobUI : types the job name
+activate RegisterJobUI
+RegisterJobUI -> RegisterJobController : RegisterJob()
+activate RegisterJobController
+RegisterJobController -> Repositories: getRepository()
+activate Repositories
+Repositories -> RegisterJobController : RegisterJobRepository()
+deactivate Repositories
+RegisterJobController -> RegisterJobRepository: RegisterJobRepository()
+activate RegisterJobRepository
+RegisterJobRepository -> RegisterJobController : New job Created
+deactivate RegisterJobRepository
+RegisterJobController -> RegisterJobUI : New job Created
+deactivate RegisterJobController
 RegisterJobUI -> USER : Display operation Success
 deactivate RegisterJobUI
 deactivate USER
