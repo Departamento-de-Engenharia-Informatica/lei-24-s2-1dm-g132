@@ -1,0 +1,102 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US004 - Assign one or more skills to a collaborator
+
+autonumber
+
+actor "HRM" as Employee
+participant ":AssignSkillsUI" as UI
+participant ":AssignSkillsController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillRepository:\nSkillRepository" as SkillRepository
+participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+
+activate Employee
+
+    Employee -> UI : asks to assign skill(s) to a collaborator
+    UI --> Employee : requests the collaborator's id
+    Employee -> UI : types collaborator's id
+    activate UI
+
+        UI -> CTRL** : create
+        UI -> CTRL : getSkillsList()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getSkillsRepository()
+            activate PLAT
+
+            PLAT --> CTRL: skillsRepository
+            deactivate PLAT
+
+            CTRL -> SkillRepository : getSkillsList()
+            activate SkillRepository
+
+            SkillRepository --> CTRL : skillsList
+            deactivate SkillRepository
+
+            CTRL --> UI : skillsList
+        deactivate CTRL
+
+    loop while HRM wants to continue
+    UI --> Employee : shows skills list and requests to select one
+    deactivate UI
+
+    Employee -> UI : selects one skill
+    activate UI
+
+    UI --> Employee : asks to continue
+    deactivate UI
+
+    Employee -> UI : responds yes or no
+    activate UI
+    end
+        UI -> CTRL : getCollaboratorSkills()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getCollaboratorsRepository()
+            activate PLAT
+
+            PLAT --> CTRL: collaboratorsRepository
+            deactivate PLAT
+
+            CTRL -> CollaboratorRepository : getCollaborator()
+            activate CollaboratorRepository
+
+            CollaboratorRepository --> CTRL : collaborator
+            deactivate CollaboratorRepository
+
+            CTRL --> UI : skillsList
+    deactivate CTRL
+
+    UI --> Employee : shows all collaborator's skills and requests confirmation
+
+
+    deactivate UI
+
+    Employee -> UI : confirms data
+    activate UI
+
+    UI --> Employee : displays operation success
+    deactivate UI
+
+deactivate Employee
+@enduml
