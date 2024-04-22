@@ -1,0 +1,58 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class Skill
+{
+    - name
+    + Skill(name)
+}
+
+class Collaborator {
+    - name
+    - birthdate
+    - admissionDate
+    - address
+    - phoneNumber
+    - email
+    - taxpayerNumber
+    - identificationDocumentType
+    - identificationDocumentNumber
+    + Collaborator(name, birthdate, admissionDate, address, phoneNumber, email, \ntaxpayerNumber, identificationDocumentType, identificationDocumentNumber)
+}
+
+class AssignSkillsController {
+    + AssignSkillsController(id, skill)
+}
+
+class AssignSkillsUI {
+    + AssignSkillsController(id, skill)
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getTaskCategoryRepository()
+    + getOrganizationRepository()
+}
+
+class SkillRepository {
+    + getSkillsList()
+}
+
+Collaborator "1" --> "*" Skill: has
+AssignSkillsUI ..> AssignSkillsController
+AssignSkillsController ...> Repositories
+
+Repositories -> Repositories : instance
+Repositories -> "1" SkillRepository
+
+
+@enduml
