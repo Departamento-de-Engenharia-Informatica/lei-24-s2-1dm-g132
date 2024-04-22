@@ -7,12 +7,16 @@ public class Repositories {
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
     private final WaterSuplyPointsCsvRepository waterSuplyPointsCsvRepository;
+    private final JobRepository jobRepository;
+    private final CollaboratorRepository collaboratorRepository;
 
     private Repositories() {
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
         waterSuplyPointsCsvRepository = new WaterSuplyPointsCsvRepository(false);
+        jobRepository = new JobRepository();
+        collaboratorRepository = new CollaboratorRepository();
     }
 
     public static Repositories getInstance() {
@@ -38,5 +42,13 @@ public class Repositories {
 
     public WaterSuplyPointsCsvRepository getWaterSuplyPointsCsvRepository() {
         return waterSuplyPointsCsvRepository;
+    }
+
+    public JobRepository getJobRepository() {
+        return jobRepository;
+    }
+
+    public CollaboratorRepository getCollaboratorRepository() {
+        return collaboratorRepository;
     }
 }
