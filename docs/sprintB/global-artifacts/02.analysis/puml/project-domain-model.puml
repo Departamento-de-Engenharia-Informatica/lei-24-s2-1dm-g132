@@ -73,7 +73,7 @@ HRM "1" -- "*" Skill : assigns >
 HRM "1" -- "*" Team : generates >
 Collaborator "*" -- "1" Job : has >
 Collaborator "1" -- "*" Skill : has >
-Team "*" - "1..*" Collaborator : has >
+Team "1" - "1..*" Collaborator : has >
 Task "*" -- "1" Team : is assigned to >
 VFM "1" -- "*" Vehicle : registers >
 VFM "1" -- "*" Vehicle : manages >

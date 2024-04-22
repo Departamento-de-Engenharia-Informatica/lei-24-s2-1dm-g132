@@ -37,13 +37,18 @@ As an HRM, I want to generate a team proposal automatically.
 > **Question:** Should there be any more information in the team generated beyond the collaborators in which it consists?
 >
 > **Answer:** The information should contain each of team members and its skills.
+ 
+> **Question:** Um colaborador pode pertencer a mais que uma equipa?
+>
+> **Answer:** Um colaborador não pode estar em mais do que uma equipa.
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The minimum and maximum team size, and the set of skills need to be supplied by the HRM, like in the following example:<br>
 4; 3; <tree pruner; tree pruner; tree pruner; light vehicle licence>
-* **AC2:** The team generated should contain the selected collaborator and its skills. The HRM can refuse or accept the proposal.
-* **AC3:** The system should provide the information why it can't generate the team, if that's the case.
+* **AC2:** Each collaborator can't belong to more than one team.
+* **AC3:** The team generated should contain the selected collaborators and their skills. The HRM can refuse or accept the proposal.
+* **AC4:** The system should provide the information why it can't generate the team, if that's the case.
 
 ### 1.4. Found out Dependencies
 
