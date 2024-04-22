@@ -55,7 +55,6 @@ class Collaborator
     - Integer phoneNumber
     - String email
     - Integer taxpayerNumber
-    - DocType identificationDocumentType
     - Integer identificationDocumentNumber
     + Collaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, job)
 }
