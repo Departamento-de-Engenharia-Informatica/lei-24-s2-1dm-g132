@@ -15,7 +15,7 @@ activate Employee
     Employee -> System : asks to produce a list of the vehicles needing maintenance
     activate System
 
-    System --> Employee : produces a list of the vehicles needing maintenance \n(shows plate, brand, model, current kms, checkup data)
+    System --> Employee : produces a list of the vehicles needing maintenance \n(shows plate, brand, model, current kms,\ncheckup frequency, last and next maintenance)
     deactivate System
 
 @enduml
