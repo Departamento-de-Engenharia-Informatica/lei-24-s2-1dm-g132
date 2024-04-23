@@ -10,16 +10,16 @@
 |                | ...coordinating the US?                                          | AssignSkillsController |                                 |
 | Step 2         | ...displaying the form for the actor to input collaborator's id? | AssignSkillsUI         | Pure Fabrication                |
 | Step 3  	      | ...validating collaborator's id?                                 | AssignSkillsUI         | Pure Fabrication                |
-| Step 4         | ...obtaining skills list?                                        | AssignSkillsController |                                 |
+| Step 4         | ...obtaining skills list?                                        | SkillRepository        |                                 |
 | 	              | ...displaying skills list?                                       | AssignSkillsUI         | Pure Fabrication                |
 | Step 5         | ...validating selected skill?                                    | AssignSkillsUI         | Pure Fabrication                |
 |                | ...temporarily keeping the selected skill?                       | AssignSkillsUI         | Pure Fabrication                |
 | Step 6         | ...displaying form for the actor to input response?	             | AssignSkillsUI         | Pure Fabrication                |              
 | Step 7         | ...validating actor's response?                                  | AssignSkillsUI         | Pure Fabrication                | 
-| Step 8         | ...obtaining collaborator's skills?                              | AssignSkillsController |                                 | 
+| Step 8         | ...obtaining collaborator's skills?                              | CollaboratorRepository |                                 | 
 |                | ...displaying all the data before submitting?                    | AssignSkillsUI         | Pure Fabrication                |
 |                | ...displaying the form for the actor to confirm?                 | AssignSkillsUI         | Pure Fabrication                |
-| Step 9         | ...adding skills to collaborator?                                | AssignSkillsController |                                 |
+| Step 9         | ...adding skills to collaborator?                                | CollaboratorRepository |                                 |
 | Step 10        | ...informing operation success?                                  | AssignSkillsUI         | Pure Fabrication                |
 
 ### Systematization ##
@@ -33,7 +33,8 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 * AssignSkillsUI  
 * AssignSkillsController
-
+* CollaboratorRepository
+* SkillRepository
 
 ## 3.2. Sequence Diagram (SD)
 
