@@ -5,44 +5,22 @@ skinparam shadowing false
 
 autonumber
 
-'hide footbox
-participant ":{NameOfUC}Controller" as CTRL
-participant "ApplicationSession" as APPSESSIONC
-participant "appSession\n:ApplicationSession" as APPSESSIONI
-participant "currentSession\n:UserSession" as CURSESSION
+participant ":RegisterNewVehicleController" as RegisterNewVehicleController
+participant "Repositories" as Repositories
+participant ":RegisterNewVehicleRepository" as RegisterNewVehicleRepository
 
-activate CTRL
-[o-> CTRL : create()
-    CTRL -> APPSESSIONC : getinstance()
-
-    activate APPSESSIONC
-        APPSESSIONC --> CTRL : appSession
-    deactivate APPSESSIONC
-
-    CTRL -> APPSESSIONI : getCurrentSession()
-    activate APPSESSIONI
-        APPSESSIONI --> CTRL : currentSession
-    deactivate APPSESSIONI
-
-    CTRL -> CURSESSION : isLoggedInWithRole(USER_ROLE)
-    activate CURSESSION
-        CURSESSION --> CTRL : answer
-    deactivate CURSESSION
-
-    alt answer = true
-        CTRL -> CTRL : doesOtherThing()
-        activate CTRL
-            [o<-- CTRL : ok
-        deactivate CTRL
-        autonumber stop
-        CTRL -[#white]> CURSESSION
-        autonumber resume
-    else
-        |||
-        [o<-- CTRL : illegalStateException("Not Authorized")
-        |||
-    end alt
-
-deactivate CTRL
+-> RegisterNewVehicleController: registerNewVehicle()
+group RegisterVehicle
+activate RegisterNewVehicleController
+RegisterNewVehicleController -> Repositories : getRepository()
+activate Repositories
+Repositories -> RegisterNewVehicleController : VehicleRepositor
+deactivate Repositories
+RegisterNewVehicleController -> RegisterNewVehicleRepository : RegisterNewVehicleRepository()
+activate RegisterNewVehicleRepository
+RegisterNewVehicleRepository -> RegisterNewVehicleController : Vehicles
+deactivate RegisterNewVehicleRepository
+end
+<- RegisterNewVehicleController : Vehicle
 
 @enduml
