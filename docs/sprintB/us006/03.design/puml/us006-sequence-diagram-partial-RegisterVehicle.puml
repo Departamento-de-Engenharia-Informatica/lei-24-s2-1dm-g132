@@ -22,5 +22,6 @@ RegisterNewVehicleRepository -> RegisterNewVehicleController : Vehicles
 deactivate RegisterNewVehicleRepository
 end
 <- RegisterNewVehicleController : Vehicle
+deactivate RegisterNewVehicleController
 
 @enduml
