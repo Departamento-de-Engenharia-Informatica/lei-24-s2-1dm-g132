@@ -29,30 +29,33 @@ class Collaborator {
 }
 
 class AssignSkillsController {
-    + AssignSkillsController(id, skill)
+    + AssignSkillsController(skillRepository)
+    + getSkillsList()
 }
 
 class AssignSkillsUI {
-    + AssignSkillsController(id, skill)
 }
 
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getTaskCategoryRepository()
-    + getOrganizationRepository()
+    + getSkillRepository()
 }
 
 class SkillRepository {
     + getSkillsList()
 }
 
+
 Collaborator "1" --> "*" Skill: has
 AssignSkillsUI ..> AssignSkillsController
-AssignSkillsController ...> Repositories
+AssignSkillsController ...> Repositories: repositories
+AssignSkillsController ..> SkillRepository: skillRepository
 
 Repositories -> Repositories : instance
-Repositories -> "1" SkillRepository
+Repositories --> "1" SkillRepository
+
+SkillRepository --> Skill: skills
 
 
 @enduml
