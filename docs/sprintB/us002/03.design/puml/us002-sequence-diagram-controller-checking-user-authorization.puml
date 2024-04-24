@@ -3,46 +3,23 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-autonumber
+ participant ":RegisterJobController" as RegisterJobController
+ participant "Repositories" as Repositories
+ participant ":RegisterJobRepository" as RegisterJobRepository
 
-'hide footbox
-participant ":RegisterJobController" as CTRL
-participant "ApplicationSession" as APPSESSIONC
-participant "appSession\n:ApplicationSession" as APPSESSIONI
-participant "currentSession\n:UserSession" as CURSESSION
+-> RegisterJobController : getjob()
+group getjob
+    activate RegisterJobController
+    RegisterJobController -> Repositories: getRepository()
+    activate Repositories
+    Repositories -> RegisterJobController : RegisterJobRepository()
+    deactivate Repositories
+    RegisterJobController -> RegisterJobRepository: RegisterJobRepository()
+    activate RegisterJobRepository
+    RegisterJobRepository -> RegisterJobController : jobs
+    deactivate RegisterJobRepository
+    end
+    <- RegisterJobController : jobs
 
-activate CTRL
-[o-> CTRL : create()
-    CTRL -> APPSESSIONC : getinstance()
-
-    activate APPSESSIONC
-        APPSESSIONC --> CTRL : appSession
-    deactivate APPSESSIONC
-
-    CTRL -> APPSESSIONI : getCurrentSession()
-    activate APPSESSIONI
-        APPSESSIONI --> CTRL : currentSession
-    deactivate APPSESSIONI
-
-    CTRL -> CURSESSION : isLoggedInWithRole(USER_ROLE)
-    activate CURSESSION
-        CURSESSION --> CTRL : answer
-    deactivate CURSESSION
-
-    alt answer = true
-        CTRL -> CTRL : doesOtherThing()
-        activate CTRL
-            [o<-- CTRL : ok
-        deactivate CTRL
-        autonumber stop
-        CTRL -[#white]> CURSESSION
-        autonumber resume
-    else
-        |||
-        [o<-- CTRL : illegalStateException("Not Authorized")
-        |||
-    end alt
-
-deactivate CTRL
 
 @enduml
