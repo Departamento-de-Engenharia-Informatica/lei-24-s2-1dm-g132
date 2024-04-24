@@ -60,7 +60,7 @@ class Vehicle {
     checkUpFrequency
 }
 
-class Checkup {
+class Maintenance {
 vehiclePlate
     date
     kms
@@ -77,9 +77,9 @@ Team "1" - "1..*" Collaborator : has >
 Task "*" -- "1" Team : is assigned to >
 VFM "1" -- "*" Vehicle : registers >
 VFM "1" -- "*" Vehicle : manages >
-Vehicle "1" - "*" Checkup : has >
+Vehicle "1" - "*" Maintenance : has >
 Task "1" - "*" Vehicle : has assigned >
-VFM "1" -- "*" Checkup : registers >
+VFM "1" -- "*" Maintenance : registers >
 
 
 
