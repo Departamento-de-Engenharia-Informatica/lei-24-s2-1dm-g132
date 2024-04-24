@@ -34,7 +34,7 @@ activate Employee
     Employee -> System : responds yes or no
     activate System
     end
-    System --> Employee : shows all collaborator's skills and requests confirmation
+    System --> Employee : shows skill(s) selected and requests confirmation
     deactivate System
 
     Employee -> System : confirms data

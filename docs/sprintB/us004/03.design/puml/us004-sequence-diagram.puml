@@ -60,31 +60,8 @@ activate Employee
     Employee -> UI : responds yes or no
     activate UI
     end
-        UI -> CTRL : getCollaboratorSkills(id)
-        activate CTRL
 
-            CTRL -> RepositorySingleton : getInstance()
-            activate RepositorySingleton
-
-            RepositorySingleton --> CTRL: repositories
-            deactivate RepositorySingleton
-
-            CTRL -> PLAT : getCollaboratorRepository()
-            activate PLAT
-
-            PLAT --> CTRL: collaboratorRepository
-            deactivate PLAT
-
-            CTRL -> CollaboratorRepository : getCollaboratorSkills(id)
-            activate CollaboratorRepository
-
-            CollaboratorRepository --> CTRL : collaboratorSkills
-            deactivate CollaboratorRepository
-
-            CTRL --> UI : collaboratorSkills
-        deactivate CTRL
-
-    UI --> Employee : shows all collaborator's skills and requests confirmation
+    UI --> Employee : shows skill(s) selected and requests confirmation
 
     deactivate UI
 
@@ -113,7 +90,7 @@ activate Employee
 
                 deactivate CollaboratorRepository
 
-            deactivate CTRL
+    deactivate CTRL
 
     UI --> Employee : displays operation success
     deactivate UI
