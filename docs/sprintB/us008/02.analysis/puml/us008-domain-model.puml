@@ -10,8 +10,7 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-title Domain Model - US008
-
+title US008 - Produce a list of vehicles needing maintenance
 
 class Vehicle {
     vehiclePlate
@@ -29,14 +28,14 @@ class Vehicle {
 class VFM {
 }
 
-class Checkup {
+class Maintenance {
     vehiclePlate
     date
     kms
 }
 
 VFM "1" -- "*" Vehicle : manages >
-Vehicle "1" -- "*" Checkup : needs >
+Vehicle "1" -- "*" Maintenance : has >
 
 
 @enduml
