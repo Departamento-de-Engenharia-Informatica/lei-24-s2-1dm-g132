@@ -49,8 +49,8 @@ class CollaboratorRepository
 class Collaborator
 {
     - String name
-    - Date birthdate
-    - Date admissionDate
+    - Calendar birthdate
+    - Calendar admissionDate
     - String address
     - Integer phoneNumber
     - String email
