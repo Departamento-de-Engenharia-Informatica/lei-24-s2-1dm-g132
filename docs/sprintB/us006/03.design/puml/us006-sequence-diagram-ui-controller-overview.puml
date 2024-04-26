@@ -15,6 +15,7 @@ participant "repositories\n:Repositories" as repRep
 participant "RegisterNewVehicleRepository" as RegisterNewVehicleRepository
 participant "Vehicle" as Vehicle
 
+activate USER
 USER -> RegisterNewVehicleUI : Requeste to register new vehicle
 activate RegisterNewVehicleUI
 RegisterNewVehicleUI -> RegisterNewVehicleController** : Create

@@ -15,6 +15,7 @@ participant "repositories\n:Repositories" as repRep
 participant "RegisterJobRepository" as RegisterJobRepository
 participant "Job" as Job
 
+activate USER
 USER -> RegisterJobUI : Requeste to register a job
 activate RegisterJobUI
 RegisterJobUI -> RegisterJobController** : Create
