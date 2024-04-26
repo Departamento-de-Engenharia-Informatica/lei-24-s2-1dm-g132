@@ -1,55 +1,53 @@
 @startuml
-    skinparam monochrome true
-    skinparam packageStyle rectangle
-    skinparam shadowing false
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
 
-    autonumber
+autonumber
 
-    'hide footbox
-    actor "HRM" as USER
-    participant ":RegisterJobUI" as RegisterJobUI
-    participant ":RegisterJobController" as RegisterJobController
-    participant "Repositories" as Repositories
-    participant ":RegisterJobRepository" as RegisterJobRepository
+'hide footbox
+actor "HRM" as USER
 
+participant ":RegisterJobUI" as RegisterJobUI
+participant ":RegisterJobController" as RegisterJobController
+participant "Repositories" as Repositories
+participant "repositories\n:Repositories" as repRep
+participant "RegisterJobRepository" as RegisterJobRepository
+participant "Job" as Job
 
-    activate USER
-    USER -> RegisterJobUI : asks to register a job
-    activate RegisterJobUI
-    RegisterJobUI -> RegisterJobController : RegistersJob()
-    activate RegisterJobController
-    RegisterJobController -> Repositories: getRepository()
-    activate Repositories
-    Repositories -> RegisterJobController : RegisterJobRepository()
-    deactivate Repositories
-    RegisterJobController -> RegisterJobRepository: RegisterJobRepository()
-    activate RegisterJobRepository
-    RegisterJobRepository -> RegisterJobController : jobs
-    deactivate RegisterJobRepository
-    RegisterJobController -> RegisterJobUI : jobs
-    deactivate RegisterJobController
-    RegisterJobUI -> USER : Shows every job and asks if wants to register a new one
-    deactivate RegisterJobUI
-    USER -> RegisterJobUI : Request to register a job
-    activate RegisterJobUI
-    RegisterJobUI -> USER : Comfirms the request and asks for the job name
-    deactivate RegisterJobUI
-    USER -> RegisterJobUI : types the job name
-    activate RegisterJobUI
-    RegisterJobUI -> RegisterJobController : RegisterJob()
-    activate RegisterJobController
-    RegisterJobController -> Repositories: getRepository()
-    activate Repositories
-    Repositories -> RegisterJobController : RegisterJobRepository()
-    deactivate Repositories
-    RegisterJobController -> RegisterJobRepository: RegisterJobRepository()
-    activate RegisterJobRepository
-    RegisterJobRepository -> RegisterJobController : New job Created
-    deactivate RegisterJobRepository
-    RegisterJobController -> RegisterJobUI : New job Created
-    deactivate RegisterJobController
-    RegisterJobUI -> USER : Display operation Success
-    deactivate RegisterJobUI
-    deactivate USER
+USER -> RegisterJobUI : Requeste to register a job
+activate RegisterJobUI
+RegisterJobUI -> RegisterJobController** : Create
+RegisterJobUI -> USER : requests job data
+deactivate RegisterJobUI
+USER -> RegisterJobUI : Types job details (name)
+activate RegisterJobUI
+RegisterJobUI -> RegisterJobUI : Keeps and stores that data
+RegisterJobUI -> USER : Shows the thyped data and a comfirmation requests
+deactivate RegisterJobUI
+USER -> RegisterJobUI : Confirms the data
+activate RegisterJobUI
+RegisterJobUI -> RegisterJobController : Registerjob()
+activate RegisterJobController
+RegisterJobController -> Repositories : getinstance()
+activate Repositories
+Repositories -> RegisterJobController : Repositories
+deactivate Repositories
+RegisterJobController -> repRep : getJobRepository()
+activate repRep
+repRep -> RegisterJobController : JobRepository
+deactivate repRep
+RegisterJobController -> RegisterJobRepository : RegisterJob(name)
+activate RegisterJobRepository
+RegisterJobRepository -> Job** : RegisterJob(name)
+RegisterJobRepository -> RegisterJobRepository : Save job
+RegisterJobRepository -> RegisterJobController : job
+deactivate RegisterJobRepository
+RegisterJobController -> RegisterJobUI : job
+deactivate RegisterJobController
+RegisterJobUI -> USER : Shows the registered job
+deactivate RegisterJobUI
+
 
 @enduml
+
