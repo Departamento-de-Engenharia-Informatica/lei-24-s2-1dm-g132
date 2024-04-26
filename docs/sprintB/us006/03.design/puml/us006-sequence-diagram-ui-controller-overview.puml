@@ -11,44 +11,36 @@ actor "VFM" as USER
 participant ":RegisterNewVehicleUI" as RegisterNewVehicleUI
 participant ":RegisterNewVehicleController" as RegisterNewVehicleController
 participant "Repositories" as Repositories
-participant ":RegisterNewVehicleRepository" as RegisterNewVehicleRepository
+participant "repositories\n:Repositories" as repRep
+participant "RegisterNewVehicleRepository" as RegisterNewVehicleRepository
+participant "Vehicle" as Vehicle
 
-activate USER
-USER-> RegisterNewVehicleUI : asks to register a new vehicle
+USER -> RegisterNewVehicleUI : Requeste to register new vehicle
+activate RegisterNewVehicleUI
+RegisterNewVehicleUI -> RegisterNewVehicleController** : Create
+RegisterNewVehicleUI -> USER : requests vehicle data
+deactivate RegisterNewVehicleUI
+USER -> RegisterNewVehicleUI : Types vehicle details (brand,vehiclePlate, model, type, \nTare, GrossWeight, CurrentKm, RegisterDate, \nAcquisitionDate, MaintenanceCheckupFrequency)
+activate RegisterNewVehicleUI
+RegisterNewVehicleUI -> RegisterNewVehicleUI : Keeps and stores that data
+RegisterNewVehicleUI -> USER : Shows the thyped data and a comfirmation requests
+deactivate RegisterNewVehicleUI
+USER -> RegisterNewVehicleUI : Confirms the data
 activate RegisterNewVehicleUI
 RegisterNewVehicleUI -> RegisterNewVehicleController : RegisterVehicle()
 activate RegisterNewVehicleController
-RegisterNewVehicleController -> Repositories : getRepository()
+RegisterNewVehicleController -> Repositories : getinstance()
 activate Repositories
-Repositories -> RegisterNewVehicleController : VehicleRepositor
+Repositories -> RegisterNewVehicleController : Repositories
 deactivate Repositories
-RegisterNewVehicleController -> RegisterNewVehicleRepository : RegisterNewVehicleRepository()
+RegisterNewVehicleController -> repRep : getVehicleRepository()
+activate repRep
+repRep -> RegisterNewVehicleController : VehicleRepository
+deactivate repRep
+RegisterNewVehicleController -> RegisterNewVehicleRepository : RegisterNewVehicle(brand,vehiclePlate, model, type, \nTare, GrossWeight, CurrentKm, RegisterDate, \nAcquisitionDate, MaintenanceCheckupFrequency)
 activate RegisterNewVehicleRepository
-RegisterNewVehicleRepository -> RegisterNewVehicleController : Vehicles
-deactivate RegisterNewVehicleRepository
-RegisterNewVehicleController -> RegisterNewVehicleUI : Vehicles
-deactivate RegisterNewVehicleController
-RegisterNewVehicleUI -> USER : Shows the vehicles and asks to register new one
-deactivate RegisterNewVehicleUI
-USER -> RegisterNewVehicleUI : Request to register a new vehicle
-activate RegisterNewVehicleUI
-RegisterNewVehicleUI -> USER : Request vehicle details
-deactivate RegisterNewVehicleUI
-USER -> RegisterNewVehicleUI : Types vehicle details (brand,vehiclePlate, model, type, Tare, GrossWeight, CurrentKm, RegisterDate, AcquisitionDate, MaintenanceCheckupFrequency)
-activate RegisterNewVehicleUI
-RegisterNewVehicleUI -> RegisterNewVehicleController : RegisterVehicle()
-activate RegisterNewVehicleController
-RegisterNewVehicleController -> Repositories : getRepository()
-activate Repositories
-Repositories -> RegisterNewVehicleController : VehicleRepositor
-deactivate Repositories
-RegisterNewVehicleController -> RegisterNewVehicleRepository : RegisterNewVehicleRepository()
-activate RegisterNewVehicleRepository
-RegisterNewVehicleRepository -> RegisterNewVehicleController : New Vehicle registered
-deactivate RegisterNewVehicleRepository
-RegisterNewVehicleController -> RegisterNewVehicleUI : Vehicle registered
-deactivate RegisterNewVehicleController
-RegisterNewVehicleUI -> USER : display success message and the new vehicle
-
+RegisterNewVehicleRepository -> Vehicle** : RegisterNewVehicle(brand,vehiclePlate, model, type, \nTare, GrossWeight, CurrentKm, RegisterDate, \nAcquisitionDate, MaintenanceCheckupFrequency)
+RegisterNewVehicleRepository -> RegisterNewVehicleRepository : Save vehicle
 
 @enduml
+
