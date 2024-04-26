@@ -53,7 +53,7 @@ AssignSkillsController ...> Repositories: repositories
 AssignSkillsController ..> SkillRepository: skillRepository
 
 Repositories -> Repositories : instance
-Repositories --> "1" SkillRepository
+Repositories --> "1" SkillRepository: skillRepository
 
 SkillRepository --> Skill: skills
 
