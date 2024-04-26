@@ -41,6 +41,13 @@ RegisterNewVehicleController -> RegisterNewVehicleRepository : RegisterNewVehicl
 activate RegisterNewVehicleRepository
 RegisterNewVehicleRepository -> Vehicle** : RegisterNewVehicle(brand,vehiclePlate, model, type, \nTare, GrossWeight, CurrentKm, RegisterDate, \nAcquisitionDate, MaintenanceCheckupFrequency)
 RegisterNewVehicleRepository -> RegisterNewVehicleRepository : Save vehicle
+RegisterNewVehicleRepository -> RegisterNewVehicleController : Vehicle
+deactivate RegisterNewVehicleRepository
+RegisterNewVehicleController -> RegisterNewVehicleUI : Vehicle
+deactivate RegisterNewVehicleController
+RegisterNewVehicleUI -> USER : Shows the registered vehicle
+deactivate RegisterNewVehicleUI
+
 
 @enduml
 
