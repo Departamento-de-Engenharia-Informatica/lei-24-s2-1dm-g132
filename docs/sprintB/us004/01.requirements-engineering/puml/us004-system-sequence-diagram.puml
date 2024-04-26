@@ -21,6 +21,12 @@ activate Employee
     Employee -> System : types collaborator's id
     activate System
 
+    System --> Employee : requests to confirm collaborator's id
+    deactivate System
+
+    Employee -> System : confirms collaborator's id
+    activate System
+
     loop while HRM wants to continue
     System --> Employee : shows skills list and requests to select one
     deactivate System
