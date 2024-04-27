@@ -23,7 +23,7 @@ public class CollaboratorRepository {
         Optional<Collaborator> optionalValue = Optional.empty();
 
         Collaborator collaborator = new Collaborator(name, birthdate, admissionDate, address, phoneNumber, email, taxpayerNumber,
-                identificationDocumentType, identificationDocumentNumber, job)
+                identificationDocumentType, identificationDocumentNumber, job);
 
         if (addCollaborator(collaborator)) {
             optionalValue = Optional.of(collaborator);
