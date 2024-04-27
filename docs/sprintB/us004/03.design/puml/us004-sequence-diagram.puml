@@ -18,8 +18,17 @@ participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRep
 activate Employee
 
     Employee -> UI : asks to assign skill(s) to a collaborator
+    activate UI
+
     UI --> Employee : requests the collaborator's id
+    deactivate UI
+
     Employee -> UI : types collaborator's id
+    activate UI
+    UI --> Employee : requests to confirm collaborator's id
+    deactivate UI
+
+    Employee -> UI : confirms collaborator's id
     activate UI
 
         UI -> CTRL** : create
@@ -88,7 +97,10 @@ activate Employee
 
                 CollaboratorRepository -> CollaboratorRepository: assignSkill(id, skill)
 
+                CollaboratorRepository -> CTRL : collaborator
                 deactivate CollaboratorRepository
+
+                CTRL --> UI : collaborator
 
     deactivate CTRL
 

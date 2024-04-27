@@ -12,4 +12,25 @@ public class JobRepository {
         jobs = new ArrayList<>();
     }
 
+
+    public Job getJobByName(String jobName) {
+        Job newJob = new Job(jobName);
+        Job job = null;
+        if (jobs.contains(newJob)) {
+            job = jobs.get(jobs.indexOf(newJob));
+        }
+        if (job == null) {
+            throw new IllegalArgumentException(
+                    "Task Category requested for [" + jobName + "] does not exist.");
+        }
+        return job;
+    }
+
+    public List<Job> getJobs() {
+        //This is a defensive copy, so that the repository cannot be modified from the outside.
+        return List.copyOf(jobs);
+    }
+
+
+
 }
