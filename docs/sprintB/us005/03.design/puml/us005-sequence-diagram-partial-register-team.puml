@@ -1,0 +1,50 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber 21
+
+'hide footbox
+participant ":GenerateTeamController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "teamRepository:\nTeamRepository" as TeamRepository
+participant "team\n:Team" as TEAM
+
+    -> CTRL : registerTeam(selectedCollaborators)
+
+        autonumber 21.1
+        group Register Team
+
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+            CTRL -> PLAT : getTeamRepository()
+            activate PLAT
+
+                PLAT --> CTRL : teamRepository
+            deactivate PLAT
+
+            CTRL -> TeamRepository : registerTeam(selectedCollaborators)
+            activate TeamRepository
+
+                TeamRepository -> TEAM** : create(selectedCollaborators)
+                TeamRepository -> TeamRepository : add(team)
+                activate TeamRepository
+                TeamRepository --> TeamRepository
+                deactivate TeamRepository
+
+                TeamRepository --> CTRL : team
+                deactivate TeamRepository
+
+        end group
+        autonumber 22
+        <-- CTRL : team
+
+@enduml

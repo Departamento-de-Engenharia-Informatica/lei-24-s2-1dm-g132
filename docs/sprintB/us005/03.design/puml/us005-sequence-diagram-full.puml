@@ -178,6 +178,8 @@ activate HRM
                         Collab --> CollaboratorRepository : evaluation
                     deactivate Collab
 
+                    end loop
+
                     CollaboratorRepository --> CTRL : selectedCollaborators
                 deactivate CollaboratorRepository
 

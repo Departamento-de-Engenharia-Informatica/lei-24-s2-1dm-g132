@@ -1,0 +1,127 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as HRM
+participant ":GenerateTeamUI" as UI
+participant ":GenerateTeamController" as CTRL
+
+
+
+activate HRM
+
+        HRM -> UI : asks for a team proposal
+
+        activate UI
+
+            UI -> CTRL** : create
+
+            UI --> HRM : asks for minimum and maximum team size
+
+        deactivate UI
+
+        HRM -> UI : enters minimum and maximum team size
+
+        activate UI
+
+            UI -> CTRL : getSkills()
+            ref over CTRL
+                Get Skill List
+
+            end ref
+
+            activate CTRL
+
+                CTRL --> UI : skillList
+            deactivate CTRL
+
+            loop while continues
+
+            UI --> HRM : shows skill list and asks to select one
+        deactivate UI
+
+    HRM -> UI : selects a skill
+    activate UI
+
+        UI --> HRM : asks to continue
+
+    deactivate UI
+
+    HRM -> UI : answers positively or negatively
+    activate UI
+
+            end loop
+
+        UI -> CTRL : generateTeamProposal(minCollab, maxCollab, skillNames)
+        activate CTRL
+
+        loop for each skillName
+
+            CTRL -> CTRL : getSkillByName(skillName)
+
+                ref over CTRL
+                    Get Skill Object
+
+                end ref
+
+                activate CTRL
+
+                    CTRL --> CTRL : skill
+            deactivate CTRL
+
+            end loop
+
+            CTRL -> CTRL : checkAvailableCollaborators()
+
+                ref over CTRL
+                    Get Available Collaborators
+
+                end ref
+
+                activate CTRL
+
+                CTRL --> CTRL : availableCollaborators
+            deactivate CTRL
+
+            CTRL -> CTRL : selectCollaboratorsForTeam(availableCollaborators, skills)
+            activate CTRL
+
+                ref over CTRL
+                    Choose Collaborators For Team
+
+                end ref
+
+                CTRL --> CTRL : selectedCollaborators
+            deactivate CTRL
+
+            CTRL --> UI : selectedCollaborators
+        deactivate CTRL
+
+        UI --> HRM : shows a team proposal
+    deactivate UI
+
+    HRM -> UI : accepts or refuses team proposal
+    activate UI
+
+        UI -> CTRL : registerTeam(selectedCollaborators)
+        activate CTRL
+
+        ref over CTRL
+            Register Team
+
+        end ref
+
+            CTRL --> UI : team
+
+            deactivate CTRL
+            UI --> HRM: displays operation result
+    deactivate UI
+
+deactivate HRM
+
+
+@enduml

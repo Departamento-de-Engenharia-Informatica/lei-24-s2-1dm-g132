@@ -42,13 +42,11 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 ## 3.2. Sequence Diagram (SD)
 
-_**Note that SSD - Alternative Two is adopted.**_
-
 ### Full Diagram
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us006-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us005-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -56,23 +54,27 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us006-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us005-sequence-diagram-split.svg)
 
-**Get Task Category List Partial SD**
+**Get Skill List**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/us006-sequence-diagram-partial-get-task-category-list.svg)
+![Sequence Diagram - Partial - Get Skill List](svg/us005-sequence-diagram-partial-get-skill-list.svg)
 
-**Get Task Category Object**
+**Get Skill Object**
 
-![Sequence Diagram - Partial - Get Task Category Object](svg/us006-sequence-diagram-partial-get-task-category.svg)
+![Sequence Diagram - Partial - Get Skill Object](svg/us005-sequence-diagram-partial-get-skill-object.svg)
 
-**Get Employee**
+**Get Available Collaborators**
 
-![Sequence Diagram - Partial - Get Employee](svg/us006-sequence-diagram-partial-get-employee.svg)
+![Sequence Diagram - Partial - Get Available Collaborators](svg/us005-sequence-diagram-partial-get-available-collaborators.svg)
 
-**Create Task**
+**Choose Collaborators For Team**
 
-![Sequence Diagram - Partial - Create Task](svg/us006-sequence-diagram-partial-create-task.svg)
+![Sequence Diagram - Partial - Choose Collaborators For Team](svg/us005-sequence-diagram-partial-choose-collaborators-for-team.svg)
+
+**Register Team**
+
+![Sequence Diagram - Partial - Register Team](svg/us005-sequence-diagram-partial-register-team.svg)
 
 ## 3.3. Class Diagram (CD)
 
