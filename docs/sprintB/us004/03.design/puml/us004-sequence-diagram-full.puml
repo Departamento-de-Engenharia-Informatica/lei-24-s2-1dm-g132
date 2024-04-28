@@ -3,84 +3,136 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+title US004 - Assign one or more skills to a collaborator
+
 autonumber
 
-'hide footbox
-actor "HRM" as ADM
+actor "HRM" as Employee
 participant ":AssignSkillsUI" as UI
 participant ":AssignSkillsController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TAREFA
+participant "skillRepository:\nSkillRepository" as SkillRepository
+participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+participant "collaborator\n:Collaborator" as Collaborator
 
-activate ADM
+activate Employee
 
-        ADM -> UI : asks to assign skill(s) to a collaborator
-        UI -> ADM : requests the collaborator's id
-        ADM -> UI : types collaborator's id
+    Employee -> UI : asks to assign skill(s) to a collaborator
+    activate UI
 
-        activate UI
+    UI -> CTRL** : create
 
-'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
-            'create CTRL
-            UI -> CTRL** : create
+                UI -> CTRL : getCollaborators()
+                activate CTRL
 
-            UI -> CTRL : getSkills()
-            activate CTRL
+                    CTRL -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
+
+                        RepositorySingleton --> CTRL: repositories
+                    deactivate RepositorySingleton
+
+                    CTRL -> PLAT : getCollaboratorRepository()
+                    activate PLAT
+
+                        PLAT --> CTRL: collaboratorRepository
+                    deactivate PLAT
+
+                    CTRL -> CollaboratorRepository : getCollaborators()
+                    activate CollaboratorRepository
+
+                        CollaboratorRepository --> CTRL : collaboratorsList
+                    deactivate CollaboratorRepository
+
+                    CTRL --> UI : collaboratorsList
+                deactivate CTRL
+
+    UI --> Employee : shows list with all collaborators
+    deactivate UI
+
+    Employee -> UI : selects the collaborator
+    activate UI
+
+        UI -> CTRL : getSkillsList()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getSkillRepository()
+            activate PLAT
+
+            PLAT --> CTRL: skillRepository
+            deactivate PLAT
+
+            CTRL -> SkillRepository : getSkills()
+            activate SkillRepository
+
+            SkillRepository --> CTRL : skillsList
+            deactivate SkillRepository
+
+            CTRL --> UI : skillsList
+        deactivate CTRL
+
+    loop while HRM wants to continue
+    UI --> Employee : shows skills list and requests to select one
+    deactivate UI
+
+    Employee -> UI : selects one skill
+    activate UI
+
+    UI --> Employee : asks to continue
+    deactivate UI
+
+    Employee -> UI : responds yes or no
+    activate UI
+    end
+
+    UI --> Employee : shows skill(s) selected and requests confirmation
+
+    deactivate UI
+
+    Employee -> UI : confirms data
+    activate UI
+
+    UI -> CTRL : assignSkill(collaborator, skillsSelectedList)
+    activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
                 activate RepositorySingleton
 
-                    RepositorySingleton --> CTRL: repositories
+                RepositorySingleton --> CTRL: repositories
                 deactivate RepositorySingleton
 
-                CTRL -> PLAT : getSkillsRepository()
+                CTRL -> PLAT : getCollaboratorRepository()
                 activate PLAT
 
-                    PLAT --> CTRL: skillsRepository
+                PLAT --> CTRL: collaboratorRepository
                 deactivate PLAT
 
-                CTRL -> TaskCategoryRepository : getSkills()
-                activate TaskCategoryRepository
+                CTRL -> CollaboratorRepository : assignSkill(collaborator, skillsSelectedList)
+                activate CollaboratorRepository
 
-                    TaskCategoryRepository --> CTRL : skillsList
-                deactivate TaskCategoryRepository
+                CollaboratorRepository -> Collaborator: assignSkill\n(collaborator, skillsSelectedList)
+                activate Collaborator
 
-                CTRL --> UI : skillsList
-            deactivate CTRL
+                Collaborator -> Collaborator : assignSkill\n(collaborator, skillsSelectedList)
+                Collaborator --> CollaboratorRepository : collaborator
+                deactivate Collaborator
 
-            UI --> ADM : shows skills list and requests to select one
-        deactivate UI
+                CollaboratorRepository --> CTRL : collaborator
+                deactivate CollaboratorRepository
 
-    ADM -> UI : selects one skill
-    activate UI
 
-        UI --> ADM : asks to continue
+                CTRL --> UI : collaborator
+
+    deactivate CTRL
+
+    UI --> Employee : displays operation success
     deactivate UI
 
-    ADM -> UI : responds yes or no
-    activate UI
-
-        UI --> ADM : shows all collaborator's skills and requests confirmation
-    deactivate UI
-
-    ADM -> UI : confirms data
-    activate UI
-
-        UI -> CTRL : assignSkill(collaboratorId, skill)
-        activate CTRL
-
-
-        deactivate CTRL
-
-    deactivate UI
-
-deactivate ADM
-
+deactivate Employee
 @enduml

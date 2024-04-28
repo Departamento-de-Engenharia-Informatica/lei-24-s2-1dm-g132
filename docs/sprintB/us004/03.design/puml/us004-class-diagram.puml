@@ -3,7 +3,7 @@
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam linetype polyline
-'skinparam linetype orto
+skinparam linetype orto
 
 skinparam classAttributeIconSize 0
 
@@ -26,10 +26,12 @@ class Collaborator {
     - identificationDocumentType
     - identificationDocumentNumber
     + Collaborator(name, birthdate, admissionDate, address, phoneNumber, email, \ntaxpayerNumber, identificationDocumentType, identificationDocumentNumber)
+
 }
 
 class AssignSkillsController {
-    + AssignSkillsController(skillRepository)
+    + AssignSkillsController(collaboratorRepository, skillRepository)
+    + getCollaborators()
     + getSkillsList()
 }
 
@@ -40,10 +42,15 @@ class Repositories {
     - Repositories()
     + getInstance() : Repositories
     + getSkillRepository()
+    + getCollaboratorRepository()
 }
 
 class SkillRepository {
     + getSkillsList()
+}
+
+class CollaboratorRepository {
+    + getCollaborators()
 }
 
 
@@ -51,11 +58,14 @@ Collaborator "1" --> "*" Skill: has
 AssignSkillsUI ..> AssignSkillsController
 AssignSkillsController ...> Repositories: repositories
 AssignSkillsController ..> SkillRepository: skillRepository
+AssignSkillsController ..> CollaboratorRepository: collaboratorRepository
 
 Repositories -> Repositories : instance
-Repositories --> "1" SkillRepository: skillRepository
+Repositories ---> "1" SkillRepository: skillRepository
+Repositories ---> "1" CollaboratorRepository: collaboratorRepository
 
 SkillRepository --> Skill: skills
+CollaboratorRepository --> Collaborator: collaborators
 
 
 @enduml

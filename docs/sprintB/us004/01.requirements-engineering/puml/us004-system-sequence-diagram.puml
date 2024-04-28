@@ -15,16 +15,10 @@ activate Employee
     Employee -> System : asks to assign skill(s) to a collaborator
     activate System
 
-    System --> Employee : requests the collaborator's id
+    System --> Employee : shows list with all collaborators
     deactivate System
 
-    Employee -> System : types collaborator's id
-    activate System
-
-    System --> Employee : requests to confirm collaborator's id
-    deactivate System
-
-    Employee -> System : confirms collaborator's id
+    Employee -> System : selects the collaborator
     activate System
 
     loop while HRM wants to continue
