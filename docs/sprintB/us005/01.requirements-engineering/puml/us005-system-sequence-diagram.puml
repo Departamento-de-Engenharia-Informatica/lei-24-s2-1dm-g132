@@ -25,7 +25,7 @@ activate HRM
         System --> HRM : shows skills list and asks for a skill
     deactivate System
 
-    HRM -> System : types a skill
+    HRM -> System : selects a skill
     activate System
 
         System --> HRM : asks to continue
