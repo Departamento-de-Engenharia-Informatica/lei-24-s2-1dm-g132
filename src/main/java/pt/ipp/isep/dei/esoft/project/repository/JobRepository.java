@@ -21,7 +21,7 @@ public class JobRepository {
         }
         if (job == null) {
             throw new IllegalArgumentException(
-                    "Task Category requested for [" + jobName + "] does not exist.");
+                    "Job requested for [" + jobName + "] does not exist.");
         }
         return job;
     }
