@@ -12,7 +12,7 @@ public class Vehicle {
     int CurrentKm;
     public Date AcquisitionDate;
     public Date RegistredDate;
-    int MaintenanceCheckupFrequency;
+    public int MaintenanceCheckupFrequency;
 
     public Vehicle(String Plate, String Model, String Brand, String Type, int Tare, int GrossWeight, int CurrentKm, Date AcquisitionDate, Date RegistredDate, int MaintenanceCheckupFrequency) {
         this.Plate = Plate;
