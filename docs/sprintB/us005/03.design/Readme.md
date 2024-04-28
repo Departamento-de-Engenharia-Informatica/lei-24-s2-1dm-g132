@@ -17,17 +17,15 @@
 | Step 5  		     | 	... temporarily keeping the skills introduced?             | GenerateTeamUI         | Pure Fabrication                     |
 | Step 6  		     | 	... asking the actor to stop the loop?						               | GenerateTeamUI         | Pure Fabrication                     |              
 | Step 7  		     | 	... continuing/breaking the loop?                          | GenerateTeamUI         | Pure Fabrication                     |
-|                | ... obtaining the collaborators list?                       | CollaboratorRepository | Pure Fabrication, Information Expert |
-|                | ... checking the most suitable collaborators?               | Collaborator           | Information Expert                   |
-|                | ... creating a temporary team object?                       | Team                   | Information Expert                   |
+|                | ... removing collaborators that are already on teams?       | Team                   |                                      |
+|                | ... selecting the most suitable collaborators?              | Collaborator           | Information Expert                   |
 | Step 8         | ... showing the proposed team?                              | GenerateTeamUI         | Pure Fabrication                     |
 | Step 9		       | 	... receiving the acceptance or refusal of the team?       | GenerateTeamUI         | Pure Fabrication                     | 
-|                | ... saving the team upon acceptance?                        | TeamRepository         | Pure Fabrication, Creator (R: 1, 2)  |
-|                | ... validating all data (global validation)?                | TeamRepository         | Pure Fabrication, Information Expert |
+|                | ... creating a team object?                                 | TeamRepository         | Pure Fabrication, Creator (R: 1, 2)  |
 | Step 10        | ... informing operation result?                             | GenerateTeamUI         | Pure Fabrication                     |
 
 ### Systematization ##
-up
+
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
 * Team
