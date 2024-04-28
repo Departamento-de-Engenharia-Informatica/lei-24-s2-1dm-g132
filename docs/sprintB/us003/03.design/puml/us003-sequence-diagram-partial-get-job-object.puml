@@ -9,7 +9,7 @@ autonumber 12
 participant ":RegisterCollaboratorController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "JobRepository:\nJobRepository" as JobRepository
+participant "jobRepository:\nJobRepository" as JobRepository
 
 
             -> CTRL : getJobByName(jobName)
