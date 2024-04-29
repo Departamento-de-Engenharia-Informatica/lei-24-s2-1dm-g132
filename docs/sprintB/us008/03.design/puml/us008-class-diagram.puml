@@ -1,0 +1,61 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class Vehicle {
+  - String vehiclePlate
+  - String brand
+  - String model
+  - String type
+  - Integer tare
+  - Integer grossWeight
+  - Integer currentKms
+  - Integer checkUpFrequency
+  - Date registerDate
+  - Date acquisitionDate
+}
+
+class Maintenance {
+    - String vehiclePlate
+    - Date date
+    - Integer kms
+}
+
+class ProduceListMaintenceUI {
+}
+
+class ProduceListMaintenceController {
+    + ProduceListMaintenceController(vehicleRepository)
+    + getVehiclesNeedingMaintenance()
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getVehicleRepository()
+}
+
+class VehicleRepository {
+    + getVehiclesNeedingMaintenance()
+}
+
+
+Repositories -> Repositories : instance
+Repositories --> "1" VehicleRepository: vehicleRepository
+ProduceListMaintenceController ...> Repositories: repositories
+ProduceListMaintenceController ..> VehicleRepository: vehicleRepository
+
+ProduceListMaintenceUI ..> ProduceListMaintenceController
+Vehicle "1" --> "*" Maintenance : has
+
+VehicleRepository "1" --> "*" Vehicle : vehicles
+
+
+@enduml
