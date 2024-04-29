@@ -35,7 +35,7 @@ participant "team\n:Team" as TEAM
             activate TeamRepository
 
                 TeamRepository -> TEAM** : create(selectedCollaborators)
-                TeamRepository -> TeamRepository : add(team)
+                TeamRepository -> TeamRepository : addTeam(team)
                 activate TeamRepository
                 TeamRepository --> TeamRepository
                 deactivate TeamRepository
