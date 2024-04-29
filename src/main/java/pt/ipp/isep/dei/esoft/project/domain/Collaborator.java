@@ -12,12 +12,19 @@ public class Collaborator {
     private int phoneNumber;
     private String email;
     private int taxpayerNumber;
-    private String identificationDocumentType;
     private int identificationDocumentNumber;
+
+    private DocType identificationDocumentType;
 
     private Job job;
 
     private List<Skill> listSkills = new ArrayList<>();
+
+    private static enum DocType{
+        CC { @Override public String toString() { return "CC"; } },
+        BI { @Override public String toString() { return "BI"; } },
+        PASSPORT { @Override public String toString() { return "Passport"; } };
+    }
 
     public Collaborator(String name, String birthdate, String admissionDate, String address, int phoneNumber, String email,
                         int taxpayerNumber, String identificationDocumentType, int identificationDocumentNumber, Job job){
@@ -34,7 +41,7 @@ public class Collaborator {
     }
 
     public Collaborator(String name, Calendar birthdate, Calendar admissionDate, String address, int phoneNumber, String email,
-                        int taxpayerNumber, String identificationDocumentType, int identificationDocumentNumber, Job job){
+                        int taxpayerNumber, DocType identificationDocumentType, int identificationDocumentNumber, Job job){
         setName(name);
         this.birthdate = birthdate;
         this.admissionDate = admissionDate;
@@ -47,41 +54,51 @@ public class Collaborator {
         this.job = job;
     }
 
-    public void setName(String name) {
+    private void setName(String name) {
         this.name = name;
     }
 
-    public void setBirthdate(String birthdate) {
+    private void setBirthdate(String birthdate) {
         //this.birthdate = birthdate;
         this.birthdate = Calendar.getInstance();
     }
 
-    public void setAdmissionDate(String admissionDate) {
+    private void setAdmissionDate(String admissionDate) {
         //this.admissionDate = admissionDate;
         this.admissionDate = Calendar.getInstance();
     }
 
-    public void setAddress(String address) {
+    private void setAddress(String address) {
         this.address = address;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    private void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setTaxpayerNumber(int taxpayerNumber) {
+    private void setTaxpayerNumber(int taxpayerNumber) {
         this.taxpayerNumber = taxpayerNumber;
     }
 
-    public void setEmail(String email) {
+    private void setEmail(String email) {
         this.email = email;
     }
 
-    public void setIdentificationDocumentType(String identificationDocumentType) {
+    private void setIdentificationDocumentType(String identificationDocumentType) {
+        if(identificationDocumentType.equalsIgnoreCase(DocType.CC.toString()))
+            this.identificationDocumentType = DocType.CC;
+        else if(identificationDocumentType.equalsIgnoreCase(DocType.BI.toString()))
+            this.identificationDocumentType = DocType.BI;
+        else if(identificationDocumentType.equalsIgnoreCase(DocType.PASSPORT.toString()))
+            this.identificationDocumentType = DocType.PASSPORT;
+        //Outro else e mandar erro
+    }
+
+    private void setIdentificationDocumentType(DocType identificationDocumentType) {
         this.identificationDocumentType = identificationDocumentType;
     }
 
-    public void setIdentificationDocumentNumber(int identificationDocumentNumber) {
+    private void setIdentificationDocumentNumber(int identificationDocumentNumber) {
         this.identificationDocumentNumber = identificationDocumentNumber;
     }
 

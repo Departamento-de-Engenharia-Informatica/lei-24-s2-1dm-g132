@@ -116,7 +116,7 @@ public class RegisterCollaboratorUI implements Runnable {
 
     private String requestCollaboratorIdentificationDocumentType() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Collaborator Identification Document Type: ");
+        System.out.print("Collaborator Identification Document Type (CC, BI or Passport): ");
         return input.nextLine();
     }
 
