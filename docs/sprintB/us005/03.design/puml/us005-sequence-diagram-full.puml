@@ -76,12 +76,10 @@ activate HRM
 
             end loop
 
-        UI -> CTRL : generateTeamProposal(minCollab, maxCollab, skillNames)
+        UI -> CTRL : generateTeamProposal(minCollab, maxCollab, skillSelectedNamesList)
         activate CTRL
 
-        loop for each skillName
-
-            CTRL -> CTRL : getSkillByName(skillName)
+            CTRL -> CTRL : getSkillsByName(skillSelectedNamesList)
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -95,16 +93,18 @@ activate HRM
 
                     PLAT -> CTRL : skillRepository
                 deactivate PLAT
+        loop for each skillName
 
-                CTRL -> SkillRepository : getSkillByName(skillName)
+                CTRL -> SkillRepository : getSkillByName(skillSelectedName)
                 activate SkillRepository
 
-                    SkillRepository --> CTRL : skill
+                    SkillRepository --> CTRL : skillSelected
                 deactivate SkillRepository
-                    CTRL --> CTRL : skill
-            deactivate CTRL
 
-            end loop
+        end loop
+
+                    CTRL --> CTRL : skillsSelectedList
+            deactivate CTRL
 
             CTRL -> CTRL : checkAvailableCollaborators()
             activate CTRL
@@ -147,13 +147,13 @@ activate HRM
 
                     end loop
 
-                    TeamRepository --> CTRL : availableCollaborators
+                    TeamRepository --> CTRL : availableCollaboratorsList
                 deactivate TeamRepository
 
-                CTRL --> CTRL : availableCollaborators
+                CTRL --> CTRL : availableCollaboratorsList
             deactivate CTRL
 
-            CTRL -> CTRL : selectCollaboratorsForTeam(availableCollaborators, skills)
+            CTRL -> CTRL : selectCollaboratorsForTeam(availableCollaboratorsList, skillsSelectedList)
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -168,11 +168,11 @@ activate HRM
                     PLAT --> CTRL: collaboratorRepository
                 deactivate PLAT
 
-                CTRL -> CollaboratorRepository : selectCollaboratorsForTeam(availableCollaborators, skills)
+                CTRL -> CollaboratorRepository : selectCollaboratorsForTeam(availableCollaboratorsList, skillsSelectedList)
                 activate CollaboratorRepository
 
                     loop for each available collaborator
-                    CollaboratorRepository -> Collab : evaluateCollaborator(skills)
+                    CollaboratorRepository -> Collab : evaluateCollaborator(skillsSelectedList)
                     activate Collab
 
                         Collab --> CollaboratorRepository : evaluation
@@ -180,13 +180,13 @@ activate HRM
 
                     end loop
 
-                    CollaboratorRepository --> CTRL : selectedCollaborators
+                    CollaboratorRepository --> CTRL : selectedCollaboratorsList
                 deactivate CollaboratorRepository
 
-                CTRL --> CTRL : selectedCollaborators
+                CTRL --> CTRL : selectedCollaboratorsList
             deactivate CTRL
 
-            CTRL --> UI : selectedCollaborators
+            CTRL --> UI : selectedCollaboratorsList
         deactivate CTRL
 
         UI --> HRM : shows a team proposal
@@ -195,7 +195,7 @@ activate HRM
     HRM -> UI : accepts or refuses team proposal
     activate UI
 
-        UI -> CTRL : registerTeam(selectedCollaborators)
+        UI -> CTRL : registerTeam(selectedCollaboratorsList)
         activate CTRL
 
             CTRL -> RepositorySingleton : getInstance()
@@ -210,10 +210,10 @@ activate HRM
                 PLAT --> CTRL : teamRepository
             deactivate PLAT
 
-            CTRL -> TeamRepository : registerTeam(selectedCollaborators)
+            CTRL -> TeamRepository : registerTeam(selectedCollaboratorsList)
             activate TeamRepository
 
-                TeamRepository -> TEAM** : create(selectedCollaborators)
+                TeamRepository -> TEAM** : create(selectedCollaboratorsList)
                 TeamRepository -> TeamRepository : addTeam(team)
                 activate TeamRepository
                 TeamRepository --> TeamRepository
