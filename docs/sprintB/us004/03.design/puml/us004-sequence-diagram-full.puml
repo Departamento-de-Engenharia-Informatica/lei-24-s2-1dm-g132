@@ -152,7 +152,7 @@ activate Employee
                             CollaboratorRepository -> Collaborator : sameIdNumber(collaboratorIdNumber)
                             activate Collaborator
 
-                                Collaborator --> CollaboratorRepository : true
+                                Collaborator --> CollaboratorRepository : true/false
                                 deactivate Collaborator
 
                         end loop
