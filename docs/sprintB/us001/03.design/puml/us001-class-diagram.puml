@@ -1,24 +1,33 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-class RegisterSkillController {
-    +registerSkill(name)
+class CreateSkillController {
+    +createSkill(name)
 }
 
 
-class RegisterSkillUI {
+class CreateSkillUI {
+
 }
-class Collaborator {
-   -String name
-   -Date birthdate
-    -Date admissionDate
-    -address
-    phoneNumber
-    email
-    taxpayerNumber
-    identificationDocumentType
-    identificationDocumentNumber
-}
-RegisterSkillUI ..> RegisterSkillController
-RegisterSkillController ..> Collaborator
+
+class Skill
+ {
+    +String name
+
+ }
+ class Repositories {
+     - Repositories()
+     + getInstance() : Repositories
+     + getSkillRepository();
+ }
+
+ class SkillRepository {
+     + getSkillsList()
+ }
+CreateSkillUI ..> CreateSkillController: inputs wanted data
+CreateSkillController ..> Repositories : inserts skill in the repository
+Repositories ..> SkillRepository : Have
+SkillRepository ..> Skill : Have
+Skill ..> CreateSkillController : will be inserted
+
 @enduml

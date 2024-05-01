@@ -9,12 +9,12 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class RegisterCheckUpController {
-    +registerCheckUp(vehiclePlate, date, kms)
+class RegisterMaintenanceController {
+    +registerMaintenance(vehiclePlate, date, kms)
 }
 
 
-class RegisterCheckUpUI {
+class RegisterMaintenanceUI {
 }
 
 class Vehicle {
@@ -30,19 +30,30 @@ class Vehicle {
       - Date acquisitionDate
 
 }
-
-
-
-class CheckUp {
-  - String vehiclePlate
-- Date date
--Integer kms
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getVehicleRepository()
 }
 
 
-RegisterCheckUpUI ..> RegisterCheckUpController
-RegisterCheckUpController ..> Vehicle
-Vehicle "1" --> "*" CheckUp : has
+class Maintenance {
+    - String vehiclePlate
+    - Date date
+    - Integer kms
+}
+class VehicleRepository {
+    + createMaintenance()
+}
+
+Repositories -> Repositories : instance
+RegisterMaintenanceUI ..> RegisterMaintenanceController
+Vehicle "1" --> "*" Maintenance : has
+RegisterMaintenanceController ...> Repositories: repositories
+Repositories --> "1" VehicleRepository: vehicleRepository
+RegisterMaintenanceController ..> VehicleRepository: vehicleRepository
+VehicleRepository "1" --> "*" Vehicle : vehicles
+
 
 
 
