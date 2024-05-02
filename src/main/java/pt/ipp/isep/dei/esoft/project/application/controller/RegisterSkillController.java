@@ -23,7 +23,7 @@ public class RegisterSkillController {
         Skill newSkill = new Skill(name);
         //erro controller, resolver mais tarde
 
-        SkillRepository.add(newSkill);
+        skillRepository.add(newSkill);
 
         return newSkill;
     }

@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui;
+package pt.ipp.isep.dei.esoft.project.ui.console;
 
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillController;
@@ -20,7 +20,7 @@ public class RegisterSkillUI {
 
     public void run() {
         System.out.println("\n\n--- Register Skill ------------------------");
-        requestDataforSkillName();
+        requestData();
         submitData();
     }
 
@@ -29,17 +29,21 @@ public class RegisterSkillUI {
         System.out.println("\nSkill successfully registered!");
     }
 
-    private void requestDataforSkillName() {
-        System.out.println("Skill name: ");
-    }
-
     private void requestData(){
         name = RequestSkillName();
     }
+
+
+
     private String RequestSkillName() {
         Scanner input = new Scanner(System.in);
         System.out.print("Name: ");
         return input.nextLine();
     }
+
+
+
+
+
 
 }
