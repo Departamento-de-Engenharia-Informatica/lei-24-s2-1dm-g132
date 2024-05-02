@@ -21,7 +21,7 @@ public class RegisterSkillController {
         SkillRepository skillRepository = getSkillRepository();
 
         Skill newSkill = new Skill(name);
-        //erro controller, resolver mais tarde
+
 
         skillRepository.add(newSkill);
 
