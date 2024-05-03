@@ -9,7 +9,8 @@ autonumber
 actor "Human Resources Manager" as HRM
 participant ":GenerateTeamUI" as UI
 participant ":GenerateTeamController" as CTRL
-
+participant "skillRepository:\nSkillRepository" as SkillRepository
+participant "selectedSkillNamesList:\nList<String>" as selectedSkillNamesList
 
 
 activate HRM
@@ -36,6 +37,12 @@ activate HRM
 
             activate CTRL
 
+            CTRL -> SkillRepository : createSelectedSkillNamesList()
+            activate SkillRepository
+
+            SkillRepository -> selectedSkillNamesList** : create()
+            deactivate SkillRepository
+
                 CTRL --> UI : skillList
             deactivate CTRL
 
@@ -47,6 +54,21 @@ activate HRM
     HRM -> UI : selects a skill
     activate UI
 
+        UI -> CTRL : addSelectedSkillName(skillName)
+            activate CTRL
+
+                CTRL -> SkillRepository: addSelectedSkillName(skillName)
+                activate SkillRepository
+
+                SkillRepository -> selectedSkillNamesList : add(skillName)
+                activate selectedSkillNamesList
+
+                deactivate selectedSkillNamesList
+
+        deactivate SkillRepository
+
+        deactivate CTRL
+
         UI --> HRM : asks to continue
 
     deactivate UI
@@ -56,49 +78,45 @@ activate HRM
 
             end loop
 
-        UI -> CTRL : generateTeamProposal(minCollab, maxCollab, skillNames)
+        UI -> CTRL : generateTeamProposal(minCollab, maxCollab)
         activate CTRL
 
-        loop for each skillName
-
-            CTRL -> CTRL : getSkillByName(skillName)
+            CTRL -> CTRL : createSelectedSkillsList()
 
                 ref over CTRL
-                    Get Skill Object
+                    Create Selected Skills List
 
                 end ref
 
                 activate CTRL
 
-                    CTRL --> CTRL : skill
+                    CTRL --> CTRL : selectedSkillsList
             deactivate CTRL
 
-            end loop
-
-            CTRL -> CTRL : checkAvailableCollaborators()
+            CTRL -> CTRL : createAvailableCollaboratorsList()
 
                 ref over CTRL
-                    Get Available Collaborators
+                    Create Available Collaborators List
 
                 end ref
 
                 activate CTRL
 
-                CTRL --> CTRL : availableCollaborators
+                CTRL --> CTRL :
             deactivate CTRL
 
             CTRL -> CTRL : selectCollaboratorsForTeam(availableCollaborators, skills)
             activate CTRL
 
                 ref over CTRL
-                    Choose Collaborators For Team
+                    Generate Team Proposal
 
                 end ref
 
-                CTRL --> CTRL : selectedCollaborators
+                CTRL --> CTRL : tempCollaboratorList
             deactivate CTRL
 
-            CTRL --> UI : selectedCollaborators
+            CTRL --> UI : tempCollaboratorList
         deactivate CTRL
 
         UI --> HRM : shows a team proposal
@@ -107,7 +125,7 @@ activate HRM
     HRM -> UI : accepts or refuses team proposal
     activate UI
 
-        UI -> CTRL : registerTeam(selectedCollaborators)
+        UI -> CTRL : registerTeam(tempCollaboratorList)
         activate CTRL
 
         ref over CTRL
