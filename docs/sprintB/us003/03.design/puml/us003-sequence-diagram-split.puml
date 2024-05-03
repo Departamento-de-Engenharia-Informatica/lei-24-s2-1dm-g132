@@ -41,7 +41,7 @@ activate HRM
         UI --> HRM : requests data
     deactivate UI
 
-    HRM -> UI : types requested data (i.e. name, birthdate,\nadmission date, address, phone\nnumber, email, taxpayer number,\nidentification document type and respective number)
+    HRM -> UI : types requested data (name, birthdate,\nadmission date, address, phone\nnumber, email, taxpayer number,\nidentification document type and respective number)
     activate UI
 
         UI --> HRM : shows selected job and requested data
