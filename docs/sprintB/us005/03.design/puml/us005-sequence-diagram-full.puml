@@ -120,7 +120,11 @@ activate HRM
 
                 deactivate selectedSkillNamesList
 
-                SkillRepository -> SkillRepository: skill = getSkillByName(selectedSkillName)
+                SkillRepository -> SkillRepository: getSkillByName(selectedSkillName)
+                activate SkillRepository
+
+                SkillRepository --> SkillRepository: skill
+                deactivate SkillRepository
 
                 SkillRepository -> selectedSkillsList : add(skill)
                 activate selectedSkillsList
@@ -166,7 +170,7 @@ activate HRM
                     PLAT --> CTRL : teamRepository
                 deactivate PLAT
 
-            CTRL -> TeamRepository : removeUnvailableCollaborators(tempCollaboratorList)
+            CTRL -> TeamRepository : removeUnavailableCollaborators(tempCollaboratorList)
                 activate TeamRepository
 
                     loop for each team

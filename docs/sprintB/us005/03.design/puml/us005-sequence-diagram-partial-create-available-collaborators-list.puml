@@ -13,17 +13,17 @@ participant "repositories\n:Repositories" as PLAT
 participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
 participant "teamRepository:\nTeamRepository" as TeamRepository
 participant "team\n:Team" as Team
+participant "tempCollaboratorList:\nList<Collaborator>" as tempCollaboratorList
 
-autonumber 14
+autonumber 19
 
-    -> CTRL : checkAvailableCollaborators()
-            autonumber 14.1
-            group Get Available Collaborators
+    -> CTRL : createAvailableCollaboratorsList()
+            autonumber 19.1
+            group Create Available Collaborators List
 
             activate CTRL
 
-
-            CTRL -> RepositorySingleton : getInstance()
+CTRL -> RepositorySingleton : getInstance()
                 activate RepositorySingleton
 
                     RepositorySingleton --> CTRL: repositories
@@ -35,10 +35,13 @@ autonumber 14
                      PLAT --> CTRL: collaboratorRepository
             deactivate PLAT
 
-            CTRL -> CollaboratorRepository : getCollaborators()
-                activate CollaboratorRepository
+            CTRL -> CollaboratorRepository : createTempCollaboratorList()
+            activate CollaboratorRepository
 
-                    CollaboratorRepository --> CTRL : collaboratorList
+                CollaboratorRepository -> tempCollaboratorList** : clone(collaboratorList)
+
+                CollaboratorRepository --> CTRL : tempCollaboratorList
+
                 deactivate CollaboratorRepository
 
                 CTRL -> PLAT : getTeamRepository()
@@ -47,24 +50,34 @@ autonumber 14
                     PLAT --> CTRL : teamRepository
                 deactivate PLAT
 
-            CTRL -> TeamRepository : checkAvailableCollaborators(collaboratorList)
+            CTRL -> TeamRepository : removeUnavailableCollaborators(tempCollaboratorList)
                 activate TeamRepository
 
                     loop for each team
 
-                    TeamRepository -> Team: removeUnavailableCollaborators(collaboratorList)
+                    TeamRepository -> Team: removeUnavailableCollaborators(tempCollaboratorList)
                     activate Team
 
-                        Team --> TeamRepository : collaboratorList
+                        loop for each collaborator of the team
+
+                        Team -> tempCollaboratorList : remove(collaborator)
+                        activate tempCollaboratorList
+
+                        deactivate tempCollaboratorList
+
+                        end loop
+
                     deactivate Team
 
                     end loop
 
-                    TeamRepository --> CTRL : availableCollaborators
+
                 deactivate TeamRepository
 
-                end group
-                autonumber 15
 
-            <-- CTRL : availableCollaborators
+                end group
+                autonumber 20
+
+            <-- CTRL :
+            deactivate CTRL
 @enduml

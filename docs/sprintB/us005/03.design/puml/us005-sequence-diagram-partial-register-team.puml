@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-autonumber 21
+autonumber 26
 
 'hide footbox
 participant ":GenerateTeamController" as CTRL
@@ -14,7 +14,7 @@ participant "team\n:Team" as TEAM
 
     -> CTRL : registerTeam(selectedCollaborators)
 
-        autonumber 21.1
+        autonumber 26.1
         group Register Team
 
         activate CTRL
@@ -31,7 +31,7 @@ participant "team\n:Team" as TEAM
                 PLAT --> CTRL : teamRepository
             deactivate PLAT
 
-            CTRL -> TeamRepository : registerTeam(selectedCollaborators)
+            CTRL -> TeamRepository : registerTeam(tempCollaboratorList)
             activate TeamRepository
 
                 TeamRepository -> TEAM** : create(selectedCollaborators)
@@ -44,7 +44,7 @@ participant "team\n:Team" as TEAM
                 deactivate TeamRepository
 
         end group
-        autonumber 22
+        autonumber 27
         <-- CTRL : team
 
 @enduml

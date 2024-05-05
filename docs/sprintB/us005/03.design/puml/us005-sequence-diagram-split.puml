@@ -105,7 +105,7 @@ activate HRM
                 CTRL --> CTRL :
             deactivate CTRL
 
-            CTRL -> CTRL : selectCollaboratorsForTeam(availableCollaborators, skills)
+            CTRL -> CTRL : selectCollaboratorsForTeam(selectedSkillsList)
             activate CTRL
 
                 ref over CTRL

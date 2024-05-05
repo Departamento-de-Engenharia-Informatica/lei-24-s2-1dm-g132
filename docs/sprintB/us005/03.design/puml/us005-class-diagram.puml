@@ -18,11 +18,12 @@ class GenerateTeamController
 {
     + GenerateTeamController()
     + getSkills()
-    + generateTeamProposal(minCollab, maxCollab, skillNames)
-    + registerTeam(selectedCollaborators)
-    - getSkillByName(skillName)
-    - checkAvailableCollaborators()
-    - selectCollaboratorsForTeam(availableCollaborators, skills)
+    + addSelectedSkillName(skillName)
+    + generateTeamProposal(minCollab, maxCollab)
+    + registerTeam(tempCollaboratorList)
+    - createSelectedSkillsList()
+    - createAvailableCollaboratorsList()
+    - selectCollaboratorsForTeam(selectedSkillsList)
 }
 '###############################################
 'Confirmar o pq do construtor ter os repositórios no exemplo
@@ -42,19 +43,22 @@ class Repositories
 class SkillRepository
 {
     + getSkills()
-    + getSkillByName(skillName)
+    + createSelectedSkillNamesList()
+    + addSelectedSkillName(skillName)
+    + createSelectedSkillsList()
+    + getSkillByName(selectedSkillName)
 }
 
 class CollaboratorRepository
 {
-    + getCollaborators()
-    + selectCollaboratorsForTeam(availableCollaborators, skills)
+    + createTempCollaboratorList()
+    + generateTeam(selectedSkillsList)
 }
 
 class TeamRepository
 {
-    + checkAvailableCollaborators(collaboratorList)
-    + registerTeam(selectedCollaborators)
+    + removeUnavailableCollaborators(tempCollaboratorList)
+    + registerTeam(tempCollaboratorList)
     - addTeam(team)
 }
 
@@ -69,7 +73,7 @@ class Collaborator
     - Integer taxpayerNumber
     - Integer identificationDocumentNumber
     + Collaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, job)
-    + evaluateCollaborator(skills)
+    + teamDefinitionCriteria(selectedSkillsList)
 }
 
 enum DocType
@@ -86,8 +90,8 @@ class Skill
 
 class Team
 {
-    + Team(selectedCollaborators)
-    + removeUnavailableCollaborators(collaboratorList)
+    + Team(tempCollaboratorList)
+    + removeUnavailableCollaborators(tempCollaboratorList)
 }
 
 Repositories -> Repositories : instance

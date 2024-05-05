@@ -35,7 +35,7 @@ participant "skillRepository:\nSkillRepository" as SkillRepository
                 deactivate SkillRepository
 
                 end
-                autonumber 6
+                autonumber 8
                 <-- CTRL : skillList
             deactivate CTRL
 
