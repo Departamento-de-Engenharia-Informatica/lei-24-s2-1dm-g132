@@ -13,6 +13,8 @@ participant ":AssignSkillsController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "skillRepository:\nSkillRepository" as SkillRepository
+participant "selectedSkillNamesList:\nList<String>" as selectedSkillNamesList
+participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
 participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
 participant "collaborator\n:Collaborator" as Collaborator
 
@@ -74,6 +76,12 @@ activate Employee
             SkillRepository --> CTRL : skillsList
             deactivate SkillRepository
 
+            CTRL -> SkillRepository : createSelectedSkillNamesList()
+            activate SkillRepository
+
+                SkillRepository -> selectedSkillNamesList** : create()
+            deactivate SkillRepository
+
             CTRL --> UI : skillsList
         deactivate CTRL
 
@@ -83,6 +91,21 @@ activate Employee
 
     Employee -> UI : selects one skill
     activate UI
+
+    UI -> CTRL : addSelectedSkillName(skillName)
+    activate CTRL
+
+        CTRL -> SkillRepository: addSelectedSkillName(skillName)
+        activate SkillRepository
+
+            SkillRepository -> selectedSkillNamesList : add(skillName)
+                activate selectedSkillNamesList
+
+                deactivate selectedSkillNamesList
+
+            deactivate SkillRepository
+
+        deactivate CTRL
 
     UI --> Employee : asks to continue
 
@@ -99,34 +122,41 @@ activate Employee
     Employee -> UI : confirms data
     activate UI
 
-    UI -> CTRL : assignSkill(collaboratorIdNumber, skillSelectedNamesList)
+    UI -> CTRL : assignSkill(collaboratorIdNumber)
     activate CTRL
 
-    CTRL -> CTRL : getSkillsByName(skillSelectedNamesList)
+    CTRL -> CTRL : createSelectedSkillsList()
                 activate CTRL
 
-                    CTRL -> RepositorySingleton : getInstance()
-                    activate RepositorySingleton
+                CTRL -> SkillRepository : createSelectedSkillsList()
+                activate SkillRepository
 
-                        RepositorySingleton --> CTRL: repositories
-                    deactivate RepositorySingleton
+                    SkillRepository -> selectedSkillsList** : create()
 
-                    CTRL -> PLAT : getSkillRepository()
-                    activate PLAT
+                    loop for each known selectedSkillName
 
-                        PLAT -> CTRL : skillRepository
-                    deactivate PLAT
-            loop for each skillSelectedName
+                    SkillRepository -> selectedSkillNamesList : selectedSkillName = get(i)
+                    activate selectedSkillNamesList
 
-                    CTRL -> SkillRepository : getSkillByName(skillSelectedName)
+                    deactivate selectedSkillNamesList
+
+                    SkillRepository -> SkillRepository: getSkillByName(selectedSkillName)
                     activate SkillRepository
 
-                        SkillRepository --> CTRL : skillSelected
+                    SkillRepository --> SkillRepository: skill
                     deactivate SkillRepository
 
-            end loop
+                    SkillRepository -> selectedSkillsList : add(skill)
+                    activate selectedSkillsList
 
-                        CTRL --> CTRL : skillsSelectedList
+                    deactivate selectedSkillsList
+
+                    end loop
+
+                    SkillRepository --> CTRL : selectedSkillsList
+                    deactivate SkillRepository
+
+                        CTRL --> CTRL : selectedSkillsList
                 deactivate CTRL
 
         CTRL -> CTRL : getCollaboratorByIdNumber(collaboratorIdNumber)
@@ -174,13 +204,12 @@ activate Employee
                 PLAT --> CTRL: collaboratorRepository
                 deactivate PLAT
 
-                CTRL -> CollaboratorRepository : assignSkill(collaborator, skillsSelectedList)
+                CTRL -> CollaboratorRepository : assignSkill(collaborator, selectedSkillsList)
                 activate CollaboratorRepository
 
-                CollaboratorRepository -> Collaborator: assignSkill\n(collaborator, skillsSelectedList)
+                CollaboratorRepository -> Collaborator: assignSkill(skillsSelectedList)
                 activate Collaborator
 
-                Collaborator -> Collaborator : assignSkill\n(collaborator, skillsSelectedList)
                 Collaborator --> CollaboratorRepository : collaborator
                 deactivate Collaborator
 
