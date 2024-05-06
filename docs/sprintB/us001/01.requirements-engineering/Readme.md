@@ -68,6 +68,18 @@ it's not required to do so.
 
 
 
+> **Question:** Where do you want the jobs and skills to be stored and validated?
+
+Do you which to have a skill and job repository or do you want them to be stored in the organization?
+
+
+> 
+> **Answer:**
+Hello,
+the business rules regarding skills and stored were already provided in this forum;
+
+I have no knowledge about repositories.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
@@ -93,11 +105,6 @@ it's not required to do so.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
-
-#### Alternative One
-
 ![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram.svg)
-
 
 ### 1.7 Other Relevant Remarks
