@@ -37,7 +37,7 @@ public class RegisterCollaboratorController {
 
     public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissionDate,
                                                        String address, int phoneNumber, String email, int taxpayerNumber,
-                                                       String identificationDocumentType, int identificationDocumentNumber, String jobName) {
+                                                       String identificationDocumentType, String identificationDocumentNumber, String jobName) {
 
         Job job = getJobByName(jobName);
 

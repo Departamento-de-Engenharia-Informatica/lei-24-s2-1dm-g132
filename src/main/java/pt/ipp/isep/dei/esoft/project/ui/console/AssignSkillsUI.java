@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class AssignSkillsUI implements Runnable{
     private final AssignSkillsController controller;
 
-    private int collaboratorIdNumber;
+    private String collaboratorIdNumber;
 
     public AssignSkillsUI() {
         controller = new AssignSkillsController();
@@ -67,7 +67,7 @@ public class AssignSkillsUI implements Runnable{
         }while(answer != 0);
     }
 
-    private int displayAndSelectCollaborator() {
+    private String displayAndSelectCollaborator() {
         //Display the list of jobs
         List<Collaborator> collaborators = controller.getCollaborators();
 
@@ -82,7 +82,7 @@ public class AssignSkillsUI implements Runnable{
             answer = input.nextInt();
         }
 
-        int idNumber = collaborators.get(answer - 1).getIdentificationDocumentNumber();
+        String idNumber = collaborators.get(answer - 1).getIdentificationDocumentNumber();
         return idNumber;
     }
 

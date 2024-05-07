@@ -71,7 +71,7 @@ class Collaborator
     - Integer phoneNumber
     - String email
     - Integer taxpayerNumber
-    - Integer identificationDocumentNumber
+    - String identificationDocumentNumber
     + Collaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, job)
     + teamDefinitionCriteria(selectedSkillsList)
 }

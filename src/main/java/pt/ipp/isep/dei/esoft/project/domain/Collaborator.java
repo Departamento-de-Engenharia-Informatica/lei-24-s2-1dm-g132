@@ -12,7 +12,7 @@ public class Collaborator {
     private int phoneNumber;
     private String email;
     private int taxpayerNumber;
-    private int identificationDocumentNumber;
+    private String identificationDocumentNumber;
 
     private DocType identificationDocumentType;
 
@@ -24,10 +24,26 @@ public class Collaborator {
         CC { @Override public String toString() { return "CC"; } },
         BI { @Override public String toString() { return "BI"; } },
         PASSPORT { @Override public String toString() { return "Passport"; } };
+
+        public static boolean isValidNumber(DocType type, String number) {
+            switch (type) {
+                case CC:
+                    // Add your validation logic for CC
+                    return true; // Example validation, replace with your actual logic
+                case BI:
+                    // Add your validation logic for BI
+                    return true; // Example validation, replace with your actual logic
+                case PASSPORT:
+                    // Add your validation logic for Passport
+                    return true; // Example validation, replace with your actual logic
+                default:
+                    return false;
+            }
+        }
     }
 
     public Collaborator(String name, String birthdate, String admissionDate, String address, int phoneNumber, String email,
-                        int taxpayerNumber, String identificationDocumentType, int identificationDocumentNumber, Job job){
+                        int taxpayerNumber, String identificationDocumentType, String identificationDocumentNumber, Job job){
         setName(name);
         setBirthdate(birthdate);
         setAdmissionDate(admissionDate);
@@ -41,7 +57,7 @@ public class Collaborator {
     }
 
     public Collaborator(String name, Calendar birthdate, Calendar admissionDate, String address, int phoneNumber, String email,
-                        int taxpayerNumber, DocType identificationDocumentType, int identificationDocumentNumber, Job job){
+                        int taxpayerNumber, DocType identificationDocumentType, String identificationDocumentNumber, Job job){
         setName(name);
         this.birthdate = birthdate;
         this.admissionDate = admissionDate;
@@ -58,7 +74,7 @@ public class Collaborator {
         return name;
     }
 
-    public int getIdentificationDocumentNumber() {
+    public String getIdentificationDocumentNumber() {
         return identificationDocumentNumber;
     }
 
@@ -99,15 +115,18 @@ public class Collaborator {
             this.identificationDocumentType = DocType.BI;
         else if(identificationDocumentType.equalsIgnoreCase(DocType.PASSPORT.toString()))
             this.identificationDocumentType = DocType.PASSPORT;
-        //Outro else e mandar erro
+        else throw new IllegalArgumentException("Invalid document type!");
     }
 
     private void setIdentificationDocumentType(DocType identificationDocumentType) {
         this.identificationDocumentType = identificationDocumentType;
     }
 
-    private void setIdentificationDocumentNumber(int identificationDocumentNumber) {
-        this.identificationDocumentNumber = identificationDocumentNumber;
+    private void setIdentificationDocumentNumber(String identificationDocumentNumber) {
+        if(DocType.isValidNumber(identificationDocumentType, identificationDocumentNumber))
+            this.identificationDocumentNumber = identificationDocumentNumber;
+        else
+            throw new IllegalArgumentException("Invalid identification document number for the provided type!");
     }
 
     public Collaborator assignSkill(List<Skill> selectedSkillsList){
@@ -124,11 +143,11 @@ public class Collaborator {
             return false;
         }
         Collaborator collaborator = (Collaborator) o;
-        return identificationDocumentNumber == collaborator.identificationDocumentNumber;
+        return identificationDocumentNumber.equalsIgnoreCase(collaborator.identificationDocumentNumber);
     }
 
-    public boolean sameIdNumber(int collaboratorIdNumber){
-        return this.identificationDocumentNumber == collaboratorIdNumber;
+    public boolean sameIdNumber(String collaboratorIdNumber){
+        return this.identificationDocumentNumber.equalsIgnoreCase(collaboratorIdNumber);
     }
 
     @Override

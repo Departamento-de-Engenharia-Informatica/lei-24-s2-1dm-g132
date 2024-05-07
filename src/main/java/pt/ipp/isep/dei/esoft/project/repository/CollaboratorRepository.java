@@ -15,7 +15,7 @@ public class CollaboratorRepository {
 
     public Optional<Collaborator> registerCollaborator(String name, String birthdate, String admissionDate,
                                                        String address, int phoneNumber, String email, int taxpayerNumber,
-                                                       String identificationDocumentType, int identificationDocumentNumber, Job job) {
+                                                       String identificationDocumentType, String identificationDocumentNumber, Job job) {
 
 
         // When a Collaborator is added, it should fail if the Collaborator already exists in the list of Collaborators.
@@ -62,7 +62,7 @@ public class CollaboratorRepository {
         return List.copyOf(collaborators);
     }
 
-    public Collaborator getCollaboratorByIdNumber(int collaboratorIdNumber){
+    public Collaborator getCollaboratorByIdNumber(String collaboratorIdNumber){
         for(Collaborator collaborator: collaborators)
         {
             if(collaborator.sameIdNumber(collaboratorIdNumber))

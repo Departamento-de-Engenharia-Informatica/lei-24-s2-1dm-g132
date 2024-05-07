@@ -19,7 +19,7 @@ public class RegisterCollaboratorUI implements Runnable {
     private String collaboratorEmail;
     private int collaboratorTaxpayerNumber;
     private String collaboratorIdentificationDocumentType;
-    private int collaboratorIdentificationDocumentNumber;
+    private String collaboratorIdentificationDocumentNumber;
     private String jobName;
 
     public RegisterCollaboratorUI() {
@@ -120,10 +120,10 @@ public class RegisterCollaboratorUI implements Runnable {
         return input.nextLine();
     }
 
-    private int requestCollaboratorIdentificationDocumentNumber() {
+    private String requestCollaboratorIdentificationDocumentNumber() {
         Scanner input = new Scanner(System.in);
         System.out.print("Collaborator Identification Document Number: ");
-        return input.nextInt();
+        return input.nextLine();
     }
 
     private String displayAndSelectJob() {
