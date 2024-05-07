@@ -7,7 +7,7 @@ import java.util.List;
 
 public class JobRepository {
 
-    private List<Job> jobs;
+    private final List<Job> jobs;
     public JobRepository() {
         jobs = new ArrayList<>();
     }

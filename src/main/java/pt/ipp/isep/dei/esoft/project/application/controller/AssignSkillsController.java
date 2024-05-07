@@ -2,11 +2,13 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 
 
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AssignSkillsController {
 
@@ -34,10 +36,45 @@ public class AssignSkillsController {
         return skillRepository;
     }
 
-    //return the list of jobs
+
+    public Optional<Collaborator> assignSkills(int collaboratorIdNumber){
+        List<Skill> selectedSkillsList = createSelectedSkillsList();
+
+        Collaborator collaborator = getCollaboratorByIdNumber(collaboratorIdNumber);
+
+        Optional<CollaboratorRepository> collaboratorRepository = Optional.ofNullable(getCollaboratorRepository());
+
+        Optional<Collaborator> updatedCollaborator = Optional.empty();
+
+        if (collaboratorRepository.isPresent()) {
+            updatedCollaborator = collaboratorRepository.get()
+                    .assignSkill(collaborator, selectedSkillsList);
+        }
+
+        return updatedCollaborator;
+    }
+
+    private List<Skill> createSelectedSkillsList(){
+        return skillRepository.createSelectedSkillsList();
+    }
+
+    private Collaborator getCollaboratorByIdNumber(int collaboratorIdNumber){
+        return collaboratorRepository.getCollaboratorByIdNumber(collaboratorIdNumber);
+    }
+
     public List<Collaborator> getCollaborators() {
         CollaboratorRepository collaboratorRepository = getCollaboratorRepository();
         return collaboratorRepository.getCollaborators();
+    }
+
+    public List<Skill> getSkills() {
+        SkillRepository skillRepository = getSkillRepository();
+        skillRepository.createSelectedSkillNamesList();
+        return skillRepository.getSkills();
+    }
+
+    public void addSelectedSkillName(String name){
+        skillRepository.addSelectedSkillName(name);
     }
 
 }

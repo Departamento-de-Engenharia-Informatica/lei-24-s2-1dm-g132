@@ -3,8 +3,10 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillsController;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class AssignSkillsUI implements Runnable{
@@ -25,8 +27,45 @@ public class AssignSkillsUI implements Runnable{
 
         collaboratorIdNumber = displayAndSelectCollaborator();
 
+        displayAndSelectSkills();
+
+        assignSkills();
+
     }
 
+    private void assignSkills(){
+        Optional<Collaborator> collaborator = getController().assignSkills(collaboratorIdNumber);
+
+        if (collaborator.isPresent()) {
+            System.out.println("\nSkills successfully assigned!");
+        } else {
+            System.out.println("\nSkills not assigned successfully!");
+        }
+    }
+
+    private void displayAndSelectSkills(){
+        List<Skill> skills = controller.getSkills();
+
+        int listSize = skills.size();
+        int answer = -1;
+
+        Scanner input = new Scanner(System.in);
+
+        do {
+            while (answer < 0 || answer > listSize) {
+                displaySkillOptions(skills);
+                System.out.print("Select a skill (press 0 to stop): ");
+                answer = input.nextInt();
+            }
+
+            if(answer != 0)
+            {
+                String name = skills.get(answer - 1).getName();
+                controller.addSelectedSkillName(name);
+            }
+
+        }while(answer != 0);
+    }
 
     private int displayAndSelectCollaborator() {
         //Display the list of jobs
@@ -45,6 +84,15 @@ public class AssignSkillsUI implements Runnable{
 
         int idNumber = collaborators.get(answer - 1).getIdentificationDocumentNumber();
         return idNumber;
+    }
+
+    private void displaySkillOptions(List<Skill> skills) {
+        //display the skills as a menu with number options to select
+        int i = 1;
+        for (Skill skill : skills) {
+            System.out.println("  " + i + " - " + skill.getName());
+            i++;
+        }
     }
 
     private void displayCollaboratorOptions(List<Collaborator> collaborators) {

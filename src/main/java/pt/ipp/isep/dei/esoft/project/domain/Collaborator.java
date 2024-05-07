@@ -18,7 +18,7 @@ public class Collaborator {
 
     private Job job;
 
-    private List<Skill> listSkills = new ArrayList<>();
+    private List<Skill> skills = new ArrayList<>();
 
     private static enum DocType{
         CC { @Override public String toString() { return "CC"; } },
@@ -110,6 +110,11 @@ public class Collaborator {
         this.identificationDocumentNumber = identificationDocumentNumber;
     }
 
+    public Collaborator assignSkill(List<Skill> selectedSkillsList){
+        this.skills = selectedSkillsList;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -120,6 +125,10 @@ public class Collaborator {
         }
         Collaborator collaborator = (Collaborator) o;
         return identificationDocumentNumber == collaborator.identificationDocumentNumber;
+    }
+
+    public boolean sameIdNumber(int collaboratorIdNumber){
+        return this.identificationDocumentNumber == collaboratorIdNumber;
     }
 
     @Override

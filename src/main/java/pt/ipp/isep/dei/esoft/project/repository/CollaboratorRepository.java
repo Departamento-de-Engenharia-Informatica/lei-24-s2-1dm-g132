@@ -31,6 +31,14 @@ public class CollaboratorRepository {
         return optionalValue;
     }
 
+    public Optional<Collaborator> assignSkill(Collaborator collaborator, List<Skill> selectedSkillsList){
+        Optional<Collaborator> optionalValue;
+
+        optionalValue = Optional.of(collaborator.assignSkill(selectedSkillsList));
+
+        return optionalValue;
+    }
+
     private boolean addCollaborator(Collaborator collaborator) {
         boolean success = false;
         if (validate(collaborator)) {
@@ -54,4 +62,14 @@ public class CollaboratorRepository {
         return List.copyOf(collaborators);
     }
 
+    public Collaborator getCollaboratorByIdNumber(int collaboratorIdNumber){
+        for(Collaborator collaborator: collaborators)
+        {
+            if(collaborator.sameIdNumber(collaboratorIdNumber))
+            {
+                return collaborator;
+            }
+        }
+        return null;
+    }
 }
