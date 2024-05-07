@@ -63,17 +63,17 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 ![Sequence Diagram - Partial - Get Skill List](svg/us005-sequence-diagram-partial-get-skill-list.svg)
 
-**Get Skill Object**
+**Create Selected Skills List**
 
-![Sequence Diagram - Partial - Get Skill Object](svg/us005-sequence-diagram-partial-get-skill-object.svg)
+![Sequence Diagram - Partial - Create Selected Skills List](svg/us005-sequence-diagram-partial-create-selected-skills-list.svg)
 
-**Get Available Collaborators**
+**Create Available Collaborators List**
 
-![Sequence Diagram - Partial - Get Available Collaborators](svg/us005-sequence-diagram-partial-get-available-collaborators.svg)
+![Sequence Diagram - Partial - Create Available Collaborators List](svg/us005-sequence-diagram-partial-create-available-collaborators-list.svg)
 
-**Choose Collaborators For Team**
+**Generate Team Proposal**
 
-![Sequence Diagram - Partial - Choose Collaborators For Team](svg/us005-sequence-diagram-partial-choose-collaborators-for-team.svg)
+![Sequence Diagram - Partial - Generate Team Proposal](svg/us005-sequence-diagram-partial-generate-team-proposal.svg)
 
 **Register Team**
 
