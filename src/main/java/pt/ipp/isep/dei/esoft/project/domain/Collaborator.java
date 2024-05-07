@@ -54,6 +54,14 @@ public class Collaborator {
         this.job = job;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getIdentificationDocumentNumber() {
+        return identificationDocumentNumber;
+    }
+
     private void setName(String name) {
         this.name = name;
     }

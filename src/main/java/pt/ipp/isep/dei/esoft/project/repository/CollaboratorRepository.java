@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class CollaboratorRepository {
 
-    private List<Collaborator> collaborators;
+    private final List<Collaborator> collaborators;
     public CollaboratorRepository() {
         collaborators = new ArrayList<>();
     }
@@ -47,6 +47,11 @@ public class CollaboratorRepository {
 
     private boolean collaboratorsDoNotContain(Collaborator collaborator) {
         return !collaborators.contains(collaborator);
+    }
+
+    public List<Collaborator> getCollaborators() {
+        //This is a defensive copy, so that the repository cannot be modified from the outside.
+        return List.copyOf(collaborators);
     }
 
 }

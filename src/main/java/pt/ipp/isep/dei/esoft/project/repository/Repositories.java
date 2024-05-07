@@ -9,6 +9,7 @@ public class Repositories {
     private final WaterSuplyPointsCsvRepository waterSuplyPointsCsvRepository;
     private final JobRepository jobRepository;
     private final CollaboratorRepository collaboratorRepository;
+    private final SkillRepository skillRepository;
 
     private Repositories() {
         organizationRepository = new OrganizationRepository();
@@ -17,6 +18,7 @@ public class Repositories {
         waterSuplyPointsCsvRepository = new WaterSuplyPointsCsvRepository(false);
         jobRepository = new JobRepository();
         collaboratorRepository = new CollaboratorRepository();
+        skillRepository = new SkillRepository();
     }
 
     public static Repositories getInstance() {
@@ -50,5 +52,9 @@ public class Repositories {
 
     public CollaboratorRepository getCollaboratorRepository() {
         return collaboratorRepository;
+    }
+
+    public SkillRepository getSkillRepository(){
+        return skillRepository;
     }
 }
