@@ -20,6 +20,7 @@ class Vehicle {
   - Integer checkUpFrequency
   - Date registerDate
   - Date acquisitionDate
+  + updateVehicleKms(vehiclePlate, kms)
 }
 
 class Maintenance {
@@ -28,12 +29,17 @@ class Maintenance {
     - Integer kms
 }
 
-class ProduceListMaintenceUI {
+class ListVehiclesNeedingMaintenanceUI {
 }
 
-class ProduceListMaintenceController {
-    + ProduceListMaintenceController(vehicleRepository)
-    + getVehiclesNeedingMaintenance()
+class ListVehiclesNeedingMaintenanceController {
+    + ListVehiclesNeedingMaintenanceController(vehicleRepository, maintenanceRepository)
+    + getVehiclesList()
+    + updateVehicleKms(vehiclePlate, kms)
+    + getLastMaintenance(vehiclePlate)
+    + calculateNextMaintenance(vehicle, lastMaintenance)
+    + addVehicleToList(vehicle)
+
 }
 
 class Repositories {
@@ -43,19 +49,27 @@ class Repositories {
 }
 
 class VehicleRepository {
-    + getVehiclesNeedingMaintenance()
+    + getVehiclesList()
+    + updateVehicleKms(vehiclePlate, kms)
+}
+
+class MaintenanceRepository {
+    + getLastMaintenance(vehiclePlate)
 }
 
 
 Repositories -> Repositories : instance
 Repositories --> "1" VehicleRepository: vehicleRepository
-ProduceListMaintenceController ...> Repositories: repositories
-ProduceListMaintenceController ..> VehicleRepository: vehicleRepository
+Repositories ---> "1" MaintenanceRepository: maintenanceRepository
+ListVehiclesNeedingMaintenanceController ...> Repositories: repositories
+ListVehiclesNeedingMaintenanceController ..> VehicleRepository: vehicleRepository
+ListVehiclesNeedingMaintenanceController ...> MaintenanceRepository: maintenanceRepository
 
-ProduceListMaintenceUI ..> ProduceListMaintenceController
-Vehicle "1" --> "*" Maintenance : has
+ListVehiclesNeedingMaintenanceUI ..> ListVehiclesNeedingMaintenanceController
+Vehicle "1" --> "*" Maintenance : needs
 
 VehicleRepository "1" --> "*" Vehicle : vehicles
+MaintenanceRepository "1" --> "*" Maintenance : maintenances
 
 
 @enduml
