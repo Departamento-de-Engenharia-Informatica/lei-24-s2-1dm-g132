@@ -32,6 +32,6 @@ class HRM {
 }
 
 
-Collaborator "1" -- "*" Skill : has >
-HRM "1" -- "*" Skill : assignes >
+Collaborator "1" -- "*" Skill : is assigned to <
+HRM "1" -- "*" Skill : assigns >
 @enduml
