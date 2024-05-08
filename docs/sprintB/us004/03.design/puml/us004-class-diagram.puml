@@ -30,9 +30,14 @@ class Collaborator {
 }
 
 class AssignSkillsController {
-    + AssignSkillsController(collaboratorRepository, skillRepository)
+    + assignSkillsController(collaboratorRepository, skillRepository)
     + getCollaborators()
-    + getSkillsList()
+    + getSkills()
+    + createSelectedSkillsList()
+    + addSelectedSkill(skillName)
+    + getSelectedSkillsList()
+    + getCollaboratorByIdNumber(collaboratorIdNumber)
+    + assignSkill(collaborator, selectedSkillsList)
 }
 
 class AssignSkillsUI {
@@ -46,15 +51,20 @@ class Repositories {
 }
 
 class SkillRepository {
-    + getSkillsList()
+    + getSkills()
+    + getSkillByName(skillName)
+    + add(skill)
+    + getSelectedSkillsList()
 }
 
 class CollaboratorRepository {
     + getCollaborators()
+    + getCollaboratorByIdNumber(collaboratorIdNumber)
+    + assignSkill(collaborator, selectedSkillsList)
 }
 
 
-Collaborator "1" --> "*" Skill: has
+Collaborator "1" --> "*" Skill: is assigned
 AssignSkillsUI ..> AssignSkillsController
 AssignSkillsController ...> Repositories: repositories
 AssignSkillsController ..> SkillRepository: skillRepository
