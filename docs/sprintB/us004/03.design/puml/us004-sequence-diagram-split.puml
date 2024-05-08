@@ -43,7 +43,7 @@ activate Employee
                 Get Skills
             end
 
-            CTRL -> SkillRepository : createSelectedSkillNamesList()
+            CTRL -> SkillRepository : createSelectedSkillsList()
             activate SkillRepository
 
                 SkillRepository -> selectedSkillsList** : create()

@@ -75,7 +75,7 @@ activate Employee
             SkillRepository --> CTRL : skillsList
             deactivate SkillRepository
 
-            CTRL -> SkillRepository : createSelectedSkillNamesList()
+            CTRL -> SkillRepository : createSelectedSkillsList()
             activate SkillRepository
 
                 SkillRepository -> selectedSkillsList** : create()
@@ -94,10 +94,10 @@ activate Employee
     UI -> CTRL : addSelectedSkillName(skillName)
     activate CTRL
 
-        CTRL -> SkillRepository: addSelectedSkillName(skillName)
+        CTRL -> SkillRepository: addSelectedSkill(skillName)
         activate SkillRepository
 
-            SkillRepository -> SkillRepository: getSkillByName(selectedSkillName)
+            SkillRepository -> SkillRepository: getSkillByName(skillName)
 
             SkillRepository --> SkillRepository: skill
             SkillRepository -> selectedSkillsList : add(skill)

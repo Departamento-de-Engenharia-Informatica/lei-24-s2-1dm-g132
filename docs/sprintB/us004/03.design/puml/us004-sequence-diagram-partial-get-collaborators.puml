@@ -14,10 +14,10 @@ autonumber 3.1
 
 activate CTRL
     group Get Collaborators
-        CTRL -> SkillRepository: addSelectedSkillName(skillName)
+        CTRL -> SkillRepository: addSelectedSkill(skillName)
         activate SkillRepository
 
-        SkillRepository -> SkillRepository: getSkillByName(selectedSkillName)
+        SkillRepository -> SkillRepository: getSkillByName(skillName)
 
         SkillRepository --> SkillRepository: skill
         SkillRepository -> selectedSkillsList : add(skill)
