@@ -22,6 +22,8 @@ activate Employee
     Employee -> UI : asks to produce a list of the vehicles needing maintenance
     activate UI
 
+    UI -> CTRL** : create
+
     UI -> CTRL : createList()
     activate CTRL
     CTRL -> VehicleRepository : createList()
