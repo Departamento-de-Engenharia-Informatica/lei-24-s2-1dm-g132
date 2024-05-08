@@ -6,39 +6,86 @@ skinparam shadowing false
 participant ":AssignSkillsController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
+participant "skillRepository:\nSkillRepository" as SkillRepository
 participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+participant "collaborator\n:Collaborator" as Collaborator
 
 autonumber 27
--> CTRL : getCollaborators()
+-> CTRL : assignSkill(collaboratorIdNumber)
 
 autonumber 27.1
 
 activate CTRL
     group Assign Skill(s)
-        CTRL -> RepositorySingleton : getInstance()
-        activate RepositorySingleton
+        CTRL -> CTRL : getSelectedSkillsList()
+            activate CTRL
 
-        RepositorySingleton --> CTRL: repositories
-        deactivate RepositorySingleton
+            CTRL -> SkillRepository : getSelectedSkillsList()
+            activate SkillRepository
 
-        CTRL -> PLAT : getCollaboratorRepository()
-        activate PLAT
+            SkillRepository -> SkillRepository : getSelectedSkillsList()
+            SkillRepository --> CTRL : selectedSkillsList
+            deactivate SkillRepository
+            deactivate CTRL
 
-        PLAT --> CTRL: collaboratorRepository
-        deactivate PLAT
+                CTRL -> CTRL : getCollaboratorByIdNumber(collaboratorIdNumber)
+                            activate CTRL
 
-        CTRL -> CollaboratorRepository : assignSkill(collaborator, skillsSelectedList)
-        activate CollaboratorRepository
+                                CTRL -> RepositorySingleton : getInstance()
+                                activate RepositorySingleton
 
-        CollaboratorRepository -> Collaborator: assignSkill\n(collaborator, skillsSelectedList)
-        activate Collaborator
+                                    RepositorySingleton --> CTRL: repositories
+                                deactivate RepositorySingleton
 
-        Collaborator -> Collaborator : assignSkill\n(collaborator, skillsSelectedList)
-        Collaborator --> CollaboratorRepository : collaborator
-        deactivate Collaborator
+                                CTRL -> PLAT : getCollaboratorRepository()
+                                activate PLAT
 
-        CollaboratorRepository --> CTRL : collaborator
-        deactivate CollaboratorRepository
+                                    PLAT -> CTRL : collaboratorRepository
+                                deactivate PLAT
+
+                                CTRL -> CollaboratorRepository : getCollaboratorByIdNumber(collaboratorIdNumber)
+                                activate CollaboratorRepository
+
+                                loop while false
+
+                                    CollaboratorRepository -> Collaborator : sameIdNumber(collaboratorIdNumber)
+                                    activate Collaborator
+
+                                        Collaborator --> CollaboratorRepository : true/false
+                                        deactivate Collaborator
+
+                                end loop
+
+                                    CollaboratorRepository --> CTRL : collaborator
+                                deactivate CollaboratorRepository
+                                    CTRL --> CTRL : collaborator
+                            deactivate CTRL
+
+                        CTRL -> RepositorySingleton : getInstance()
+                        activate RepositorySingleton
+
+                        RepositorySingleton --> CTRL: repositories
+                        deactivate RepositorySingleton
+
+                        CTRL -> PLAT : getCollaboratorRepository()
+                        activate PLAT
+
+                        PLAT --> CTRL: collaboratorRepository
+                        deactivate PLAT
+
+                        CTRL -> CollaboratorRepository : assignSkill(collaborator, selectedSkillsList)
+                        activate CollaboratorRepository
+
+                        CollaboratorRepository -> Collaborator: assignSkill(collaborator, skillsSelectedList)
+                        activate Collaborator
+
+                        Collaborator --> CollaboratorRepository : collaborator
+                        deactivate Collaborator
+
+                        CollaboratorRepository --> CTRL : collaborator
+                        deactivate CollaboratorRepository
+
+
 
     end group
 

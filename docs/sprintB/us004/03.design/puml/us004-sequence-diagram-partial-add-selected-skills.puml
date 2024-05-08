@@ -34,6 +34,18 @@ activate CTRL
            SkillRepository --> CTRL : skillsList
            deactivate SkillRepository
 
-end group
+           CTRL -> SkillRepository : createSelectedSkillNamesList()
+           activate SkillRepository
+
+           SkillRepository -> selectedSkillsList** : create()
+           deactivate SkillRepository
+
+    end group
+
+    autonumber 14
+    <-- CTRL : skillsList
+
+deactivate CTRL
+
 
 @enduml
