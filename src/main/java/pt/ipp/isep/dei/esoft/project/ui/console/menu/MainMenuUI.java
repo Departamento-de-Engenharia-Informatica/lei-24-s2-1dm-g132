@@ -3,6 +3,9 @@ package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 import pt.ipp.isep.dei.esoft.project.ui.console.DevTeamUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.authorization.AuthenticationUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
+import pt.ipp.isep.dei.esoft.project.domain.Job;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +19,13 @@ public class MainMenuUI implements Runnable {
     }
 
     public void run() {
+        testJob(); // Test the Job class
+        testSkill(); // Test the Skill class
+
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("Do Login", new AuthenticationUI()));
         options.add(new MenuItem("Know the Development Team", new DevTeamUI()));
+
         int option = 0;
         do {
             option = Utils.showAndSelectIndex(options, "\n\n--- MAIN MENU --------------------------");
@@ -27,5 +34,20 @@ public class MainMenuUI implements Runnable {
                 options.get(option).run();
             }
         } while (option != -1);
+
+    }
+
+    private void testJob() {
+        // Test the Job class
+        String jobName = "Podador";
+        Job job = new Job(jobName);
+        System.out.println("Job Name: " + job.getName());
+    }
+
+    private void testSkill() {
+        // Test the Skill class
+        String skillName = "Especialista de pesados";
+        Skill skill = new Skill(skillName);
+        System.out.println("Skill Name: " + skill.getName());
     }
 }
