@@ -34,22 +34,22 @@ activate Employee
     activate CTRL
     CTRL -> RepositorySingleton : getInstance()
     activate RepositorySingleton
-    RepositorySingleton -> CTRL : repositories
+    RepositorySingleton --> CTRL : repositories
     deactivate RepositorySingleton
 
     CTRL -> PLAT : getVehicleRepository()
     activate PLAT
-    PLAT -> CTRL : vehicleRepository
+    PLAT --> CTRL : vehicleRepository
     deactivate PLAT
 
     CTRL -> VehicleRepository : getVehiclesList()
     activate VehicleRepository
-    VehicleRepository -> CTRL : vehiclesList
+    VehicleRepository --> CTRL : vehiclesList
     deactivate VehicleRepository
-    CTRL -> UI : vehiclesList
+    CTRL --> UI : vehiclesList
     deactivate CTRL
 
-    loop while until end of vehicles list
+    loop until end of vehicles list
     UI --> Employee : requests to update the current kms of the vehicle
     deactivate UI
     Employee -> UI : enters the current kms of the vehicle
@@ -58,51 +58,51 @@ activate Employee
     activate CTRL
     CTRL -> RepositorySingleton : getInstance()
     activate RepositorySingleton
-    RepositorySingleton -> CTRL : repositories
+    RepositorySingleton --> CTRL : repositories
     deactivate RepositorySingleton
     CTRL -> PLAT : getVehicleRepository()
     activate PLAT
-    PLAT -> CTRL : vehicleRepository
+    PLAT --> CTRL : vehicleRepository
     deactivate PLAT
     CTRL -> VehicleRepository : updateVehicleKms(vehiclePlate, kms)
     activate VehicleRepository
     VehicleRepository -> Vehicle : updateVehicleKms(vehiclePlate, kms)
     activate Vehicle
-    Vehicle -> VehicleRepository : vehicle
+    Vehicle --> VehicleRepository : vehicle
     deactivate Vehicle
-    VehicleRepository -> CTRL : vehicle
+    VehicleRepository --> CTRL : vehicle
     deactivate VehicleRepository
-    CTRL -> UI : vehicle
+    CTRL --> UI : vehicle
     deactivate CTRL
     UI -> CTRL : getLastMaintenance(vehiclePlate)
     activate CTRL
     CTRL -> RepositorySingleton : getInstance()
     activate RepositorySingleton
-    RepositorySingleton -> CTRL : repositories
+    RepositorySingleton --> CTRL : repositories
     deactivate RepositorySingleton
     CTRL -> PLAT : getMaintenanceRepository()
     activate PLAT
-    PLAT -> CTRL : maintenanceRepository
+    PLAT --> CTRL : maintenanceRepository
     deactivate PLAT
     CTRL -> MaintenanceRepository : getLastMaintenance(vehiclePlate)
     activate MaintenanceRepository
-    MaintenanceRepository -> CTRL : lastMaintenance
+    MaintenanceRepository --> CTRL : lastMaintenance
     deactivate MaintenanceRepository
-    CTRL -> UI : lastMaintenance
+    CTRL --> UI : lastMaintenance
     deactivate CTRL
     UI -> CTRL : calculateNextMaintenance(vehicle, lastMaintenance)
     activate CTRL
     CTRL -> CTRL : needsMaintenance = calculateNextMaintenance(vehicle, lastMaintenance)
-    CTRL -> UI : needsMaintenance
+    CTRL --> UI : needsMaintenance
     deactivate CTRL
     opt needsMaintenance = true
         UI -> CTRL : addVehicleToList(vehicle)
         activate CTRL
         CTRL -> vehiclesNeedingMaintenanceList : addVehicleToList(vehicle)
         activate vehiclesNeedingMaintenanceList
-        vehiclesNeedingMaintenanceList -> CTRL : vehiclesNeedingMaintenanceList
+        vehiclesNeedingMaintenanceList --> CTRL : vehiclesNeedingMaintenanceList
         deactivate vehiclesNeedingMaintenanceList
-        CTRL -> UI : vehiclesNeedingMaintenanceList
+        CTRL --> UI : vehiclesNeedingMaintenanceList
         deactivate CTRL
     end
     end
