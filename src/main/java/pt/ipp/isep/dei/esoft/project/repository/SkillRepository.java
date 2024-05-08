@@ -8,8 +8,6 @@ import java.util.List;
 public class SkillRepository {
     private final List<Skill> skills;
 
-    private List<String> selectedSkillNamesList;
-
     private List<Skill> selectedSkillsList;
 
     public SkillRepository() {
@@ -39,24 +37,20 @@ public class SkillRepository {
         return List.copyOf(skills);
     }
 
-    public void createSelectedSkillNamesList()
+    public void createSelectedSkillsList()
     {
-        selectedSkillNamesList = new ArrayList<>();
-    }
-
-    public void addSelectedSkillName(String name){
-        if(!selectedSkillNamesList.contains(name))
-        {
-            selectedSkillNamesList.add(name);
-        }
-    }
-
-    public List<Skill> createSelectedSkillsList(){
         selectedSkillsList = new ArrayList<>();
-        for(String selectedSkillName: selectedSkillNamesList){
-            selectedSkillsList.add(getSkillByName(selectedSkillName));
+    }
+
+    public void addSelectedSkill(String name){
+        Skill skill = getSkillByName(name);
+        if(!selectedSkillsList.contains(skill))
+        {
+            selectedSkillsList.add(skill);
         }
+    }
+
+    public List<Skill> getSelectedSkillsList(){
         return selectedSkillsList;
     }
-
 }

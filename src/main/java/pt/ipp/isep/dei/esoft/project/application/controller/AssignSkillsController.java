@@ -38,7 +38,7 @@ public class AssignSkillsController {
 
 
     public Optional<Collaborator> assignSkills(String collaboratorIdNumber){
-        List<Skill> selectedSkillsList = createSelectedSkillsList();
+        List<Skill> selectedSkillsList = getSelectedSkillsList();
 
         Collaborator collaborator = getCollaboratorByIdNumber(collaboratorIdNumber);
 
@@ -54,8 +54,8 @@ public class AssignSkillsController {
         return updatedCollaborator;
     }
 
-    private List<Skill> createSelectedSkillsList(){
-        return skillRepository.createSelectedSkillsList();
+    private List<Skill> getSelectedSkillsList(){
+        return skillRepository.getSelectedSkillsList();
     }
 
     private Collaborator getCollaboratorByIdNumber(String collaboratorIdNumber){
@@ -69,12 +69,12 @@ public class AssignSkillsController {
 
     public List<Skill> getSkills() {
         SkillRepository skillRepository = getSkillRepository();
-        skillRepository.createSelectedSkillNamesList();
+        skillRepository.createSelectedSkillsList();
         return skillRepository.getSkills();
     }
 
     public void addSelectedSkillName(String name){
-        skillRepository.addSelectedSkillName(name);
+        skillRepository.addSelectedSkill(name);
     }
 
 }
