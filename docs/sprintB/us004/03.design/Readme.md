@@ -4,23 +4,22 @@
 
 ### 3.1. Rationale
 
-| Interaction ID | Question: Which class is responsible for...                      | Answer                 | Justification (with patterns)   |
-|:---------------|:-----------------------------------------------------------------|:-----------------------|:--------------------------------|
-| Step 1         | ...interacting with the actor?                                   | AssignSkillsUI         | Pure Fabrication                |
-|                | ...coordinating the US?                                          | AssignSkillsController |                                 |
-| Step 2         | ...displaying the form for the actor to input collaborator's id? | AssignSkillsUI         | Pure Fabrication                |
-| Step 3  	      | ...validating collaborator's id?                                 | AssignSkillsUI         | Pure Fabrication                |
-| Step 4         | ...obtaining skills list?                                        | SkillRepository        |                                 |
-| 	              | ...displaying skills list?                                       | AssignSkillsUI         | Pure Fabrication                |
-| Step 5         | ...validating selected skill?                                    | AssignSkillsUI         | Pure Fabrication                |
-|                | ...temporarily keeping the selected skill?                       | AssignSkillsUI         | Pure Fabrication                |
-| Step 6         | ...displaying form for the actor to input response?	             | AssignSkillsUI         | Pure Fabrication                |              
-| Step 7         | ...validating actor's response?                                  | AssignSkillsUI         | Pure Fabrication                | 
-| Step 8         | ...obtaining collaborator's skills?                              | CollaboratorRepository |                                 | 
-|                | ...displaying all the data before submitting?                    | AssignSkillsUI         | Pure Fabrication                |
-|                | ...displaying the form for the actor to confirm?                 | AssignSkillsUI         | Pure Fabrication                |
-| Step 9         | ...adding skills to collaborator?                                | CollaboratorRepository |                                 |
-| Step 10        | ...informing operation success?                                  | AssignSkillsUI         | Pure Fabrication                |
+| Interaction ID | Question: Which class is responsible for... | Answer                 | Justification (with patterns)        |
+|:---------------|:--------------------------------------------|:-----------------------|:-------------------------------------|
+| Step 1         | ...interacting with the actor?              | AssignSkillsUI         | Pure Fabrication                     |
+|                | ...coordinating the US?                     | AssignSkillsController | Pure Fabrication, Controller         |
+|                | ...obtaining the collaborators list?        | CollaboratorRepository | Pure Fabrication, Information Expert |
+| Step 2         | ...displaying collaborators list?           | AssignSkillsUI         | Pure Fabrication                     |
+| Step 3         | ...obtaining skills list?                   | SkillRepository        | Pure Fabrication, Information Expert |
+|                | ...creating a selected skills list?         | SkillRepository        | Pure Fabrication, Creator            |
+| Step 4         | ...displaying skills list?                  | AssignSkillsUI         | Pure Fabrication                     |
+| Step 5         | ...adding selected skills to the list?      | SkillRepository        | Pure Fabrication, Information Expert |              
+| Step 7         | ...asking the actor to stop the loop?       | AssignSkillsUI         | Pure Fabrication                     | 
+| Step 8         | ...continue/breaking the loop?              | AssignSkillsUI         | Pure Fabrication                     | 
+| Step 9         | ...obtaining the selected skills list?      | SkillRepository        | Pure Fabrication, Information Expert |
+|                | ...obtaining the collaborator by id?        | CollaboratorRepository | Pure Fabrication, Information Expert |
+|                | ...assigning skill(s) to collaborator?      | Collaborator           | Information Expert                   |
+| Step 10        | ...informing operation success?             | AssignSkillsUI         | Pure Fabrication                     |
 
 ### Systematization ##
 
@@ -50,23 +49,23 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![US04 - Sequence Diagram - split](svg/us006-sequence-diagram-split.svg)
+![US04 - Sequence Diagram - split](svg/us004-sequence-diagram-split.svg)
 
-**Get Task Category List Partial SD**
+**Get Collaborators**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/us006-sequence-diagram-partial-get-task-category-list.svg)
+![Sequence Diagram - Partial - Get Collaborators](svg/us004-sequence-diagram-partial-get-collaborators.svg)
 
-**Get Task Category Object**
+**Get Skills**
 
-![Sequence Diagram - Partial - Get Task Category Object](svg/us006-sequence-diagram-partial-get-task-category.svg)
+![Sequence Diagram - Partial - Get Skills](svg/us004-sequence-diagram-partial-get-skills.svg)
 
-**Get Employee**
+**Add Selected Skill**
 
-![Sequence Diagram - Partial - Get Employee](svg/us006-sequence-diagram-partial-get-employee.svg)
+![Sequence Diagram - Partial - Add Selected Skill](svg/us004-sequence-diagram-partial-add-selected-skills.svg)
 
-**Create Task**
+**Assign Skill(s)**
 
-![Sequence Diagram - Partial - Create Task](svg/us006-sequence-diagram-partial-create-task.svg)
+![Sequence Diagram - Partial - Assign Skill](svg/us004-sequence-diagram-partial-assign-skill.svg)
 
 ## 3.3. Class Diagram (CD)
 
