@@ -1,11 +1,11 @@
-# US008 - List vehicles needing check-up
+# US008 - Produce list of vehicles needing maintenance
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an VFM, I want to list the vehicles needing the check-up.
+As a VFM, I want the system to produce a list (report) of vehicles needing maintenance.
 
 ### 1.2. Customer Specifications and Clarifications 
 
@@ -38,13 +38,19 @@ As an VFM, I want to list the vehicles needing the check-up.
 
 ### 1.3. Acceptance Criteria
 
-* There's no acceptance criteria defined for this user story.
+* AC1: The report should have the data concerning the vehicle description (Plate, Brand, Model and Current Kms) and the Checkup related data
 
 ### 1.4. Found out Dependencies
 
-* There are no dependencies.
+* There is a dependency on "US006 - Register a vehicle" as there must be at least one vehicle.
+* There is a dependency on "US007 - Register a vehicle's maintenance" as there must be at least one vehicle's maintencance.
 
 ### 1.5 Input and Output Data
+
+**Input Data:**
+
+* Typed data:
+    * current kms of each vehicle
 
 **Output Data:**
 
