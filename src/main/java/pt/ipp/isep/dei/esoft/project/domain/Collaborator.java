@@ -28,14 +28,14 @@ public class Collaborator {
         public static boolean isValidNumber(DocType type, String number) {
             switch (type) {
                 case CC:
-                    // Add your validation logic for CC
-                    return true; // Example validation, replace with your actual logic
+                    String ccPattern = "\\d{8} \\d [A-Z]{2}\\d";
+                    return number.trim().matches(ccPattern);
                 case BI:
-                    // Add your validation logic for BI
-                    return true; // Example validation, replace with your actual logic
+                    String biPattern = "\\d{8} \\d";
+                    return number.trim().matches(biPattern);
                 case PASSPORT:
-                    // Add your validation logic for Passport
-                    return true; // Example validation, replace with your actual logic
+                    String passportPattern = "[A-Z]{2}\\d{6}";
+                    return number.trim().matches(passportPattern);
                 default:
                     return false;
             }
@@ -79,7 +79,26 @@ public class Collaborator {
     }
 
     private void setName(String name) {
-        this.name = name;
+
+        if (name.matches(".*\\d.*")) {
+            // If the input name contains numeric characters, throw an exception or handle it accordingly
+            throw new IllegalArgumentException("Name cannot contain numbers.");
+        }
+
+        String trimmedName = name.trim();
+
+        int wordCount = trimmedName.isEmpty() ? 0 : trimmedName.split("\\s+").length;
+
+        if (wordCount <= 6 && wordCount > 0) {
+            this.name = name;
+        }
+        else if (wordCount == 0)
+        {
+            throw new IllegalArgumentException("Name wasn't correctly filled.");
+        }
+        else {
+            throw new IllegalArgumentException("Name cannot have more than 6 words.");
+        }
     }
 
     private void setBirthdate(String birthdate) {
