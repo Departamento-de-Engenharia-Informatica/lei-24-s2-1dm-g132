@@ -102,28 +102,120 @@ public class Collaborator {
     }
 
     private void setBirthdate(String birthdate) {
-        //this.birthdate = birthdate;
-        this.birthdate = Calendar.getInstance();
+        String[] parts = birthdate.trim().split("/");
+
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("Invalid birthdate format. Use year/month/day.");
+        }
+
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int day = Integer.parseInt(parts[2]);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month - 1);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+
+        Calendar currentDate = Calendar.getInstance();
+
+        currentDate.add(Calendar.YEAR, -18);
+
+        if(!cal.before(currentDate))
+        {
+            throw new IllegalArgumentException("Collaborator must be at least 18 years old.");
+        }
+
+        this.birthdate = cal;
     }
 
     private void setAdmissionDate(String admissionDate) {
-        //this.admissionDate = admissionDate;
-        this.admissionDate = Calendar.getInstance();
+        String[] parts = admissionDate.trim().split("/");
+
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("Invalid admission date format. Use year/month/day.");
+        }
+
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int day = Integer.parseInt(parts[2]);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month - 1);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+
+        Calendar currentDate = Calendar.getInstance();
+
+        currentDate.add(Calendar.YEAR, -18);
+
+        if(!cal.before(currentDate))
+        {
+            throw new IllegalArgumentException("Collaborator must be at least 18 years old at the time of admission.");
+        }
+
+        this.admissionDate = cal;
     }
 
     private void setAddress(String address) {
+        String[] components = address.trim().split(",");
+
+        if (components.length != 3) {
+            throw new IllegalArgumentException("Invalid address format. Use street, zipcode, city.");
+        }
+
+        String street = components[0].trim();
+        String zipcode = components[1].trim();
+        String city = components[2].trim();
+
+
+        if (street.isEmpty()) {
+            throw new IllegalArgumentException("Street cannot be empty.");
+        }
+
+        if (zipcode.isEmpty() || !zipcode.matches("\\d{4}-\\d{3}")) {
+            throw new IllegalArgumentException("Zipcode must have the format '0000-000'.");
+        }
+
+        if (city.isEmpty()) {
+            throw new IllegalArgumentException("City cannot be empty.");
+        }
+
         this.address = address;
     }
 
     private void setPhoneNumber(int phoneNumber) {
+        String phoneNumberStr = String.valueOf(phoneNumber);
+
+        if (!phoneNumberStr.matches("(91|92|93|95|96)\\d{7}")) {
+            throw new IllegalArgumentException("Invalid phone number format. Phone number must start with 91, 92, 93, 95, or 96 and have 9 digits.");
+        }
+
         this.phoneNumber = phoneNumber;
     }
 
     private void setTaxpayerNumber(int taxpayerNumber) {
-        this.taxpayerNumber = taxpayerNumber;
+        int digitCount = 0;
+
+        int temp = taxpayerNumber;
+        while (temp != 0) {
+            temp /= 10;
+            digitCount++;
+        }
+
+        if (digitCount == 9) {
+            this.taxpayerNumber = taxpayerNumber;
+        } else {
+            throw new IllegalArgumentException("Taxpayer number must have 9 digits.");
+        }
     }
 
     private void setEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        if (!email.matches(emailRegex)) {
+            throw new IllegalArgumentException("Invalid email address format.");
+        }
+
         this.email = email;
     }
 

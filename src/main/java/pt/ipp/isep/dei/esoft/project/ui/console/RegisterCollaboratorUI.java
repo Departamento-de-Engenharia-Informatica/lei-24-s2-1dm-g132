@@ -80,19 +80,19 @@ public class RegisterCollaboratorUI implements Runnable {
 
     private String requestCollaboratorBirthdate() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Collaborator Birthdate: ");
+        System.out.print("Collaborator Birthdate (year/month/day): ");
         return input.nextLine();
     }
 
     private String requestCollaboratorAdmissionDate() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Collaborator Admission Date: ");
+        System.out.print("Collaborator Admission Date (year/month/day): ");
         return input.nextLine();
     }
 
     private String requestCollaboratorAddress() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Collaborator Address: ");
+        System.out.print("Collaborator Address (street, zipcode, city): ");
         return input.nextLine();
     }
 
