@@ -1,4 +1,4 @@
-# US008 - list the vehicles needing the check-up
+# US008 - Produce list of vehicles needing maintenance
 
 ## 2. Analysis
 
