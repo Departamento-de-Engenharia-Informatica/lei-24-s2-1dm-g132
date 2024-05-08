@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US008 - Produce a list of vehicles needing maintenance
+
+actor "VFM" as Employee
+participant ":ListVehiclesNeedingMaintenanceController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "vehiclesNeedingMaintenanceList\nList<Vehicle>" as vehiclesNeedingMaintenanceList
+
+
+autonumber 36
+-> CTRL : addVehicleToList(vehicle)
+
+autonumber 36.1
+
+activate CTRL
+    group Add vehicle to list of \nvehicles needing maintenance
+    CTRL -> vehiclesNeedingMaintenanceList : addVehicleToList(vehicle)
+    activate vehiclesNeedingMaintenanceList
+
+    vehiclesNeedingMaintenanceList --> CTRL : vehiclesNeedingMaintenanceList
+    deactivate vehiclesNeedingMaintenanceList
+
+    end group
+
+autonumber 37
+<-- CTRL : vehiclesNeedingMaintenanceList
+deactivate CTRL
+
+@enduml
