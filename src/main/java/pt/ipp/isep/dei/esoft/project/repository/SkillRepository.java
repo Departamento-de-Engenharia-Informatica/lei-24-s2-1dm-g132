@@ -54,6 +54,16 @@ public class SkillRepository {
         return List.copyOf(skills);
     }
 
+    public void createSelectedSkillsList()
+    {
+        selectedSkillsList = new ArrayList<>();
+    }
+
+    public void addSelectedSkill(String name){
+        Skill skill = getSkillByName(name);
+        selectedSkillsList.add(skill);
+    }
+
     public Skill getSkillByName(String skillName) {
         Skill newSkill = new Skill(skillName);
         Skill skill = null;
@@ -65,17 +75,6 @@ public class SkillRepository {
                     "Skill requested for [" + skillName + "] does not exist.");
         }
         return skill;
-    }
-
-
-    public void createSelectedSkillsList()
-    {
-        selectedSkillsList = new ArrayList<>();
-    }
-
-    public void addSelectedSkill(String name){
-        Skill skill = getSkillByName(name);
-        selectedSkillsList.add(skill);
     }
 
     public List<Skill> getSelectedSkillsList(){

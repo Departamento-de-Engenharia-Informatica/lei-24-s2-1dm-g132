@@ -44,6 +44,8 @@ public class AssignSkillsUI implements Runnable{
     }
 
     private void displayAndSelectSkills(){
+        boolean cont = true;
+
         List<Skill> skills = controller.getSkills();
 
         int listSize = skills.size();
@@ -63,8 +65,13 @@ public class AssignSkillsUI implements Runnable{
                 String name = skills.get(answer - 1).getName();
                 controller.addSelectedSkillName(name);
             }
+            else{
+                cont = false;
+            }
 
-        }while(answer != 0);
+            answer = -1;
+
+        }while(cont);
     }
 
     private String displayAndSelectCollaborator() {
@@ -99,7 +106,7 @@ public class AssignSkillsUI implements Runnable{
         //display the collaborators as a menu with number options to select
         int i = 1;
         for (Collaborator collaborator : collaborators) {
-            System.out.println("  " + i + " - " + collaborator.getName() + ":" + collaborator.getIdentificationDocumentNumber());
+            System.out.println("  " + i + " - " + collaborator.getName() + " : " + collaborator.getIdentificationDocumentNumber());
             i++;
         }
     }

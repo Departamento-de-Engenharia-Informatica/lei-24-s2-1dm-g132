@@ -285,4 +285,9 @@ public class Collaborator {
                 this.taxpayerNumber, this.identificationDocumentType, this.identificationDocumentNumber, this.job, new ArrayList<>(this.skills));
     }
 
+
+    public String toStringTeam() {
+        return String.format("Collaborator: %s\n" +
+                        "Skills: %s", this.name, this.skills);
+    }
 }

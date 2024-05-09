@@ -1,15 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.ui.console.DevTeamUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterCollaboratorUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterJobUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.authorization.AuthenticationUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterSkillUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +31,7 @@ public class MainMenuUI implements Runnable {
         options.add(new MenuItem("Register a Job", new RegisterJobUI()));
         options.add(new MenuItem("Register a Skill", new RegisterSkillUI()));
         options.add(new MenuItem("Register a Collaborator", new RegisterCollaboratorUI()));
+        options.add(new MenuItem("Assign skills to Collaborator", new AssignSkillsUI()));
 
         int option = 0;
         do {
@@ -70,7 +68,7 @@ public class MainMenuUI implements Runnable {
         List<Collaborator> collaborators = Repositories.getInstance().getCollaboratorRepository().getCollaborators();
         System.out.println("Collaborators in repository:");
         for (Collaborator collaborator : collaborators) {
-            System.out.println(collaborator.getName());
+            System.out.println(collaborator.getName() + collaborator.getSkills());
         }
     }
 }
