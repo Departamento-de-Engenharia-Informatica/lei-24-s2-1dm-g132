@@ -141,7 +141,7 @@ public class RegisterCollaboratorUI implements Runnable {
             answer = input.nextInt();
         }
 
-        String name = jobs.get(answer - 1).getName();
+        String name = jobs.get(answer - 1).getJobName();
         return name;
     }
 
@@ -149,7 +149,7 @@ public class RegisterCollaboratorUI implements Runnable {
         //display the jobs as a menu with number options to select
         int i = 1;
         for (Job job : jobs) {
-            System.out.println("  " + i + " - " + job.getName());
+            System.out.println("  " + i + " - " + job.getJobName());
             i++;
         }
     }
