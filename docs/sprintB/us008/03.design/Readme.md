@@ -61,9 +61,6 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 ![Sequence Diagram - Partial - Get Last Maintenance](svg/us008-sequence-diagram-partial-get-last-maintenance.svg)
 
-**Add Vehicle to List**
-
-![Sequence Diagram - Partial - Add Vehicle to List](svg/us008-sequence-diagram-partial-add-vehicle-to-list.svg)
 
 ## 3.3. Class Diagram (CD)
 

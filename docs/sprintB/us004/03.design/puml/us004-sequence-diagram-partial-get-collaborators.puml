@@ -4,34 +4,37 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 participant ":AssignSkillsController" as CTRL
-participant "skillRepository:\nSkillRepository" as SkillRepository
-participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
 
 autonumber 3
--> CTRL : addSelectedSkillName(skillName)
+-> CTRL : getCollaborators()
 
 autonumber 3.1
 
 activate CTRL
     group Get Collaborators
-        CTRL -> SkillRepository: addSelectedSkill(skillName)
-        activate SkillRepository
+           CTRL -> RepositorySingleton : getInstance()
+           activate RepositorySingleton
 
-        SkillRepository -> SkillRepository: getSkillByName(skillName)
+           RepositorySingleton --> CTRL: repositories
+           deactivate RepositorySingleton
 
-        SkillRepository --> SkillRepository: skill
-        SkillRepository -> selectedSkillsList : add(skill)
-        activate selectedSkillsList
+           CTRL -> PLAT : getCollaboratorRepository()
+           activate PLAT
 
-        deactivate selectedSkillsList
-        deactivate SkillRepository
+           PLAT --> CTRL: collaboratorRepository
+           deactivate PLAT
 
-    end group
+           CTRL -> CollaboratorRepository : getCollaborators()
+           activate CollaboratorRepository
 
-    autonumber 4
-    <-- CTRL : asks to continue
+           CollaboratorRepository --> CTRL : collaboratorsList
+           deactivate CollaboratorRepository
 
-deactivate CTRL
-
+end group
+autonumber 4
+<-- CTRL : collaboratorsList
 
 @enduml
