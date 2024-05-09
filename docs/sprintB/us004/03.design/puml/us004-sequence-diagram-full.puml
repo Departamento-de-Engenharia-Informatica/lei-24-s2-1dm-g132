@@ -133,7 +133,6 @@ activate Employee
     CTRL -> SkillRepository : getSelectedSkillsList()
     activate SkillRepository
 
-    SkillRepository -> SkillRepository : getSelectedSkillsList()
     SkillRepository --> CTRL : selectedSkillsList
     deactivate SkillRepository
     deactivate CTRL
