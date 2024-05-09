@@ -151,11 +151,11 @@ public class Collaborator {
         cal.set(Calendar.MONTH, month - 1);
         cal.set(Calendar.DAY_OF_MONTH, day);
 
-        Calendar currentDate = Calendar.getInstance();
+        Calendar valDate = (Calendar) this.birthdate.clone();
 
-        currentDate.add(Calendar.YEAR, -18);
+        valDate.add(Calendar.YEAR, +18);
 
-        if(!cal.before(currentDate))
+        if(cal.before(valDate))
         {
             throw new IllegalArgumentException("Collaborator must be at least 18 years old at the time of admission.");
         }
@@ -285,4 +285,9 @@ public class Collaborator {
                 this.taxpayerNumber, this.identificationDocumentType, this.identificationDocumentNumber, this.job, new ArrayList<>(this.skills));
     }
 
+
+    public String toStringTeam() {
+        return String.format("Collaborator: %s\n" +
+                        "Skills: %s", this.name, this.skills);
+    }
 }

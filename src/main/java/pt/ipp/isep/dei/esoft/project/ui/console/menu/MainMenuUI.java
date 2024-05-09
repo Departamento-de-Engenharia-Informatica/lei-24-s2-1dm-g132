@@ -1,13 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
-import pt.ipp.isep.dei.esoft.project.ui.console.DevTeamUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterJobUI;
+import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.ui.console.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.authorization.AuthenticationUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterSkillUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +30,8 @@ public class MainMenuUI implements Runnable {
         options.add(new MenuItem("Know the Development Team", new DevTeamUI()));
         options.add(new MenuItem("Register a Job", new RegisterJobUI()));
         options.add(new MenuItem("Register a Skill", new RegisterSkillUI()));
+        options.add(new MenuItem("Register a Collaborator", new RegisterCollaboratorUI()));
+        options.add(new MenuItem("Assign skills to Collaborator", new AssignSkillsUI()));
 
         int option = 0;
         do {
@@ -39,6 +40,7 @@ public class MainMenuUI implements Runnable {
             if ((option >= 0) && (option < options.size())) {
                 options.get(option).run();
             }
+            printCollaboratorRepository();
         } while (option != -1);
 
     }
@@ -59,6 +61,14 @@ public class MainMenuUI implements Runnable {
         System.out.println("Skills in repository:");
         for (Skill skill : skills) {
             System.out.println(skill.getName());
+        }
+    }
+
+    private void printCollaboratorRepository() {
+        List<Collaborator> collaborators = Repositories.getInstance().getCollaboratorRepository().getCollaborators();
+        System.out.println("Collaborators in repository:");
+        for (Collaborator collaborator : collaborators) {
+            System.out.println(collaborator.getName() + collaborator.getSkills());
         }
     }
 }

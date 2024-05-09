@@ -63,7 +63,6 @@ public class AssignSkillsController {
     }
 
     public List<Collaborator> getCollaborators() {
-        CollaboratorRepository collaboratorRepository = getCollaboratorRepository();
         return collaboratorRepository.getCollaborators();
     }
 

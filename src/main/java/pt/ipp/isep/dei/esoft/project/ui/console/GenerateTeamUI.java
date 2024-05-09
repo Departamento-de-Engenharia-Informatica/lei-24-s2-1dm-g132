@@ -55,6 +55,10 @@ public class GenerateTeamUI implements Runnable{
     }
 
     private boolean teamProposalAnswer() {
+        for(Collaborator collaborator : teamProposal)
+        {
+            System.out.println(collaborator.toStringTeam());
+        }
         Scanner input = new Scanner(System.in);
         while (true) {
             System.out.print("Accept team proposal? (y or n): ");
@@ -83,6 +87,8 @@ public class GenerateTeamUI implements Runnable{
     }
 
     private void displayAndSelectSkills(){
+        boolean cont = true;
+
         List<Skill> skills = controller.getSkills();
 
         int listSize = skills.size();
@@ -102,8 +108,13 @@ public class GenerateTeamUI implements Runnable{
                 String name = skills.get(answer - 1).getName();
                 controller.addSelectedSkillName(name);
             }
+            else{
+                cont = false;
+            }
 
-        }while(answer != 0);
+            answer = -1;
+
+        }while(cont);
     }
 
     private void displaySkillOptions(List<Skill> skills) {
