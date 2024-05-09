@@ -61,7 +61,7 @@ It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 **Add Selected Skill**
 
-![Sequence Diagram - Partial - Add Selected Skill](svg/us004-sequence-diagram-partial-add-selected-skills.svg)
+![Sequence Diagram - Partial - Add Selected Skill](svg/us004-sequence-diagram-partial-add-selected-skill.svg)
 
 **Assign Skill(s)**
 
