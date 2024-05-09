@@ -241,7 +241,19 @@ public class Collaborator {
     }
 
     public Collaborator assignSkill(List<Skill> selectedSkillsList){
-        this.skills = selectedSkillsList;
+        boolean updated = false;
+        for(Skill skill: selectedSkillsList)
+        {
+            if(!this.skills.contains(skill))
+            {
+                this.skills.add(skill);
+                updated = true;
+            }
+        }
+        if(!updated)
+        {
+            throw new IllegalArgumentException("Collaborator already had all the skills introduced");
+        }
         return this;
     }
 
