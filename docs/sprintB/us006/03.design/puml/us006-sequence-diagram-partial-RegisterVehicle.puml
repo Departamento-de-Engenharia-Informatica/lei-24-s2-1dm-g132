@@ -4,6 +4,7 @@
 actor "VFM" as USER
 
 
+
 participant ":RegisterNewVehicleUI" as RegisterNewVehicleUI
 participant ":RegisterNewVehicleController" as RegisterNewVehicleController
 
