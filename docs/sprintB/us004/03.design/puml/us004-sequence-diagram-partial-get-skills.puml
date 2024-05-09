@@ -7,7 +7,6 @@ participant ":AssignSkillsController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "skillRepository:\nSkillRepository" as SkillRepository
-participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
 
 autonumber 13
 -> CTRL : getSkillsList()

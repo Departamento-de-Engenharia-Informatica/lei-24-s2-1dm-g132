@@ -91,7 +91,7 @@ activate Employee
     Employee -> UI : selects one skill
     activate UI
 
-    UI -> CTRL : addSelectedSkillName(skillName)
+    UI -> CTRL : addSelectedSkill(skillName)
     activate CTRL
 
         CTRL -> SkillRepository: addSelectedSkill(skillName)
