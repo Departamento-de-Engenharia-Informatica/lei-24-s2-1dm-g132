@@ -66,13 +66,14 @@ activate Employee
         UI -> CTRL : addVehicleToList(vehicle)
         activate CTRL
 
-        ref over CTRL
-           Add Vehicle to Vehicles Needing Maintenance List
-        end ref
+        CTRL -> vehiclesNeedingMaintenanceList : addVehicleToList(vehicle)
+        activate vehiclesNeedingMaintenanceList
+
+        vehiclesNeedingMaintenanceList --> CTRL : vehiclesNeedingMaintenanceList
+        deactivate vehiclesNeedingMaintenanceList
 
         CTRL --> UI : vehiclesNeedingMaintenanceList
         deactivate CTRL
-    end
     end
 
     UI --> Employee : shows list of vehicles needing maintenance
