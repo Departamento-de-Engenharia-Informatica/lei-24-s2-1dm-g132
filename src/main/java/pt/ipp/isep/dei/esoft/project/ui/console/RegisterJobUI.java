@@ -89,6 +89,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.RegisterJobControlle
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
 
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
