@@ -1,3 +1,4 @@
+/*
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterJobController;
@@ -79,5 +80,61 @@ public class RegisterJobUI implements Runnable {
 
 
 
+
+}
+*/
+package pt.ipp.isep.dei.esoft.project.ui.console;
+
+import pt.ipp.isep.dei.esoft.project.application.controller.RegisterJobController;
+import pt.ipp.isep.dei.esoft.project.domain.Job;
+import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
+
+public class RegisterJobUI implements Runnable {
+    private String Jobname;
+
+    private final RegisterJobController controller;
+
+
+    public RegisterJobUI() {
+
+        controller = new RegisterJobController();
+
+    }
+    private RegisterJobController controller() {
+        return controller;
+    }
+
+
+    public void run() {
+        System.out.println("\n\n--- Register Job ------------------------");
+
+        requestData();
+        submitData();
+    }
+
+    private void submitData() {
+        Job job = controller().registerJob(Jobname);
+        if (job != null) {
+            System.out.println("\nJob successfully created!");
+        } else {
+            System.out.println("\nJob not created!");
+        }
+
+    }
+    private void requestData() {
+        Jobname = requestJobName();
+    }
+
+
+
+    private String requestJobName() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Job Name: ");
+        return input.nextLine();
+    }
 
 }
