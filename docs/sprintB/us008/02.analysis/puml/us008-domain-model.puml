@@ -35,7 +35,7 @@ class Maintenance {
 }
 
 VFM "1" -- "*" Vehicle : manages >
-Vehicle "1" -- "*" Maintenance : has >
+Vehicle "1" -- "*" Maintenance : needs >
 
 
 @enduml
