@@ -20,7 +20,7 @@ class GenerateTeamController
     + getSkills()
     + addSelectedSkillName(skillName)
     + generateTeamProposal(minCollab, maxCollab)
-    + registerTeam(tempCollaboratorList)
+    + registerTeam(teamProposal)
     - getSelectedSkillsList()
     - createAvailableCollaboratorsList()
     - selectCollaboratorsForTeam(selectedSkillsList, minCollab, maxCollab)
@@ -58,7 +58,7 @@ class CollaboratorRepository
 class TeamRepository
 {
     + removeUnavailableCollaborators(tempCollaboratorList)
-    + registerTeam(tempCollaboratorList)
+    + registerTeam(teamProposal)
     - addTeam(team)
 }
 
@@ -73,7 +73,7 @@ class Collaborator
     - Integer taxpayerNumber
     - String identificationDocumentNumber
     + Collaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, job)
-    + teamDefinitionCriteria(selectedSkillsList, minCollab, maxCollab)
+    + getSkills()
 }
 
 enum DocType
@@ -90,7 +90,7 @@ class Skill
 
 class Team
 {
-    + Team(tempCollaboratorList)
+    + Team(teamProposal)
     + removeUnavailableCollaborators(tempCollaboratorList)
 }
 
