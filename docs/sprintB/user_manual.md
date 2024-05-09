@@ -57,6 +57,10 @@
     The main goal of this program is to facilitate and provide a more organized management system to our managers 
     and administrators. The program allows these users to control everything that involves public spaces, including its users and maintenance.
     The application is organized by user. Each user has a specific role and access to different functionalities.
+    The main users are the Green Space Manager (GSM), the Human Resources Manager (HRM), and the Vehicle and Equipment Fleet Manager (VFM).
+    The HRM is responsible for managing the human resources and defining teams based on the skills of the employees.
+    The GSM is responsible for managing the green spaces, which includes planning and building irrigation system.
+    The VFM is responsible for managing the vehicles and machines, ensuring their good condition.
 
 
 ## System Features
