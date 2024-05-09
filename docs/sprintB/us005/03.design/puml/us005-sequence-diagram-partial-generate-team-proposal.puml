@@ -22,27 +22,20 @@ participant "tempCollaboratorList:\nList<Collaborator>" as tempCollaboratorList
                                 activate CollaboratorRepository
 
                                     loop for each available collaborator in tempCollaboratorList
-                                    CollaboratorRepository -> Collab : res = teamDefinitionCriteria(selectedSkillsList, minCollab, maxCollab)
+                                    CollaboratorRepository -> Collab : getSkills()
                                     activate Collab
+
+                                    Collab --> CollaboratorRepository : skills
 
                                     deactivate Collab
 
-                                    opt res == false
-
-                                    CollaboratorRepository -> tempCollaboratorList : remove(collaborator)
-                                    activate tempCollaboratorList
-
-                                    deactivate tempCollaboratorList
-
-                                    end opt
-
                                     end loop
 
-                                    CollaboratorRepository --> CTRL : tempCollaboratorList
+                                    CollaboratorRepository --> CTRL : teamProposal
                                 deactivate CollaboratorRepository
 
                 end group
                 autonumber 22
 
-    <-- CTRL : tempCollaboratorsList
+    <-- CTRL : teamProposal
 @enduml

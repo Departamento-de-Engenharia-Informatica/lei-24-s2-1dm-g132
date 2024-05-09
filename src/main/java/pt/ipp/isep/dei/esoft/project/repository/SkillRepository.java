@@ -75,10 +75,7 @@ public class SkillRepository {
 
     public void addSelectedSkill(String name){
         Skill skill = getSkillByName(name);
-        if(!selectedSkillsList.contains(skill))
-        {
-            selectedSkillsList.add(skill);
-        }
+        selectedSkillsList.add(skill);
     }
 
     public List<Skill> getSelectedSkillsList(){

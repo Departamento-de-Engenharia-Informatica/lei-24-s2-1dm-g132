@@ -18,7 +18,7 @@ public class Collaborator {
 
     private Job job;
 
-    private List<Skill> skills = new ArrayList<>();
+    private List<Skill> skills;
 
     private static enum DocType{
         CC { @Override public String toString() { return "CC"; } },
@@ -54,10 +54,11 @@ public class Collaborator {
         setIdentificationDocumentType(identificationDocumentType);
         setIdentificationDocumentNumber(identificationDocumentNumber);
         this.job = job;
+        this.skills = new ArrayList<>();
     }
 
     public Collaborator(String name, Calendar birthdate, Calendar admissionDate, String address, int phoneNumber, String email,
-                        int taxpayerNumber, DocType identificationDocumentType, String identificationDocumentNumber, Job job){
+                        int taxpayerNumber, DocType identificationDocumentType, String identificationDocumentNumber, Job job, List<Skill> skills){
         setName(name);
         this.birthdate = birthdate;
         this.admissionDate = admissionDate;
@@ -65,9 +66,10 @@ public class Collaborator {
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setTaxpayerNumber(taxpayerNumber);
-        setIdentificationDocumentType(identificationDocumentType);
+        this.identificationDocumentType = identificationDocumentType;
         setIdentificationDocumentNumber(identificationDocumentNumber);
         this.job = job;
+        this.skills = skills;
     }
 
     public String getName() {
@@ -76,6 +78,10 @@ public class Collaborator {
 
     public String getIdentificationDocumentNumber() {
         return identificationDocumentNumber;
+    }
+
+    public List<Skill> getSkills() {
+        return List.copyOf(skills);
     }
 
     private void setName(String name) {
@@ -276,7 +282,7 @@ public class Collaborator {
     @Override
     public Collaborator clone() {
         return new Collaborator(this.name, this.birthdate, this.admissionDate, this.address, this.phoneNumber, this.email,
-                this.taxpayerNumber, this.identificationDocumentType, this.identificationDocumentNumber, this.job);
+                this.taxpayerNumber, this.identificationDocumentType, this.identificationDocumentNumber, this.job, new ArrayList<>(this.skills));
     }
 
 }

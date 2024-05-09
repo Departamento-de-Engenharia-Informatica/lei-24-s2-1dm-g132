@@ -186,29 +186,22 @@ activate HRM
                 activate CollaboratorRepository
 
                     loop for each available collaborator in tempCollaboratorList
-                    CollaboratorRepository -> Collab : res = teamDefinitionCriteria(selectedSkillsList, minCollab, maxCollab)
+                    CollaboratorRepository -> Collab : getSkills()
                     activate Collab
+
+                    Collab --> CollaboratorRepository : skills
 
                     deactivate Collab
 
-                    opt res == false
-
-                    CollaboratorRepository -> tempCollaboratorList : remove(collaborator)
-                    activate tempCollaboratorList
-
-                    deactivate tempCollaboratorList
-
-                    end opt
-
                     end loop
 
-                    CollaboratorRepository --> CTRL : tempCollaboratorList
+                    CollaboratorRepository --> CTRL : teamProposal
                 deactivate CollaboratorRepository
 
-                CTRL --> CTRL : tempCollaboratorList
+                CTRL --> CTRL : teamProposal
             deactivate CTRL
 
-            CTRL --> UI : tempCollaboratorList
+            CTRL --> UI : teamProposal
         deactivate CTRL
 
         UI --> HRM : shows a team proposal
@@ -217,7 +210,7 @@ activate HRM
     HRM -> UI : accepts or refuses team proposal
     activate UI
 
-        UI -> CTRL : registerTeam(tempCollaboratorList)
+        UI -> CTRL : registerTeam(teamProposal)
         activate CTRL
 
             CTRL -> RepositorySingleton : getInstance()
@@ -232,10 +225,10 @@ activate HRM
                 PLAT --> CTRL : teamRepository
             deactivate PLAT
 
-            CTRL -> TeamRepository : registerTeam(tempCollaboratorList)
+            CTRL -> TeamRepository : registerTeam(teamProposal)
             activate TeamRepository
 
-                TeamRepository -> TEAM** : create(tempCollaboratorList)
+                TeamRepository -> TEAM** : create(teamProposal)
                 TeamRepository -> TeamRepository : addTeam(team)
                 activate TeamRepository
                 TeamRepository --> TeamRepository
