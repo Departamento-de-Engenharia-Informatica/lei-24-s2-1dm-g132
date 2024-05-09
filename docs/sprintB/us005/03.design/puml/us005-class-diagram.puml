@@ -23,7 +23,7 @@ class GenerateTeamController
     + registerTeam(tempCollaboratorList)
     - getSelectedSkillsList()
     - createAvailableCollaboratorsList()
-    - selectCollaboratorsForTeam(selectedSkillsList)
+    - selectCollaboratorsForTeam(selectedSkillsList, minCollab, maxCollab)
 }
 '###############################################
 'Confirmar o pq do construtor ter os repositórios no exemplo
@@ -52,7 +52,7 @@ class SkillRepository
 class CollaboratorRepository
 {
     + createTempCollaboratorList()
-    + generateTeam(selectedSkillsList)
+    + generateTeam(selectedSkillsList, minCollab, maxCollab)
 }
 
 class TeamRepository
@@ -73,7 +73,7 @@ class Collaborator
     - Integer taxpayerNumber
     - String identificationDocumentNumber
     + Collaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, job)
-    + teamDefinitionCriteria(selectedSkillsList)
+    + teamDefinitionCriteria(selectedSkillsList, minCollab, maxCollab)
 }
 
 enum DocType
