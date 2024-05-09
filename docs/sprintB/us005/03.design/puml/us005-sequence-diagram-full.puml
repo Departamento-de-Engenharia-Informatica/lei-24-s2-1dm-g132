@@ -12,7 +12,6 @@ participant ":GenerateTeamController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "skillRepository:\nSkillRepository" as SkillRepository
-participant "selectedSkillNamesList:\nList<String>" as selectedSkillNamesList
 participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
 participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
 participant "tempCollaboratorList:\nList<Collaborator>" as tempCollaboratorList
@@ -60,10 +59,10 @@ activate HRM
                 deactivate SkillRepository
 
 
-                CTRL -> SkillRepository : createSelectedSkillNamesList()
+                CTRL -> SkillRepository : createSelectedSkillsList()
                 activate SkillRepository
 
-                    SkillRepository -> selectedSkillNamesList** : create()
+                    SkillRepository -> selectedSkillsList** : create()
                     deactivate SkillRepository
 
                 CTRL --> UI : skillList
@@ -78,20 +77,26 @@ activate HRM
     HRM -> UI : selects a skill
     activate UI
 
-            UI -> CTRL : addSelectedSkillName(skillName)
-            activate CTRL
+    UI -> CTRL : addSelectedSkillName(skillName)
+        activate CTRL
 
-                CTRL -> SkillRepository: addSelectedSkillName(skillName)
+            CTRL -> SkillRepository: addSelectedSkill(skillName)
+            activate SkillRepository
+
+                SkillRepository -> SkillRepository: getSkillByName(skillName)
                 activate SkillRepository
 
-                    SkillRepository -> selectedSkillNamesList : add(skillName)
-                    activate selectedSkillNamesList
+                SkillRepository --> SkillRepository: skill
+                deactivate SkillRepository
 
-                    deactivate selectedSkillNamesList
+                SkillRepository -> selectedSkillsList : add(skill)
+                activate selectedSkillsList
 
-            deactivate SkillRepository
+                deactivate selectedSkillsList
 
-        deactivate CTRL
+                deactivate SkillRepository
+
+            deactivate CTRL
 
         UI --> HRM : asks to continue
 
@@ -105,39 +110,17 @@ activate HRM
         UI -> CTRL : generateTeamProposal(minCollab, maxCollab)
         activate CTRL
 
-            CTRL -> CTRL : createSelectedSkillsList()
-            activate CTRL
+            CTRL -> CTRL : getSelectedSkillsList()
+                activate CTRL
 
-            CTRL -> SkillRepository : createSelectedSkillsList()
-            activate SkillRepository
-
-                SkillRepository -> selectedSkillsList** : create()
-
-                loop for each known selectedSkillName
-
-                SkillRepository -> selectedSkillNamesList : selectedSkillName = get(i)
-                activate selectedSkillNamesList
-
-                deactivate selectedSkillNamesList
-
-                SkillRepository -> SkillRepository: getSkillByName(selectedSkillName)
+                CTRL -> SkillRepository : getSelectedSkillsList()
                 activate SkillRepository
-
-                SkillRepository --> SkillRepository: skill
-                deactivate SkillRepository
-
-                SkillRepository -> selectedSkillsList : add(skill)
-                activate selectedSkillsList
-
-                deactivate selectedSkillsList
-
-                end loop
 
                 SkillRepository --> CTRL : selectedSkillsList
                 deactivate SkillRepository
 
-                    CTRL --> CTRL : selectedSkillsList
-            deactivate CTRL
+                CTRL --> CTRL : selectedSkillsList
+                deactivate CTRL
 
             CTRL -> CTRL : createAvailableCollaboratorsList()
             activate CTRL

@@ -10,7 +10,7 @@ actor "Human Resources Manager" as HRM
 participant ":GenerateTeamUI" as UI
 participant ":GenerateTeamController" as CTRL
 participant "skillRepository:\nSkillRepository" as SkillRepository
-participant "selectedSkillNamesList:\nList<String>" as selectedSkillNamesList
+participant "selectedSkillsList:\nList<Skill>" as selectedSkillsList
 
 
 activate HRM
@@ -37,10 +37,10 @@ activate HRM
 
             activate CTRL
 
-            CTRL -> SkillRepository : createSelectedSkillNamesList()
+            CTRL -> SkillRepository : createSelectedSkillsList()
             activate SkillRepository
 
-            SkillRepository -> selectedSkillNamesList** : create()
+            SkillRepository -> selectedSkillsList** : create()
             deactivate SkillRepository
 
                 CTRL --> UI : skillList
@@ -55,17 +55,11 @@ activate HRM
     activate UI
 
         UI -> CTRL : addSelectedSkillName(skillName)
-            activate CTRL
+        activate CTRL
+            ref over CTRL
+                Create Selected Skills List
 
-                CTRL -> SkillRepository: addSelectedSkillName(skillName)
-                activate SkillRepository
-
-                SkillRepository -> selectedSkillNamesList : add(skillName)
-                activate selectedSkillNamesList
-
-                deactivate selectedSkillNamesList
-
-        deactivate SkillRepository
+            end ref
 
         deactivate CTRL
 
@@ -81,16 +75,16 @@ activate HRM
         UI -> CTRL : generateTeamProposal(minCollab, maxCollab)
         activate CTRL
 
-            CTRL -> CTRL : createSelectedSkillsList()
+            CTRL -> CTRL : getSelectedSkillsList()
+            activate CTRL
 
-                ref over CTRL
-                    Create Selected Skills List
+            CTRL -> SkillRepository : getSelectedSkillsList()
+            activate SkillRepository
 
-                end ref
+            SkillRepository --> CTRL : selectedSkillsList
+            deactivate SkillRepository
 
-                activate CTRL
-
-                    CTRL --> CTRL : selectedSkillsList
+            CTRL --> CTRL : selectedSkillsList
             deactivate CTRL
 
             CTRL -> CTRL : createAvailableCollaboratorsList()

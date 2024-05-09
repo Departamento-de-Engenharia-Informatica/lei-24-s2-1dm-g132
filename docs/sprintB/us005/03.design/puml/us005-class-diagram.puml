@@ -21,7 +21,7 @@ class GenerateTeamController
     + addSelectedSkillName(skillName)
     + generateTeamProposal(minCollab, maxCollab)
     + registerTeam(tempCollaboratorList)
-    - createSelectedSkillsList()
+    - getSelectedSkillsList()
     - createAvailableCollaboratorsList()
     - selectCollaboratorsForTeam(selectedSkillsList)
 }
@@ -43,10 +43,10 @@ class Repositories
 class SkillRepository
 {
     + getSkills()
-    + createSelectedSkillNamesList()
-    + addSelectedSkillName(skillName)
     + createSelectedSkillsList()
+    + addSelectedSkill(skillName)
     + getSkillByName(selectedSkillName)
+    + getSelectedSkillsList()
 }
 
 class CollaboratorRepository

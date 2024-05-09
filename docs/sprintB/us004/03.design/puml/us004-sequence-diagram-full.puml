@@ -138,6 +138,8 @@ activate Employee
 
     SkillRepository --> CTRL : selectedSkillsList
     deactivate SkillRepository
+
+    CTRL --> CTRL : selectedSkillsList
     deactivate CTRL
 
         CTRL -> CTRL : getCollaboratorByIdNumber(collaboratorIdNumber)

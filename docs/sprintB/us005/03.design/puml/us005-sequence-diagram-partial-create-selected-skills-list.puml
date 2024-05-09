@@ -1,35 +1,25 @@
 @startuml
+
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-autonumber 17
+autonumber 11
 
-'hide footbox
 participant ":GenerateTeamController" as CTRL
 participant "skillRepository:\nSkillRepository" as SkillRepository
-participant "selectedSkillNamesList:\nList<String>" as selectedSkillNamesList
 participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
 
-     -> CTRL : createSelectedSkillsList()
-            activate CTRL
+-> CTRL : addSelectedSkillName(skillName)
+        autonumber 11.1
+        group Create Selected Skills List
 
-            autonumber 17.1
-            group Create Selected Skills List
+        activate CTRL
 
-CTRL -> SkillRepository : createSelectedSkillsList()
+            CTRL -> SkillRepository: addSelectedSkill(skillName)
             activate SkillRepository
 
-                SkillRepository -> selectedSkillsList** : create()
-
-                loop for each known selectedSkillName
-
-                SkillRepository -> selectedSkillNamesList : selectedSkillName = get(i)
-                activate selectedSkillNamesList
-
-                deactivate selectedSkillNamesList
-
-                SkillRepository -> SkillRepository: getSkillByName(selectedSkillName)
+                SkillRepository -> SkillRepository: getSkillByName(skillName)
                 activate SkillRepository
 
                 SkillRepository --> SkillRepository: skill
@@ -40,13 +30,9 @@ CTRL -> SkillRepository : createSelectedSkillsList()
 
                 deactivate selectedSkillsList
 
-                end loop
-
-                SkillRepository --> CTRL : selectedSkillsList
                 deactivate SkillRepository
 
                 end group
-                autonumber 18
-                <-- CTRL : selectedSkillsList
 
+            deactivate CTRL
 @enduml
