@@ -99,7 +99,7 @@ activate HRM
                 CTRL --> CTRL :
             deactivate CTRL
 
-            CTRL -> CTRL : selectCollaboratorsForTeam(selectedSkillsList)
+            CTRL -> CTRL : selectCollaboratorsForTeam(selectedSkillsList, minCollab, maxCollab)
             activate CTRL
 
                 ref over CTRL

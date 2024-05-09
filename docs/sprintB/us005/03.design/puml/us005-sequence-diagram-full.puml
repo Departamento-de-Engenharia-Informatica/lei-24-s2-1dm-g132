@@ -179,14 +179,14 @@ activate HRM
 
             deactivate CTRL
 
-            CTRL -> CTRL : selectCollaboratorsForTeam(selectedSkillsList)
+            CTRL -> CTRL : selectCollaboratorsForTeam(selectedSkillsList, minCollab, maxCollab)
             activate CTRL
 
-                CTRL -> CollaboratorRepository : generateTeam(selectedSkillsList)
+                CTRL -> CollaboratorRepository : generateTeam(selectedSkillsList, minCollab, maxCollab)
                 activate CollaboratorRepository
 
                     loop for each available collaborator in tempCollaboratorList
-                    CollaboratorRepository -> Collab : res = teamDefinitionCriteria(selectedSkillsList)
+                    CollaboratorRepository -> Collab : res = teamDefinitionCriteria(selectedSkillsList, minCollab, maxCollab)
                     activate Collab
 
                     deactivate Collab
