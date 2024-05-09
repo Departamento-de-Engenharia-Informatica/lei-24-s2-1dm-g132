@@ -98,8 +98,11 @@ activate Employee
         activate SkillRepository
 
             SkillRepository -> SkillRepository: getSkillByName(skillName)
+            activate SkillRepository
 
             SkillRepository --> SkillRepository: skill
+            deactivate SkillRepository
+
             SkillRepository -> selectedSkillsList : add(skill)
             activate selectedSkillsList
 
