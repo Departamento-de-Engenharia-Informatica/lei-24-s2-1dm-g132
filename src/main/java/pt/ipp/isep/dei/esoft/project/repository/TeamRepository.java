@@ -37,4 +37,9 @@ public class TeamRepository {
         success = teams.add(team.clone());
         return success;
     }
+
+    public List<Team> getTeams() {
+        //This is a defensive copy, so that the repository cannot be modified from the outside.
+        return List.copyOf(teams);
+    }
 }

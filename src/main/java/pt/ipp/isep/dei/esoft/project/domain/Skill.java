@@ -40,4 +40,8 @@ public class Skill {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s", this.name);
+    }
 }

@@ -55,6 +55,7 @@ public class GenerateTeamUI implements Runnable{
     }
 
     private boolean teamProposalAnswer() {
+        System.out.println("\nTeam Proposal:");
         for(Collaborator collaborator : teamProposal)
         {
             System.out.println(collaborator.toStringTeam());
