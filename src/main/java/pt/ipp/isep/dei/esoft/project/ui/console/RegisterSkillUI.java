@@ -1,135 +1,60 @@
-/*
+
+/**
+
+ This class represents the user interface for registering a new skill.
+ It interacts with the user to input skill details, submits the data to the controller,
+ and displays the list of skills in the repository.
+ */
 package pt.ipp.isep.dei.esoft.project.ui.console;
-
-
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillController;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
-
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
-
-public class RegisterSkillUI implements Runnable{
-    private String name;
-
-    private final RegisterSkillController controller;
-
-
-
-    public RegisterSkillUI() {
-        controller= new RegisterSkillController();
-
-    }
-
-    public void run() {
-        System.out.println("\n\n--- Register Skill ------------------------");
-
-        name = displayAndSelectSkill();
-
-        requestData();
-        submitData();
-    }
-
-
-    private void submitData() {
-        Optional<Skill> skill = controller.registerSkill(name);
-
-        if (skill.isPresent()) {
-            System.out.println("\nSkill successfully created!");
-        } else {
-            System.out.println("\nSkill not created!");
-        }
-    }
-
-
-    private void requestData(){
-        name = RequestSkillName();
-    }
-
-
-
-    private String RequestSkillName() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Name: ");
-        return input.nextLine();
-    }
-    private String displayAndSelectSkill() {
-        //Display the list of skills
-        List<Skill> skills = controller.getSkills();
-
-        int listSize = skills.size();
-        int answer = -1;
-
-        Scanner input = new Scanner(System.in);
-
-        while (answer < 1 || answer > listSize) {
-            displayAndSelectSkill();
-            System.out.print("Select a Skill: ");
-            answer = input.nextInt();
-        }
-
-        String description = skills.get(answer - 1).getName();
-        return description;
-    }
-    private void displaySkillsOptions(List<Skill> skills) {
-        //display the skills as a menu with number options to select
-        int i = 1;
-        for (Skill skill : skills) {
-            System.out.println("  " + i + " - " + skill.getName());
-            i++;
-        }
-    }
-
-
-
-
-
-
-}
-*/
-package pt.ipp.isep.dei.esoft.project.ui.console;
-
-
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillController;
-import pt.ipp.isep.dei.esoft.project.domain.Job;
-import pt.ipp.isep.dei.esoft.project.domain.Skill;
-
+import java.lang.IllegalArgumentException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
-public class RegisterSkillUI implements Runnable{
+public class RegisterSkillUI implements Runnable {
     private String name;
-
     private final RegisterSkillController controller;
 
-
-
+    /**
+     * Constructs a new RegisterSkillUI object.
+     */
     public RegisterSkillUI() {
-        controller= new RegisterSkillController();
-
+        controller = new RegisterSkillController();
     }
 
+    /**
+     * Runs the Register Skill user interface.
+     */
     public void run() {
         System.out.println("\n\n--- Register Skill ------------------------");
-
         requestData();
         submitData();
         displaySkills();
     }
 
-
+    /**
+     * Submits the skill data to the controller for registration.
+     * Displays a success message if the skill is successfully created,
+     * or an error message if not.
+     */
     private void submitData() {
-        Skill skill = controller.registerSkill(name);
-
-        if (skill != null) {
-            System.out.println("\nSkill successfully created!");
-        } else {
-            System.out.println("\nSkill not created!");
+        try {
+            Skill skill = controller.registerSkill(name);
+            if (skill != null) {
+                System.out.println("\nSkill successfully created!");
+            } else {
+                System.out.println("\nSkill not created!");
+            }
+        } catch(IllegalArgumentException e){
+            System.out.println("\nERROR: " + e.getMessage());
         }
     }
+
+    /**
+     * Displays the list of skills in the repository.
+     */
     private void displaySkills() {
         System.out.println("\nSkills in repository:");
         List<Skill> skills = controller.getSkills();
@@ -138,19 +63,20 @@ public class RegisterSkillUI implements Runnable{
         }
     }
 
-
-
     private void requestData(){
         name = RequestSkillName();
     }
 
 
-
+    /**
+     * Requests the skill name input from the user.
+     * @return The inputted skill name.
+     */
     private String RequestSkillName() {
         Scanner input = new Scanner(System.in);
         System.out.print("Name: ");
         return input.nextLine();
     }
-
 }
+
 

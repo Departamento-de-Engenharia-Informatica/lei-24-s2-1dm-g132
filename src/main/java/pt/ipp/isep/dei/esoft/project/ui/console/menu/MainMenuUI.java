@@ -48,7 +48,6 @@ public class MainMenuUI implements Runnable {
 
 
 
-
     private void printJobRepository() {
         List<Job> jobs = Repositories.getInstance().getJobRepository().getJobs();
         System.out.println("Jobs in repository:");
