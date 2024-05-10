@@ -17,18 +17,6 @@ public class SkillRepository {
         skills = new ArrayList<>();
     }
 
-    public Skill getSkillByDescription(String skillDescription) {
-        Skill newSkill = new Skill(skillDescription);
-        Skill skill = null;
-        if (skills.contains(newSkill)) {
-            skill = skills.get(skills.indexOf(newSkill));
-        }
-        if (skill == null) {
-            throw new IllegalArgumentException(
-                    "Skill requested for [" + skillDescription + "] does not exist.");
-        }
-        return skill;
-    }
 
     public Optional<Skill> add(Skill skill) {
         Optional<Skill> newSkill = Optional.empty();

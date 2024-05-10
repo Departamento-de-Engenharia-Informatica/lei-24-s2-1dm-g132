@@ -31,31 +31,14 @@ public class RegisterJobController {
             return jobRepository;
         }
 
-    /*public Optional<Job> createJob(String name) {
-        Employee employee = getEmployeeFromSession();
-        Optional<Organization> organization = getOrganizationRepository().getOrganizationByEmployee(employee);
 
-        Optional<Job> newJob = Optional.empty();
-
-        if (organization.isPresent()) {
-            newJob = organization.get().createJob(name, jobDescription, employee);
-        }
-        return newJob;
-    }*/
 
     public List<Job> getJobs() {
         JobRepository jobRepository = getJobRepository();
         return jobRepository.getJobs();
     }
 
-    /*private OrganizationRepository getOrganizationRepository() {
-        if (organizationRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-            organizationRepository = repositories.getOrganizationRepository();
-        }
-        return organizationRepository;
 
-    }*/
 
         public Job registerJob(String name) {
             JobRepository jobRepository = getJobRepository();
