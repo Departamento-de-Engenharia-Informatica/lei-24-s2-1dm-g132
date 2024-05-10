@@ -22,10 +22,6 @@ public class MainMenuUI implements Runnable {
 
     public void run() {
 
-
-        printJobRepository(); // Print the content of the Job repository
-        printSkillRepository(); // Print the content of the Skill repository
-
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("Do Login", new AuthenticationUI()));
         options.add(new MenuItem("Know the Development Team", new DevTeamUI()));
@@ -42,6 +38,8 @@ public class MainMenuUI implements Runnable {
             if ((option >= 0) && (option < options.size())) {
                 options.get(option).run();
             }
+            printJobRepository();
+            printSkillRepository();
             printCollaboratorRepository();
             printTeamRepository();
         } while (option != -1);
@@ -55,7 +53,7 @@ public class MainMenuUI implements Runnable {
         List<Job> jobs = Repositories.getInstance().getJobRepository().getJobs();
         System.out.println("Jobs in repository:");
         for (Job job : jobs) {
-            System.out.println(job.getJobName());
+            System.out.println(job);
         }
     }
 
@@ -63,7 +61,7 @@ public class MainMenuUI implements Runnable {
         List<Skill> skills = Repositories.getInstance().getSkillRepository().getSkills();
         System.out.println("Skills in repository:");
         for (Skill skill : skills) {
-            System.out.println(skill.getName());
+            System.out.println(skill);
         }
     }
 
@@ -71,7 +69,7 @@ public class MainMenuUI implements Runnable {
         List<Collaborator> collaborators = Repositories.getInstance().getCollaboratorRepository().getCollaborators();
         System.out.println("Collaborators in repository:");
         for (Collaborator collaborator : collaborators) {
-            System.out.println(collaborator.toStringTeam());
+            System.out.println(collaborator);
         }
     }
 

@@ -4,22 +4,22 @@ import java.util.Objects;
 
 public class Job {
 
-    private String Jobname;
+    private String name;
 
     public Job(String jobname) {
-        this.Jobname = jobname;
+        this.name = jobname;
     }
 
     public void setJobName(String jobname) {
-        this.Jobname = jobname;
+        this.name = jobname;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Jobname);
+        return Objects.hash(name);
     }
     public boolean hasName(String name) {
-        return this.Jobname.equals(name);
+        return this.name.equals(name);
     }
 
 
@@ -32,16 +32,20 @@ public class Job {
             return false;
         }
         Job job = (Job) o;
-        return Jobname == job.Jobname;
+        return name == job.name;
     }
 
     @Override
     public Job clone() {
-        return new Job(this.Jobname);
+        return new Job(this.name);
     }
 
     public String getJobName() {
-        return Jobname;
+        return name;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s", this.name);
+    }
 }

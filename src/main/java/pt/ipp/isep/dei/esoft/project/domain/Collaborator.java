@@ -302,4 +302,22 @@ public class Collaborator {
         return String.format("Collaborator: %s\n" +
                         "Skills: %s", this.name, this.skills);
     }
+
+    @Override
+    public String toString() {
+        return String.format("Collaborator %s Data:\n" +
+                "Birthdate: %d/%d/%d\n" +
+                "Admission Date: %d/%d/%d\n" +
+                "Address: %s\n" +
+                "Phone Number: %d\n" +
+                "Email: %s\n" +
+                "Taxpayer number: %d\n" +
+                "Identification Document Type: %s\n" +
+                "Identification Document Number: %s\n" +
+                "Job: %s\n" +
+                "Skills: %s", this.name, this.birthdate.get(Calendar.YEAR), this.birthdate.get(Calendar.MONTH)+1, this.birthdate.get(Calendar.DAY_OF_MONTH),
+                                                    this.admissionDate.get(Calendar.YEAR), this.admissionDate.get(Calendar.MONTH)+1, this.admissionDate.get(Calendar.DAY_OF_MONTH),
+                                                    this.address, this.phoneNumber, this.email, this.taxpayerNumber, this.identificationDocumentType.toString(), this.identificationDocumentNumber,
+                                                    this.job, this.skills);
+    }
 }
