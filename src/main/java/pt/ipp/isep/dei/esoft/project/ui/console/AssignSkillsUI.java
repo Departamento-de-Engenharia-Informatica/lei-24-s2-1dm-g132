@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillsControll
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -23,13 +24,37 @@ public class AssignSkillsUI implements Runnable{
     }
 
     public void run() {
+        boolean dadosInvalidos = true;
+
         System.out.println("\n\n--- Assign Skills to Collaborator ------------------------");
 
-        collaboratorIdNumber = displayAndSelectCollaborator();
+        do{
+            try {
+                collaboratorIdNumber = displayAndSelectCollaborator();
+                dadosInvalidos = false;
 
-        displayAndSelectSkills();
+            }catch (InputMismatchException e){
+                System.out.println("\nERROR: " + "Invalid input value.\n");
+            }
+            catch (RuntimeException e){
+                System.out.println("\nERROR: " + e.getMessage());
+                return;
+            }
+        }while(dadosInvalidos);
 
-        assignSkills();
+        try {
+            displayAndSelectSkills();
+        }
+        catch (RuntimeException e){
+            System.out.println("\nERROR: " + e.getMessage());
+            return;
+        }
+
+        try {
+            assignSkills();
+        }catch (IllegalArgumentException e){
+            System.out.println("\nERROR: " + e.getMessage());
+        }
 
     }
 
@@ -44,20 +69,33 @@ public class AssignSkillsUI implements Runnable{
     }
 
     private void displayAndSelectSkills(){
+        boolean dadosInvalidos;
         boolean cont = true;
 
         List<Skill> skills = controller.getSkills();
 
         int listSize = skills.size();
+
+        if(listSize == 0)
+            throw new RuntimeException("There are no skills to display at the moment.");
+
         int answer = -1;
 
         Scanner input = new Scanner(System.in);
 
         do {
             while (answer < 0 || answer > listSize) {
+                dadosInvalidos = true;
                 displaySkillOptions(skills);
-                System.out.print("Select a skill (press 0 to stop): ");
-                answer = input.nextInt();
+                do {
+                    System.out.print("Select a skill (press 0 to stop): ");
+                    try {
+                        answer = input.nextInt();
+                        dadosInvalidos = false;
+                    } catch (InputMismatchException e) {
+                        System.out.println("ERROR: " + "Invalid input value.\n");
+                    }
+                }while(dadosInvalidos);
             }
 
             if(answer != 0)
@@ -79,6 +117,10 @@ public class AssignSkillsUI implements Runnable{
         List<Collaborator> collaborators = controller.getCollaborators();
 
         int listSize = collaborators.size();
+
+        if(listSize == 0)
+            throw new RuntimeException("There are no collaborators to display at the moment.");
+
         int answer = -1;
 
         Scanner input = new Scanner(System.in);

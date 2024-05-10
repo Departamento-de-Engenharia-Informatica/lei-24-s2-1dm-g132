@@ -114,6 +114,12 @@ public class Collaborator {
             throw new IllegalArgumentException("Invalid birthdate format. Use year/month/day.");
         }
 
+        for (String part : parts) {
+            if (!part.matches("\\d+")) {
+                throw new IllegalArgumentException("Non-numeric value found in birthdate.");
+            }
+        }
+
         int year = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
         int day = Integer.parseInt(parts[2]);
@@ -140,6 +146,12 @@ public class Collaborator {
 
         if (parts.length != 3) {
             throw new IllegalArgumentException("Invalid admission date format. Use year/month/day.");
+        }
+
+        for (String part : parts) {
+            if (!part.matches("\\d+")) {
+                throw new IllegalArgumentException("Non-numeric value found in admission date.");
+            }
         }
 
         int year = Integer.parseInt(parts[0]);
@@ -232,7 +244,7 @@ public class Collaborator {
             this.identificationDocumentType = DocType.BI;
         else if(identificationDocumentType.equalsIgnoreCase(DocType.PASSPORT.toString()))
             this.identificationDocumentType = DocType.PASSPORT;
-        else throw new IllegalArgumentException("Invalid document type!");
+        else throw new IllegalArgumentException("Invalid document type.");
     }
 
     private void setIdentificationDocumentType(DocType identificationDocumentType) {
@@ -243,7 +255,7 @@ public class Collaborator {
         if(DocType.isValidNumber(identificationDocumentType, identificationDocumentNumber))
             this.identificationDocumentNumber = identificationDocumentNumber;
         else
-            throw new IllegalArgumentException("Invalid identification document number for the provided type!");
+            throw new IllegalArgumentException("Invalid identification document number for the provided type.");
     }
 
     public Collaborator assignSkill(List<Skill> selectedSkillsList){
