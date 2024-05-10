@@ -213,19 +213,13 @@ public class Collaborator {
     }
 
     private void setTaxpayerNumber(int taxpayerNumber) {
-        int digitCount = 0;
+        String taxpayerNumberStr = String.valueOf(taxpayerNumber);
 
-        int temp = taxpayerNumber;
-        while (temp != 0) {
-            temp /= 10;
-            digitCount++;
+        if (!taxpayerNumberStr.matches("\\d{9}")) {
+            throw new IllegalArgumentException("Invalid taxpayer number. Taxpayer number must have 9 digits.");
         }
 
-        if (digitCount == 9) {
-            this.taxpayerNumber = taxpayerNumber;
-        } else {
-            throw new IllegalArgumentException("Taxpayer number must have 9 digits.");
-        }
+        this.taxpayerNumber = taxpayerNumber;
     }
 
     private void setEmail(String email) {
@@ -245,10 +239,6 @@ public class Collaborator {
         else if(identificationDocumentType.equalsIgnoreCase(DocType.PASSPORT.toString()))
             this.identificationDocumentType = DocType.PASSPORT;
         else throw new IllegalArgumentException("Invalid document type.");
-    }
-
-    private void setIdentificationDocumentType(DocType identificationDocumentType) {
-        this.identificationDocumentType = identificationDocumentType;
     }
 
     private void setIdentificationDocumentNumber(String identificationDocumentNumber) {

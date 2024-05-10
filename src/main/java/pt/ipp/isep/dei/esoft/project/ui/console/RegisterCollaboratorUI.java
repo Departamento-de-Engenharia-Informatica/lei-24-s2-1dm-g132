@@ -60,6 +60,9 @@ public class RegisterCollaboratorUI implements Runnable {
             catch (IllegalArgumentException e){
                 System.out.println("\nERROR: " + e.getMessage());
             }
+            catch (InputMismatchException e){
+                System.out.println("\nERROR: " + "Invalid input value.\n");
+            }
         }while (dadosInvalidos2);
     }
 
