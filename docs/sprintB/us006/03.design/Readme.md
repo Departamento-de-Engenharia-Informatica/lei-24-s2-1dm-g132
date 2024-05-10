@@ -6,23 +6,19 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for... | Answer               | Justification (with patterns)                                                                                 |
-|:-------------  |:--------------------- |:---------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		 |	... interacting with the actor? | CreateTaskUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		 |	... coordinating the US? | CreateTaskController | Controller                                                                                                    |
-| 			  		 |	... instantiating a new Task? | Organization         | Creator (Rule 1): in the DM Organization has a Task.                                                          |
-| 			  		 | ... knowing the user using the system?  | UserSession          | IE: cf. A&A component documentation.                                                                          |
-| 			  		 |							 | Organization         | IE: knows/has its own Employees                                                                               |
-| 			  		 |							 | Employee             | IE: knows its own data (e.g. email)                                                                           |
-| Step 2  		 |							 |                      |                                                                                                               |
-| Step 3  		 |	...saving the inputted data? | Task                 | IE: object created in step 1 has its own data.                                                                |
-| Step 4  		 |	...knowing the task categories to show? | System               | IE: Task Categories are defined by the Administrators.                                                        |
-| Step 5  		 |	... saving the selected category? | Task                 | IE: object created in step 1 is classified in one Category.                                                   |
-| Step 6  		 |							 |                      |                                                                                                               |              
-| Step 7  		 |	... validating all data (local validation)? | Task                 | IE: owns its data.                                                                                            | 
-| 			  		 |	... validating all data (global validation)? | Organization         | IE: knows all its tasks.                                                                                      | 
-| 			  		 |	... saving the created task? | Organization         | IE: owns all its tasks.                                                                                       | 
-| Step 8  		 |	... informing operation success?| CreateTaskUI         | IE: is responsible for user interactions.                                                                     | 
+
+| Interaction ID | Question                                     | Answer                    | Justification                                              |
+|:---------------|:---------------------------------------------|:--------------------------|:-----------------------------------------------------------|
+| Step 1         | ... interacting with the actor?              | RegisterVehicleUI         | Pure Fabrication                                           |
+|                | ... coordinating the US?                     | RegisterVehicleController | Controller                                                 |
+|                | ... getting the Vehicle list?                | VehicleRepository         | Pure Fabrication                                           |
+| Step 2         | ... saving the inputted data?                | RegisterVehicleUI         | Pure Fabrication                                           |
+| Step 3         | ... knowing the Vehicle Name to show?        | RegisterVehicleUI         | IE      |
+| Step 4         | ... saving the selected category?            | Vehicle                   | IE:  |
+| Step 5         | ... validating all data (local validation)?  | Vehicle                   | IE                                                         |
+|                | ... validating all data (global validation)? | VehicleRepository         | IE , Pure Fabrication                                      |
+|                | ... saving the created Vehicle?              | VehicleRepository         | IE                                                         |
+| Step 6         | ... informing operation success?             | RegisterVehicleUI         | Pure Fabrication                                           |
 
 ### Systematization ##
 

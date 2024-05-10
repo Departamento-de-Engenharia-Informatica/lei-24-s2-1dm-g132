@@ -46,6 +46,7 @@ again, duplication of data is not a business rule is technical one, since by def
 ### 1.3. Acceptance Criteria
 
 *Doesn't exist yet.*
+
 ### 1.4. Found out Dependencies
 
 *Doesn't exist yet.*
@@ -77,7 +78,7 @@ again, duplication of data is not a business rule is technical one, since by def
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One]![SSD-us006-System_Sequence_Diagram__SSD____us006.svg](svg%2FSSD-us006-System_Sequence_Diagram__SSD____us006.svg)
 
 
 ### 1.7 Other Relevant Remarks

@@ -8,20 +8,18 @@ _**Note that SSD - Alternative One is adopted.**_
 
 
 
-| Interaction ID | Question                                     | Answer                | Justification                                                 |
-|:-------------- |:---------------------------------------------|:----------------------|:---------------------------------------------------------------|
-| Step 1         | ... interacting with the actor?              | RegisterJobUI         | Pure Fabrication                                             |
-|                | ... coordinating the US?                     | RegisterJobController | Controller                                                   |
-|                | ... getting the job list?                    | JobRepository         | Pure Fabrication                                             |
-| Step 2         |                                              |                       |                                                               |
-| Step 3         | ... saving the inputted data?                | RegisterJobUI         | IE: object created in step 1 has its own data                |
-| Step 4         | ... knowing the jobName to show?             | System                | IE: Task Categories are defined by the Administrators         |
-| Step 5         | ... saving the selected category?            | Task                  | IE: object created in step 1 is classified in one Category    |
-| Step 6         |                                              |                       |                                                               |
-| Step 7         | ... validating all data (local validation)?  | Task                  | IE: owns its data                                            |
-|                | ... validating all data (global validation)? | Organization          | IE: knows all its jobs                                       |
-|                | ... saving the created job?                  | Organization          | IE: owns all its jobs                                        |
-| Step 8         | ... informing operation success?             | RegisterJobUI         | IE: is responsible for user interactions                     |
+| Interaction ID | Question                                     | Answer                | Justification                                              |
+|:---------------|:---------------------------------------------|:----------------------|:-----------------------------------------------------------|
+| Step 1         | ... interacting with the actor?              | RegisterJobUI         | Pure Fabrication                                           |
+|                | ... coordinating the US?                     | RegisterJobController | Controller                                                 |
+|                | ... getting the job list?                    | JobRepository         | Pure Fabrication                                           |
+| Step 2         | ... saving the inputted data?                | RegisterJobUI         | Pure Fabrication                                           |
+| Step 3         | ... knowing the jobName to show?             | RegisterJobUI         | IE      |
+| Step 4         | ... saving the selected category?            | Job                   | IE:  |
+| Step 5         | ... validating all data (local validation)?  | Job                   | IE                                                         |
+|                | ... validating all data (global validation)? | JobRepository         | IE , Pure Fabrication                                      |
+|                | ... saving the created job?                  | JobRepository         | IE                                                         |
+| Step 6         | ... informing operation success?             | RegisterJobUI         | Pure Fabrication                                           |
 
 ### Systematization ##
 

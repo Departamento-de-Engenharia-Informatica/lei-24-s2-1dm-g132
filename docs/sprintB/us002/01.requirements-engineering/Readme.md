@@ -87,9 +87,15 @@ Can a job be anything?
 should numbers or special char be allowed?
 Is there a minim or max number of char?
 > 
-> **Answer:** Ainda Sem Resposta
+> **Answer:** A job name can’t have special characters or digits.
 
-
+> **Question** Hello Client,
+Where do you want the jobs and skills to be stored and validated?
+Do you which to have a skill and job repository or do you want them to be stored in the organization?
+>
+> **Answer:** Hello,
+the business rules regarding skills and stored were already provided in this forum;
+I have no knowledge about repositories.
 
 
 
@@ -106,24 +112,23 @@ Is there a minim or max number of char?
 **Input Data:**
 
 * Typed data:
-    * Name of the job
+    * Job Name
 	
 * Selected data:
-    * a task category 
+    * a job 
 
 **Output Data:**
 
+* The created job
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
 
-#### Alternative One
 
-![SSD.svg](svg%2FSSD.svg)
+![SSD.svg]![SSD-us002-System_Sequence_Diagram__SSD____us002.svg](svg%2FSSD-us002-System_Sequence_Diagram__SSD____us002.svg)
 
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+*n/a
