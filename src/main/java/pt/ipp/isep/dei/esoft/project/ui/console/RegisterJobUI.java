@@ -115,6 +115,7 @@ public class RegisterJobUI implements Runnable {
 
         requestData();
         submitData();
+        displayJobs();
     }
 
     private void submitData() {
@@ -126,10 +127,16 @@ public class RegisterJobUI implements Runnable {
         }
 
     }
+    private void displayJobs() {
+        System.out.println("\nJobs in repository:");
+        List<Job> jobs = controller.getJobs();
+        for (Job job : jobs) {
+            System.out.println(job.toString());
+        }
+    }
     private void requestData() {
         Jobname = requestJobName();
     }
-
 
 
     private String requestJobName() {

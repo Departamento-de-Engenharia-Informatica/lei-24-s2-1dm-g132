@@ -92,6 +92,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillController;
+import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
 
@@ -116,6 +117,7 @@ public class RegisterSkillUI implements Runnable{
 
         requestData();
         submitData();
+        displaySkills();
     }
 
 
@@ -128,6 +130,14 @@ public class RegisterSkillUI implements Runnable{
             System.out.println("\nSkill not created!");
         }
     }
+    private void displaySkills() {
+        System.out.println("\nSkills in repository:");
+        List<Skill> skills = controller.getSkills();
+        for (Skill skill : skills) {
+            System.out.println(skill.toString());
+        }
+    }
+
 
 
     private void requestData(){
