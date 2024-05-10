@@ -27,7 +27,7 @@ public class Team {
         String printTeam = "Team:";
         for(Collaborator collaborator : collaborators)
         {
-            printTeam = String.format("%s\n %s: %s", printTeam,  collaborator.getName(), collaborator.getSkills());
+            printTeam = String.format("%s\n%s: %s", printTeam,  collaborator.getName(), collaborator.getSkills());
         }
         return printTeam;
     }

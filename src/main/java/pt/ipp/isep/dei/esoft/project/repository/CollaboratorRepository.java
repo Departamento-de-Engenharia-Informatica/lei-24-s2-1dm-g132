@@ -93,7 +93,10 @@ public class CollaboratorRepository {
         for (Collaborator collaborator : tempCollaboratorsList) {
             for (Skill skill : collaborator.getSkills()) {
                 if (skillsNeeded.contains(skill)) {
-                    teamProposal.add(collaborator); // Add collaborator to the team
+                    if(!teamProposal.contains(collaborator))
+                    {
+                        teamProposal.add(collaborator); // Add collaborator to the team
+                    }
                     skillsNeeded.remove(skill); // Reduce the quantity needed for this skill
                 }
             }
