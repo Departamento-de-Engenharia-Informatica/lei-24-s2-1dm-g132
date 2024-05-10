@@ -72,7 +72,7 @@ public class CollaboratorRepository {
                 return collaborator;
             }
         }
-        return null;
+        throw new RuntimeException("Collaborator not found.");
     }
 
     public List<Collaborator> createTempCollaboratorsList(){
@@ -101,6 +101,8 @@ public class CollaboratorRepository {
                 }
             }
         }
+
+        tempCollaboratorsList.removeAll(teamProposal);
 
         // Check if all required skills are covered by the team
         if (!skillsNeeded.isEmpty()) {

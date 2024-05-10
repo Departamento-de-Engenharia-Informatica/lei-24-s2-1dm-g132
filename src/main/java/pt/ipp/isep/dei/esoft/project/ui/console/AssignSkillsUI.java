@@ -55,6 +55,9 @@ public class AssignSkillsUI implements Runnable{
         }catch (IllegalArgumentException e){
             System.out.println("\nERROR: " + e.getMessage());
         }
+        catch (RuntimeException e){
+            System.out.println("\nERROR: " + e.getMessage());
+        }
 
     }
 
