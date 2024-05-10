@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaborator
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -31,13 +32,35 @@ public class RegisterCollaboratorUI implements Runnable {
     }
 
     public void run() {
+        boolean dadosInvalidos1 = true;
+        boolean dadosInvalidos2 = true;
+
         System.out.println("\n\n--- Register Collaborator ------------------------");
 
-        jobName = displayAndSelectJob();
+        do{
+            try {
+                jobName = displayAndSelectJob();
+                dadosInvalidos1 = false;
 
-        requestData();
+            } catch (InputMismatchException e){
+                System.out.println("\nERROR: " + "Invalid input value.\n");
+            }
+            catch (RuntimeException e){
+                System.out.println("\nERROR: " + e.getMessage());
+                return;
+            }
+        }while (dadosInvalidos1);
 
-        submitData();
+        do {
+            try {
+                requestData();
+                submitData();
+                dadosInvalidos2 = false;
+            }
+            catch (IllegalArgumentException e){
+                System.out.println("\nERROR: " + e.getMessage());
+            }
+        }while (dadosInvalidos2);
     }
 
     private void submitData() {
@@ -131,6 +154,10 @@ public class RegisterCollaboratorUI implements Runnable {
         List<Job> jobs = controller.getJobs();
 
         int listSize = jobs.size();
+
+        if(listSize == 0)
+            throw new RuntimeException("There are no jobs to display at the moment.");
+
         int answer = -1;
 
         Scanner input = new Scanner(System.in);
