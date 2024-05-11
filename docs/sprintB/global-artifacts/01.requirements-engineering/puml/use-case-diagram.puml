@@ -4,6 +4,8 @@ left to right direction
 
 actor "Human Resources Manager" as HRM
 actor "Vehicle and Equipment Fleet Manager" as VFM
+actor "Green Space Manager" as GSM
+actor "Software Quality Assessment Team Manager" as QAM
 
 
 rectangle GreenSpaceManagement {
@@ -15,6 +17,15 @@ rectangle GreenSpaceManagement {
   VFM --> (UC 006 - Register a vehicle)
   VFM --> (UC 007 - Register a vehicle’s check-up)
   VFM --> (UC 008 - List vehicles needing check-up)
+  GSM --> (UC 009 - List the  costs referring to water consumption of specific green space)
+  GSM --> (UC 010 - List which piece/s of equipment is are used in each day)
+  GSM --> (UC 011 - Collect data from the user portal about the use of the park)
+  GSM --> (UC 012 - Import a .csv file)
+  GSM --> (UC 013 -  Apply an algorithm to find the cheapest way to connect all points)
+  QAM --> (UC 014 - run tests to observe the asymptotic behavior of the execution time of the US13  algorithm)
+
+
+
 }
 
 @enduml
