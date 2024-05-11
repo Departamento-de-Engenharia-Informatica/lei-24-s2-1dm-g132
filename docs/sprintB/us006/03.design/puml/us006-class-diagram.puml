@@ -5,49 +5,45 @@ skinparam classAttributeIconSize 0
 
 
 class RegisterNewVehicleController {
-    + registerVehicle(brand : String,
-                           vehiclePlate : String,
-                           model : String,
-                           type : String,
-                           Tare : int,
-                           GrossWeight : int,
-                           CurrentKm : int,
-                           RegisterDate : Date,
-                           AcquisitionDate : Date,
-                           MaintenanceCheckupFrequency : int,)
 
-                           + RegisterNewVehicleController()
+    + RegisterNewVehicleController();
+    +getVehicle();
+    -getVehicleByPlate();
+
      }
 
 class RegisterNewVehicleUI {
-    +main(args: String[]): void
+
 }
 
 class Repositories{
     + getVehicleRepository();
     +Repositories();
+    -getinstance();
 
 }
 class VehicleRepository{
-    + VehicleRepository();
+    +RegisterVehicles();
+    +getVehicleByPlate();
+
 }
 
 class Vehicle {
-    Strin brand
-    String vehiclePlate
-    String model
-    String type
-    int Tare
-    int GrossWeight
-    int CurrentKm
-    Date RegisterDate
-    Date AcquisitionDate
-    Date MaintenanceCheckupFrequency
+    +Strin brand
+    +String vehiclePlate
+    +String model
+    +String type
+    +int Tare
+    +int GrossWeight
+    +int CurrentKm
+    +Date RegisterDate
+    +Date AcquisitionDate
+    +Date MaintenanceCheckupFrequency
 }
 
-RegisterNewVehicleUI ..> RegisterNewVehicleController : inputs wanted data
-RegisterNewVehicleController ..> Repositories : «saves in»
-Vehicle ..> RegisterNewVehicleController : will be used in
-Repositories ..> VehicleRepository : have
-VehicleRepository ..> Vehicle : have
+RegisterNewVehicleUI ..> RegisterNewVehicleController
+RegisterNewVehicleController ..> Repositories : Repositories
+Vehicle ..> RegisterNewVehicleController
+Repositories ..> VehicleRepository : RegisterVehicleRepository
+VehicleRepository ..> Vehicle : Vehicle
 @enduml

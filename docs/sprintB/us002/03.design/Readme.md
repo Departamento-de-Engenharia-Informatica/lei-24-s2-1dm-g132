@@ -41,7 +41,7 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full]![us002-sequence-diagram-ui-controller-overview.svg](svg%2Fus002-sequence-diagram-ui-controller-overview.svg)
+![Sequence Diagram - Full]!![us002-class-diagram-Register_a_job__that_a_collaborator_needs_to_have.svg](svg%2Fus002-class-diagram-Register_a_job__that_a_collaborator_needs_to_have.svg)
 
 ### Split Diagrams
 

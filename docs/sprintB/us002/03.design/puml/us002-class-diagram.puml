@@ -4,30 +4,34 @@ title Register a job  that a collaborator needs to have
 skinparam classAttributeIconSize 0
 
 class Repositories {
-    getJobRepository();
-    Repositories();
+    +getJobRepository();
+    +getinstance();
+    -Repositories();
 }
 class RegisterJobController {
     + RegisterJobController()
-    + registerJob(jobName: String)
+    + geJob();
+    -getJobByName();
+
 
 }
 
 class RegisterJobUI {
-    +main(args: String[]): void
+
 }
 
-class RegisterJobRepository {
-    RegisterJobRepository()
+class JobRepository {
+    RegisterJobs();
+    getJobByName();
 }
 class job{
     +String name
 }
 
 
-RegisterJobUI ..> RegisterJobController: inputs wanted data
-RegisterJobController ..> Repositories : inserts job in the repository
-Repositories ..> RegisterJobRepository : Have
-RegisterJobRepository ..> job : Have
+RegisterJobUI ..> RegisterJobController
+RegisterJobController ..> Repositories : Repositories
+Repositories ..> RegisterJobRepository : RegisterJobRepository
+RegisterJobRepository ..> job : job
 job ..> RegisterJobController : will be inserted
 @enduml
