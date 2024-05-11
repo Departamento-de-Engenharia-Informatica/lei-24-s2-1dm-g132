@@ -44,7 +44,6 @@ public class CollaboratorRepository {
     private boolean addCollaborator(Collaborator collaborator) {
         boolean success = false;
         if (validate(collaborator)) {
-            // A clone of the task is added to the list of tasks, to avoid side effects and outside manipulation.
             success = collaborators.add(collaborator.clone());
         }
         return success;

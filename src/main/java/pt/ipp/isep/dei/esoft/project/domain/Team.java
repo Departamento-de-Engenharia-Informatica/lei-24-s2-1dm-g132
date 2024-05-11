@@ -18,6 +18,18 @@ public class Team {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Team team = (Team) o;
+        return this.collaborators.equals(team.collaborators);
+    }
+
+    @Override
     public Team clone() {
         return new Team(this.collaborators);
     }

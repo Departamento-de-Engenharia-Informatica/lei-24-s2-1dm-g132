@@ -34,7 +34,9 @@ public class TeamRepository {
 
     private boolean addTeam(Team team) {
         boolean success = false;
-        success = teams.add(team.clone());
+        if (!this.teams.contains(team)) {
+            success = teams.add(team.clone());
+        }
         return success;
     }
 
