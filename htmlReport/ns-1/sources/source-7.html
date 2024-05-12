@@ -1,0 +1,181 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Task</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
+</div>
+
+<h1>Coverage Summary for Class: Task (pt.ipp.isep.dei.esoft.project.domain)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Task</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
+&nbsp;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;public class Task {
+&nbsp;    private final String reference;
+&nbsp;    private String description;
+&nbsp;    private String informalDescription;
+&nbsp;    private String technicalDescription;
+&nbsp;    private int duration;
+&nbsp;    private double cost;
+&nbsp;
+&nbsp;    private TaskCategory taskCategory;
+&nbsp;
+&nbsp;    private Employee employee;
+&nbsp;
+&nbsp;    public Task(String reference, String description, String informalDescription, String technicalDescription,
+<b class="nc">&nbsp;                int duration, double cost, TaskCategory taskCategory, Employee employee) {</b>
+&nbsp;
+<b class="nc">&nbsp;        validateReference(reference);</b>
+<b class="nc">&nbsp;        this.reference = reference;</b>
+<b class="nc">&nbsp;        this.description = description;</b>
+<b class="nc">&nbsp;        this.informalDescription = informalDescription;</b>
+<b class="nc">&nbsp;        this.technicalDescription = technicalDescription;</b>
+<b class="nc">&nbsp;        this.duration = duration;</b>
+<b class="nc">&nbsp;        this.cost = cost;</b>
+<b class="nc">&nbsp;        this.taskCategory = taskCategory;</b>
+<b class="nc">&nbsp;        this.employee = employee;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void validateReference(String reference) {
+&nbsp;        //TODO: missing from the diagrams
+<b class="nc">&nbsp;        if (reference == null || reference.isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Reference cannot be null or empty.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o) {
+<b class="nc">&nbsp;        if (this == o) {</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (!(o instanceof Task)) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        Task task = (Task) o;</b>
+<b class="nc">&nbsp;        return reference.equals(task.reference) &amp;&amp; employee.equals(task.employee);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="nc">&nbsp;        return Objects.hash(reference, employee);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Clone method.
+&nbsp;     *
+&nbsp;     * @return A clone of the current instance.
+&nbsp;     */
+&nbsp;    public Task clone() {
+<b class="nc">&nbsp;        return new Task(this.reference, this.description, this.informalDescription, this.technicalDescription,</b>
+&nbsp;                this.duration, this.cost, this.taskCategory, this.employee);
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:04</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,180 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Repositories</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: Repositories (pt.ipp.isep.dei.esoft.project.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Repositories</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.repository;
+&nbsp;
+&nbsp;public class Repositories {
+&nbsp;
+&nbsp;    private static Repositories instance;
+&nbsp;    private final OrganizationRepository organizationRepository;
+&nbsp;    private final TaskCategoryRepository taskCategoryRepository;
+&nbsp;    private final AuthenticationRepository authenticationRepository;
+&nbsp;    private final WaterSuplyPointsCsvRepository waterSuplyPointsCsvRepository;
+&nbsp;    private final JobRepository jobRepository;
+&nbsp;    private final CollaboratorRepository collaboratorRepository;
+&nbsp;    private final SkillRepository skillRepository;
+&nbsp;    private final TeamRepository teamRepository;
+&nbsp;
+<b class="nc">&nbsp;    private Repositories() {</b>
+<b class="nc">&nbsp;        organizationRepository = new OrganizationRepository();</b>
+<b class="nc">&nbsp;        taskCategoryRepository = new TaskCategoryRepository();</b>
+<b class="nc">&nbsp;        authenticationRepository = new AuthenticationRepository();</b>
+<b class="nc">&nbsp;        waterSuplyPointsCsvRepository = new WaterSuplyPointsCsvRepository(false);</b>
+<b class="nc">&nbsp;        jobRepository = new JobRepository();</b>
+<b class="nc">&nbsp;        collaboratorRepository = new CollaboratorRepository();</b>
+<b class="nc">&nbsp;        skillRepository = new SkillRepository();</b>
+<b class="nc">&nbsp;        teamRepository = new TeamRepository();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Repositories getInstance() {
+<b class="nc">&nbsp;        if (instance == null) {</b>
+<b class="nc">&nbsp;            synchronized (Repositories.class) {</b>
+<b class="nc">&nbsp;                instance = new Repositories();</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return instance;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public OrganizationRepository getOrganizationRepository() {
+<b class="nc">&nbsp;        return organizationRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public TaskCategoryRepository getTaskCategoryRepository() {
+<b class="nc">&nbsp;        return taskCategoryRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public AuthenticationRepository getAuthenticationRepository() {
+<b class="nc">&nbsp;        return authenticationRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public WaterSuplyPointsCsvRepository getWaterSuplyPointsCsvRepository() {
+<b class="nc">&nbsp;        return waterSuplyPointsCsvRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public JobRepository getJobRepository() {
+<b class="nc">&nbsp;        return jobRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public CollaboratorRepository getCollaboratorRepository() {
+<b class="nc">&nbsp;        return collaboratorRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public SkillRepository getSkillRepository(){
+<b class="nc">&nbsp;        return skillRepository;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public TeamRepository getTeamRepository() {return teamRepository;}</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:04</div>
+</div>
+</body>
+</html>

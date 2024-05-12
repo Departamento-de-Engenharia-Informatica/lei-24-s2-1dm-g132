@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > WaterSuplyPointsCsvRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: WaterSuplyPointsCsvRepository (pt.ipp.isep.dei.esoft.project.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WaterSuplyPointsCsvRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/58)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.repository;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;public class WaterSuplyPointsCsvRepository {
+&nbsp;
+&nbsp;    // Para já, considerei que cada edge é uma String e o custo é um Double, podem mudar mais tarde se for o caso.
+&nbsp;    private MatrixGraph&lt;Vertice, Double&gt; csvGraph;
+&nbsp;
+<b class="nc">&nbsp;    public WaterSuplyPointsCsvRepository(boolean directed) {</b>
+<b class="nc">&nbsp;        csvGraph = new MatrixGraph&lt;&gt;(directed);</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public WaterSuplyPointsCsvRepository() {</b>
+<b class="nc">&nbsp;        csvGraph = new MatrixGraph&lt;&gt;(false);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addEdge(String ori, String dest, Double weight) {
+<b class="nc">&nbsp;        return addEdge(new Vertice(ori), new Vertice(dest), weight);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addEdge(Vertice ori, Vertice dest, Double weight){
+<b class="nc">&nbsp;        return csvGraph.addEdge(ori, dest, weight);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getEdge(Vertice ori, Vertice dest) {
+<b class="nc">&nbsp;        Double temp = csvGraph.edge(ori, dest).getWeight();</b>
+<b class="nc">&nbsp;        if (temp != null) {</b>
+<b class="nc">&nbsp;            return temp;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public MatrixGraph&lt;Vertice, Double&gt; getCsvGraphCopy() {
+<b class="nc">&nbsp;        return csvGraph.clone();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean loadGraph(String filePath) {
+&nbsp;        try {
+<b class="nc">&nbsp;            File file = new File(filePath);</b>
+<b class="nc">&nbsp;            String reverseName = reverseString(file.getName());</b>
+<b class="nc">&nbsp;            String[] tokens = reverseName.split(&quot;\\.&quot;);</b>
+<b class="nc">&nbsp;            String extensao = reverseString(tokens[0]);</b>
+<b class="nc">&nbsp;            if (!extensao.equals(&quot;csv&quot;)) {</b>
+<b class="nc">&nbsp;                if (extensao.equals(&quot;png&quot;)){</b>
+<b class="nc">&nbsp;                    return false;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;Invalid File Format! Should be &lt;.csv&gt;&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            Scanner scanner = new Scanner(file);</b>
+<b class="nc">&nbsp;            int i = 0;</b>
+<b class="nc">&nbsp;            while (scanner.hasNext()) {</b>
+<b class="nc">&nbsp;                String line = scanner.nextLine();</b>
+<b class="nc">&nbsp;                String[] args = line.split(&quot;,&quot;);</b>
+<b class="nc">&nbsp;                if (i &gt; 0){</b>
+<b class="nc">&nbsp;                    if (args.length != 3) {</b>
+<b class="nc">&nbsp;                        throw new RuntimeException(&quot;Invalid Entry: &lt;&quot; + line + &quot;&gt;, Should be &lt;arg, arg, arg&quot;);</b>
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        String ori = args[0].strip();</b>
+<b class="nc">&nbsp;                        String dest = args[1].strip();</b>
+<b class="nc">&nbsp;                        double weight = Double.parseDouble(args[2].strip());</b>
+<b class="nc">&nbsp;                        addEdge(ori, dest, weight);</b>
+&nbsp;                    }
+&nbsp;                }
+<b class="nc">&nbsp;                i++;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        scanner.close();</b>
+<b class="nc">&nbsp;        } catch (FileNotFoundException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static String reverseString(String str) {
+<b class="nc">&nbsp;        if (str == null || str.isEmpty()) {</b>
+<b class="nc">&nbsp;            return str;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        char[] charArray = str.toCharArray();</b>
+&nbsp;
+<b class="nc">&nbsp;        int left = 0;</b>
+<b class="nc">&nbsp;        int right = charArray.length - 1;</b>
+&nbsp;
+<b class="nc">&nbsp;        while (left &lt; right) {</b>
+<b class="nc">&nbsp;            char temp = charArray[left];</b>
+<b class="nc">&nbsp;            charArray[left] = charArray[right];</b>
+<b class="nc">&nbsp;            charArray[right] = temp;</b>
+<b class="nc">&nbsp;            left++;</b>
+<b class="nc">&nbsp;            right--;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return new String(charArray);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;String&gt; getMinimalCostGraph() {
+<b class="nc">&nbsp;        List&lt;String&gt; listToReturn = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        MatrixGraph&lt;Vertice, Double&gt; graph = Algorithms.minDistGraph(getCsvGraphCopy(), Double::compareTo);</b>
+<b class="nc">&nbsp;        for (Edge&lt;Vertice, Double&gt; edge : graph.edges()) {</b>
+<b class="nc">&nbsp;            String entry = edge.getVOrig().getNome() + &quot; &lt;-&gt; &quot; + edge.getVDest().getNome() + &quot;, cost: &quot; + edge.getWeight();</b>
+<b class="nc">&nbsp;            if (listToReturn.isEmpty()){</b>
+<b class="nc">&nbsp;                listToReturn.add(entry);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                String entry2 = edge.getVDest().getNome() + &quot; &lt;-&gt; &quot; + edge.getVOrig().getNome() + &quot;, cost: &quot; + edge.getWeight();</b>
+<b class="nc">&nbsp;                if (!listToReturn.contains(entry) &amp;&amp; !listToReturn.contains(entry2)){</b>
+<b class="nc">&nbsp;                    listToReturn.add(entry);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return listToReturn;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:04</div>
+</div>
+</body>
+</html>
