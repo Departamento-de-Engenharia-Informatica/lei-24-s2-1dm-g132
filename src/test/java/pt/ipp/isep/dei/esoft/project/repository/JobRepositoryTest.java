@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JobRepositoryTest {
     @Test
     void testAddJob() {
-        // Arrange
+
         JobRepository jobRepository = new JobRepository();
         Job job = new Job("Motorista");
 
-        // Act
+
         Optional<Job> addedJob = jobRepository.add(job);
 
         // Assert
@@ -25,12 +25,12 @@ public class JobRepositoryTest {
 
     @Test
     void testAddDuplicateJob() {
-        // Arrange
+
         JobRepository jobRepository = new JobRepository();
         Job job = new Job("Motorista");
         jobRepository.add(job);
 
-        // Act
+
         Optional<Job> addedJob = jobRepository.add(job);
 
         // Assert
@@ -39,14 +39,14 @@ public class JobRepositoryTest {
 
     @Test
     void testGetJobs() {
-        // Arrange
+
         JobRepository jobRepository = new JobRepository();
         Job job1 = new Job("Motorista");
         Job job2 = new Job("Eletricista");
         jobRepository.add(job1);
         jobRepository.add(job2);
 
-        // Act
+
         List<Job> jobs = jobRepository.getJobs();
 
         // Assert
@@ -57,12 +57,12 @@ public class JobRepositoryTest {
 
     @Test
     void testGetJobByName() {
-        // Arrange
+
         JobRepository jobRepository = new JobRepository();
         Job job1 = new Job("Motorista");
         jobRepository.add(job1);
 
-        // Act
+
         Job retrievedJob = jobRepository.getJobByName("Motorista");
 
         // Assert
@@ -71,7 +71,7 @@ public class JobRepositoryTest {
 
     @Test
     void testGetJobByNameNonExisting() {
-        // Arrange
+
         JobRepository jobRepository = new JobRepository();
 
         // Act & Assert
