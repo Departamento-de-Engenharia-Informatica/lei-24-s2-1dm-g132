@@ -1,30 +1,62 @@
-# OO Design
+# US07 - Register a Vehicle’s Check-Up
 
-### Application Overview
+## 3. Design - User Story Realization
 
-The following sequence diagram graphically represents the intended flow for the application where there is a clear separation (decoupling) between the domain classes and the user interaction classes (_user interface_). This decoupling is performed by classes with the suffix _Controller_.
-
-
-![GeneralOverview](svg/us007-sequence-diagram-ui-controller-overview.svg)
-
-#### OBS:
-- **_{MenuX}UI_ :** represents an instance of a UI class that presents several menu options and/or features to the user
-- **_{NameOfUC}UI_ :** represents an instance of a specific UI class for the realization of a given use case / user story
-- **_{NameOfUC}Controller_ :** represents an instance of a Controller class responsible for decoupling the UI from the Domain classes
-- **_methodX(...)_ :** abstraction representing the invocation a public method of {NameOfUC} Controller
-- **_methodY(...)_ :** abstraction representing the invocation a public method of any class belonging to the domain
-- In the remaining sequence diagrams, focus only focus on the content of the **_loop_**
-
-The execution of some functionalities by users must be preceded and verified by an authorization mechanism based on users' roles.
-This verification can be carried out as follows:
+### 3.1. Rationale
 
 
-![CheckingUserAuthorization](svg/us007-sequence-diagram-controller.svg)
+| Interaction ID | Question: Which class is responsible for...   | Answer                        | Justification (with patterns)                                                                                 |
+|:---------------|:----------------------------------------------|:------------------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1  		     | 	... interacting with the actor?              | RegisterMaintenanceUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  		        | 	... coordinating the US?                     | RegisterMaintenanceController | Controller                                                                                                    |
+| 			  		        | 	... instantiating a new Maintenance?         | Collaborator                  | Pure Fabrication.                                                                                             |
+| 			  		        | ... knowing the user using the system?        | UserSession                   | IE: cf. A&A component documentation.                                                                          |
+| 			  		        | 							                                       | Organization                  | IE: knows/has its own Collaborators                                                                           |
+| 			  		        | 							                                       | Collaborator                  | IE: knows its own data vehiclePlat, date, kms)                                                                |
+| Step 2  		     | 							                                       |                               |                                                                                                               |
+| Step 3  		     | 	...saving the inputted data?                 | VehicleRepository             | Pure Fabrication                                                                                              |
+| Step 4  		     | 	... saving the selected category?            | Vehicle                       | IE: object created in step 1 is classified in one Category.                                                   |
+| Step 5  		     | 							                                       |                               |                                                                                                               |              
+| Step 6  		     | 	... validating all data (local validation)?  | Maintenance                   | IE: owns its data.                                                                                            | 
+| 			  		        | 	... validating all data (global validation)? | Collaborator                  | IE: knows all its vehicles.                                                                                   | 
+| 			  		        | 	... saving the created maintenance?          | VehicleRepository             | IE: stores all vehicles                                                                                       | 
+| Step 7         | ...adding skill to repository                 | VehicleRepository             | Pure Fabrication                                                                                              |
+| Step 8  		     | 	... informing operation success?             | RegisterMaintenanceUI         | IE: is responsible for user interactions.                                                                     | 
 
-Users' authentication and authorization processes are reutilizing an external component called **_AuthLib_**.
-Documentation regarding this component is available [here](../../../auth/Readme.md).
+
+### Systematization ##
+
+According to the taken rationale, the conceptual classes promoted to software classes are:
+
+* Vehicle
+* Maintenance
+
+Other software classes (i.e. Pure Fabrication) identified:
+
+* RegisterMaintenanceUI
+* RegisterMaintenanceController
+* VehicleRepository
 
 
-## Class Diagram
+## 3.2. Sequence Diagram (SD)
+
+
+### Full Diagram
+
+This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
+
+![Sequence Diagram - Full](svg/us007-sequence-diagram-full.svg)
+
+### Split Diagrams
+
+The following diagram shows the same sequence of interactions between the classes involved in the realization of this user story, but it is split in partial diagrams to better illustrate the interactions between the classes.
+
+It uses Interaction Occurrence (a.k.a. Interaction Use).
+
+![Sequence Diagram - split](svg/us007-sequence-diagram-split.svg)
+
+
+
+## 3.3. Class Diagram (CD)
 
 ![Class Diagram](svg/us007-class-diagram.svg)
