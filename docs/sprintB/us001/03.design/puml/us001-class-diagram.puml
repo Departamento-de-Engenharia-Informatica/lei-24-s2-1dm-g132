@@ -11,23 +11,23 @@ class CreateSkillUI {
 }
 
 class Skill
- {
-    +String name
+{
+    - name
+    + Skill(name)
+}
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getSkillRepository()
+}
 
- }
- class Repositories {
-     - Repositories()
-     + getInstance() : Repositories
-     + getSkillRepository();
- }
+class SkillRepository {
+   + add(skill)
+}
+CreateSkillUI ..> CreateSkillController
+CreateSkillController ..> Repositories : repositories
 
- class SkillRepository {
-     + getSkillsList()
- }
-CreateSkillUI ..> CreateSkillController: inputs wanted data
-CreateSkillController ..> Repositories : inserts skill in the repository
-Repositories ..> SkillRepository : Have
-SkillRepository ..> Skill : Have
-Skill ..> CreateSkillController : will be inserted
+Repositories ..> SkillRepository : skillRepository
+SkillRepository ..> Skill : skill
 
 @enduml
