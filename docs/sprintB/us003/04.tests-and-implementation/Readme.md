@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US003 - Register a collaborator
 
 ## 4. Tests 
 
@@ -24,23 +24,187 @@ _It is also recommended to organize this content by subsections._
 
 ## 5. Construction (Implementation)
 
-### Class CreateTaskController 
+### Class RegisterCollaboratorUI
 
 ```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
+public void run() {
+    boolean dadosInvalidos1 = true;
+    boolean dadosInvalidos2 = true;
 
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
+    System.out.println("\n\n--- Register Collaborator ------------------------");
 
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
+    do{
+        try {
+            jobName = displayAndSelectJob();
+            dadosInvalidos1 = false;
 
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
+        } catch (InputMismatchException e){
+            System.out.println("\nERROR: " + "Invalid input value.\n");
+        }
+        catch (RuntimeException e){
+            System.out.println("\nERROR: " + e.getMessage());
+            return;
+        }
+    }while (dadosInvalidos1);
+
+    do {
+        try {
+            requestData();
+            submitData();
+            dadosInvalidos2 = false;
+        }
+        catch (IllegalArgumentException e){
+            System.out.println("\nERROR: " + e.getMessage());
+        }
+        catch (InputMismatchException e){
+            System.out.println("\nERROR: " + "Invalid input value.\n");
+        }
+    }while (dadosInvalidos2);
 }
 ```
+
+```java
+private void submitData() {
+        Optional<Collaborator> collaborator = getController().registerCollaborator(collaboratorName, collaboratorBirthdate, collaboratorAdmissionDate,
+                collaboratorAddress, collaboratorPhoneNumber, collaboratorEmail, collaboratorTaxpayerNumber, collaboratorIdentificationDocumentType, collaboratorIdentificationDocumentNumber, jobName);
+
+        if (collaborator.isPresent()) {
+            System.out.println("\nCollaborator successfully registered!");
+        } else {
+            System.out.println("\nCollaborator not registered successfully!");
+        }
+    }
+```
+
+```java
+private void requestData() {
+
+    collaboratorName = requestCollaboratorName();
+
+    collaboratorBirthdate = requestCollaboratorBirthdate();
+
+    collaboratorAdmissionDate = requestCollaboratorAdmissionDate();
+
+    collaboratorAddress = requestCollaboratorAddress();
+
+    collaboratorPhoneNumber = requestCollaboratorPhoneNumber();
+
+    collaboratorEmail = requestCollaboratorEmail();
+
+    collaboratorTaxpayerNumber = requestCollaboratorTaxpayerNumber();
+
+    collaboratorIdentificationDocumentType = requestCollaboratorIdentificationDocumentType();
+
+    collaboratorIdentificationDocumentNumber = requestCollaboratorIdentificationDocumentNumber();
+}
+```
+
+```java
+private String requestCollaboratorName() {
+    Scanner input = new Scanner(System.in);
+    System.out.print("Collaborator Name: ");
+    return input.nextLine();
+}
+```
+
+```java
+private String requestCollaboratorBirthdate() {
+    Scanner input = new Scanner(System.in);
+    System.out.print("Collaborator Birthdate (year/month/day): ");
+    return input.nextLine();
+}
+```
+
+```java
+private String requestCollaboratorAdmissionDate() {
+    Scanner input = new Scanner(System.in);
+    System.out.print("Collaborator Admission Date (year/month/day): ");
+    return input.nextLine();
+}
+```
+
+```java
+private String requestCollaboratorAddress() {
+    Scanner input = new Scanner(System.in);
+    System.out.print("Collaborator Address (street, zipcode, city): ");
+    return input.nextLine();
+}
+```
+
+```java
+private int requestCollaboratorPhoneNumber() {
+    Scanner input = new Scanner(System.in);
+    System.out.print("Collaborator Phone Number: ");
+    return input.nextInt();
+}
+```
+
+```java
+private String requestCollaboratorEmail() {
+    Scanner input = new Scanner(System.in);
+    System.out.print("Collaborator Email: ");
+    return input.nextLine();
+}
+```
+
+```java
+private int requestCollaboratorTaxpayerNumber() {
+    Scanner input = new Scanner(System.in);
+    System.out.print("Collaborator Taxpayer Number: ");
+    return input.nextInt();
+}
+```
+
+```java
+private String requestCollaboratorIdentificationDocumentType() {
+    Scanner input = new Scanner(System.in);
+    System.out.print("Collaborator Identification Document Type (CC, BI or Passport): ");
+    return input.nextLine();
+}
+```
+
+```java
+    private String requestCollaboratorIdentificationDocumentNumber() {
+    Scanner input = new Scanner(System.in);
+    System.out.print("Collaborator Identification Document Number: ");
+    return input.nextLine();
+}
+```
+
+```java
+    private String displayAndSelectJob() {
+    List<Job> jobs = controller.getJobs();
+
+    int listSize = jobs.size();
+
+    if(listSize == 0)
+        throw new RuntimeException("There are no jobs to display at the moment.");
+
+    int answer = -1;
+
+    Scanner input = new Scanner(System.in);
+
+    while (answer < 1 || answer > listSize) {
+        displayJobOptions(jobs);
+        System.out.print("Select a job: ");
+        answer = input.nextInt();
+    }
+
+    String name = jobs.get(answer - 1).getJobName();
+    return name;
+}
+```
+
+```java
+private void displayJobOptions(List<Job> jobs) {
+    int i = 1;
+    for (Job job : jobs) {
+        System.out.println("  " + i + " - " + job.getJobName());
+        i++;
+    }
+}
+```
+
 
 ### Class Organization
 
@@ -61,9 +225,7 @@ public Optional<Task> createTask(String reference, String description, String in
 
 ## 6. Integration and Demo 
 
-* A new option on the Employee menu options was added.
-
-* For demo purposes some tasks are bootstrapped while system starts.
+n/a
 
 
 ## 7. Observations
