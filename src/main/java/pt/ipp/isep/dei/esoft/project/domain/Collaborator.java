@@ -4,27 +4,81 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Represents a collaborator in the system.
+ */
 public class Collaborator {
+
+    /**
+     * The name of the collaborator.
+     */
     private String name;
+
+    /**
+     * The birthdate of the collaborator.
+     */
     private Calendar birthdate;
+
+    /**
+     * The admission date of the collaborator.
+     */
     private Calendar admissionDate;
+
+    /**
+     * The address of the collaborator.
+     */
     private String address;
+
+    /**
+     * The phone number of the collaborator.
+     */
     private int phoneNumber;
+
+    /**
+     * The email of the collaborator.
+     */
     private String email;
+
+    /**
+     * The taxpayer number of the collaborator.
+     */
     private int taxpayerNumber;
+
+    /**
+     * The identification document number of the collaborator.
+     */
     private String identificationDocumentNumber;
 
+    /**
+     * The identification document type of the collaborator.
+     */
     private DocType identificationDocumentType;
 
+    /**
+     * The job of the collaborator.
+     */
     private Job job;
 
+    /**
+     * The skills assigned to the collaborator.
+     */
     private List<Skill> skills;
 
+    /**
+     * Enumeration representing different types of identification documents.
+     */
     private static enum DocType{
         CC { @Override public String toString() { return "CC"; } },
         BI { @Override public String toString() { return "BI"; } },
         PASSPORT { @Override public String toString() { return "Passport"; } };
 
+        /**
+         * Validates the identification number based on the document type.
+         *
+         * @param type   The type of identification document.
+         * @param number The identification number to validate.
+         * @return True if the number is valid for the given document type, false otherwise.
+         */
         public static boolean isValidNumber(DocType type, String number) {
             switch (type) {
                 case CC:
@@ -42,6 +96,20 @@ public class Collaborator {
         }
     }
 
+    /**
+     * Constructs a collaborator with the provided details.
+     *
+     * @param name                        The name of the collaborator.
+     * @param birthdate                   The birthdate of the collaborator (format: year/month/day).
+     * @param admissionDate               The admission date of the collaborator (format: year/month/day).
+     * @param address                     The address of the collaborator (format: street, zipcode, city).
+     * @param phoneNumber                 The phone number of the collaborator.
+     * @param email                       The email of the collaborator.
+     * @param taxpayerNumber              The taxpayer number of the collaborator.
+     * @param identificationDocumentType  The type of identification document of the collaborator.
+     * @param identificationDocumentNumber The identification document number of the collaborator.
+     * @param job                         The job of the collaborator.
+     */
     public Collaborator(String name, String birthdate, String admissionDate, String address, int phoneNumber, String email,
                         int taxpayerNumber, String identificationDocumentType, String identificationDocumentNumber, Job job){
         setName(name);
@@ -57,6 +125,20 @@ public class Collaborator {
         this.skills = new ArrayList<>();
     }
 
+    /**
+     * Constructs a new collaborator with the provided details.
+     * @param name The name of the collaborator.
+     * @param birthdate The birthdate of the collaborator.
+     * @param admissionDate The admission date of the collaborator.
+     * @param address The address of the collaborator.
+     * @param phoneNumber The phone number of the collaborator.
+     * @param email The email address of the collaborator.
+     * @param taxpayerNumber The taxpayer number of the collaborator.
+     * @param identificationDocumentType The type of identification document.
+     * @param identificationDocumentNumber The identification document number.
+     * @param job The job of the collaborator.
+     * @param skills The skills of the collaborator.
+     */
     public Collaborator(String name, Calendar birthdate, Calendar admissionDate, String address, int phoneNumber, String email,
                         int taxpayerNumber, DocType identificationDocumentType, String identificationDocumentNumber, Job job, List<Skill> skills){
         setName(name);
@@ -72,22 +154,39 @@ public class Collaborator {
         this.skills = skills;
     }
 
+    /**
+     * Gets the name of the collaborator.
+     * @return The name of the collaborator.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets the identification document number of the collaborator.
+     * @return The identification document number.
+     */
     public String getIdentificationDocumentNumber() {
         return identificationDocumentNumber;
     }
 
+    /**
+     * Gets the skills of the collaborator.
+     * @return The list of skills of the collaborator.
+     */
     public List<Skill> getSkills() {
         return List.copyOf(skills);
     }
 
+    /**
+     * Sets the name of the collaborator.
+     * @param name The name to set.
+     * @throws IllegalArgumentException If the name contains numeric characters,
+     * or if it has more than 6 words, or if it's not correctly filled.
+     */
     private void setName(String name) {
 
         if (name.matches(".*\\d.*")) {
-            // If the input name contains numeric characters, throw an exception or handle it accordingly
             throw new IllegalArgumentException("Name cannot contain numbers.");
         }
 
@@ -107,6 +206,13 @@ public class Collaborator {
         }
     }
 
+    /**
+     * Sets the birthdate of the collaborator.
+     * @param birthdate The birthdate to set (in the format "year/month/day").
+     * @throws IllegalArgumentException If the birthdate format is invalid,
+     * or if it contains non-numeric values,
+     * or if the collaborator is not at least 18 years old.
+     */
     private void setBirthdate(String birthdate) {
         String[] parts = birthdate.trim().split("/");
 
@@ -141,6 +247,13 @@ public class Collaborator {
         this.birthdate = cal;
     }
 
+    /**
+     * Sets the admission date of the collaborator.
+     * @param admissionDate The admission date to set (in the format "year/month/day").
+     * @throws IllegalArgumentException If the admission date format is invalid,
+     * or if it contains non-numeric values,
+     * or if the collaborator is not at least 18 years old at the time of admission.
+     */
     private void setAdmissionDate(String admissionDate) {
         String[] parts = admissionDate.trim().split("/");
 
@@ -175,6 +288,13 @@ public class Collaborator {
         this.admissionDate = cal;
     }
 
+    /**
+     * Sets the address of the collaborator.
+     * @param address The address to set (formatted as "street, zipcode, city").
+     * @throws IllegalArgumentException If the address format is invalid,
+     * or if the street, zipcode, or city are empty,
+     * or if the zipcode format is invalid.
+     */
     private void setAddress(String address) {
         String[] components = address.trim().split(",");
 
@@ -202,6 +322,11 @@ public class Collaborator {
         this.address = address;
     }
 
+    /**
+     * Sets the phone number of the collaborator.
+     * @param phoneNumber The phone number to set.
+     * @throws IllegalArgumentException If the phone number format is invalid.
+     */
     private void setPhoneNumber(int phoneNumber) {
         String phoneNumberStr = String.valueOf(phoneNumber);
 
@@ -212,6 +337,11 @@ public class Collaborator {
         this.phoneNumber = phoneNumber;
     }
 
+    /**
+     * Sets the taxpayer number of the collaborator.
+     * @param taxpayerNumber The taxpayer number to set.
+     * @throws IllegalArgumentException If the taxpayer number format is invalid.
+     */
     private void setTaxpayerNumber(int taxpayerNumber) {
         String taxpayerNumberStr = String.valueOf(taxpayerNumber);
 
@@ -222,6 +352,11 @@ public class Collaborator {
         this.taxpayerNumber = taxpayerNumber;
     }
 
+    /**
+     * Sets the email address of the collaborator.
+     * @param email The email address to set.
+     * @throws IllegalArgumentException If the email address format is invalid.
+     */
     private void setEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         if (!email.matches(emailRegex)) {
@@ -231,6 +366,11 @@ public class Collaborator {
         this.email = email;
     }
 
+    /**
+     * Sets the identification document type of the collaborator.
+     * @param identificationDocumentType The identification document type to set.
+     * @throws IllegalArgumentException If the identification document type is invalid.
+     */
     private void setIdentificationDocumentType(String identificationDocumentType) {
         if(identificationDocumentType.equalsIgnoreCase(DocType.CC.toString()))
             this.identificationDocumentType = DocType.CC;
@@ -241,6 +381,12 @@ public class Collaborator {
         else throw new IllegalArgumentException("Invalid document type.");
     }
 
+    /**
+     * Sets the identification document number of the collaborator.
+     * @param identificationDocumentNumber The identification document number to set.
+     * @throws IllegalArgumentException If the identification document number is invalid
+     * for the provided type.
+     */
     private void setIdentificationDocumentNumber(String identificationDocumentNumber) {
         if(DocType.isValidNumber(identificationDocumentType, identificationDocumentNumber))
             this.identificationDocumentNumber = identificationDocumentNumber;
@@ -248,6 +394,12 @@ public class Collaborator {
             throw new IllegalArgumentException("Invalid identification document number for the provided type.");
     }
 
+    /**
+     * Assigns skills to the collaborator.
+     * @param selectedSkillsList The list of skills to assign.
+     * @return The updated collaborator.
+     * @throws IllegalArgumentException If all the provided skills are already assigned to the collaborator.
+     */
     public Collaborator assignSkill(List<Skill> selectedSkillsList){
         boolean updated = false;
         for(Skill skill: selectedSkillsList)
@@ -265,6 +417,11 @@ public class Collaborator {
         return this;
     }
 
+    /**
+     * Indicates whether some other object is "equal to" this collaborator.
+     * @param o The reference object with which to compare.
+     * @return true if this collaborator is the same as the o argument; false otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -277,22 +434,38 @@ public class Collaborator {
         return identificationDocumentNumber.equalsIgnoreCase(collaborator.identificationDocumentNumber);
     }
 
+    /**
+     * Checks if the collaborator has the same identification number as the provided one.
+     * @param collaboratorIdNumber The identification number to compare.
+     * @return True if the collaborator has the same identification number, false otherwise.
+     */
     public boolean sameIdNumber(String collaboratorIdNumber){
         return this.identificationDocumentNumber.equalsIgnoreCase(collaboratorIdNumber);
     }
 
+    /**
+     * Returns a new object that is a copy of this collaborator.
+     * @return A new Collaborator object that is a copy of this collaborator.
+     */
     @Override
     public Collaborator clone() {
         return new Collaborator(this.name, this.birthdate, this.admissionDate, this.address, this.phoneNumber, this.email,
                 this.taxpayerNumber, this.identificationDocumentType, this.identificationDocumentNumber, this.job, new ArrayList<>(this.skills));
     }
 
-
+    /**
+     * Returns a string representation of the collaborator suitable for displaying in a team proposal context.
+     * @return The string representation of the collaborator for team proposal display.
+     */
     public String toStringTeam() {
         return String.format("Collaborator: %s\n" +
                         "Skills: %s", this.name, this.skills);
     }
 
+    /**
+     * Returns a string representation of the Collaborator object.
+     * @return A string representation of the Collaborator object.
+     */
     @Override
     public String toString() {
         return String.format("Collaborator %s Data:\n" +

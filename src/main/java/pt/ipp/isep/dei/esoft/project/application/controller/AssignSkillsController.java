@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
@@ -10,16 +9,34 @@ import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller class responsible for handling operations related to assigning skills to collaborators.
+ */
 public class AssignSkillsController {
 
+    /**
+     * The collaborator repository needed for the operations of this class.
+     */
     private CollaboratorRepository collaboratorRepository;
+
+    /**
+     * The skill repository needed for the operations of this class.
+     */
     private SkillRepository skillRepository;
 
+    /**
+     * Constructs a new AssignSkillsController object.
+     */
     public AssignSkillsController(){
         getCollaboratorRepository();
         getSkillRepository();
     }
 
+    /**
+     * Retrieves the collaborator repository instance.
+     *
+     * @return The CollaboratorRepository object.
+     */
     private CollaboratorRepository getCollaboratorRepository() {
         if (collaboratorRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -28,6 +45,11 @@ public class AssignSkillsController {
         return collaboratorRepository;
     }
 
+    /**
+     * Retrieves the skill repository instance.
+     *
+     * @return The SkillRepository object.
+     */
     private SkillRepository getSkillRepository() {
         if (skillRepository == null) {
             Repositories repositories = Repositories.getInstance();
@@ -36,7 +58,12 @@ public class AssignSkillsController {
         return skillRepository;
     }
 
-
+    /**
+     * Assigns skills to a collaborator.
+     *
+     * @param collaboratorIdNumber The identification number of the collaborator.
+     * @return An optional containing the updated collaborator if the assignment was successful, otherwise empty.
+     */
     public Optional<Collaborator> assignSkills(String collaboratorIdNumber){
         List<Skill> selectedSkillsList = getSelectedSkillsList();
 
@@ -54,24 +81,50 @@ public class AssignSkillsController {
         return updatedCollaborator;
     }
 
+    /**
+     * Retrieves the list of selected skills.
+     *
+     * @return The list of selected skills.
+     */
     private List<Skill> getSelectedSkillsList(){
         return skillRepository.getSelectedSkillsList();
     }
 
+    /**
+     * Retrieves a collaborator by its identification number.
+     *
+     * @param collaboratorIdNumber The identification number of the collaborator.
+     * @return The collaborator corresponding to the provided identification number.
+     */
     private Collaborator getCollaboratorByIdNumber(String collaboratorIdNumber){
         return collaboratorRepository.getCollaboratorByIdNumber(collaboratorIdNumber);
     }
 
+    /**
+     * Retrieves the list of collaborators.
+     *
+     * @return The list of collaborators.
+     */
     public List<Collaborator> getCollaborators() {
         return collaboratorRepository.getCollaborators();
     }
 
+    /**
+     * Retrieves the list of skills.
+     *
+     * @return The list of skills.
+     */
     public List<Skill> getSkills() {
         SkillRepository skillRepository = getSkillRepository();
         skillRepository.createSelectedSkillsList();
         return skillRepository.getSkills();
     }
 
+    /**
+     * Adds a selected skill by name.
+     *
+     * @param name The name of the skill to add.
+     */
     public void addSelectedSkillName(String name){
         skillRepository.addSelectedSkill(name);
     }

@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
-
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillsController;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
@@ -10,19 +9,40 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * UI class responsible for assigning skills to collaborator through console interaction.
+ */
 public class AssignSkillsUI implements Runnable{
+
+    /**
+     * The controller associated with this UI.
+     */
     private final AssignSkillsController controller;
 
+    /**
+     * The collaborator identification number inputted by the user.
+     */
     private String collaboratorIdNumber;
 
+    /**
+     * Constructs a new AssignSkillsUI object.
+     */
     public AssignSkillsUI() {
         controller = new AssignSkillsController();
     }
 
+    /**
+     * Retrieves the controller associated with this UI.
+     *
+     * @return The AssignSkillsController object.
+     */
     private AssignSkillsController getController(){
         return controller;
     }
 
+    /**
+     * Executes the process of assigning skills to a collaborator.
+     */
     public void run() {
         boolean dadosInvalidos = true;
 
@@ -61,6 +81,9 @@ public class AssignSkillsUI implements Runnable{
 
     }
 
+    /**
+     * Assigns skills to a collaborator based on the provided collaborator identification number.
+     */
     private void assignSkills(){
         Optional<Collaborator> collaborator = getController().assignSkills(collaboratorIdNumber);
 
@@ -71,6 +94,9 @@ public class AssignSkillsUI implements Runnable{
         }
     }
 
+    /**
+     * Displays the available skills and allows the user to select skills to assign.
+     */
     private void displayAndSelectSkills(){
         boolean dadosInvalidos;
         boolean cont = true;
@@ -115,8 +141,12 @@ public class AssignSkillsUI implements Runnable{
         }while(cont);
     }
 
+    /**
+     * Displays the list of available collaborators and prompts the user to select one.
+     *
+     * @return The identification document number of the selected collaborator.
+     */
     private String displayAndSelectCollaborator() {
-        //Display the list of jobs
         List<Collaborator> collaborators = controller.getCollaborators();
 
         int listSize = collaborators.size();
@@ -138,8 +168,12 @@ public class AssignSkillsUI implements Runnable{
         return idNumber;
     }
 
+    /**
+     * Displays the available skills as a numbered menu.
+     *
+     * @param skills The list of available jobs.
+     */
     private void displaySkillOptions(List<Skill> skills) {
-        //display the skills as a menu with number options to select
         int i = 1;
         for (Skill skill : skills) {
             System.out.println("  " + i + " - " + skill.getName());
@@ -147,8 +181,12 @@ public class AssignSkillsUI implements Runnable{
         }
     }
 
+    /**
+     * Displays the available collaborators as a numbered menu.
+     *
+     * @param collaborators The list of available jobs.
+     */
     private void displayCollaboratorOptions(List<Collaborator> collaborators) {
-        //display the collaborators as a menu with number options to select
         int i = 1;
         for (Collaborator collaborator : collaborators) {
             System.out.println("  " + i + " - " + collaborator.getName() + " : " + collaborator.getIdentificationDocumentNumber());
