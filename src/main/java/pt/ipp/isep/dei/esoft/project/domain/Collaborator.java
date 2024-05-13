@@ -67,10 +67,23 @@ public class Collaborator {
     /**
      * Enumeration representing different types of identification documents.
      */
-    private static enum DocType{
-        CC { @Override public String toString() { return "CC"; } },
-        BI { @Override public String toString() { return "BI"; } },
-        PASSPORT { @Override public String toString() { return "Passport"; } };
+    private static enum DocType {
+        CC("\\d{8} \\d [A-Z]{2}\\d", "CC"),
+        BI("\\d{8} \\d", "BI"),
+        PASSPORT("[A-Z]{2}\\d{6}", "Passport");
+
+        private final String pattern;
+        private final String displayName;
+
+        DocType(String pattern, String displayName) {
+            this.pattern = pattern;
+            this.displayName = displayName;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
+        }
 
         /**
          * Validates the identification number based on the document type.
@@ -80,19 +93,7 @@ public class Collaborator {
          * @return True if the number is valid for the given document type, false otherwise.
          */
         public static boolean isValidNumber(DocType type, String number) {
-            switch (type) {
-                case CC:
-                    String ccPattern = "\\d{8} \\d [A-Z]{2}\\d";
-                    return number.trim().matches(ccPattern);
-                case BI:
-                    String biPattern = "\\d{8} \\d";
-                    return number.trim().matches(biPattern);
-                case PASSPORT:
-                    String passportPattern = "[A-Z]{2}\\d{6}";
-                    return number.trim().matches(passportPattern);
-                default:
-                    return false;
-            }
+            return number.trim().matches(type.pattern);
         }
     }
 
