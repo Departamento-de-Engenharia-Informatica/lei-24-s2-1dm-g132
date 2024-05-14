@@ -1,0 +1,83 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US008 - Produce a list of vehicles needing maintenance
+
+autonumber
+
+actor "VFM" as Employee
+participant ":ListVehiclesNeedingMaintenanceUI" as UI
+participant ":ListVehiclesNeedingMaintenanceController" as CTRL
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+participant "vehiclesNeedingMaintenanceList\nList<Vehicle>" as vehiclesNeedingMaintenanceList
+
+activate Employee
+
+    Employee -> UI : asks to produce a list of the vehicles needing maintenance
+    activate UI
+
+    UI -> CTRL : createList()
+    activate CTRL
+    CTRL -> VehicleRepository : createList()
+    activate VehicleRepository
+    VehicleRepository -> vehiclesNeedingMaintenanceList** : createList()
+    deactivate VehicleRepository
+    deactivate CTRL
+
+    UI -> CTRL : getVehiclesList()
+    activate CTRL
+    ref over CTRL
+        Get Vehicles List
+    end ref
+    CTRL --> UI : vehiclesList
+    deactivate CTRL
+
+    loop until end of vehicles list
+    UI --> Employee : requests to update the current kms of the vehicle
+    deactivate UI
+    Employee -> UI : enters the current kms of the vehicle
+    activate UI
+    UI -> CTRL : updateVehicleKms(vehiclePlate, kms)
+    activate CTRL
+
+    ref over CTRL
+       Update Vehicle's Kms
+    end ref
+    CTRL --> UI : vehicle
+    deactivate CTRL
+
+    UI -> CTRL : getLastMaintenance(vehiclePlate)
+    activate CTRL
+
+    ref over CTRL
+       Get Vehicle's Last Maintenance
+    end ref
+
+    CTRL --> UI : lastMaintenance
+    deactivate CTRL
+    UI -> CTRL : calculateNextMaintenance(vehicle, lastMaintenance)
+    activate CTRL
+    CTRL -> CTRL : needsMaintenance = calculateNextMaintenance(vehicle, lastMaintenance)
+    CTRL --> UI : needsMaintenance
+    deactivate CTRL
+    opt needsMaintenance = true
+        UI -> CTRL : addVehicleToList(vehicle)
+        activate CTRL
+
+        CTRL -> vehiclesNeedingMaintenanceList : addVehicleToList(vehicle)
+        activate vehiclesNeedingMaintenanceList
+
+        vehiclesNeedingMaintenanceList --> CTRL : vehiclesNeedingMaintenanceList
+        deactivate vehiclesNeedingMaintenanceList
+
+        CTRL --> UI : vehiclesNeedingMaintenanceList
+        deactivate CTRL
+    end
+
+    UI --> Employee : shows list of vehicles needing maintenance
+    deactivate UI
+
+deactivate Employee
+@enduml

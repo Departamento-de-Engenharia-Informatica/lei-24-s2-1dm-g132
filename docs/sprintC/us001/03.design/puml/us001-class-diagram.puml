@@ -1,0 +1,33 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class CreateSkillController {
+    +createSkill(name)
+}
+
+
+class CreateSkillUI {
+
+}
+
+class Skill
+{
+    - name
+    + Skill(name)
+}
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getSkillRepository()
+}
+
+class SkillRepository {
+   + add(skill)
+}
+CreateSkillUI ..> CreateSkillController
+CreateSkillController ..> Repositories : repositories
+
+Repositories ..> SkillRepository : skillRepository
+SkillRepository ..> Skill : skill
+
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US004 - Assign one or more skills to a collaborator
+
+autonumber
+
+actor "HRM" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to assign skill(s) to a collaborator
+    activate System
+
+    System --> Employee : shows list with all collaborators
+    deactivate System
+
+    Employee -> System : selects the collaborator
+    activate System
+
+    loop while HRM wants to continue
+    System --> Employee : shows skills list and requests to select one
+    deactivate System
+
+    Employee -> System : selects one skill
+    activate System
+
+    System --> Employee : asks to continue
+    deactivate System
+
+    Employee -> System : responds yes or no
+    activate System
+    end
+    System --> Employee : shows skill(s) selected and requests confirmation
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+    System --> Employee : displays operation success
+    deactivate System
+
+deactivate Employee
+@enduml

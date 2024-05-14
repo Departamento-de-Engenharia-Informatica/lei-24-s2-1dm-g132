@@ -1,0 +1,52 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US008 - Produce a list of vehicles needing maintenance
+
+actor "VFM" as Employee
+participant ":ListVehiclesNeedingMaintenanceController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+participant "vehicle\n:Vehicle" as Vehicle
+
+autonumber 15
+-> CTRL : updateVehicleKms(vehiclePlate, kms)
+
+autonumber 15.1
+
+activate CTRL
+    group Update Vehicle
+    CTRL -> RepositorySingleton : getInstance()
+    activate RepositorySingleton
+
+    RepositorySingleton --> CTRL : repositories
+    deactivate RepositorySingleton
+
+    CTRL -> PLAT : getVehicleRepository()
+    activate PLAT
+
+    PLAT --> CTRL : vehicleRepository
+    deactivate PLAT
+
+    CTRL -> VehicleRepository : updateVehicleKms(vehiclePlate, kms)
+    activate VehicleRepository
+
+    VehicleRepository -> Vehicle : updateVehicleKms(vehiclePlate, kms)
+    activate Vehicle
+
+    Vehicle --> VehicleRepository : vehicle
+    deactivate Vehicle
+
+    VehicleRepository --> CTRL : vehicle
+    deactivate VehicleRepository
+    end group
+
+autonumber 16
+<-- CTRL : vehicle
+
+deactivate CTRL
+
+@enduml

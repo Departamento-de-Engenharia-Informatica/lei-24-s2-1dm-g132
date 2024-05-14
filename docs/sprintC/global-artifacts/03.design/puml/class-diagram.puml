@@ -1,0 +1,291 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class CreateSkillUI {
+
+}
+
+class CreateSkillController {
+    +createSkill(name)
+}
+
+class RegisterCollaboratorUI
+{
+}
+
+class RegisterCollaboratorController
+{
+    + RegisterCollaboratorController()
+    + getJobs()
+    + registerCollaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, jobName)
+    - getJobByName(jobName)
+}
+ class RegisterJobUI {
+
+ }
+ class RegisterJobController {
+     + RegisterJobController()
+     + registerJob(jobName: String)
+
+ }
+ class AssignSkillsUI {
+ }
+
+class AssignSkillsController {
+    + assignSkillsController(collaboratorRepository, skillRepository)
+    + getCollaborators()
+    + getSkills()
+    + createSelectedSkillsList()
+    + addSelectedSkill(skillName)
+    + getSelectedSkillsList()
+    + getCollaboratorByIdNumber(collaboratorIdNumber)
+    + assignSkill(collaborator, selectedSkillsList)
+}
+
+
+class GenerateTeamUI
+{
+
+}
+
+class GenerateTeamController
+{
+    + GenerateTeamController()
+    + getSkills()
+    + addSelectedSkillName(skillName)
+    + generateTeamProposal(minCollab, maxCollab)
+    + registerTeam(tempCollaboratorList)
+    - createSelectedSkillsList()
+    - createAvailableCollaboratorsList()
+    - selectCollaboratorsForTeam(selectedSkillsList)
+}
+ class RegisterNewVehicleUI {
+ }
+ class RegisterNewVehicleController {
+     + registerVehicle(brand : String,
+                         MaintenanceCheckupFrequency : int,)
+
+      }
+
+
+
+  class RegisterMaintenanceUI {
+  }
+ class RegisterMaintenanceController {
+     +registerMaintenance(vehiclePlate, date, kms)
+ }
+
+ class ListVehiclesNeedingMaintenanceUI {
+ }
+
+ class ListVehiclesNeedingMaintenanceController {
+     + ListVehiclesNeedingMaintenanceController(vehicleRepository, maintenanceRepository)
+     + getVehiclesList()
+     + updateVehicleKms(vehiclePlate, kms)
+     + getLastMaintenance(vehiclePlate)
+     + calculateNextMaintenance(vehicle, lastMaintenance)
+     + addVehicleToList(vehicle)
+
+ }
+
+ class Repositories {
+     - Repositories()
+     + getInstance() : Repositories
+     + getSkillRepository();
+     + getJobRepository()
+     + getCollaboratorRepository()
+     + getTeamRepository()
+     + getVehicleRepository()
+ }
+
+ class SkillRepository {
+     + getSkillsList()
+         + addSelectedSkillName(skillName)
+         + createSelectedSkillsList()
+         + getSkillByName(skillName)
+             + getSelectedSkillsList()
+ }
+
+
+
+ class RegisterJobRepository {
+     RegisterJobRepository()
+ }
+
+ class JobRepository
+ {
+     + getJobs()
+     + getJobByName(jobName)
+ }
+
+ class CollaboratorRepository
+ {
+     + registerCollaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, job)
+     - addCollaborator(collaborator)
+     - validateCollaborator(collaborator)
+         + createTempCollaboratorList()
+         + generateTeam(selectedSkillsList)
+          + getCollaborators()
+             + getCollaboratorByIdNumber(collaboratorIdNumber)
+             + assignSkill(collaborator, selectedSkillsList)
+ }
+ class TeamRepository
+ {
+     + removeUnavailableCollaborators(tempCollaboratorList)
+     + registerTeam(tempCollaboratorList)
+     - addTeam(team)
+ }
+
+
+  class MaintenanceRepository {
+      + getLastMaintenance(vehiclePlate)
+  }
+
+class VehicleRepository {
+    + getVehiclesList()
+    + updateVehicleKms(vehiclePlate, kms)
+        + createMaintenance()
+             + VehicleRepository();
+
+}
+
+class Job
+{
+    - String name
+}
+
+
+class Collaborator {
+  - String name
+    - Calendar birthdate
+    - Calendar admissionDate
+    - String address
+    - Integer phoneNumber
+    - String email
+    - Integer taxpayerNumber
+    - String identificationDocumentNumber
+    + Collaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, job)
+    + teamDefinitionCriteria(selectedSkillsList)
+
+}
+
+
+
+
+enum DocType
+{
+    CC
+    BI
+    Passport
+}
+
+class Skill
+{
+    - String name
+}
+
+class Team
+{
+    + Team(tempCollaboratorList)
+    + removeUnavailableCollaborators(tempCollaboratorList)
+}
+
+
+class Vehicle {
+  - String vehiclePlate
+  - String brand
+  - String model
+  - String type
+  - Integer tare
+  - Integer grossWeight
+  - Integer currentKms
+  - Integer checkUpFrequency
+  - Date registerDate
+  - Date acquisitionDate
+  + updateVehicleKms(vehiclePlate, kms)
+}
+
+class Maintenance {
+    - String vehiclePlate
+    - Date date
+    - Integer kms
+}
+
+
+
+
+Repositories --> "1" JobRepository
+Repositories --> "1" VehicleRepository
+Repositories --> "1" MaintenanceRepository
+Repositories --> "1" SkillRepository
+Repositories --> "1" TeamRepository
+Repositories --> "1" CollaboratorRepository
+Repositories --> RegisterJobRepository
+Repositories -> Repositories : instance
+
+ListVehiclesNeedingMaintenanceController ...> Repositories: repositories
+ListVehiclesNeedingMaintenanceController ..> VehicleRepository: vehicleRepository
+ListVehiclesNeedingMaintenanceController ...> MaintenanceRepository: maintenanceRepository
+ListVehiclesNeedingMaintenanceUI ..> ListVehiclesNeedingMaintenanceController
+
+VehicleRepository "1" --> "*" Vehicle : vehicle
+
+MaintenanceRepository "1" --> "*" Maintenance : maintenance
+
+SkillRepository "1" --> "*" Skill: skill
+
+CollaboratorRepository "1" --> "*" Collaborator : collaborator
+
+TeamRepository "1" --> "*" Team: team
+
+JobRepository "1" -> "*" Job : job
+
+RegisterJobRepository ..> job : has
+
+
+RegisterMaintenanceUI ..> RegisterMaintenanceController
+RegisterMaintenanceController ...> Repositories: repositories
+RegisterMaintenanceController ..> VehicleRepository: vehicleRepository
+
+RegisterNewVehicleUI ..> RegisterNewVehicleController
+RegisterNewVehicleController ..> Repositories : «saves in»
+
+AssignSkillsUI ..> AssignSkillsController
+AssignSkillsController ...> Repositories: repositories
+AssignSkillsController ..> SkillRepository: skillRepository
+AssignSkillsController ..> CollaboratorRepository: collaboratorRepository
+
+RegisterCollaboratorUI .> RegisterCollaboratorController
+RegisterCollaboratorController .> Repositories: repositories
+RegisterCollaboratorController ..> JobRepository : jobRepository
+RegisterCollaboratorController ..> CollaboratorRepository : collaboratorRepository
+
+ RegisterJobUI ..> RegisterJobController
+ RegisterJobController ..> Repositories : inserts job in the repository
+
+CreateSkillUI ...> CreateSkillController
+CreateSkillController ..> Repositories : inserts skill in the repository
+
+Vehicle "1" --> "*" Maintenance : has
+Vehicle ..> RegisterNewVehicleController : will be used in
+
+
+GenerateTeamUI ..> GenerateTeamController
+GenerateTeamController ...> Repositories: repositories
+GenerateTeamController ...> CollaboratorRepository : collaboratorRepository
+GenerateTeamController ...> SkillRepository : skillRepository
+GenerateTeamController ...> TeamRepository : teamRepository
+
+Team "1" --> "1..*" Collaborator: has
+
+Collaborator +-- DocType
+Collaborator "1" --> "*" Skill: is assigned
+Collaborator "*" -> "1" Job : has
+
+job ..> RegisterJobController : will be inserted
+
+Skill ..> CreateSkillController : will be inserted
+
+
+
+@enduml

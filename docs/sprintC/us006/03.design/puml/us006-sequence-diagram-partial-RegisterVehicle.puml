@@ -1,0 +1,25 @@
+
+@startuml
+
+actor "VFM" as USER
+
+
+
+participant ":RegisterNewVehicleUI" as RegisterNewVehicleUI
+participant ":RegisterNewVehicleController" as RegisterNewVehicleController
+
+group Register new vehicle
+activate USER
+USER -> RegisterNewVehicleUI : Requeste to register new vehicle
+activate RegisterNewVehicleUI
+RegisterNewVehicleUI -> RegisterNewVehicleController** : Create
+RegisterNewVehicleUI -> USER : requests vehicle data
+deactivate RegisterNewVehicleUI
+USER -> RegisterNewVehicleUI : Types vehicle details (brand,vehiclePlate, model, type, \nTare, GrossWeight, CurrentKm, RegisterDate, \nAcquisitionDate, MaintenanceCheckupFrequency)
+activate RegisterNewVehicleUI
+RegisterNewVehicleUI -> RegisterNewVehicleUI : Keeps and stores that data
+RegisterNewVehicleUI -> USER : Shows the thyped data and a comfirmation requests
+deactivate RegisterNewVehicleUI
+end
+
+@enduml

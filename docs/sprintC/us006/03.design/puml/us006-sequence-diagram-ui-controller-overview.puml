@@ -1,0 +1,54 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "VFM" as USER
+
+participant ":RegisterNewVehicleUI" as RegisterNewVehicleUI
+participant ":RegisterNewVehicleController" as RegisterNewVehicleController
+participant "Repositories" as Repositories
+participant "repositories\n:Repositories" as repRep
+participant "RegisterNewVehicleRepository" as RegisterNewVehicleRepository
+participant "Vehicle" as Vehicle
+
+activate USER
+USER -> RegisterNewVehicleUI : Requeste to register new vehicle
+activate RegisterNewVehicleUI
+RegisterNewVehicleUI -> RegisterNewVehicleController** : Create
+RegisterNewVehicleUI -> USER : requests vehicle data
+deactivate RegisterNewVehicleUI
+USER -> RegisterNewVehicleUI : Types vehicle details (brand,vehiclePlate, model, type, \nTare, GrossWeight, CurrentKm, RegisterDate, \nAcquisitionDate, MaintenanceCheckupFrequency)
+activate RegisterNewVehicleUI
+RegisterNewVehicleUI -> RegisterNewVehicleUI : Keeps and stores that data
+RegisterNewVehicleUI -> USER : Shows the thyped data and a comfirmation requests
+deactivate RegisterNewVehicleUI
+USER -> RegisterNewVehicleUI : Confirms the data
+activate RegisterNewVehicleUI
+RegisterNewVehicleUI -> RegisterNewVehicleController : RegisterVehicle()
+activate RegisterNewVehicleController
+RegisterNewVehicleController -> Repositories : getinstance()
+activate Repositories
+Repositories -> RegisterNewVehicleController : Repositories
+deactivate Repositories
+RegisterNewVehicleController -> repRep : getVehicleRepository()
+activate repRep
+repRep -> RegisterNewVehicleController : VehicleRepository
+deactivate repRep
+RegisterNewVehicleController -> RegisterNewVehicleRepository : RegisterNewVehicle(brand,vehiclePlate, model, type, \nTare, GrossWeight, CurrentKm, RegisterDate, \nAcquisitionDate, MaintenanceCheckupFrequency)
+activate RegisterNewVehicleRepository
+RegisterNewVehicleRepository -> Vehicle** : RegisterNewVehicle(brand,vehiclePlate, model, type, \nTare, GrossWeight, CurrentKm, RegisterDate, \nAcquisitionDate, MaintenanceCheckupFrequency)
+RegisterNewVehicleRepository -> RegisterNewVehicleRepository : Save vehicle
+RegisterNewVehicleRepository -> RegisterNewVehicleController : Vehicle
+deactivate RegisterNewVehicleRepository
+RegisterNewVehicleController -> RegisterNewVehicleUI : Vehicle
+deactivate RegisterNewVehicleController
+RegisterNewVehicleUI -> USER : Shows the registered vehicle
+deactivate RegisterNewVehicleUI
+
+
+@enduml
+

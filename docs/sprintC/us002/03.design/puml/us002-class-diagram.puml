@@ -1,0 +1,37 @@
+@startuml
+title Register a job  that a collaborator needs to have
+
+skinparam classAttributeIconSize 0
+
+class Repositories {
+    +getJobRepository();
+    +getinstance();
+    -Repositories();
+}
+class RegisterJobController {
+    + RegisterJobController()
+    + geJob();
+    -getJobByName();
+
+
+}
+
+class RegisterJobUI {
+
+}
+
+class JobRepository {
+    RegisterJobs();
+    getJobByName();
+}
+class job{
+    +String name
+}
+
+
+RegisterJobUI ..> RegisterJobController
+RegisterJobController ..> Repositories : Repositories
+Repositories ..> RegisterJobRepository : RegisterJobRepository
+RegisterJobRepository ..> job : job
+job ..> RegisterJobController : will be inserted
+@enduml
