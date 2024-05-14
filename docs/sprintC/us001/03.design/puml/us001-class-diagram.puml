@@ -2,7 +2,7 @@
 skinparam classAttributeIconSize 0
 
 class CreateSkillController {
-    +createSkill(name)
+    +registerSkill(name)
 }
 
 
