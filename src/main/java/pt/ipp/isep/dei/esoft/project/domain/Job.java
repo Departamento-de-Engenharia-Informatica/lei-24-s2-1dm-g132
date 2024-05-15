@@ -28,21 +28,22 @@ public class Job {
             // If the input name contains numeric characters, throw an exception or handle it accordingly
             throw new IllegalArgumentException("Name cannot contain numbers.");
         }
+        if (!name.matches("[a-zA-Z ]*" )) {
+            throw new IllegalArgumentException("Name cannot contain special characters.");
+        }
 
         String trimmedName = name.trim();
 
         int wordCount = trimmedName.isEmpty() ? 0 : trimmedName.split("\\s+").length;
 
-        if (wordCount <= 6 && wordCount > 0) {
+        if (wordCount > 0) {
             this.name = name;
         }
-        else if (wordCount == 0)
+        else
         {
             throw new IllegalArgumentException("Name wasn't correctly filled.");
         }
-        else {
-            throw new IllegalArgumentException("Name cannot have more than 6 words.");
-        }
+
     }
 
     /**
