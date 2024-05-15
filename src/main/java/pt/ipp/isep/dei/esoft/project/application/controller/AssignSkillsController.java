@@ -110,14 +110,16 @@ public class AssignSkillsController {
     }
 
     /**
-     * Retrieves the list of skills.
+     * Retrieves the list of skills not assigned to the selected collaborator.
      *
-     * @return The list of skills.
+     * @return The list of skills not assigned to the selected collaborator.
      */
-    public List<Skill> getSkills() {
+    public List<Skill> getSkills(String collaboratorIdNumber) {
         SkillRepository skillRepository = getSkillRepository();
         skillRepository.createSelectedSkillsList();
-        return skillRepository.getSkills();
+        List<Skill> skills = skillRepository.createTempSkillsList();
+
+        return collaboratorRepository.removeAlreadyAssignedSkills(collaboratorIdNumber, skills);
     }
 
     /**

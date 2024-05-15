@@ -75,6 +75,21 @@ public class CollaboratorRepository {
     }
 
     /**
+     * Removes the skills already assigned to the collaborator identified by the provided identification number
+     * from the given list of skills.
+     *
+     * @param collaboratorIdNumber The identification number of the collaborator whose assigned skills are to be removed.
+     * @param skills               The list of skills to remove already assigned skills from.
+     * @return                     The updated list of skills after removing the assigned skills of the collaborator.
+     */
+    public List<Skill> removeAlreadyAssignedSkills(String collaboratorIdNumber, List<Skill> skills){
+        Collaborator collaborator = getCollaboratorByIdNumber(collaboratorIdNumber);
+        collaborator.removeAlreadyAssignedSkills(skills);
+
+        return skills;
+    }
+
+    /**
      * Adds a collaborator to the repository if it passes validation.
      *
      * @param collaborator The collaborator to be added.

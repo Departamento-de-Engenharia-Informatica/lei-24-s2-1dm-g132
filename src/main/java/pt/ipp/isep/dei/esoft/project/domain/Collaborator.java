@@ -397,25 +397,30 @@ public class Collaborator {
 
     /**
      * Assigns skills to the collaborator.
+     *
      * @param selectedSkillsList The list of skills to assign.
      * @return The updated collaborator.
-     * @throws IllegalArgumentException If all the provided skills are already assigned to the collaborator.
      */
     public Collaborator assignSkill(List<Skill> selectedSkillsList){
-        boolean updated = false;
         for(Skill skill: selectedSkillsList)
         {
             if(!this.skills.contains(skill))
             {
                 this.skills.add(skill);
-                updated = true;
             }
         }
-        if(!updated)
-        {
-            throw new IllegalArgumentException("Collaborator already had all the skills introduced");
-        }
         return this;
+    }
+
+    /**
+     * Removes the skills already assigned to the collaborator from the provided list of skills.
+     *
+     * @param skills The list of skills to remove already assigned skills from.
+     */
+    public void removeAlreadyAssignedSkills(List<Skill> skills) {
+        for(Skill skill : this.skills){
+            skills.remove(skill);
+        }
     }
 
     /**

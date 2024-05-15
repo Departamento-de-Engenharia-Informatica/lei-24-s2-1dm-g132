@@ -41,6 +41,26 @@ class CollaboratorRepositoryTest {
     }
 
     @Test
+    void testRemoveAlreadyAssignedSkills() {
+        CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
+        Job job = new Job("Jardineiro");
+        collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+                919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
+
+        Collaborator collaborator = collaboratorRepository.getCollaboratorByIdNumber("20735924 7");
+
+        Skill skill = new Skill("Podar árvores");
+        List<Skill> skills = new ArrayList<>();
+        skills.add(skill);
+        collaboratorRepository.assignSkill(collaborator, skills);
+
+        List<Skill> skillsResult = collaboratorRepository.removeAlreadyAssignedSkills("20735924 7", skills);
+        List<Skill> skillsExpected = new ArrayList<>();
+
+        assertEquals(skillsExpected, skillsResult);
+    }
+
+    @Test
     void ensureRegisterCollaboratorWorks() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         Job job = new Job("Jardineiro");

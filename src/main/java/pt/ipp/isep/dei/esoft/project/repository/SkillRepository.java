@@ -58,6 +58,21 @@ public class SkillRepository {
     }
 
     /**
+     * Creates a temporary list of skills by cloning the existing skills list.
+     *
+     * @return A new list containing clones of the skills from the original list.
+     */
+    public List<Skill> createTempSkillsList(){
+        List<Skill> tempSkillsList = new ArrayList<>();
+
+        for (Skill skill : skills) {
+            tempSkillsList.add(skill.clone());
+        }
+
+        return tempSkillsList;
+    }
+
+    /**
      * Creates a new list to store selected skills.
      */
     public void createSelectedSkillsList() {

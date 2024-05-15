@@ -63,7 +63,7 @@ public class AssignSkillsUI implements Runnable{
         }while(dadosInvalidos);
 
         try {
-            displayAndSelectSkills();
+            displayAndSelectSkills(collaboratorIdNumber);
         }
         catch (RuntimeException e){
             System.out.println("\nERROR: " + e.getMessage());
@@ -72,10 +72,7 @@ public class AssignSkillsUI implements Runnable{
 
         try {
             assignSkills();
-        }catch (IllegalArgumentException e){
-            System.out.println("\nERROR: " + e.getMessage());
-        }
-        catch (RuntimeException e){
+        }catch (RuntimeException e){
             System.out.println("\nERROR: " + e.getMessage());
         }
 
@@ -97,11 +94,11 @@ public class AssignSkillsUI implements Runnable{
     /**
      * Displays the available skills and allows the user to select skills to assign.
      */
-    private void displayAndSelectSkills(){
+    private void displayAndSelectSkills(String collaboratorIdNumber){
         boolean dadosInvalidos;
         boolean cont = true;
 
-        List<Skill> skills = controller.getSkills();
+        List<Skill> skills = controller.getSkills(collaboratorIdNumber);
 
         int listSize = skills.size();
 
@@ -131,6 +128,7 @@ public class AssignSkillsUI implements Runnable{
             {
                 String name = skills.get(answer - 1).getName();
                 controller.addSelectedSkillName(name);
+                skills.remove(answer -1);
             }
             else{
                 cont = false;

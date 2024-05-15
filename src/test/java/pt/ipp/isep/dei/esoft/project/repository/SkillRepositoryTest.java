@@ -94,6 +94,27 @@ public class SkillRepositoryTest {
     }
 
     @Test
+    void testCreateTempSkillsList() {
+
+        SkillRepository skillRepository = new SkillRepository();
+
+        Skill skill1 = new Skill("Podar árvores");
+        Skill skill2 = new Skill("Conduzir pesados");
+
+        skillRepository.add(skill1);
+        skillRepository.add(skill2);
+
+        List<Skill> expectedSkills = new ArrayList<>();
+        expectedSkills.add(skill1);
+        expectedSkills.add(skill2);
+
+        List<Skill> resultSkills = skillRepository.createTempSkillsList();
+
+        // Assert
+        assertEquals(expectedSkills, resultSkills);
+    }
+
+    @Test
     void testAddSelectedSkill() {
 
         SkillRepository skillRepository = new SkillRepository();

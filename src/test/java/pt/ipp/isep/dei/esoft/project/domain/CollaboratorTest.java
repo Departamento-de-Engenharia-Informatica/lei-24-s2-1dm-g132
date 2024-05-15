@@ -113,7 +113,7 @@ class CollaboratorTest {
     }
 
     @Test
-    void assignSkillWithSkillsAlreadyAssigned() {
+    void testRemoveAlreadyAssignedSkills() {
         Job job = new Job("Jardineiro");
         Collaborator collaborator = new Collaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
@@ -127,8 +127,10 @@ class CollaboratorTest {
 
         collaborator.assignSkill(skills);
 
-        assertThrows(IllegalArgumentException.class,
-                () -> collaborator.assignSkill(skills));
+        List<Skill> expectedSkills = new ArrayList<>();
+        collaborator.removeAlreadyAssignedSkills(skills);
+
+        assertEquals(expectedSkills, skills);
     }
 
     @Test
