@@ -1,0 +1,41 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber 21
+
+'hide footbox
+participant ":GenerateTeamController" as CTRL
+
+participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+participant "collaborator\n:Collaborator" as Collab
+participant "tempCollaboratorList:\nList<Collaborator>" as tempCollaboratorList
+
+
+    -> CTRL : selectCollaboratorsForTeam(selectedSkillsList, minCollab, maxCollab)
+            activate CTRL
+            autonumber 21.1
+            group Generate Team Proposal
+
+                CTRL -> CollaboratorRepository : generateTeam(selectedSkillsList, minCollab, maxCollab)
+                                activate CollaboratorRepository
+
+                                    loop for each available collaborator in tempCollaboratorList
+                                    CollaboratorRepository -> Collab : getSkills()
+                                    activate Collab
+
+                                    Collab --> CollaboratorRepository : skills
+
+                                    deactivate Collab
+
+                                    end loop
+
+                                    CollaboratorRepository --> CTRL : teamProposal
+                                deactivate CollaboratorRepository
+
+                end group
+                autonumber 22
+
+    <-- CTRL : teamProposal
+@enduml

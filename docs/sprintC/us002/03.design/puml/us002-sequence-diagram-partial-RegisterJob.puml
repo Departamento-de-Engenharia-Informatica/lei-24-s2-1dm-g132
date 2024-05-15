@@ -1,0 +1,22 @@
+@startuml
+actor "HRM" as USER
+
+participant ":RegisterJobUI" as RegisterJobUI
+participant ":RegisterJobController" as RegisterJobController
+
+group Register a job
+activate USER
+USER -> RegisterJobUI : Requeste to register a job
+activate RegisterJobUI
+RegisterJobUI -> RegisterJobController** : Create
+RegisterJobUI -> USER : requests job data
+deactivate RegisterJobUI
+USER -> RegisterJobUI : Types job details (name)
+activate RegisterJobUI
+RegisterJobUI -> RegisterJobUI : Keeps and stores that data
+RegisterJobUI -> USER : Shows the thyped data and a comfirmation requests
+deactivate RegisterJobUI
+end
+
+
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+
+participant ":RegisterJobController" as RegisterJobController
+participant "Repositories" as Repositories
+participant "repositories\n:Repositories" as repRep
+participant "RegisterJobRepository" as RegisterJobRepository
+participant "Job" as Job
+
+
+-> RegisterJobController : Registerjob()
+activate RegisterJobController
+group StoreJob
+RegisterJobController -> Repositories : getinstance()
+activate Repositories
+Repositories -> RegisterJobController : Repositories
+deactivate Repositories
+RegisterJobController -> repRep : getJobRepository()
+activate repRep
+repRep -> RegisterJobController : JobRepository
+deactivate repRep
+RegisterJobController -> RegisterJobRepository : RegisterJob(name)
+activate RegisterJobRepository
+RegisterJobRepository -> Job** : RegisterJob(name)
+RegisterJobRepository -> RegisterJobRepository : Save job
+RegisterJobRepository -> RegisterJobController : job
+end
+deactivate RegisterJobRepository
+ <- RegisterJobController: job
+@enduml

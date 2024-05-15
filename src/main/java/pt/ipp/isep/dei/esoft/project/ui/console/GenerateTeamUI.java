@@ -58,13 +58,19 @@ public class GenerateTeamUI implements Runnable{
             try{
                 minTeamSize = requestMinTeamSize();
                 maxTeamSize = requestMaxTeamSize();
-                dadosInvalidos = false;
             }catch (InputMismatchException e){
                 System.out.println("\nERROR: " + "Invalid input value.\n");
             }
             catch (RuntimeException e){
                 System.out.println("\nERROR: " + e.getMessage());
                 return;
+            }
+
+            if(minTeamSize <= maxTeamSize){
+                dadosInvalidos = false;
+            }
+            else{
+                System.out.println("ERROR: Minimum team size can't be lower than maximum team size.\n");
             }
         }while(dadosInvalidos);
 

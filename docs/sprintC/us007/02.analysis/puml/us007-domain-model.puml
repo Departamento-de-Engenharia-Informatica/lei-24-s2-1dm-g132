@@ -1,0 +1,43 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+class VFM {
+}
+
+class Vehicle {
+    vehiclePlate
+    brand
+    model
+    type
+    tare
+    grossWeight
+    currentKms
+    registerDate
+    acquisitionDate
+    checkUpFrequency
+}
+
+class Checkup {
+vehiclePlate
+    date
+    kms
+}
+
+VFM "1" -- "*" Checkup : registers >
+Vehicle "1" -- "*" Checkup : has >
+
+
+@enduml

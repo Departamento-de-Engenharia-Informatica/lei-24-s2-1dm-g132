@@ -1,0 +1,28 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US008 - Produce a list of vehicles needing maintenance
+
+autonumber
+
+actor "VFM" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to produce a list of the vehicles needing maintenance
+    activate System
+
+    loop until end of vehicles list
+    System --> Employee : requests to update the current kms of the vehicle
+    deactivate System
+    Employee -> System : updates the current kms of the vehicle
+    activate System
+    end
+
+    System --> Employee : produces a list of the vehicles needing maintenance \n(shows plate, brand, model, current kms,\ncheckup frequency, last and next maintenance)
+    deactivate System
+
+@enduml

@@ -1,0 +1,231 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > CommonGraph</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain.graph</a>
+</div>
+
+<h1>Coverage Summary for Class: CommonGraph (pt.ipp.isep.dei.esoft.project.domain.graph)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CommonGraph</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/34)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain.graph;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collection;
+&nbsp;import java.util.Objects;
+&nbsp;import java.util.function.Predicate;
+&nbsp;
+&nbsp;public abstract class CommonGraph &lt;V,E&gt; implements Graph&lt;V,E&gt; {
+&nbsp;    protected int numVerts;
+&nbsp;    protected int numEdges;
+&nbsp;    protected final boolean isDirected;
+&nbsp;    protected ArrayList&lt;V&gt; vertices;       // Used to maintain a numeric key to each vertex
+&nbsp;
+<b class="nc">&nbsp;    public CommonGraph(boolean directed) {</b>
+<b class="nc">&nbsp;        numVerts = 0;</b>
+<b class="nc">&nbsp;        numEdges = 0;</b>
+<b class="nc">&nbsp;        isDirected = directed;</b>
+<b class="nc">&nbsp;        vertices = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean isDirected() {
+<b class="nc">&nbsp;        return isDirected;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int numVertices() {
+<b class="nc">&nbsp;        return numVerts;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public ArrayList&lt;V&gt; vertices() {
+<b class="nc">&nbsp;        return new ArrayList&lt;&gt;(vertices);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+<b class="nc">&nbsp;    public boolean validVertex(V vert) { return vertices.contains(vert);   }</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int key(V vert) {
+<b class="nc">&nbsp;        return vertices.indexOf(vert);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public V vertex(int key) {
+<b class="nc">&nbsp;        if ((key &lt; 0) || (key&gt;=numVerts)) return null;</b>
+<b class="nc">&nbsp;        return vertices.get(key);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public V vertex(Predicate&lt;V&gt; p) {
+<b class="nc">&nbsp;        for (V v : vertices) {</b>
+<b class="nc">&nbsp;            if (p.test(v)) return v;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int numEdges() {
+<b class="nc">&nbsp;        return numEdges;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /** Copy graph from to graph to
+&nbsp;     *
+&nbsp;     * @param from graph from which to copy
+&nbsp;     * @param to graph for which to copy
+&nbsp;     */
+&nbsp;    protected void copy(Graph &lt;V,E&gt; from, Graph &lt;V,E&gt; to) {
+&nbsp;        //insert all vertices
+<b class="nc">&nbsp;        for (V v : from.vertices()) {</b>
+<b class="nc">&nbsp;            to.addVertex(v);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        //insert all edges
+<b class="nc">&nbsp;        for (Edge&lt;V, E&gt; e : from.edges()) {</b>
+<b class="nc">&nbsp;            to.addEdge(e.getVOrig(), e.getVDest(), e.getWeight());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /* equals implementation compares graphs, independently of their representation
+&nbsp;     * @param the other graph to test for equality
+&nbsp;     * @return true if both objects represent the same graph
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object otherObj) {
+&nbsp;
+<b class="nc">&nbsp;        if (this == otherObj)</b>
+<b class="nc">&nbsp;            return true;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (!(otherObj instanceof Graph&lt;?, ?&gt;))</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        @SuppressWarnings(&quot;unchecked&quot;) Graph&lt;V, E&gt; otherGraph = (Graph&lt;V, E&gt;) otherObj;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (numVerts != otherGraph.numVertices() || numEdges != otherGraph.numEdges() || isDirected() != otherGraph.isDirected())</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;
+&nbsp;        // graph must have same vertices
+<b class="nc">&nbsp;        Collection&lt;V&gt; tvc = this.vertices();</b>
+<b class="nc">&nbsp;        tvc.removeAll(otherGraph.vertices());</b>
+<b class="nc">&nbsp;        if (tvc.size() &gt; 0 ) return false;</b>
+&nbsp;
+&nbsp;        // graph must have same edges
+<b class="nc">&nbsp;        Collection&lt;Edge&lt;V, E&gt;&gt; tec = this.edges();</b>
+<b class="nc">&nbsp;        tec.removeAll(otherGraph.edges());</b>
+<b class="nc">&nbsp;        return (tec.size() == 0);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public abstract Graph&lt;V, E&gt; clone();
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="nc">&nbsp;        return Objects.hash(numVerts, numEdges, isDirected, vertices);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:04</div>
+</div>
+</body>
+</html>

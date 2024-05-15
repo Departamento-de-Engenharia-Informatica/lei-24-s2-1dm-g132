@@ -1,0 +1,243 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Job</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
+</div>
+
+<h1>Coverage Summary for Class: Job (pt.ipp.isep.dei.esoft.project.domain)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Job</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (6/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62,5%
+  </span>
+  <span class="absValue">
+    (10/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72,7%
+  </span>
+  <span class="absValue">
+    (16/22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;
+&nbsp;/**
+&nbsp;
+&nbsp; The Job class represents a job.
+&nbsp; */
+&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
+&nbsp;import java.util.Objects;
+&nbsp;import java.lang.IllegalArgumentException;
+&nbsp;
+&nbsp;public class Job {
+&nbsp;
+&nbsp;
+&nbsp;    private String name;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the name of the job after validating it.
+&nbsp;     * The name cannot contain numbers, must be filled, and cannot have more than 6 words.
+&nbsp;     *
+&nbsp;     * @param name the name of the job
+&nbsp;     * @throws IllegalArgumentException if the name contains numbers
+&nbsp;     * @throws IllegalArgumentException if the name wasn&#39;t correctly filled
+&nbsp;     * @throws IllegalArgumentException if the name has more than 6 words
+&nbsp;     */
+&nbsp;    private void setJobName(String name) {
+&nbsp;
+<b class="pc">&nbsp;        if (name.matches(&quot;.*\\d.*&quot;)) {</b>
+&nbsp;            // If the input name contains numeric characters, throw an exception or handle it accordingly
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Name cannot contain numbers.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        String trimmedName = name.trim();</b>
+&nbsp;
+<b class="pc">&nbsp;        int wordCount = trimmedName.isEmpty() ? 0 : trimmedName.split(&quot;\\s+&quot;).length;</b>
+&nbsp;
+<b class="pc">&nbsp;        if (wordCount &lt;= 6 &amp;&amp; wordCount &gt; 0) {</b>
+<b class="fc">&nbsp;            this.name = name;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (wordCount == 0)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Name wasn&#39;t correctly filled.&quot;);</b>
+&nbsp;        }
+&nbsp;        else {
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Name cannot have more than 6 words.&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new Job object with the specified name.
+&nbsp;     * The name is validated by the setJobName method.
+&nbsp;     *
+&nbsp;     * @param jobName the name of the job
+&nbsp;     * @throws IllegalArgumentException if the name contains numbers, wasn&#39;t correctly filled, or has more than 6 words
+&nbsp;     */
+&nbsp;
+<b class="fc">&nbsp;    public Job(String jobName){</b>
+<b class="fc">&nbsp;        setJobName(jobName);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates a hash code for the job based on its name.
+&nbsp;     * @return The hash code generated.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="fc">&nbsp;        return Objects.hash(name);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the job has the specified name.
+&nbsp;     * @param name The name to be checked.
+&nbsp;     * @return True if the job has the specified name, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean hasName(String name) {
+<b class="fc">&nbsp;        return this.name.equals(name);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Compares this job to another object for equality.
+&nbsp;     * @param o The object to be compared.
+&nbsp;     * @return True if the objects are equal, false otherwise.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o) {
+<b class="fc">&nbsp;        if (this == o) {</b>
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (o == null || getClass() != o.getClass()) {</b>
+<b class="fc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Job job = (Job) o;</b>
+<b class="fc">&nbsp;        return name.equals(job.name);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a deep copy of the job.
+&nbsp;     * @return A new Job object with the same name.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public Job clone() {
+<b class="fc">&nbsp;        return new Job(this.name);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the name of the job.
+&nbsp;     * @return The name of the job.
+&nbsp;     */
+&nbsp;    public String getJobName() {
+<b class="nc">&nbsp;        return name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates a string representation of the job.
+&nbsp;     * @return The string representation of the job.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        return String.format(&quot;%s&quot;, this.name);</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-12 20:04</div>
+</div>
+</body>
+</html>
