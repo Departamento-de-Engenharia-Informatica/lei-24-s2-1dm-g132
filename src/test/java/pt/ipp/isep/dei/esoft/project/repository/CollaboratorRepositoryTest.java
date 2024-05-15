@@ -235,4 +235,35 @@ class CollaboratorRepositoryTest {
         assertThrows(IllegalArgumentException.class,
                 () -> collaboratorRepository.generateTeam(skills, 2, 3));
     }
+
+    @Test
+    void ensureGenerateTeamMaxCollaboratorsExceeded() {
+        CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
+        Job job = new Job("Jardineiro");
+        collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+                919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
+
+        collaboratorRepository.registerCollaborator("João Oliveira", "2000/2/2", "2020/3/30", "Rua Passada, 3786-089, Porto",
+                913333333, "joaipassado3@gmail.com", 546002206, "BI", "20731224 7", job);
+
+        Collaborator collaborator1 = collaboratorRepository.getCollaboratorByIdNumber("20735924 7");
+        Collaborator collaborator2 = collaboratorRepository.getCollaboratorByIdNumber("20731224 7");
+        Skill skill1 = new Skill("Podar árvores");
+        Skill skill2 = new Skill("Conduzir pesados");
+        List<Skill> skills = new ArrayList<>();
+        skills.add(skill1);
+
+        collaborator1.assignSkill(skills);
+
+        skills.add(skill2);
+
+        collaborator2.assignSkill(skills);
+
+        skills.add(skill1);
+
+        collaboratorRepository.createTempCollaboratorsList();
+
+        assertThrows(IllegalArgumentException.class,
+                () -> collaboratorRepository.generateTeam(skills, 0, 1));
+    }
 }

@@ -181,6 +181,9 @@ public class CollaboratorRepository {
         if (!skillsNeeded.isEmpty()) {
             throw new IllegalArgumentException("Cannot generate team. Not all required skills are covered.");
         }
+        if(teamProposal.size() > maxTeamSize) {
+            throw new IllegalArgumentException("Cannot generate team. Maximum number of collaborators exceeded to cover required skills.");
+        }
 
         // Adjust team size if necessary
         while (teamProposal.size() < minTeamSize) {
@@ -189,9 +192,6 @@ public class CollaboratorRepository {
             }
             Collaborator collaboratorToAdd = tempCollaboratorsList.remove(0); // Remove collaborator from the beginning of the list
             teamProposal.add(collaboratorToAdd);
-        }
-        while (teamProposal.size() > maxTeamSize) {
-            teamProposal.remove(teamProposal.size() - 1); // Remove collaborators if team size exceeds maxTeamSize
         }
 
         return teamProposal;
