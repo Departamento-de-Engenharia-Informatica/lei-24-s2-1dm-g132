@@ -1,110 +1,53 @@
-# US001 - Register skills that a collaborator may have
+# US024 - Postpone an entry in the Agenda
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-- As a HRM, I want to register skills that a
-  collaborator may have
+As a GSM, I want to postpone an entry in the Agenda to a future date.
 
-### 1.2. Customer Specifications and Clarifications
+### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> "an employee has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities"
-
+//TODO
 
 **From the client clarifications:**
 
-> **Question:** Hello, I have some questions about the US01: Which information can be introduced to create a new skill?
-Which information is mandatory for creating a new skill?
-Which are the skills accepted? Or should we enable the HRM to introduce anything as a skill?
-> 
-> **Answer:** The skill name;
-The skill name;
-All, it's up to HRM to decide. (special characters or algarisms should not be allowed in the skill name)
+//TODO
 
-
-> **Question:** Good Morning, client
-I wanted to ask a few question:
-Do I need to add skills  by writing them or can I just give a file with all of the skills?
-Does the HRM need to see the confirmation of the sucess of the operation and the skills added or just the sucess of the operation?
-Is there any other possible outcome like if the HMR does not put the requested data, do I need to ask the user to to register a diferent competence?
->  
-> **Answer:** Hi,
-Both are acceptable since the business the same the crucial difference resides in the UX.
-It will depend if you opt to insert one skil or a set of skils in a batch. Maybe some adaptation needed.
-This US is quite simple, atm a skill is simply a name.
-
-> **Question:** What criteria are necessary to register a skill? 
-What type of information does a skill have? When a skill that already exists is created, what should the system do?
-> 
-> **Answer:** The necessary criteria to register a skill include the skill's name, for example:
-pruner,
-heavy vehicle driver,
-phyto-pharmaceutical applicator.
-
-> **Question:**
-Dear client,
-The indentificator of the skill will be the name, or the system will generate authomatically and Id when the manager insert the name?
-> 
-> **Answer:** A skill is just a name, can be a composition os words like "Light Vehicle Driving Licence".
-I have no knowledge about systems IDs.
-
-> **Question:**
-Dear client, which is the difference between collaborator and employ? And employ could have skills? HRM, VFM, GSM and GSU are employers?
-> 
-> **Answer:**
-Employee and collaborator are synonyms.
-
-> **Question:**
-Hello,
-Should the system able the HRM to introduce multiple skills in one interaction before saving all of them?
-> 
-> **Answer:**
-Hi,
-it's not required to do so.
-
-
-
-> **Question:** Where do you want the jobs and skills to be stored and validated?
-
-Do you which to have a skill and job repository or do you want them to be stored in the organization?
-
-
-> 
-> **Answer:**
-Hello,
-the business rules regarding skills and stored were already provided in this forum;
-
-I have no knowledge about repositories.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The name of the skill must be filled in
-* **AC3:** The name of the skill cannot have special characters
+* There's no acceptance criteria defined for this user story.
+
 ### 1.4. Found out Dependencies
 
-* There are no dependencies
+* There is a dependency on "US022 - Add a new entry in the agenda" as there must be at least one entry to be able to postpone it.
+
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-
-  * name of skill
+    * entry's new date
 
 * Selected data:
-
+  * a green space
+  * an entry
 
 **Output Data:**
 
+* List of green spaces
+* List of green spaces' entries
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram.svg)
+![System Sequence Diagram - US024](svg/us024-system-sequence-diagram.svg)
+
 
 ### 1.7 Other Relevant Remarks
+
+* There are no other relevant remarks for this user story.
