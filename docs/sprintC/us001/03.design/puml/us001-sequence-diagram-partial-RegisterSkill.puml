@@ -1,0 +1,22 @@
+@startuml
+actor "HRM" as USER
+
+participant ":RegisterSkillUI" as RegisterSkillUI
+participant ":RegisterSkillController" as RegisterSkillController
+
+group Register a skill
+activate USER
+USER -> RegisterSkillUI : Requeste to register a skill
+activate RegisterSkillUI
+RegisterSkillUI -> RegisterSkillController** : Create
+RegisterSkillUI -> USER : requests skill data
+deactivate RegisterSkillUI
+USER -> RegisterSkillUI : Types skill details (name)
+activate RegisterSkillUI
+RegisterSkillUI -> RegisterSkillUI : Keeps and stores that data
+RegisterSkillUI -> USER : Shows the typed data and a confirmation requests
+deactivate RegisterSkillUI
+end
+
+
+@enduml

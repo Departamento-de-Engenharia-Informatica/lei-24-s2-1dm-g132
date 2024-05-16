@@ -1,0 +1,29 @@
+@startuml
+
+participant ":RegisterSkillController" as RegisterSkillController
+participant "Repositories" as Repositories
+participant "repositories\n:Repositories" as repRep
+participant "RegisterJobRepository" as SkillRepository
+participant "Skill" as Skill
+
+
+-> RegisterSkillController : Registerskill()
+activate RegisterSkillController
+group StoreSkill
+RegisterSkillController -> Repositories : getInstance()
+activate Repositories
+Repositories -> RegisterSkillController : Repositories
+deactivate Repositories
+RegisterSkillController -> repRep : getJobRepository()
+activate repRep
+repRep -> RegisterSkillController : SkillRepository
+deactivate repRep
+RegisterSkillController -> SkillRepository : RegisterSkill(name)
+activate SkillRepository
+SkillRepository -> Skill** : RegisterJob(name)
+SkillRepository -> SkillRepository : Save skill
+SkillRepository -> RegisterSkillController : skill
+end
+deactivate SkillRepository
+ <- RegisterSkillController: skill
+@enduml

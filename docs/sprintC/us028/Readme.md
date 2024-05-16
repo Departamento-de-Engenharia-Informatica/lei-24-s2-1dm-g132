@@ -1,4 +1,4 @@
-# US 001 - Register skills that a collaborator may have
+# US 028 - As a Collaborator, I wish to consult the tasks assigned to me
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

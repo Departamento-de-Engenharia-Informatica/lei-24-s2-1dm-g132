@@ -6,45 +6,49 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "HRM" as HRM
-participant ":RegisterSkillUI" as UI
-participant ":RegisterSkillController" as CTRL
+actor "HRM" as USER
 
-activate HRM
+participant ":RegisterSKIllUI" as RegisterSkillUI
+participant ":RegisterSkillController" as RegisterSkillController
+participant "Repositories" as Repositories
+participant "repositories\n:Repositories" as repRep
+participant "SkillRepository" as skillRepository
+participant "Skill" as skill
 
-        HRM -> UI : asks to register a new skill
-activate UI
-
-        UI --> HRM : requests data (skill name)
-         deactivate UI
-
-    HRM -> UI : confirm and submits data
-        activate UI
-
-                UI -> CTRL : registerSkill (skill name)
-            activate CTRL
-    group Create Skill
-
-                                        CTRL -> CTRL: addSkill(skill)
-
-                                                                           activate CTRL
-                                                                               CTRL -> CTRL: validateSkill(skill)
-                                                                               activate CTRL
-                                                                                   CTRL --> CTRL
-                                                                               deactivate CTRL
-
-                                                                               CTRL --> CTRL
-                                                                               deactivate CTRL
-                                                                               end
-
-            CTRL --> UI : Skill
-            deactivate CTRL
-
-
-            UI --> HRM : displays operation success
-        deactivate UI
-
-
+activate USER
+USER -> RegisterSkillUI : Requeste to register a skill
+activate RegisterSkillUI
+RegisterSkillUI -> RegisterSkillController** : Create
+RegisterSkillUI -> USER : requests skill data
+deactivate RegisterSkillUI
+USER -> RegisterSkillUI : Types skill details (name)
+activate RegisterSkillUI
+RegisterSkillUI -> RegisterSkillUI : Keeps and stores that data
+RegisterSkillUI -> USER : Shows the thyped data and a comfirmation requests
+deactivate RegisterSkillUI
+USER -> RegisterSkillUI : Confirms the data
+activate RegisterSkillUI
+RegisterSkillUI -> RegisterSkillController : Registerskill()
+activate RegisterSkillController
+RegisterSkillController -> Repositories : getinstance()
+activate Repositories
+Repositories -> RegisterSkillController : Repositories
+deactivate Repositories
+RegisterSkillController -> repRep : getSkillRepository()
+activate repRep
+repRep -> RegisterSkillController : SkillRepository
+deactivate repRep
+RegisterSkillController -> SkillRepository: RegisterSkill(name)
+activate SkillRepository
+SkillRepository -> Skill** : RegisterSkill(name)
+SkillRepository -> SkillRepository : Save skill
+SkillRepository -> RegisterSkillController : skill
+deactivate SkillRepository
+RegisterSkillController -> RegisterSkillUI : skill
+deactivate RegisterSkillController
+RegisterSkillUI -> USER : Shows the registered skill
+deactivate RegisterSkillUI
 
 
 @enduml
+

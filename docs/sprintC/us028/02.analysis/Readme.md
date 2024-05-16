@@ -1,10 +1,10 @@
-# US 001 - Register skills that a collaborator may have
+# US 028 - s a Collaborator, I wish to consult the tasks assigned to me
 
 ## 2. Analysis
 
 ### 2.1. Relevant Domain Model Excerpt 
 
-![Domain Model](svg/us001-domain-model.svg)
+![Domain Model](svg/us028-domain-model.svg)
 
 ### 2.2. Other Remarks
 

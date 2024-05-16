@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+
+class GSM {
+}
+class Agenda {
+}
+
+class Vehicle {
+      vehiclePlate
+      brand
+      model
+      type
+      tare
+      grossWeight
+      currentKms
+      registerDate
+      acquisitionDate
+      checkUpFrequency
+
+}
+GSM "1" -- "*" Vehicle : assigns >
+Vehicle "1" -- "*" Agenda : > is assigned on
+
+@enduml
