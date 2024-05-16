@@ -1,4 +1,4 @@
-# US024 - Postpone an entry in the Agenda
+# US024 - postpone an entry in the agenda
 
 
 ## 1. Requirements Engineering
