@@ -1,4 +1,4 @@
-# US 001 - Register skills that a collaborator may have
+# US029 - As a Collaborator, I want to record the completion of a task.
 
 ## 2. Analysis
 

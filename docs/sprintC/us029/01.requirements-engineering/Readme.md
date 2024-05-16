@@ -1,12 +1,11 @@
-# US001 - Register skills that a collaborator may have
+# US029 - As a Collaborator, I want to record the completion of a task.
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-- As a HRM, I want to register skills that a
-  collaborator may have
+As a Collaborator, I want to record the completion of a task.
 
 ### 1.2. Customer Specifications and Clarifications
 

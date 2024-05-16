@@ -1,5 +1,4 @@
-# US006 - Create a Task 
-
+# US028 - As a Collaborator, I wish to consult the tasks assigned to me
 ## 4. Tests 
 
 **Test 1:** Check that it is not possible to create an instance of the Task class with null values. 

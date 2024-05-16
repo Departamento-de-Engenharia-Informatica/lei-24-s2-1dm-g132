@@ -1,0 +1,29 @@
+@startuml
+
+participant ":RegisterMaintenanceController" as RegisterMaintenanceController
+participant "Repositories" as Repositories
+participant "repositories\n:Repositories" as repRep
+participant "VehicleRepository" as VehicleRepository
+participant "Vehicle" as Vehicle
+
+
+-> RegisterMaintenanceController : RegisterMaintenance()
+activate RegisterMaintenanceController
+group StoreMaintenance
+RegisterMaintenanceController -> Repositories : getinstance()
+activate Repositories
+Repositories -> RegisterMaintenanceController : Repositories
+deactivate Repositories
+RegisterMaintenanceController -> repRep : getVehicleRepository()
+activate repRep
+repRep -> RegisterMaintenanceController : VehicleRepository
+deactivate repRep
+RegisterMaintenanceController -> VehicleRepository : RegisterMaintenance(name)
+activate VehicleRepository
+VehicleRepository -> Vehicle** : RegisterJob(name)
+VehicleRepository -> VehicleRepository : Save maintenance
+VehicleRepository -> RegisterMaintenanceController : maintenance
+end
+deactivate VehicleRepository
+ <- RegisterMaintenanceController: maintenance
+@enduml

@@ -1,4 +1,4 @@
-# US001 - Register a skill
+# US28 - As a Collaborator, I wish to consult the tasks assigned to me
 
 ## 3. Design - User Story Realization
 
@@ -30,14 +30,14 @@ _**Note that SSD - Alternative One is adopted.**_
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
 * Collaborator
-* Skill
+* Task
 
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* CreateSkillUI
-* CreateSkillController
-* SkillRepository
+* ConsultTaskslUI
+* ConsultTasksController
+* TaskRepository
 
 
 ## 3.2. Sequence Diagram (SD)
@@ -46,7 +46,7 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us001-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us028-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -54,8 +54,8 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us001-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us028-sequence-diagram-split.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us001-class-diagram.svg)
+![Class Diagram](svg/us028-class-diagram.svg)
