@@ -10,10 +10,10 @@ participant "skillRepository:\nSkillRepository" as SkillRepository
 participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
 participant "collaborator\n:Collaborator" as Collaborator
 
-autonumber 27
+autonumber 16
 -> CTRL : assignSkill(collaboratorIdNumber)
 
-autonumber 27.1
+autonumber 16.1
 
 activate CTRL
     group Assign Skill(s)
@@ -88,7 +88,7 @@ activate CTRL
 
     end group
 
-    autonumber 28
+    autonumber 17
     <-- CTRL : collaborator
 
 deactivate CTRL

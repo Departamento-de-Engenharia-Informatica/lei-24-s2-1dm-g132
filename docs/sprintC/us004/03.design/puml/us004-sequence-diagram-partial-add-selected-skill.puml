@@ -31,7 +31,7 @@ activate CTRL
     end group
 
     autonumber 4
-    <-- CTRL : asks to continue
+
 
 deactivate CTRL
 

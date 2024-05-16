@@ -21,9 +21,6 @@ class RegisterCollaboratorController
     + registerCollaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, jobName)
     - getJobByName(jobName)
 }
-'###############################################
-'Confirmar o pq do construtor ter os repositórios no exemplo
-'###############################################
 
 class Repositories
 {

@@ -36,18 +36,12 @@ activate Employee
     Employee -> UI : selects the collaborator
     activate UI
 
-        UI -> CTRL : getSkillsList()
+        UI -> CTRL : getSkills()
         activate CTRL
 
             ref over CTRL
                 Get Skills
             end
-
-            CTRL -> SkillRepository : createSelectedSkillsList()
-            activate SkillRepository
-
-                SkillRepository -> selectedSkillsList** : create()
-            deactivate SkillRepository
 
             CTRL --> UI : skillsList
         deactivate CTRL

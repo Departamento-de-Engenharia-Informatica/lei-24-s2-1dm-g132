@@ -14,6 +14,7 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "skillRepository:\nSkillRepository" as SkillRepository
 participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
+participant "tempSkillsList\nList<Skill>" as tempSkillsList
 participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
 participant "collaborator\n:Collaborator" as Collaborator
 
@@ -54,7 +55,7 @@ activate Employee
     Employee -> UI : selects the collaborator
     activate UI
 
-        UI -> CTRL : getSkillsList()
+        UI -> CTRL : getSkills(collaboratorIdNumber)
         activate CTRL
 
             CTRL -> RepositorySingleton : getInstance()
@@ -69,19 +70,58 @@ activate Employee
             PLAT --> CTRL: skillRepository
             deactivate PLAT
 
-            CTRL -> SkillRepository : getSkills()
-            activate SkillRepository
-
-            SkillRepository --> CTRL : skillsList
-            deactivate SkillRepository
-
             CTRL -> SkillRepository : createSelectedSkillsList()
             activate SkillRepository
 
                 SkillRepository -> selectedSkillsList** : create()
             deactivate SkillRepository
 
-            CTRL --> UI : skillsList
+            CTRL -> SkillRepository : createTempSkillsList()
+            activate SkillRepository
+
+                SkillRepository -> tempSkillsList** : create()
+                loop for each skill in skillsList
+                    SkillRepository -> tempSkillsList** : add(skill)
+                end loop
+                SkillRepository --> CTRL : tempSkillsList
+            deactivate SkillRepository
+
+            CTRL -> CollaboratorRepository : removeAlreadyAssignedSkills(collaboratorIdNumber, tempSkillsList)
+            activate CollaboratorRepository
+
+                CollaboratorRepository -> CollaboratorRepository : getCollaboratorByIdNumber(collaboratorIdNumber)
+                activate CollaboratorRepository
+
+                    loop while false
+
+                    CollaboratorRepository -> Collaborator : sameIdNumber(collaboratorIdNumber)
+                    activate Collaborator
+
+                        Collaborator --> CollaboratorRepository : true/false
+                    deactivate Collaborator
+
+                    end loop
+
+                    CollaboratorRepository --> CollaboratorRepository : collaborator
+
+                deactivate CollaboratorRepository
+
+            CollaboratorRepository -> Collaborator : removeAlreadyAssignedSkills(tempSkillsList)
+            activate Collaborator
+
+            loop for each skill in skills
+                Collaborator -> tempSkillsList : remove(skill)
+                    activate tempSkillsList
+                    deactivate tempSkillsList
+            end loop
+
+            deactivate Collaborator
+
+            CollaboratorRepository --> CTRL : tempSkillsList
+
+            deactivate CollaboratorRepository
+
+            CTRL --> UI : tempSkillsList
         deactivate CTRL
 
     loop while HRM wants to continue

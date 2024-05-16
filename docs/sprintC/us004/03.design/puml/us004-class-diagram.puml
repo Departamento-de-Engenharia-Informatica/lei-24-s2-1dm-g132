@@ -16,28 +16,32 @@ class Skill
 }
 
 class Collaborator {
-    - name
-    - birthdate
-    - admissionDate
-    - address
-    - phoneNumber
-    - email
-    - taxpayerNumber
-    - identificationDocumentType
-    - identificationDocumentNumber
-    + Collaborator(name, birthdate, admissionDate, address, phoneNumber, email, \ntaxpayerNumber, identificationDocumentType, identificationDocumentNumber)
+    - String name
+    - Calendar birthdate
+    - Calendar admissionDate
+    - String address
+    - Integer phoneNumber
+    - String email
+    - Integer taxpayerNumber
+    - String identificationDocumentNumber
+    + Collaborator(name, birthdate,\nadmissionDate, address, phoneNumber,\nemail, taxpayerNumber, identificationDocumentType,\nidentificationDocumentNumber, job)
+}
 
+enum DocType
+{
+    CC
+    BI
+    Passport
 }
 
 class AssignSkillsController {
-    + assignSkillsController(collaboratorRepository, skillRepository)
+    + AssignSkillsController()
     + getCollaborators()
-    + getSkills()
-    + createSelectedSkillsList()
+    + getSkills(collaboratorIdNumber)
     + addSelectedSkill(skillName)
-    + getSelectedSkillsList()
-    + getCollaboratorByIdNumber(collaboratorIdNumber)
-    + assignSkill(collaborator, selectedSkillsList)
+    + assignSkill(collaboratorIdNumber)
+    - getSelectedSkillsList()
+    - getCollaboratorByIdNumber(collaboratorIdNumber)
 }
 
 class AssignSkillsUI {
@@ -51,21 +55,25 @@ class Repositories {
 }
 
 class SkillRepository {
-    + getSkills()
-    + getSkillByName(skillName)
-    + add(skill)
+    + createSelectedSkillsList()
+    + createTempSkillsList()
+    + addSelectedSkill(skillName)
+    - getSkillByName(skillName)
     + getSelectedSkillsList()
 }
 
 class CollaboratorRepository {
     + getCollaborators()
+    + removeAlreadyAssignedSkills(collaboratorIdNumber, tempSkillsList)
     + getCollaboratorByIdNumber(collaboratorIdNumber)
     + assignSkill(collaborator, selectedSkillsList)
 }
 
+Collaborator +-- DocType
 
 Collaborator "1" --> "*" Skill: is assigned
 AssignSkillsUI ..> AssignSkillsController
+
 AssignSkillsController ...> Repositories: repositories
 AssignSkillsController ..> SkillRepository: skillRepository
 AssignSkillsController ..> CollaboratorRepository: collaboratorRepository
