@@ -31,8 +31,8 @@ public class Skill {
      *
      * @param name the name of the job
      * @throws IllegalArgumentException if the name contains numbers
+     * @throws IllegalArgumentException if the name contains special characters
      * @throws IllegalArgumentException if the name wasn't correctly filled
-     * @throws IllegalArgumentException if the name has more than 6 words
      */
     private void setSkillName(String name) {
 

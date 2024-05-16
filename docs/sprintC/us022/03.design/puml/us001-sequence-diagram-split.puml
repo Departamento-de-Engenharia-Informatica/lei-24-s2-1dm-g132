@@ -1,0 +1,39 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":RegisterSkillController" as CTRL
+
+
+
+
+
+                 -> CTRL : registerSkill (skill name)
+            activate CTRL
+    group Create Skill
+
+                                        CTRL -> CTRL: addSkill(skill)
+
+                                                                           activate CTRL
+                                                                               CTRL -> CTRL: validateSkill(skill)
+                                                                               activate CTRL
+                                                                                   CTRL --> CTRL
+                                                                               deactivate CTRL
+
+                                                                               CTRL --> CTRL
+                                                                               deactivate CTRL
+                                                                               end
+
+             <-- CTRL : Skill
+            deactivate CTRL
+
+
+
+
+
+
+@enduml
