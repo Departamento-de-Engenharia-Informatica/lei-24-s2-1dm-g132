@@ -1,0 +1,39 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":AssignSkillsController" as CTRL
+participant "skillRepository:\nSkillRepository" as SkillRepository
+participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
+
+autonumber 3
+-> CTRL : addSelectedSkill(skillName)
+
+autonumber 3.1
+
+activate CTRL
+    group Add Selected Skill
+        CTRL -> SkillRepository: addSelectedSkill(skillName)
+        activate SkillRepository
+
+        SkillRepository -> SkillRepository: getSkillByName(skillName)
+        activate SkillRepository
+        SkillRepository --> SkillRepository: skill
+        deactivate SkillRepository
+
+        SkillRepository -> selectedSkillsList : add(skill)
+        activate selectedSkillsList
+
+        deactivate selectedSkillsList
+        deactivate SkillRepository
+
+    end group
+
+    autonumber 4
+    <-- CTRL : asks to continue
+
+deactivate CTRL
+
+
+@enduml

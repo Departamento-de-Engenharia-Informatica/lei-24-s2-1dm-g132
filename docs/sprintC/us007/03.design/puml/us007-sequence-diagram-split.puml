@@ -1,0 +1,39 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":RegisterCheckUpController" as CTRL
+
+
+
+
+
+                 -> CTRL : registerCheckUp (vehiclePlate, date, kms)
+                             activate CTRL
+    group Schedule CheckUp
+
+                                            CTRL -> CTRL: addCheckUp(checkup)
+
+                                                                               activate CTRL
+                                                                                   CTRL -> CTRL: validateCheckUp(checkup)
+                                                                                   activate CTRL
+                                                                                       CTRL --> CTRL
+                                                                                   deactivate CTRL
+
+                                                                                   CTRL --> CTRL
+                                                                                   deactivate CTRL
+                                                                                   end
+
+             <-- CTRL : CheckUp
+            deactivate CTRL
+
+
+
+
+
+
+@enduml
