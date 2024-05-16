@@ -117,9 +117,9 @@ public class AssignSkillsController {
     public List<Skill> getSkills(String collaboratorIdNumber) {
         SkillRepository skillRepository = getSkillRepository();
         skillRepository.createSelectedSkillsList();
-        List<Skill> skills = skillRepository.createTempSkillsList();
+        List<Skill> tempSkillsList = skillRepository.createTempSkillsList();
 
-        return collaboratorRepository.removeAlreadyAssignedSkills(collaboratorIdNumber, skills);
+        return collaboratorRepository.removeAlreadyAssignedSkills(collaboratorIdNumber, tempSkillsList);
     }
 
     /**

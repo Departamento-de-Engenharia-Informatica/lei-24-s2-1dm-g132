@@ -128,7 +128,7 @@ public class AssignSkillsUI implements Runnable{
             {
                 String name = skills.get(answer - 1).getName();
                 controller.addSelectedSkillName(name);
-                skills.remove(answer -1);
+                skills.remove(answer - 1);
             }
             else{
                 cont = false;
