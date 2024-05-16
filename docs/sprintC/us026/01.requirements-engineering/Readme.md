@@ -1,12 +1,11 @@
-# US001 - Register skills that a collaborator may have
+# US026 -  Assign vehicles to the Agenda
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-- As a HRM, I want to register skills that a
-  collaborator may have
+- As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 
 ### 1.2. Customer Specifications and Clarifications
 

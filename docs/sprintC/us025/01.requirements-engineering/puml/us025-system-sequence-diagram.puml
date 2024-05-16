@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title US024 - Postpone an entry in the agenda
+title US025 - Cancel an entry in the agenda
 
 autonumber
 
@@ -12,7 +12,7 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to postpone an entry in the agenda
+    Employee -> System : asks to cancel an entry in the agenda
     activate System
 
     System --> Employee : shows list of green spaces to select one
@@ -24,16 +24,10 @@ activate Employee
     System --> Employee : shows list of entries in the agenda of the selected green space
     deactivate System
 
-    Employee -> System : selects one entry
+    Employee -> System : selects one entry to cancel
     activate System
 
-    System --> Employee : requests the new date
-    deactivate System
-
-    Employee -> System : types the new date
-    activate System
-
-    System --> Employee : postpones entry and displays operation success
+    System --> Employee : cancels entry and displays operation success
     deactivate System
 
 deactivate Employee

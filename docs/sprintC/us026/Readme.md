@@ -1,4 +1,4 @@
-# US 001 - Register skills that a collaborator may have
+# US 26 - Assign  vehicles to the Agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

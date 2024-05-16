@@ -24,14 +24,11 @@ As a GSM, I want to cancel an entry in the Agenda.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US022 - Add a new entry in the agenda" as there must be at least one entry to be able to postpone it.
+* There is a dependency on "US022 - Add a new entry in the agenda" as there must be at least one entry to be able to cancel it.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
-
-* Typed data:
-    * entry's new date
 
 * Selected data:
   * a green space
@@ -45,7 +42,7 @@ As a GSM, I want to cancel an entry in the Agenda.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - US024](svg/us024-system-sequence-diagram.svg)
+![System Sequence Diagram - US025](svg/us025-system-sequence-diagram.svg)
 
 
 ### 1.7 Other Relevant Remarks
