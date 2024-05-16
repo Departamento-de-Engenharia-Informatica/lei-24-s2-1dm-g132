@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - us006
+
+autonumber
+
+actor "VFM" as Admin
+participant ":System" as System
+
+activate Admin
+
+    Admin -> System : Requests to register new vehicle
+    activate System
+
+        System --> Admin : Requests data()
+    deactivate System
+
+    Admin -> System : Enter required data (Brand, Model, Type, Tare, Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance or Checkup Frequency in Kms)
+    activate System
+
+    System --> Admin : Lists all the inputed data
+        deactivate System
+
+    Admin -> System : Confirms data
+        activate System
+
+        System --> Admin : Displays operation success
+    deactivate System
+@enduml

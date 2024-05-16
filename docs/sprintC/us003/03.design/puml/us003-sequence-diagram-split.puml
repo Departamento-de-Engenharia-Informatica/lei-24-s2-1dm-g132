@@ -1,0 +1,99 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as HRM
+participant ":RegisterCollaboratorUI" as UI
+participant ":RegisterCollaboratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+
+activate HRM
+
+        HRM -> UI : asks to register a new collaborator
+
+        activate UI
+
+            UI -> CTRL** : create
+
+            UI -> CTRL : getJobs()
+            ref over CTRL
+                Get Job List
+
+            end ref
+
+            activate CTRL
+
+                CTRL --> UI : jobList
+            deactivate CTRL
+
+            UI --> HRM : shows job list and asks to select one
+        deactivate UI
+
+    HRM -> UI : selects a job
+    activate UI
+
+        UI --> HRM : requests data
+    deactivate UI
+
+    HRM -> UI : types requested data (name, birthdate,\nadmission date, address, phone\nnumber, email, taxpayer number,\nidentification document type and respective number)
+    activate UI
+
+        UI --> HRM : shows selected job and requested data
+    deactivate UI
+
+    HRM -> UI : submits data
+    activate UI
+
+        UI -> CTRL : registerCollaborator(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber,\njobName)
+        activate CTRL
+
+            CTRL -> CTRL : getJobByName(jobName)
+            activate CTRL
+
+                ref over CTRL
+                    Get Job Object
+
+                end ref
+
+
+                    CTRL --> CTRL : job
+            deactivate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getCollaboratorRepository()
+                activate PLAT
+
+                     PLAT --> CTRL: collaboratorRepository
+            deactivate PLAT
+
+            CTRL -> CollaboratorRepository: registerCollaborator(name,\nbirthdate, admissionDate,\naddress, phoneNumber,\nemail, taxpayerNumber,\nidentificationDocumentType,\nidentificationDocumentNumber, job)
+            activate CollaboratorRepository
+
+                ref over CollaboratorRepository
+                    Register Collaborator
+                end ref
+
+                CollaboratorRepository --> CTRL : collaborator
+
+            deactivate CollaboratorRepository
+
+            CTRL --> UI: collaborator
+            deactivate CTRL
+            UI --> HRM: displays operation success
+    deactivate UI
+
+deactivate HRM
+
+
+@enduml

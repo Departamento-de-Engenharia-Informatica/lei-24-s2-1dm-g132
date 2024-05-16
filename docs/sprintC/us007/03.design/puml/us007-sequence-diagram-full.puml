@@ -1,0 +1,50 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "VFM" as VFM
+participant ":RegisterCheckUpUI" as UI
+participant ":RegisterCheckUpController" as CTRL
+
+activate VFM
+
+        VFM -> UI : asks to register a vehicle check-up
+activate UI
+
+        UI --> VFM : requests data (vehiclePlate, date, kms)
+         deactivate UI
+
+    VFM -> UI : confirm and submits data
+        activate UI
+
+                UI -> CTRL : registerCheckUp (vehiclePlate, date, kms)
+            activate CTRL
+    group Schedule CheckUp
+
+                                        CTRL -> CTRL: addCheckUp(checkup)
+
+                                                                           activate CTRL
+                                                                               CTRL -> CTRL: validateCheckUp(checkup)
+                                                                               activate CTRL
+                                                                                   CTRL --> CTRL
+                                                                               deactivate CTRL
+
+                                                                               CTRL --> CTRL
+                                                                               deactivate CTRL
+                                                                               end
+
+            CTRL --> UI : CheckUp
+            deactivate CTRL
+
+
+            UI --> VFM : displays operation success
+        deactivate UI
+
+
+
+
+@enduml

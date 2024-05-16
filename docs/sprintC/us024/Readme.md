@@ -1,4 +1,4 @@
-# US 001 - Register skills that a collaborator may have
+# US024 - postpone an entry in the agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
@@ -6,4 +6,4 @@
 
 [Design](03.design/Readme.md)
 
-[Tests & Implementation ](04.tests-and-implementation/Readme.md)
+[Tests & Implementation](04.tests-and-implementation/Readme.md)
