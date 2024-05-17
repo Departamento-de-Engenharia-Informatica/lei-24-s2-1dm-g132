@@ -1,0 +1,103 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+participant ":RegisterGreenSpaceUI" as UI
+participant ":RegisterGreenSpaceController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "GreenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
+participant "GreenSpace\n:GreenSpace" as GreenSpace
+
+activate GSM
+
+        GSM -> UI : asks to Register Green Space
+
+        activate UI
+
+        UI -> CTRL** : Register
+
+        UI ->GSM : Request Green Space Data
+
+        deactivate UI
+
+        GSM -> UI : Submit Green Space Data
+
+        activate UI
+
+        UI -> CTRL : Green space (name, area, type)
+
+        activate CTRL
+
+        CTRL -> CTRL : getGreenSpaceByName(name)
+
+        CTRL -> RepositorySingleton : getInstance()
+
+        activate RepositorySingleton
+
+        RepositorySingleton -> CTRL : Repositories
+
+        deactivate RepositorySingleton
+
+        CTRL -> PLAT : getGreenSpaceRepository()
+
+        activate PLAT
+
+        PLAT -> CTRL : GreenSpaceRepository
+
+        deactivate PLAT
+
+        CTRL -> GreenSpaceRepository : getGreenSpaceByName(name)
+
+        activate GreenSpaceRepository
+
+        GreenSpaceRepository -> CTRL : GreenSpace
+
+        deactivate GreenSpaceRepository
+
+        CTRL -> GreenSpaceRepository : RegisterGreenSpace(name, area, type)
+
+        activate GreenSpaceRepository
+
+        GreenSpaceRepository -> GreenSpace** : createGreenSpace(name, area, type)
+
+
+        GreenSpaceRepository -> GreenSpaceRepository : saveGreenSpace(GreenSpace)
+
+        GreenSpaceRepository -> GreenSpaceRepository : VerifyGreenSpace(GreenSpace)
+
+        GreenSpaceRepository -> CTRL : GreenSpace
+
+        deactivate GreenSpaceRepository
+
+        CTRL -> UI : GreenSpace
+
+        deactivate CTRL
+
+        UI -> GSM : dysplay Green Space
+
+        deactivate UI
+
+        deactivate GSM
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml
