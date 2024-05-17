@@ -1,0 +1,39 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class RegisterGreenSpaceController {
+     + RegisterGreenSpaceController(GreenSpaceRepository)
+        + GreenSpace(name, type, area)
+
+}
+
+
+class RegisterGreenSpaceUI {
+
+}
+
+class GreenSpace
+{
+    - String name
+    - String Type
+    - int area
+    + GreenSpace(name, type, area)
+}
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getGreenSpaceRepository()
+}
+
+class GreenSpaceRepository {
+   + getGreenSpacebyName(name)
+}
+
+RegisterGreenSpaceUI ..> RegisterGreenSpaceController
+RegisterGreenSpaceController ..> GreenSpaceRepository : greenSpaceRepository
+GreenSpaceRepository ..> GreenSpace : greenSpace
+Repositories ..> GreenSpaceRepository : greenSpaceRepository
+RegisterGreenSpaceController ..> Repositories : repositories
+RegisterGreenSpaceController ..> GreenSpace : greenSpace
+
+@enduml

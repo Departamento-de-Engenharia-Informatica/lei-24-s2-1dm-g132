@@ -26,3 +26,32 @@ activate HRM
                                                                            System --> HRM: shows operation success
                                                                                     deactivate System
 @enduml
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US027- As a GSM, I need to list all green spaces
+
+autonumber
+
+actor "GSM" as GSM
+participant ":System" as System
+
+activate GSM
+
+    GSM -> System : asks to produce a list of the Green Spaces
+    activate System
+
+    loop until end of vehicles list
+    System --> GSM : requests to update the current kms of the vehicle
+    deactivate System
+    GSM -> System : updates the current kms of the vehicle
+    activate System
+    end
+
+    System --> GSM : produces a list of the vehicles needing maintenance \n(shows plate, brand, model, current kms,\ncheckup frequency, last and next maintenance)
+    deactivate System
+
+@enduml

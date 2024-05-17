@@ -1,0 +1,37 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US 020: Register a green space
+
+autonumber
+
+actor "GSM" as GSM
+participant ":System" as System
+
+activate GSM
+
+
+        GSM -> System : requests to register a green space
+        activate System
+
+            System --> GSM : asks to create a new green space
+        deactivate System
+
+        GSM -> System : types requested data
+        activate System
+
+            System --> GSM : shows created green space
+        deactivate System
+
+
+        GSM -> System : confirms data
+        activate System
+
+            System --> GSM : displays operation success
+        deactivate System
+
+
+
+@enduml
