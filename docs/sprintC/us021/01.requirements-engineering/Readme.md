@@ -84,6 +84,9 @@ and Low), and the approximate expected duration.
 
 * **AC1:** The new entry must be associated with a green space managed by the GSM.
 * **AC2:** The green space for the new entry should be chosen from a list presented to the GSM.
+* **AC3:** The expected duration is measured in hours and/or days.
+* **AC4:** The default status of an entry in the To-Do list is "Pending" and when it is assigned to the agenda should change to "Processed".
+* **AC5:** The title, description, degree of urgency, expected duration and green space should be provided by the GSM.
 
 ### 1.4. Found out Dependencies
 
@@ -94,22 +97,17 @@ and Low), and the approximate expected duration.
 **Input Data:**
 
 * Typed data:
-  * a name
-  * a birthdate
-  * an admission date
-  * an address
-  * a phone number
-  * an email
-  * a taxpayer number
-  * an identification document type
-  * an identification document number
+  * a title
+  * a description
+  * degree of urgency
+  * expected duration
 
 * Selected data:
-  * a job
+  * a green space
 
 **Output Data:**
 
-* List of existing jobs
+* List of existing green spaces
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -119,3 +117,4 @@ and Low), and the approximate expected duration.
 
 
 ### 1.7 Other Relevant Remarks
+Entries should have states defined by the system, no need to ask them to the user.
