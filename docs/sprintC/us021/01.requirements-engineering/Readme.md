@@ -1,110 +1,121 @@
-# US001 - Register skills that a collaborator may have
+# US021 - Add a new entry to the To-Do List
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-- As a HRM, I want to register skills that a
-  collaborator may have
+As a GSM, I want to add a new entry to the To-Do List.
 
 ### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
 
-> "an employee has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities"
+>   The To-Do List comprises all the tasks required to
+be done in order to assure the proper functioning of the parks. These tasks
+can be regular (e.g. pruning trees) or occasional (e.g. repairing a broken
+equipment). They may also require a multidisciplinary team and the length
+of the task can vary from a few minutes (e.g. replacing a light bulb) to weeks
+(e.g. installing an irrigation system).
 
+>	The To-Do List comprises all pending tasks for all parks. The entries in
+this list describe the required task, the degree of urgency (High, Medium,
+and Low), and the approximate expected duration.
 
 **From the client clarifications:**
 
-> **Question:** Hello, I have some questions about the US01: Which information can be introduced to create a new skill?
-Which information is mandatory for creating a new skill?
-Which are the skills accepted? Or should we enable the HRM to introduce anything as a skill?
-> 
-> **Answer:** The skill name;
-The skill name;
-All, it's up to HRM to decide. (special characters or algarisms should not be allowed in the skill name)
+> **Question:** If there are multiple GSM in the system, can a GSM create an entry for a Green Space managed by another GSM?
+>
+> **Answer:** No.
 
+> **Question:** For a regular task, should the GSM define the frequency in which the tasks need to be performed?
+>
+> **Answer:** Not for this sprint.
 
-> **Question:** Good Morning, client
-I wanted to ask a few question:
-Do I need to add skills  by writing them or can I just give a file with all of the skills?
-Does the HRM need to see the confirmation of the sucess of the operation and the skills added or just the sucess of the operation?
-Is there any other possible outcome like if the HMR does not put the requested data, do I need to ask the user to to register a diferent competence?
->  
-> **Answer:** Hi,
-Both are acceptable since the business the same the crucial difference resides in the UX.
-It will depend if you opt to insert one skil or a set of skils in a batch. Maybe some adaptation needed.
-This US is quite simple, atm a skill is simply a name.
+> **Question:** Should the to-do entries be unique or can a GSM repeat the same to-do entry, for the same Green Space, multiple times?
+>
+> **Answer:** Yes. Assuming the previous task with same description was previously processed and is not open anymore.
 
-> **Question:** What criteria are necessary to register a skill? 
-What type of information does a skill have? When a skill that already exists is created, what should the system do?
-> 
-> **Answer:** The necessary criteria to register a skill include the skill's name, for example:
-pruner,
-heavy vehicle driver,
-phyto-pharmaceutical applicator.
+> **Question:** If the To-Do entry is assigned to the Agenda, should it be removed for the To-Do entry, if it's only occasional?
+>
+> **Answer:** Should change the status to processed.
 
-> **Question:**
-Dear client,
-The indentificator of the skill will be the name, or the system will generate authomatically and Id when the manager insert the name?
-> 
-> **Answer:** A skill is just a name, can be a composition os words like "Light Vehicle Driving Licence".
-I have no knowledge about systems IDs.
+> **Question:** What are the details the GSM needs to input, other than the Green Space, frequency, estimated duration? Title and description are required?
+>
+> **Answer:** Title and description could be useful.
 
-> **Question:**
-Dear client, which is the difference between collaborator and employ? And employ could have skills? HRM, VFM, GSM and GSU are employers?
-> 
-> **Answer:**
-Employee and collaborator are synonyms.
+> **Question:** Should the GSM define the skills needed for a To-Do entry?
+>
+> **Answer:** No, but maybe it should be done for type of task (or similar).
 
-> **Question:**
-Hello,
-Should the system able the HRM to introduce multiple skills in one interaction before saving all of them?
-> 
-> **Answer:**
-Hi,
-it's not required to do so.
+> **Question:** Are the new entries on the list divided in categories? For example, the statement talks about regular and occasional tasks, should the distinction be made for the user?
+>
+> **Answer:** In the scope of the current proof-of-concept, there are no user stories using that categories.
 
+> **Question:** Finally, during the last client meeting, we became aware that some tasks are meant to be reoccurring rather than occasional. Is this something that should be asked on creating the task in the to-do list? If so, what inputs should we expect from the user? The task's frequency in days?
+>
+> **Answer:** For the current proof-of-concept there is no need to distinguish between recurring and occasional tasks.
 
+> **Question:** And when it comes to To-Do List entries, we identified a state (planned, postponed, completed, canceled), a green space, a title, and a description as inputs for a To-Do List entry. But are there any more?
+>
+> **Answer:** In the text you can find: the degree of urgency (High, Medium,and Low), and the approximate expected duration.
 
-> **Question:** Where do you want the jobs and skills to be stored and validated?
+> **Question:** We also know that an Agenda entry has a target date, but is this target date supposed to be inputted upon transferring a task from the to-do list to the agenda, or is it supposed to be inputted upon creating the task in the to-do list?
+>
+> **Answer:** To-do list entries doesn't have dates!
 
-Do you which to have a skill and job repository or do you want them to be stored in the organization?
+> **Question:** When a new entry is added to the ToDo list, the default status of that task will be "pending" or no status at all is considered on ToDo list?
+>
+> **Answer:** "Pending" as default for to-do list entries, sounds good.
 
+> **Question:** Hello. My question is how the code is supposed to know what GSM the user is? By an already logged-in email? Or I have to make the machine ask for confirmation? Is the machine supposed to filter the green spaces the GSM manages in to avoid mistaking one for another?
+>
+> **Answer:** I have no knowledge about how to code! I suppose it's a matter of UX/UI, so each dev team can decide about it.
 
-> 
-> **Answer:**
-Hello,
-the business rules regarding skills and stored were already provided in this forum;
+> **Question:** Is it mandatory for the program to have multiple GSM? If so, should each green space be associated with a responsible GSM? In other words, can only the GSM assigned to a specific green space register a new entry for the to-do list?
+>
+> **Answer:** The program can have multiple GSM. Yes. Yes.
 
-I have no knowledge about repositories.
+> **Question:** What time unit should be used for the duration of the task?
+>
+> **Answer:** Hours and/or days.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All required fields must be filled in.
-* **AC2:** The name of the skill must be filled in
-* **AC3:** The name of the skill cannot have special characters
+* **AC1:** The new entry must be associated with a green space managed by the GSM.
+* **AC2:** The green space for the new entry should be chosen from a list presented to the GSM.
+
 ### 1.4. Found out Dependencies
 
-* There are no dependencies
+* There is a dependency on "US020 - Register a green space" as there must be at least one green space to be associated to the new entry.
+
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-
-  * name of skill
+  * a name
+  * a birthdate
+  * an admission date
+  * an address
+  * a phone number
+  * an email
+  * a taxpayer number
+  * an identification document type
+  * an identification document number
 
 * Selected data:
-
+  * a job
 
 **Output Data:**
 
+* List of existing jobs
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram.svg)
+
+![System Sequence Diagram](svg/us003-system-sequence-diagram.svg)
+
 
 ### 1.7 Other Relevant Remarks
