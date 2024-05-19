@@ -36,7 +36,7 @@ at a determined time interval and on a specific date.
 
 * **AC1:** The new entry must be associated with a green space managed by the GSM.
 * **AC2:** The new entry must exist in the To-Do list.
-* **AC3:** The default status of an entry in the To-Do list is "Planned".
+* **AC3:** The default status of an entry in the Agenda is "Planned".
 * **AC4:** The entry on the To-Do list and the starting date should be provided by the GSM.
 
 ### 1.4. Found out Dependencies

@@ -85,7 +85,7 @@ and Low), and the approximate expected duration.
 * **AC1:** The new entry must be associated with a green space managed by the GSM.
 * **AC2:** The green space for the new entry should be chosen from a list presented to the GSM.
 * **AC3:** The expected duration is measured in hours and/or days.
-* **AC4:** The default status of an entry in the To-Do list is "Pending" and when it is assigned to the agenda should change to "Processed".
+* **AC4:** The default status of an entry in the To-Do list is "Pending" and when it is assigned to the Agenda should change to "Processed".
 * **AC5:** The title, description, degree of urgency, expected duration and green space should be provided by the GSM.
 
 ### 1.4. Found out Dependencies

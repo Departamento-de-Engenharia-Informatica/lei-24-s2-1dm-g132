@@ -1,0 +1,51 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+class GSM {
+}
+
+class Task {
+    title
+    description
+    degreeOfUrgency
+    expectedDuration
+    status
+    startingDate
+}
+
+'Perguntar sobre Task ter diferentes parâmetros em diferentes US
+
+class ToDoList {
+}
+
+class Agenda{
+}
+
+'Perguntar sobre green space ainda estar representado neste modelo de domínio
+'(se deveria)
+
+class GreenSpace {
+    name
+    area
+    type
+    address
+}
+
+GSM "1" - "*" Task : introduces >
+
+Task "*" --- "1" ToDoList : belongs to >
+
+Task "*" --- "1" Agenda : is added >
+
+Task "*" - "1" GreenSpace : is associated with >
+
+@enduml

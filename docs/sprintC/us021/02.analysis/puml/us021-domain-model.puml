@@ -1,0 +1,40 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+class GSM {
+}
+
+class Task {
+    title
+    description
+    degreeOfUrgency
+    expectedDuration
+    status
+}
+
+class ToDoList {
+}
+
+class GreenSpace {
+    name
+    area
+    type
+    address
+}
+
+GSM "1" - "*" Task : creates >
+
+Task "*" -- "1" ToDoList : is added to >
+
+Task "*" - "1" GreenSpace : is associated with >
+
+@enduml
