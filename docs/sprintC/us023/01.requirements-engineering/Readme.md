@@ -46,7 +46,7 @@ Done).
 ### 1.6. System Sequence Diagram (SSD)
 
 
-![System Sequence Diagram](svg/us003-system-sequence-diagram.svg)
+![System Sequence Diagram](svg/us023-system-sequence-diagram.svg)
 
 
 ### 1.7 Other Relevant Remarks

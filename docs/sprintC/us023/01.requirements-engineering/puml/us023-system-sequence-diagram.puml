@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US023
+
+autonumber
+
+actor "Green\nSpaces\nManager" as GSM
+participant ":System" as System
+
+activate GSM
+
+    GSM -> System : asks to assign a Team to an entry in the Agenda
+    activate System
+
+        System --> GSM : shows entries from the Agenda and asks to select one
+    deactivate System
+
+    GSM -> System : selects an entry
+    activate System
+
+        System --> GSM : shows Teams list and asks to select one
+    deactivate System
+
+    GSM -> System : selects a Team
+    activate System
+
+        System --> GSM : displays operation success
+    deactivate System
+
+@enduml

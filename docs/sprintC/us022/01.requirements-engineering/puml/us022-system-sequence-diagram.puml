@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US022
+
+autonumber
+
+actor "Green\nSpaces\nManager" as GSM
+participant ":System" as System
+
+activate GSM
+
+    GSM -> System : asks to add a new entry to the Agenda
+    activate System
+
+        System --> GSM : shows entries from the To-Do list and asks to select one
+    deactivate System
+
+    GSM -> System : selects an entry
+    activate System
+
+        System --> GSM : requests a starting date
+    deactivate System
+
+    GSM -> System : introduces starting date
+    activate System
+
+        System --> GSM : displays operation success
+    deactivate System
+
+@enduml
