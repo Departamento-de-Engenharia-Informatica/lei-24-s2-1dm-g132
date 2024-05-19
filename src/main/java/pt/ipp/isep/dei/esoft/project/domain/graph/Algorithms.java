@@ -327,11 +327,11 @@ public class Algorithms {
      * @param ce  comparator between elements of type E
      * @return the minimum distance graph
      */
-    public static <V, E> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce) {
+    public static <V, E extends Number> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce) {
         return kruskal(g, ce);
     }
 
-    private static <V, E> MatrixGraph<V, E> kruskal(Graph<V, E> graph, Comparator<E> ce) {
+    private static <V, E extends Number> MatrixGraph<V, E> kruskal(Graph<V, E> graph, Comparator<E> ce) {
         // Grafo Vazio
         MatrixGraph<V, E> graphToReturn = new MatrixGraph<>(graph.isDirected());
 

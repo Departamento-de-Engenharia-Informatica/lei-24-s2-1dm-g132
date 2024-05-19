@@ -14,11 +14,12 @@ public class MinimalAcumulatedCostGraphUI implements Runnable {
     @Override
     public void run() {
         try {
-            List<String> list = controller.getMinimalCostGraph();
-            System.out.println("Minimal Cost Graph:\nEdges: " + list.size() + "\n");
-            for (String a : list){
-                System.out.println(a);
+            if (controller.getMinimalCostGraph()){
+                System.out.println("Sucess!");
+            } else {
+                System.out.println("Error!");
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }

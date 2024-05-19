@@ -1,144 +1,139 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
+import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
+import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
 import pt.ipp.isep.dei.esoft.project.repository.WaterSuplyPointsCsvRepository;
 
 import java.io.*;
 import java.util.*;
 
 public class AsymptoticBehaviorAnalyser {
-    public String desktopPath;
-    private final String folderPath;
-    private final String folderName = "output";
 
-    public AsymptoticBehaviorAnalyser() {
-        getDesktopPath();
-        this.folderPath = desktopPath + File.separator + folderName;
-    }
-
-    private void getDesktopPath() {
-        try {
-            this.desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Map<String, Long> startTest(List<Integer> listOfSizes, int iterations) throws IOException {
-        Map<String, Long> finalMap = new HashMap<>();
-        Map<String, Long> iterationMap;
-        for (int i = 0; i < iterations; i++) {
-            System.out.println("Iteration: " + (i + 1));
-            System.out.println("Generating test CSV's...");
-            if (!generateCsvs(listOfSizes)) {
-                return null;
-            } else {
-                System.out.println("Analyzing...");
-                iterationMap = readCsvs();
-            }
-            for (Map.Entry<String, Long> a : iterationMap.entrySet()) {
-                if (!finalMap.containsKey(a.getKey())){
-                    finalMap.put(a.getKey(), a.getValue());
-                } else {
-                    finalMap.replace(a.getKey(), finalMap.get(a.getKey()) + a.getValue());
-                }
-            }
-        }
-        for (Map.Entry<String, Long> a : finalMap.entrySet()){
-            finalMap.replace(a.getKey(), a.getValue()/5);
-        }
-
-        return finalMap;
-    }
-
-    private Map<String, Long> readCsvs() {
+    public boolean start(String folderPath) {
         File folder = new File(folderPath);
         if (!folder.isDirectory()) {
-            throw new RuntimeException("Inválid path to the folder");
+            throw new IllegalArgumentException("Invalid folder path!: " + folderPath);
         }
+        File [] fileArr = folder.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.getName().endsWith(".csv");
+            }
+        });
+        if (fileArr == null) {
+            throw new RuntimeException("Folder is empty");
+        } else if (fileArr.length != 30) {
+            throw new RuntimeException("Folder does not have 30 files!");
+        } else {
+            List<File> fileList = new ArrayList<>(List.of(fileArr));
+            fileList.sort(Comparator.comparing(File::getName, new IntuitiveStringComparator<>()));
+            return readCsvs(fileList);
+        }
+    }
 
-        Map<String, Long> mapToReturn = new HashMap<>();
-        File[] files = folder.listFiles();
+    private boolean readCsvs(List<File> fileList) {
+        File folder = fileList.get(0).getParentFile().getAbsoluteFile();
+        List<ExecutionTimeInfo> executionTimeInfoList = new ArrayList<>();
         String fileName = "";
         try {
-            for (File file : files) {
+            for (File file : fileList) {
                 fileName = file.getName();
+                System.out.println("Reading file: " + fileName);
                 WaterSuplyPointsCsvRepository tempRepo = new WaterSuplyPointsCsvRepository(true);
-                if (tempRepo.loadGraph(file.getAbsolutePath())){
+                if (tempRepo.loadGraph(file.getAbsolutePath())) {
                     long begining = System.currentTimeMillis();
-                    Algorithms.minDistGraph(tempRepo.getCsvGraphCopy(), Comparator.naturalOrder());
+                    MatrixGraph<Vertice, Double> graph = Algorithms.minDistGraph(tempRepo.getCsvGraphCopy(), Comparator.naturalOrder());
                     long end = System.currentTimeMillis();
-                    mapToReturn.put(file.getName(), (end - begining));
+                    ExecutionTimeInfo executionTimeInfo = new ExecutionTimeInfo(
+                            fileName,
+                            graph.numEdges(),
+                            graph.numVertices(),
+                            end - begining);
+                    executionTimeInfoList.add(executionTimeInfo);
                 } else {
-
+                    throw new RuntimeException("Error parsing file! " + file.getAbsolutePath());
                 }
             }
-        }catch (IllegalArgumentException illegalArgumentException){
+        } catch (IllegalArgumentException illegalArgumentException) {
             System.out.println(illegalArgumentException.getMessage() + ". " + fileName);
-        }
-        catch (OutOfMemoryError outOfMemoryError) {
+        } catch (OutOfMemoryError outOfMemoryError) {
             System.out.println("Out of memory! File: " + fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return mapToReturn;
+
+        generateFiles(executionTimeInfoList);
+        return true;
     }
 
-    private String getRandomIntInString() {
-        Random rand = new Random();
-        // inteiro random entre 1 e 100000
-        return String.valueOf((rand.nextInt((100000 - 1) + 1) + 1));
+    private boolean generateFiles(List<ExecutionTimeInfo> executionTimeInfoList) {
+        File baseFolder = new File(getDesktopPath());
+        if (setup(baseFolder)) {
+            String header = "File Name;Edges;Vertices;Execution Time (ms)\n";
+            return generateCsv(executionTimeInfoList, baseFolder, header) && generateGraphPng(executionTimeInfoList, baseFolder);
+        } else {
+            return false;
+        }
     }
 
-    private boolean generateCsvs(List<Integer> listOfSizes) throws IOException {
-        File folder = new File(desktopPath, folderName);
-
+    private boolean setup(File baseFolder) {
+        String outputFolderPath = baseFolder.getAbsolutePath() + File.separator + "output" + File.separator + "us14";
+        File outputFolder = new File(outputFolderPath);
         try {
-            if (!folder.exists()) { // Check if the folder doesn't already exist
-                boolean created = folder.mkdir(); // Create the folder
-                if (!created) {
-                    throw new RuntimeException("Failed to create the folder: " + folderName);
+            if (!outputFolder.exists()) {
+                boolean ok = outputFolder.mkdirs();
+                if (!ok) {
+                    throw new RuntimeException("Error creating " + outputFolderPath);
+                } else {
+                    System.out.println("Created: " + outputFolderPath);
+                }
+            } else {
+                if (outputFolder.listFiles() != null) {
+                    for (File a : outputFolder.listFiles()) {
+                        boolean ok = a.delete();
+                        if (!ok) {
+                            throw new RuntimeException("Error deleting " + a.getAbsolutePath() +
+                                    "\nMaybe check if the file is open by another program...");
+                        } else {
+                            System.out.println("Deleted: " + a.getAbsolutePath());
+                        }
+                    }
                 }
             }
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-
-        boolean status = false;
-        for (Integer inputSize : listOfSizes) {
-            String csvFile = folderPath + File.separator + inputSize.toString() + "inputSizeCSV.csv";
-            File file = new File(csvFile);
-            // Check if the file exists
-            if (file.exists()) {
-                // Attempt to delete the file
-                if (!file.delete()) {
-                    String message = file.exists() ? "is in use by another app" : "does not exist";
-                    throw new IOException("Cannot delete file "+ file.getName() +" , because file " + message + ".");
-                }
-            }
-            String header = "Water Point X, Water Point Y, Distance\n";
-            try (FileWriter writer = new FileWriter(csvFile, true)) {
-                writer.write(header);
-                for (int i = 0; i < inputSize; i++) {
-                    String line = getRandomIntInString() + ", " + getRandomIntInString() + ", " + getRandomIntInString() + "\n";
-                    writer.write(line);
-                }
-                status = true;
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        }
-        return status;
+        return true;
     }
 
-    public boolean generateGraph(List<Map.Entry<String, Long>> entryList) {
-        System.out.println("Generating Graph...");
+    private boolean generateCsv(List<ExecutionTimeInfo> executionTimeInfoList, File baseFolder, String header) {
+        String outputFolderPath = baseFolder.getAbsolutePath() + File.separator + "output" + File.separator + "us14";
+        String csvPath = outputFolderPath + File.separator + "AsymptoticBehavior.csv";
+        File csvFile = new File(csvPath);
+        try (PrintWriter writer = new PrintWriter(new FileWriter(csvFile))) {
+            writer.write(header);
+            for (ExecutionTimeInfo a : executionTimeInfoList) {
+                writer.write(a.getFilename() + ";" + a.getNumEdges() + ";" + a.getNumVertices() + ";" + a.getExecutionTime() + "\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        openFile(csvPath);
+        return true;
+    }
+
+    public boolean generateGraphPng(List<ExecutionTimeInfo> executionTimeInfos, File baseFolder) {
+        String outputFolderPath = baseFolder.getAbsolutePath() + File.separator + "output" + File.separator + "us14";
+        String imagePath = outputFolderPath + File.separator + "AsymptoticBehaviorGraph.png";
+
+        System.out.println("Generating Graph PNG...");
         try {
             File tempFile = File.createTempFile("gnuplot-data", "txt");
 
-            try (PrintWriter writer = new PrintWriter(new FileWriter(tempFile))){
-                for (Map.Entry<String, Long> entry : entryList){
-                    writer.println(entry.getKey() + " " + entry.getValue());
+            try (PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
+                for (ExecutionTimeInfo entry : executionTimeInfos) {
+                    writer.println(entry.numEdges + " " + entry.getExecutionTime());
                 }
             }
 
@@ -146,9 +141,9 @@ public class AsymptoticBehaviorAnalyser {
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
 
-            try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(process.getOutputStream()))){
+            try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(process.getOutputStream()))) {
                 writer.println("set terminal pngcairo");
-                writer.println("set output '"+folderPath + File.separator + "graph.png'");
+                writer.println("set output '" + imagePath + "'");
                 writer.println("set title 'Execution Time vs Input Size'");
                 writer.println("set xlabel 'Input Size (edges)'");
                 writer.println("set ylabel 'Execution Time (ms)'");
@@ -163,39 +158,86 @@ public class AsymptoticBehaviorAnalyser {
             }
             process.waitFor();
 
-            try {
-                String command;
-
-                // Check the operating system
-                String os = System.getProperty("os.name").toLowerCase();
-
-                if (os.contains("win")) {
-                    // Windows
-                    command = "cmd.exe /c start ";
-                } else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
-                    // Unix or Linux or Mac
-                    command = "open ";
-                } else {
-                    // Unsupported OS
-                    System.out.println("Unsupported operating system.");
-                    return false;
-                }
-
-                // Path to the image file
-                String imagePath = folderPath + File.separator + "graph.png";;
-
-                // Execute the command
-                Runtime runtime = Runtime.getRuntime();
-                Process process2 = runtime.exec(command + imagePath);
-                process2.waitFor();
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
-
-        }catch (Exception exception){
+            openFile(imagePath);
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
         return true;
+    }
+
+    private static int extractNumericValue(String fileName) {
+        // Extract the numeric part (e.g., "file11" -> 11)
+        String numericPart = fileName.replaceAll("[^0-9]", "");
+        return Integer.parseInt(numericPart);
+    }
+
+    private boolean openFile(String filePath) {
+
+        try {
+            String command;
+
+            // Check the operating system
+            String os = System.getProperty("os.name").toLowerCase();
+
+            if (os.contains("win")) {
+                // Windows
+                command = "cmd.exe /c start ";
+            } else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
+                // Unix or Linux or Mac
+                command = "open ";
+            } else {
+                // Unsupported OS
+                System.out.println("Unsupported operating system.");
+                return false;
+            }
+
+            // Execute the command
+            Runtime runtime = Runtime.getRuntime();
+            Process process2 = runtime.exec(command + filePath);
+            process2.waitFor();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private String getDesktopPath() {
+        try {
+            return System.getProperty("user.home") + File.separator + "Desktop";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static class ExecutionTimeInfo {
+        protected String filename;
+        protected int numEdges;
+        protected int numVertices;
+        protected long executionTime;
+
+        public ExecutionTimeInfo(String filename, int numEdges, int numVertices, long executionTime) {
+            this.filename = filename;
+            this.numEdges = numEdges;
+            this.numVertices = numVertices;
+            this.executionTime = executionTime;
+        }
+
+        public String getFilename() {
+            return filename;
+        }
+
+        public int getNumEdges() {
+            return numEdges;
+        }
+
+        public int getNumVertices() {
+            return numVertices;
+        }
+
+        public long getExecutionTime() {
+            return executionTime;
+        }
     }
 }

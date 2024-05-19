@@ -1,14 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.GraphPngGenerator;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
-import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
 import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class WaterSuplyPointsCsvRepository {
@@ -28,7 +26,7 @@ public class WaterSuplyPointsCsvRepository {
         return addEdge(new Vertice(ori), new Vertice(dest), weight);
     }
 
-    public boolean addEdge(Vertice ori, Vertice dest, Double weight){
+    public boolean addEdge(Vertice ori, Vertice dest, Double weight) {
         return csvGraph.addEdge(ori, dest, weight);
     }
 
@@ -47,75 +45,81 @@ public class WaterSuplyPointsCsvRepository {
 
     public boolean loadGraph(String filePath) {
         try {
+            if (csvGraph.numEdges() != 0){
+                csvGraph = new MatrixGraph<>(csvGraph.isDirected());
+            }
             File file = new File(filePath);
-            String reverseName = reverseString(file.getName());
-            String[] tokens = reverseName.split("\\.");
-            String extensao = reverseString(tokens[0]);
-            if (!extensao.equals("csv")) {
-                if (extensao.equals("png")){
+            csvGraph.setName(file.getName());
+            if (!file.getName().endsWith("csv")) {
+                if (file.getName().endsWith("png")) {
                     return false;
                 }
                 throw new IllegalArgumentException("Invalid File Format! Should be <.csv>");
             }
             Scanner scanner = new Scanner(file);
-            int i = 0;
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
-                String[] args = line.split(",");
-                if (i > 0){
-                    if (args.length != 3) {
-                        throw new RuntimeException("Invalid Entry: <" + line + ">, Should be <arg, arg, arg");
-                    } else {
-                        String ori = args[0].strip();
-                        String dest = args[1].strip();
-                        double weight = Double.parseDouble(args[2].strip());
-                        addEdge(ori, dest, weight);
-                    }
+                String separator = getSeparator(line);
+                String[] args = line.split(separator);
+                if (args.length != 3) {
+                    throw new RuntimeException("Invalid Entry: <" + line + ">, Should be <arg, arg, arg");
+                } else {
+                    String ori = args[0].strip();
+                    String dest = args[1].strip();
+                    double weight = Double.parseDouble(args[2].strip());
+                    addEdge(ori, dest, weight);
                 }
-                i++;
             }
-        scanner.close();
+            scanner.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
         return true;
     }
 
-    public static String reverseString(String str) {
-        if (str == null || str.isEmpty()) {
-            return str;
+    private String getSeparator(String line) {
+        if (line.contains(";")) {
+            return ";";
+        } else {
+            return ",";
         }
-
-        char[] charArray = str.toCharArray();
-
-        int left = 0;
-        int right = charArray.length - 1;
-
-        while (left < right) {
-            char temp = charArray[left];
-            charArray[left] = charArray[right];
-            charArray[right] = temp;
-            left++;
-            right--;
-        }
-
-        return new String(charArray);
     }
 
-    public List<String> getMinimalCostGraph() {
-        List<String> listToReturn = new ArrayList<>();
+    public boolean getMinimalCostGraph() {
         MatrixGraph<Vertice, Double> graph = Algorithms.minDistGraph(getCsvGraphCopy(), Double::compareTo);
-        for (Edge<Vertice, Double> edge : graph.edges()) {
-            String entry = edge.getVOrig().getNome() + " <-> " + edge.getVDest().getNome() + ", cost: " + edge.getWeight();
-            if (listToReturn.isEmpty()){
-                listToReturn.add(entry);
-            } else {
-                String entry2 = edge.getVDest().getNome() + " <-> " + edge.getVOrig().getNome() + ", cost: " + edge.getWeight();
-                if (!listToReturn.contains(entry) && !listToReturn.contains(entry2)){
-                    listToReturn.add(entry);
-                }
+        graph.setName(getCsvGraphCopy().getName());
+
+        Runnable task1 = new Runnable() {
+            @Override
+            public void run() {
+                generateGraphPNG(getCsvGraphCopy(), "FullGraph.png");
             }
+        };
+
+        Runnable task2 = new Runnable() {
+            @Override
+            public void run() {
+                generateGraphPNG(graph, "MinimalCostGraph.png");
+            }
+        };
+        Thread thread1 = new Thread(task1);
+        Thread thread2 = new Thread(task2);
+
+        thread1.start();
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        return listToReturn;
+
+        return true;
+    }
+
+    private boolean generateGraphPNG(MatrixGraph<Vertice, Double> graph, String fileName) {
+        GraphPngGenerator graphPngGenerator = new GraphPngGenerator();
+        return graphPngGenerator.generateGraphSim(graph, fileName);
     }
 }

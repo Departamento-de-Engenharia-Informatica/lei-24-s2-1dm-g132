@@ -9,7 +9,17 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class MatrixGraph<V,E> extends CommonGraph<V,E> {
+public class MatrixGraph<V,E extends Number> extends CommonGraph<V,E> {
+
+    public String name;
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name.replaceAll(".csv", "");
+    }
 
     public static final int INITIAL_CAPACITY = 10;
     public static final float RESIZE_FACTOR = 1.5F;
@@ -261,7 +271,7 @@ public class MatrixGraph<V,E> extends CommonGraph<V,E> {
         MatrixGraph<V, E> g = new MatrixGraph<>(this.isDirected, this.edgeMatrix.length);
 
         copy(this, g);
-
+        g.setName(this.name);
         return g;
     }
 
@@ -305,5 +315,13 @@ public class MatrixGraph<V,E> extends CommonGraph<V,E> {
         sb.append("\n");
 
         return sb.toString();
+    }
+
+    public double cost(){
+        double sum = 0.0;
+        for (Edge<V, E> edge : edges()){
+            sum += edge.getWeight().doubleValue();
+        }
+        return sum;
     }
 }

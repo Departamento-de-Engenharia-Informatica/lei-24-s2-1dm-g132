@@ -21,7 +21,7 @@ public class MinimalAcumulatedCostGraphController {
         return waterSuplyPointsCsvRepository;
     }
 
-    public List<String> getMinimalCostGraph(){
+    public boolean getMinimalCostGraph(){
         return waterSuplyPointsCsvRepository.getMinimalCostGraph();
     }
 }
