@@ -1,31 +1,3 @@
-@startuml
-skinparam monochrome true
-skinparam packageStyle rectangle
-skinparam shadowing false
-
-title System Sequence Diagram (SSD) - US 001
-
-autonumber
-
-actor "HRM" as HRM
-participant ":System" as System
-
-activate HRM
-
-    HRM -> System: selects "create skill" option
-    activate System
-
-         System --> HRM: request skill name
-            deactivate System
-                HRM -> System: enters skill name
-                    activate System
-                       System --> HRM: asks for validation of skill
-                                deactivate System
-                                                HRM -> System: validates skill
-                                                    activate System
-                                                                           System --> HRM: shows operation success
-                                                                                    deactivate System
-@enduml
 
 @startuml
 skinparam monochrome true
@@ -44,14 +16,14 @@ activate GSM
     GSM -> System : asks to produce a list of the Green Spaces
     activate System
 
-    loop until end of vehicles list
-    System --> GSM : requests to update the current kms of the vehicle
+    loop until end of Green Space list
+    System --> GSM : requests to update the current names of the Green Space
     deactivate System
     GSM -> System : updates the current kms of the vehicle
     activate System
     end
 
-    System --> GSM : produces a list of the vehicles needing maintenance \n(shows plate, brand, model, current kms,\ncheckup frequency, last and next maintenance)
+    System --> GSM : produces a list of the Green Spaces
     deactivate System
 
 @enduml
