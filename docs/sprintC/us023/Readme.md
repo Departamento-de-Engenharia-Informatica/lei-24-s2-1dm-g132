@@ -1,4 +1,4 @@
-# US 001 - Register skills that a collaborator may have
+# US023 - Assign a Team to an entry in the Agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
