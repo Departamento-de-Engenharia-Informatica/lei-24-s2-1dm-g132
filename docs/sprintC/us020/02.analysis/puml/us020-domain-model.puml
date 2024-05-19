@@ -15,7 +15,9 @@ class GSM {
 class GreenSpace {
     name
     area
-    Type
+    type
+    adress
+
 }
 
 GSM "1" -- "*" GreenSpace : registers >

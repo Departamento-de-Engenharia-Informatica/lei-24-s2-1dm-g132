@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 
 class RegisterGreenSpaceController {
      + RegisterGreenSpaceController(GreenSpaceRepository)
-        + GreenSpace(name, type, area)
+        + GreenSpace(name, type, area, adress)
 
 }
 
@@ -17,7 +17,8 @@ class GreenSpace
     - String name
     - String Type
     - int area
-    + GreenSpace(name, type, area)
+    - int adress
+    + GreenSpace(name, type, area, adress)
 }
 class Repositories {
     - Repositories()
@@ -34,6 +35,6 @@ RegisterGreenSpaceController ..> GreenSpaceRepository : greenSpaceRepository
 GreenSpaceRepository ..> GreenSpace : greenSpace
 Repositories ..> GreenSpaceRepository : greenSpaceRepository
 RegisterGreenSpaceController ..> Repositories : repositories
-RegisterGreenSpaceController ..> GreenSpace : greenSpace
+'RegisterGreenSpaceController ..> GreenSpace : greenSpace
 
 @enduml
