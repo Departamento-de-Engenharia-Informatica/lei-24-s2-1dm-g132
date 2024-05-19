@@ -1,11 +1,11 @@
-# US 001 - Register skills that a collaborator may have
+# US023 - Assign a Team to an entry in the Agenda
 
 ## 2. Analysis
 
 ### 2.1. Relevant Domain Model Excerpt 
 
-![Domain Model](svg/us001-domain-model.svg)
+![Domain Model](svg/us023-domain-model.svg)
 
 ### 2.2. Other Remarks
 
-Nothing.
+n/a
