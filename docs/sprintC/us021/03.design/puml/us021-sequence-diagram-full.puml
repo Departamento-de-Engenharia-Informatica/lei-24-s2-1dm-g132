@@ -1,0 +1,195 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Space Manager" as GSM
+participant ":AddEntryToDoUI" as UI
+participant ":AddEntryToDoController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
+participant "greenSpace\n:GreenSpace" as greenSpace
+participant ":GreenSpaceMapper" as GreenSpaceMapper
+participant "associatedGreenSpacesList\nList<GreenSpace>" as associatedGreenSpacesList
+participant "associatedGreenSpacesListDto\nList<GreenSpaceDto>" as associatedGreenSpacesListDto
+participant "objDto\n:GreenSpaceDto" as greenSpaceDto
+participant "greenSpaceDto\n:GreenSpaceDto" as GreenSpaceDto
+participant "toDoList:\nToDoList" as ToDoList
+participant ":TaskMapper" as TaskMapper
+participant "taskDto\n:TaskDto" as TaskDto
+participant "task\n:Task" as TASK
+
+activate GSM
+
+    GSM -> UI : asks to add a new entry to the To-Do List
+    activate UI
+
+        UI --> CTRL** : create()
+        UI -> CTRL : getGreenSpaces()
+        activate CTRL
+
+            CTRL -> : identifyGSM()
+
+            CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getGreenSpaceRepository()
+                activate PLAT
+
+                    PLAT --> CTRL : greenSpaceRepository
+                deactivate PLAT
+
+                CTRL -> GreenSpaceRepository : getGreenSpaces()
+                activate GreenSpaceRepository
+
+                    GreenSpaceRepository --> associatedGreenSpacesList** : clone(greenSpacesList)
+                    GreenSpaceRepository --> CTRL : associatedGreenSpacesList
+                deactivate GreenSpaceRepository
+
+                CTRL -> GreenSpaceMapper : toDTO(associatedGreenSpacesList)
+                activate GreenSpaceMapper
+
+                    GreenSpaceMapper --> associatedGreenSpacesListDto** : create()
+
+                    loop for each object in associatedGreenSpacesList
+                        GreenSpaceMapper -> associatedGreenSpacesList : obj = get(i)
+                        activate associatedGreenSpacesList
+
+                            deactivate associatedGreenSpacesList
+
+                        GreenSpaceMapper -> GreenSpaceMapper : objDto = toDTO(obj)
+                        activate GreenSpaceMapper
+
+                            GreenSpaceMapper -> greenSpaceDto** :create(...)
+                            deactivate GreenSpaceMapper
+
+                        GreenSpaceMapper -> associatedGreenSpacesListDto : add(objDto)
+                        activate associatedGreenSpacesListDto
+
+                            deactivate associatedGreenSpacesListDto
+
+                        end loop
+
+                    GreenSpaceMapper --> CTRL : associatedGreenSpacesListDto
+                    deactivate GreenSpaceMapper
+
+                CTRL --> UI : associatedGreenSpacesListDto
+                deactivate CTRL
+            UI --> GSM : shows green spaces list and asks to select one
+            deactivate UI
+
+        GSM -> UI : selects a green space
+        activate UI
+
+            UI -> associatedGreenSpacesListDto : get(i)
+            activate associatedGreenSpacesListDto
+
+                associatedGreenSpacesListDto --> UI : obj1Dto
+            deactivate associatedGreenSpacesListDto
+
+            UI -> CTRL : getSelectedGreenSpace(greenSpaceDto)
+            activate CTRL
+
+                CTRL -> GreenSpaceRepository : getSelectedGreenSpace(greenSpaceDto)
+                activate GreenSpaceRepository
+
+                    GreenSpaceRepository -> GreenSpaceMapper : toModel(greenSpaceDto)
+                    activate GreenSpaceMapper
+
+                        GreenSpaceMapper -> GreenSpaceDto : name = getName()
+                        activate GreenSpaceDto
+                        deactivate GreenSpaceDto
+
+                        GreenSpaceMapper -> GreenSpaceDto : area = getArea()
+                        activate GreenSpaceDto
+                        deactivate GreenSpaceDto
+
+                        GreenSpaceMapper -> GreenSpaceDto : type = getType()
+                        activate GreenSpaceDto
+                        deactivate GreenSpaceDto
+
+                        GreenSpaceMapper -> GreenSpaceDto : address = getAddress()
+                        activate GreenSpaceDto
+                        deactivate GreenSpaceDto
+
+                        GreenSpaceMapper -> greenSpace : create(name, area, type, address)
+                        activate greenSpace
+
+                            greenSpace --> GreenSpaceMapper : selectedGreenSpaceCopy
+                        deactivate greenSpace
+
+                        GreenSpaceMapper --> GreenSpaceRepository : selectedGreenSpaceCopy
+                        deactivate GreenSpaceMapper
+
+                    GreenSpaceRepository -> GreenSpaceRepository: greenSpacesList.contains(selectedGreenSpaceCopy)
+                    activate GreenSpaceRepository
+
+                        GreenSpaceRepository --> GreenSpaceRepository : selectedGreenSpace
+                    deactivate GreenSpaceRepository
+
+                    GreenSpaceRepository --> CTRL : selectedGreenSpace
+                    deactivate GreenSpaceRepository
+
+                deactivate CTRL
+
+            UI --> GSM : requests a title, a description, the degree of\nurgency and an expected duration
+            deactivate UI
+
+        GSM -> UI : types requested data
+        activate UI
+
+            UI -> CTRL : addEntry(taskDto)
+            activate CTRL
+
+                CTRL -> ToDoList : addEntry(taskDto, selectedGreenSpace)
+                activate ToDoList
+
+                    ToDoList -> TaskMapper : toModel(taskDto, selectedGreenSpace)
+                    activate TaskMapper
+
+                        TaskMapper -> TaskDto : title = getTitle()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : description = getDescription()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : degreeOfUrgency = getDegreeOfUrgency()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : expectedDuration = getExpectedDuration()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TASK** : create(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
+                        TaskMapper --> ToDoList : createdTask
+
+                        deactivate TaskMapper
+
+                    ToDoList -> ToDoList : add(createdTask)
+                    activate ToDoList
+
+                        ToDoList --> ToDoList : createdTask
+                    deactivate ToDoList
+
+                    ToDoList --> CTRL : createdTask
+                    deactivate ToDoList
+
+                CTRL --> UI : createdTask
+                deactivate CTRL
+
+            UI --> GSM : displays operation success
+            deactivate UI
+
+        deactivate GSM
+
+@enduml
