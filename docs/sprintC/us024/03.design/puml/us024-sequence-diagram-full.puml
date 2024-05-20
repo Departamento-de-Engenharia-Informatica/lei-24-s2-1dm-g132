@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title US004 - Assign one or more skills to a collaborator
+title US024 - Postpone an entry in the agenda
 
 autonumber
 
@@ -12,10 +12,8 @@ participant ":PostponeEntryUI" as UI
 participant ":PostponeEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskRepository:\nTaskRepository" as TaskRepository
-participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
-participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
-participant "collaborator\n:Collaborator" as Collaborator
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GreenSpaceRepository
+participant "taskRepository\n:TaskRepository" as TaskRepository
 
 activate Employee
 

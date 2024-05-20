@@ -1,0 +1,40 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":PostponeEntryController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GreenSpaceRepository
+
+autonumber 3
+-> CTRL : getGreenSpaces()
+
+autonumber 3.1
+
+activate CTRL
+    group Get Green Spaces
+           CTRL -> RepositorySingleton : getInstance()
+           activate RepositorySingleton
+
+           RepositorySingleton --> CTRL: repositories
+           deactivate RepositorySingleton
+
+           CTRL -> PLAT : getGreenSpaceRepository()
+           activate PLAT
+
+           PLAT --> CTRL: greenSpaceRepository
+           deactivate PLAT
+
+           CTRL -> GreenSpaceRepository : getGreenSpaces()
+           activate GreenSpaceRepository
+
+           GreenSpaceRepository --> CTRL : greenSpaces
+           deactivate GreenSpaceRepository
+
+end group
+autonumber 4
+<-- CTRL : greenSpaces
+
+@enduml

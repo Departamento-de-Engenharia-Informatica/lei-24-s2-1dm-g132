@@ -1,0 +1,40 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":PostponeEntryController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "TaskRepository" as TaskRepository
+
+autonumber 3
+-> CTRL : getGreenSpaces()
+
+autonumber 3.1
+
+activate CTRL
+    group Get Tasks By Green Space
+           CTRL -> RepositorySingleton : getInstance()
+           activate RepositorySingleton
+
+           RepositorySingleton --> CTRL: repositories
+           deactivate RepositorySingleton
+
+           CTRL -> PLAT : getTaskRepository()
+           activate PLAT
+
+           PLAT --> CTRL: taskRepository
+           deactivate PLAT
+
+           CTRL -> TaskRepository : getTasksByGreenSpace(greenSpace)
+           activate TaskRepository
+
+           TaskRepository --> CTRL : tasksByGreenSpace
+           deactivate TaskRepository
+
+end group
+autonumber 4
+<-- CTRL : greenSpaces
+
+@enduml

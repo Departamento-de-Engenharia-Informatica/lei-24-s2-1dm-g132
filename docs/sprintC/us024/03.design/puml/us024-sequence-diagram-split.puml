@@ -3,95 +3,72 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title US004 - Assign one or more skills to a collaborator
+title US024 - Postpone an entry in the agenda
 
 autonumber
 
-actor "HRM" as Employee
-participant ":AssignSkillsUI" as UI
-participant ":AssignSkillsController" as CTRL
-participant "skillRepository:\nSkillRepository" as SkillRepository
-participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
+actor "GSM" as Employee
+participant ":PostponeEntryUI" as UI
+participant ":PostponeEntryController" as CTRL
+participant "taskRepository\n:TaskRepository" as TaskRepository
 
 activate Employee
 
-    Employee -> UI : asks to assign skill(s) to a collaborator
+    Employee -> UI : asks to postpone an entry in the agenda
     activate UI
 
     UI -> CTRL** : create
 
-                UI -> CTRL : getCollaborators()
+                UI -> CTRL : getGreenSpaces()
                 activate CTRL
 
                     ref over CTRL
-                        Get Collaborators
+                        Get Green Spaces
                     end
 
-                    CTRL --> UI : collaboratorsList
+                    CTRL --> UI : greenSpaces
                 deactivate CTRL
 
-    UI --> Employee : shows list with all collaborators
+    UI --> Employee : shows list of green spaces to select one
     deactivate UI
 
-    Employee -> UI : selects the collaborator
+    Employee -> UI : selects the green space
     activate UI
 
-        UI -> CTRL : getSkillsList()
+        UI -> CTRL : getTasksByGreenSpace(greenSpace)
         activate CTRL
 
             ref over CTRL
-                Get Skills
+               Get Tasks by Green Space
             end
 
-            CTRL -> SkillRepository : createSelectedSkillsList()
-            activate SkillRepository
-
-                SkillRepository -> selectedSkillsList** : create()
-            deactivate SkillRepository
-
-            CTRL --> UI : skillsList
+            CTRL --> UI : tasksByGreenSpace
         deactivate CTRL
 
-    loop while HRM wants to continue
-    UI --> Employee : shows skills list and requests to select one
+    UI --> Employee : shows list of entries in the agenda of the selected green space
     deactivate UI
 
-    Employee -> UI : selects one skill
+    Employee -> UI : selects one entry
     activate UI
 
-    UI -> CTRL : addSelectedSkill(skillName)
+    UI --> Employee : requests the new date
+    deactivate UI
+
+    Employee -> UI : types the new date
+    activate UI
+
+    UI -> CTRL : postponeEntry(task, newDate)
     activate CTRL
 
-        ref over CTRL
-          Add Selected Skill
-        end
+    CTRL -> TaskRepository : postponeEntry(task, newDate)
+    activate TaskRepository
 
-    UI --> Employee : asks to continue
+    TaskRepository -> TaskRepository : validateNewDate(newDate)
 
-    deactivate CTRL
+    TaskRepository --> CTRL : entry
+    deactivate TaskRepository
 
-    deactivate UI
-
-    Employee -> UI : responds yes or no
-    activate UI
-    end
-
-    UI --> Employee : shows skill(s) selected and requests confirmation
-
-    deactivate UI
-
-    Employee -> UI : confirms data
-    activate UI
-
-    UI -> CTRL : assignSkill(collaboratorIdNumber)
-    activate CTRL
-
-    ref over CTRL
-        Assign Skill(s)
-    end
-
-    CTRL --> UI : collaborator
-
+    CTRL --> UI : entry
     deactivate CTRL
 
     UI --> Employee : displays operation success
