@@ -32,6 +32,12 @@ at a determined time interval and on a specific date.
 >
 > **Answer:** The starting date for the task. Later the GSM will be able to add the Team and vehicles (if required).
 
+> **Question:** Can I add an entry that has a time period that already have an existing entry in the Agenda?
+>
+> **Answer:** Yes, because:
+a) there are many parks to manage;
+b) different tasks can be executed at same time in the same park;
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The new entry must be associated with a green space managed by the GSM.

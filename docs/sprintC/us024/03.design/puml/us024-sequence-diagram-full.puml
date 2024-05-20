@@ -3,28 +3,26 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title US004 - Assign one or more skills to a collaborator
+title US024 - Postpone an entry in the agenda
 
 autonumber
 
-actor "HRM" as Employee
-participant ":AssignSkillsUI" as UI
-participant ":AssignSkillsController" as CTRL
+actor "GSM" as Employee
+participant ":PostponeEntryUI" as UI
+participant ":PostponeEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "skillRepository:\nSkillRepository" as SkillRepository
-participant "selectedSkillsList\nList<Skill>" as selectedSkillsList
-participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
-participant "collaborator\n:Collaborator" as Collaborator
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GreenSpaceRepository
+participant "taskRepository\n:TaskRepository" as TaskRepository
 
 activate Employee
 
-    Employee -> UI : asks to assign skill(s) to a collaborator
+    Employee -> UI : asks to postpone an entry in the agenda
     activate UI
 
     UI -> CTRL** : create
 
-                UI -> CTRL : getCollaborators()
+                UI -> CTRL : getGreenSpaces()
                 activate CTRL
 
                     CTRL -> RepositorySingleton : getInstance()
@@ -33,28 +31,28 @@ activate Employee
                         RepositorySingleton --> CTRL: repositories
                     deactivate RepositorySingleton
 
-                    CTRL -> PLAT : getCollaboratorRepository()
+                    CTRL -> PLAT : getGreenSpaceRepository()
                     activate PLAT
 
-                        PLAT --> CTRL: collaboratorRepository
+                        PLAT --> CTRL: greenSpaceRepository
                     deactivate PLAT
 
-                    CTRL -> CollaboratorRepository : getCollaborators()
-                    activate CollaboratorRepository
+                    CTRL -> GreenSpaceRepository : getGreenSpaces()
+                    activate GreenSpaceRepository
 
-                        CollaboratorRepository --> CTRL : collaboratorsList
-                    deactivate CollaboratorRepository
+                        GreenSpaceRepository --> CTRL : greenSpaces
+                    deactivate GreenSpaceRepository
 
-                    CTRL --> UI : collaboratorsList
+                    CTRL --> UI : greenSpaces
                 deactivate CTRL
 
-    UI --> Employee : shows list with all collaborators
+    UI --> Employee : shows list of green spaces to select one
     deactivate UI
 
-    Employee -> UI : selects the collaborator
+    Employee -> UI : selects the green space
     activate UI
 
-        UI -> CTRL : getSkillsList()
+        UI -> CTRL : getTasksByGreenSpace(greenSpace)
         activate CTRL
 
             CTRL -> RepositorySingleton : getInstance()
@@ -63,145 +61,45 @@ activate Employee
             RepositorySingleton --> CTRL: repositories
             deactivate RepositorySingleton
 
-            CTRL -> PLAT : getSkillRepository()
+            CTRL -> PLAT : getTaskRepository()
             activate PLAT
 
-            PLAT --> CTRL: skillRepository
+            PLAT --> CTRL: taskRepository
             deactivate PLAT
 
-            CTRL -> SkillRepository : getSkills()
-            activate SkillRepository
+            CTRL -> TaskRepository : getTasksByGreenSpace(greenSpace)
+            activate TaskRepository
 
-            SkillRepository --> CTRL : skillsList
-            deactivate SkillRepository
+            TaskRepository --> CTRL : tasksByGreenSpace
+            deactivate TaskRepository
 
-            CTRL -> SkillRepository : createSelectedSkillsList()
-            activate SkillRepository
-
-                SkillRepository -> selectedSkillsList** : create()
-            deactivate SkillRepository
-
-            CTRL --> UI : skillsList
+            CTRL --> UI : tasksByGreenSpace
         deactivate CTRL
 
-    loop while HRM wants to continue
-    UI --> Employee : shows skills list and requests to select one
+    UI --> Employee : shows list of entries in the agenda of the selected green space
     deactivate UI
 
-    Employee -> UI : selects one skill
+    Employee -> UI : selects one entry
     activate UI
 
-    UI -> CTRL : addSelectedSkill(skillName)
-    activate CTRL
-
-        CTRL -> SkillRepository: addSelectedSkill(skillName)
-        activate SkillRepository
-
-            SkillRepository -> SkillRepository: getSkillByName(skillName)
-            activate SkillRepository
-
-            SkillRepository --> SkillRepository: skill
-            deactivate SkillRepository
-
-            SkillRepository -> selectedSkillsList : add(skill)
-            activate selectedSkillsList
-
-            deactivate selectedSkillsList
-
-            deactivate SkillRepository
-
-        deactivate CTRL
-
-    UI --> Employee : asks to continue
-
+    UI --> Employee : requests the new date
     deactivate UI
 
-    Employee -> UI : responds yes or no
-    activate UI
-    end
-
-    UI --> Employee : shows skill(s) selected and requests confirmation
-
-    deactivate UI
-
-    Employee -> UI : confirms data
+    Employee -> UI : types the new date
     activate UI
 
-    UI -> CTRL : assignSkill(collaboratorIdNumber)
+    UI -> CTRL : postponeEntry(task, newDate)
     activate CTRL
 
-    CTRL -> CTRL : getSelectedSkillsList()
-    activate CTRL
+    CTRL -> TaskRepository : postponeEntry(task, newDate)
+    activate TaskRepository
 
-    CTRL -> SkillRepository : getSelectedSkillsList()
-    activate SkillRepository
+    TaskRepository -> TaskRepository : validateNewDate(newDate)
 
-    SkillRepository --> CTRL : selectedSkillsList
-    deactivate SkillRepository
+    TaskRepository --> CTRL : entry
+    deactivate TaskRepository
 
-    CTRL --> CTRL : selectedSkillsList
-    deactivate CTRL
-
-        CTRL -> CTRL : getCollaboratorByIdNumber(collaboratorIdNumber)
-                    activate CTRL
-
-                        CTRL -> RepositorySingleton : getInstance()
-                        activate RepositorySingleton
-
-                            RepositorySingleton --> CTRL: repositories
-                        deactivate RepositorySingleton
-
-                        CTRL -> PLAT : getCollaboratorRepository()
-                        activate PLAT
-
-                            PLAT -> CTRL : collaboratorRepository
-                        deactivate PLAT
-
-                        CTRL -> CollaboratorRepository : getCollaboratorByIdNumber(collaboratorIdNumber)
-                        activate CollaboratorRepository
-
-                        loop while false
-
-                            CollaboratorRepository -> Collaborator : sameIdNumber(collaboratorIdNumber)
-                            activate Collaborator
-
-                                Collaborator --> CollaboratorRepository : true/false
-                                deactivate Collaborator
-
-                        end loop
-
-                            CollaboratorRepository --> CTRL : collaborator
-                        deactivate CollaboratorRepository
-                            CTRL --> CTRL : collaborator
-                    deactivate CTRL
-
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
-
-                RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
-
-                CTRL -> PLAT : getCollaboratorRepository()
-                activate PLAT
-
-                PLAT --> CTRL: collaboratorRepository
-                deactivate PLAT
-
-                CTRL -> CollaboratorRepository : assignSkill(collaborator, selectedSkillsList)
-                activate CollaboratorRepository
-
-                CollaboratorRepository -> Collaborator: assignSkill(collaborator, skillsSelectedList)
-                activate Collaborator
-
-                Collaborator --> CollaboratorRepository : collaborator
-                deactivate Collaborator
-
-                CollaboratorRepository --> CTRL : collaborator
-                deactivate CollaboratorRepository
-
-
-                CTRL --> UI : collaborator
-
+    CTRL --> UI : entry
     deactivate CTRL
 
     UI --> Employee : displays operation success
