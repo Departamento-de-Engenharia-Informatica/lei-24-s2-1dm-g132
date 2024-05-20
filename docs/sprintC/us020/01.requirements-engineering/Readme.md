@@ -16,13 +16,34 @@
 
 **From the client clarifications:**
 
-> **Question:** Hello, I have some questions about the US01: Which information can be introduced to create a new skill?
-Which information is mandatory for creating a new skill?
-Which are the skills accepted? Or should we enable the HRM to introduce anything as a skill?
+> **Question:** Good afternoon, I would like to know between what ranges of hectares a green space is classified as garden, medium or large, or if it is possible to register 2 green spaces with the same area but in different typology, depending on the GSM it registers.
+Thanks.
+André Azevedo
 > 
-> **Answer:** The skill name;
-The skill name;
-All, it's up to HRM to decide. (special characters or algarisms should not be allowed in the skill name)
+> **Answer:** The classification is not automatic, it's up to GSM decide about it.
+Best regards.
+>
+> **Question:** Good afternoon,
+Should the Green Space have any field in which it would store the GSM who created it, meaning that green space is managed by that GSM?
+Best regards
+> 
+> **Answer:** Hi,
+I have no knowledge about data models.
+Best regards.
+>
+> **Question:** Can two green spaces have the same name?
+>
+> **Answer:** No
+> 
+> **Question:** Should the green space have any more traits, other than the type of green space and area?
+In which unit should the area be measured in?
+Can the GSM register multiple green spaces at once?
+> 
+> **Answer:** Already answered in the forum and client session.
+Usually, areas are measured in hectares.
+That's a matter of UX/UI, each dev team can decide about it.
+
+
 
 
 

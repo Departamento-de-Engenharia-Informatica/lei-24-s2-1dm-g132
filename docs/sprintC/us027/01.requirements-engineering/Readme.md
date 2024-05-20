@@ -16,14 +16,11 @@
 
 **From the client clarifications:**
 
-> **Question:** Hello, I have some questions about the US01: Which information can be introduced to create a new skill?
-Which information is mandatory for creating a new skill?
-Which are the skills accepted? Or should we enable the HRM to introduce anything as a skill?
+> **Question:** Dear client, which info about Green Spaces do you want the GSM see when listing? only the name ?
 > 
-> **Answer:** The skill name;
-The skill name;
-All, it's up to HRM to decide. (special characters or algarisms should not be allowed in the skill name)
-
+> **Answer:** Each de team can decide about the aspects related to UX/UI.
+>
+> **Question:** 
 
 
 
