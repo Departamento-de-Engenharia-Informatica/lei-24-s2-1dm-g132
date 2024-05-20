@@ -106,6 +106,14 @@ public class WaterSuplyPointsCsvRepository {
         Thread thread2 = new Thread(task2);
 
         thread1.start();
+
+
+        try {
+            Thread.sleep(1000);  // Pause for 1 second to ensure rendering
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         thread2.start();
 
         try {
