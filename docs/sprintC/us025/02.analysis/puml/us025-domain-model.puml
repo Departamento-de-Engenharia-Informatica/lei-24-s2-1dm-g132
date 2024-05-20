@@ -10,7 +10,7 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-title US024 - Postpone an entry in the agenda
+title US025 - Cancel an entry in the agenda
 
 class Agenda {
 }
@@ -37,5 +37,5 @@ class GreenSpace {
 
 Task "*" -- "1" Agenda : was added >
 Task "1" -- "1" GreenSpace : is associated with >
-GSM "1" -- "*" Task : postpones >
+GSM "1" -- "*" Task : cancels >
 @enduml
