@@ -36,14 +36,14 @@ public class GraphPngGenerator {
             if (tempGraph.getNode(ori) == null) {
                 oriNode = tempGraph.addNode(ori);
                 oriNode.setAttribute("ui.label", ori); // Display node identifier
-                oriNode.setAttribute("layout.weight", 10);
+                oriNode.setAttribute("layout.weight", 20);
             }
 
             Node destNode;
             if (tempGraph.getNode(dest) == null) {
                 destNode = tempGraph.addNode(dest);
                 destNode.setAttribute("ui.label", dest); // Display node identifier
-                destNode.setAttribute("layout.weight", 10);
+                destNode.setAttribute("layout.weight", 20);
             }
 
             org.graphstream.graph.Edge e = tempGraph.addEdge(ori + "-" + dest, ori, dest, true);
