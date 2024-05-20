@@ -3,7 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
-import org.graphstream.ui.swingViewer.ViewPanel;
+import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
@@ -11,6 +11,8 @@ import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 public class GraphPngGenerator {
@@ -20,29 +22,31 @@ public class GraphPngGenerator {
         String graphPath = graphFolderPath + File.separator + graph.getName() + "-" + fileName;
         setupDirs(graph, fileName, graphFolderPath);
 
-        System.setProperty("org.graphstream.ui", "swing");
+        System.setProperty("org.graphstream.ui", "javafx");
+        //System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+
         Graph tempGraph = new SingleGraph("Water Supply Points");
-        tempGraph.addAttribute("ui.quality");
-        tempGraph.addAttribute("ui.antialias");
-        tempGraph.addAttribute("layout.quality", 4);
-        tempGraph.addAttribute("layout.stabilization-limit", 1);
+        tempGraph.setAttribute("ui.quality");
+        tempGraph.setAttribute("ui.antialias");
+        tempGraph.setAttribute("layout.quality", 4);
+        tempGraph.setAttribute("layout.stabilization-limit", 1);
 
         for (Edge<Vertice, Double> edge : graph.edges()) {
             String ori = edge.getVOrig().getNome();
             String dest = edge.getVDest().getNome();
-            double price = edge.getWeight(); // Assuming the weight represents the price
+            double price = edge.getWeight();
 
             Node oriNode;
             if (tempGraph.getNode(ori) == null) {
                 oriNode = tempGraph.addNode(ori);
-                oriNode.setAttribute("ui.label", ori); // Display node identifier
+                oriNode.setAttribute("ui.label", ori);
                 oriNode.setAttribute("layout.weight", 20);
             }
 
             Node destNode;
             if (tempGraph.getNode(dest) == null) {
                 destNode = tempGraph.addNode(dest);
-                destNode.setAttribute("ui.label", dest); // Display node identifier
+                destNode.setAttribute("ui.label", dest);
                 destNode.setAttribute("layout.weight", 20);
             }
 
@@ -51,30 +55,46 @@ public class GraphPngGenerator {
             e.setAttribute("layout.weight", 4);
         }
 
-        tempGraph.setAttribute("ui.stylesheet", "node { fill-color: red; size: 20px; text-size: 16; text-color: black; } " +
+        tempGraph.setAttribute("ui.stylesheet", "node { fill-color: red; size: 20px; text-size: 16; text-color: red; } " +
                 "edge { fill-color: black; size: 2px; text-size: 16; text-color: black; }");
 
-        Viewer viewer = tempGraph.display();
-        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
-        ViewPanel viewPanel = viewer.getDefaultView();
-        viewPanel.setLayout(new BorderLayout());
+
+        JFrame frame = new JFrame(fileName + " - " + graph.getName());
+        frame.setPreferredSize(new Dimension(600, 600));
+        frame.setSize(new Dimension(600, 600));
+        frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+
+        Viewer viewer = new Viewer(tempGraph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer.enableAutoLayout();
+        View view = viewer.addDefaultView(false);
+        frame.add((Component) view, BorderLayout.CENTER);
 
         JButton button = new JButton("Save Image");
         button.addActionListener(e -> {
             System.out.println("Button clicked!");
-            tempGraph.addAttribute("ui.screenshot", graphPath);
+            tempGraph.setAttribute("ui.screenshot", graphPath);
             System.out.println("Image saved in: " + graphPath);
         });
         button.setMaximumSize(new Dimension(150, 30));
         button.setHorizontalAlignment(SwingConstants.CENTER);
-        viewPanel.add(button, BorderLayout.NORTH);
+        frame.add(button, BorderLayout.NORTH);
 
         JLabel customTextLabel = new JLabel("Cost " + graph.cost());
         customTextLabel.setHorizontalAlignment(SwingConstants.LEFT);
         customTextLabel.setVerticalAlignment(SwingConstants.TOP);
-        viewPanel.add(customTextLabel, BorderLayout.SOUTH);
+        frame.add(customTextLabel, BorderLayout.SOUTH);
 
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                viewer.close();
+                System.out.println("Press Enter To Continue...");
+            }
+        });
 
+        frame.setVisible(true);
         return true;
     }
 

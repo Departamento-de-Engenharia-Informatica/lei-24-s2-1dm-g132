@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.GraphPngGenerator;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
+import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
 import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
 
@@ -89,41 +90,26 @@ public class WaterSuplyPointsCsvRepository {
         MatrixGraph<Vertice, Double> graph = Algorithms.minDistGraph(getCsvGraphCopy(), Double::compareTo);
         graph.setName(getCsvGraphCopy().getName());
 
-        Runnable task1 = new Runnable() {
-            @Override
-            public void run() {
-                generateGraphPNG(getCsvGraphCopy(), "FullGraph.png");
-            }
-        };
+        generateGraphPNG(getCsvGraphCopy(), "FullGraph.png");
 
-        Runnable task2 = new Runnable() {
-            @Override
-            public void run() {
-                generateGraphPNG(graph, "MinimalCostGraph.png");
-            }
-        };
-        Thread thread1 = new Thread(task1);
-        Thread thread2 = new Thread(task2);
-
-        thread1.start();
-
-
-        try {
-            Thread.sleep(1000);  // Pause for 1 second to ensure rendering
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        thread2.start();
-
-        try {
-            thread1.join();
-            thread2.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (!graph.isDirected()){
+            generateGraphPNG(removeDups(graph),"MinimalCostGraph.png");
+        } else {
+            generateGraphPNG(graph, "MinimalCostGraph.png");
         }
 
         return true;
+    }
+
+    private MatrixGraph<Vertice, Double> removeDups(MatrixGraph<Vertice, Double> graph) {
+        MatrixGraph<Vertice, Double> newGraph = new MatrixGraph<>(graph.isDirected());;
+        for (Edge<Vertice, Double> edge : graph.edges()){
+            if (newGraph.edge(edge.getVOrig(), edge.getVDest()) == null &&
+                    newGraph.edge(edge.getVDest(), edge.getVOrig()) == null){
+                    newGraph.addEdge(edge.getVOrig(), edge.getVDest(), edge.getWeight());
+            }
+        }
+        return newGraph;
     }
 
     private boolean generateGraphPNG(MatrixGraph<Vertice, Double> graph, String fileName) {

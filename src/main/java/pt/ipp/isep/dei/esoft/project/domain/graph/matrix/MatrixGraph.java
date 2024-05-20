@@ -4,10 +4,7 @@ import pt.ipp.isep.dei.esoft.project.domain.graph.CommonGraph;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class MatrixGraph<V,E extends Number> extends CommonGraph<V,E> {
 
@@ -319,8 +316,16 @@ public class MatrixGraph<V,E extends Number> extends CommonGraph<V,E> {
 
     public double cost(){
         double sum = 0.0;
+        Set<Edge<V,E>> visitedEdges = new HashSet<>();
         for (Edge<V, E> edge : edges()){
-            sum += edge.getWeight().doubleValue();
+            if (!isDirected){
+               if (!visitedEdges.contains(new Edge<>(edge.getVDest(), edge.getVOrig(), edge.getWeight()))){
+                   sum += edge.getWeight().doubleValue();
+               }
+            } else {
+                sum += edge.getWeight().doubleValue();
+            }
+            visitedEdges.add(edge);
         }
         return sum;
     }
