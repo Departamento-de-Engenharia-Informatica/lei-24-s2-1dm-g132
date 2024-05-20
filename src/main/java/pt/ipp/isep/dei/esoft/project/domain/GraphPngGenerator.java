@@ -83,7 +83,7 @@ public class GraphPngGenerator {
         File graphFolder = new File(graphFolderPath);
         try {
             if (!graphFolder.exists()) {
-                if (!graphFolder.mkdir()) {
+                if (!graphFolder.mkdirs()) {
                     throw new RuntimeException("Failed to create folder: " + graphFolderPath);
                 } else {
                     System.out.println("Created: " + graphFolderPath);
