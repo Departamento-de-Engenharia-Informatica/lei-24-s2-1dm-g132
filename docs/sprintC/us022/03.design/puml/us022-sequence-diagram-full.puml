@@ -1,0 +1,177 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Space Manager" as GSM
+participant ":AddEntryAgendaUI" as UI
+participant ":AddEntryAgendaController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "toDoList:\nToDoList" as ToDoList
+participant "greenSpace\n:GreenSpace" as greenSpace
+participant ":TaskMapper" as TaskMapper
+participant "associatedToDoEntriesList\nList<Task>" as associatedToDoEntriesList
+participant "associatedToDoEntriesListDto\nList<TaskDto>" as associatedToDoEntriesListDto
+participant "objDto\n:TaskDto" as taskDto
+participant "taskDto\n:TaskDto" as TaskDto
+participant "agenda:\nAgenda" as Agenda
+participant "task\n:Task" as task
+
+activate GSM
+
+    GSM -> UI : asks to add a new entry to the To-Do List
+    activate UI
+
+        UI --> CTRL** : create()
+        UI -> CTRL : getToDoListEntries()
+        activate CTRL
+
+            CTRL -> : identifyGSM()
+
+            CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getToDoList()
+                activate PLAT
+
+                    PLAT --> CTRL : toDoList
+                deactivate PLAT
+
+                CTRL -> ToDoList : getToDoListEntries()
+                activate ToDoList
+
+                    ToDoList --> associatedToDoEntriesList** : clone(entriesList)
+                    ToDoList --> CTRL : associatedToDoEntriesList
+                deactivate ToDoList
+
+                CTRL -> TaskMapper : toDTO(associatedToDoEntriesList)
+                activate TaskMapper
+
+                    TaskMapper --> associatedToDoEntriesListDto** : create()
+
+                    loop for each object in associatedToDoEntriesList
+                        TaskMapper -> associatedToDoEntriesList : obj = get(i)
+                        activate associatedToDoEntriesList
+
+                            deactivate associatedToDoEntriesList
+
+                        TaskMapper -> TaskMapper : objDto = toDTO(obj)
+                        activate TaskMapper
+
+                            TaskMapper -> taskDto** :create(...)
+                            deactivate TaskMapper
+
+                        TaskMapper -> associatedToDoEntriesListDto : add(objDto)
+                        activate associatedToDoEntriesListDto
+
+                            deactivate associatedToDoEntriesListDto
+
+                        end loop
+
+                    TaskMapper --> CTRL : associatedToDoEntriesListDto
+                    deactivate TaskMapper
+
+                CTRL --> UI : associatedToDoEntriesListDto
+                deactivate CTRL
+            UI --> GSM : shows entries from the To-Do list and asks to select one
+            deactivate UI
+
+        GSM -> UI : selects an entry
+        activate UI
+
+            UI -> associatedToDoEntriesListDto : get(i)
+            activate associatedToDoEntriesListDto
+
+                associatedToDoEntriesListDto --> UI : taskDto
+            deactivate associatedToDoEntriesListDto
+
+            UI -> CTRL : getSelectedTask(taskDto)
+            activate CTRL
+
+                CTRL -> ToDoList : getSelectedTask(taskDto)
+                activate ToDoList
+
+                    ToDoList -> TaskMapper : toModel(taskDto)
+                    activate TaskMapper
+
+                        TaskMapper -> TaskDto : title = getTitle()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : description = getDescription()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : degreeOfUrgency = getDegreeOfUrgency()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : expectedDuration = getExpectedDuration()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : selectedGreenSpace = getSelectedGreenSpace()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> task : create(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
+                        activate task
+
+                            task --> TaskMapper : selectedTaskCopy
+                        deactivate task
+
+                        TaskMapper --> ToDoList : selectedTaskCopy
+                        deactivate TaskMapper
+
+                    ToDoList -> ToDoList: entriesList.contains(selectedTaskCopy)
+                    activate ToDoList
+
+                        ToDoList --> ToDoList : selectedTaskClone
+                    deactivate ToDoList
+
+                    ToDoList --> CTRL : selectedTaskClone
+                    deactivate ToDoList
+
+                deactivate CTRL
+
+            UI --> GSM : requests a starting date
+            deactivate UI
+
+        GSM -> UI : introduces starting date
+        activate UI
+
+            UI -> CTRL : addEntry(startingDate)
+            activate CTRL
+
+                CTRL -> Agenda : addEntry(startingDate, selectedTaskClone)
+                activate Agenda
+
+                    Agenda -> task : selectedTaskClone.setStartingDate(startingDate)
+                    activate task
+                    deactivate task
+
+                    Agenda -> Agenda : add(selectedTaskClone)
+                    activate Agenda
+
+                        Agenda --> Agenda : selectedTaskClone
+                    deactivate Agenda
+
+                    Agenda --> CTRL : selectedTaskClone
+                    deactivate Agenda
+
+                CTRL --> UI : selectedTaskClone
+                deactivate CTRL
+
+            UI --> GSM : displays operation success
+            deactivate UI
+
+        deactivate GSM
+
+@enduml

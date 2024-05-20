@@ -91,7 +91,7 @@ activate GSM
             UI -> associatedGreenSpacesListDto : get(i)
             activate associatedGreenSpacesListDto
 
-                associatedGreenSpacesListDto --> UI : obj1Dto
+                associatedGreenSpacesListDto --> UI : greenSpaceDto
             deactivate associatedGreenSpacesListDto
 
             UI -> CTRL : getSelectedGreenSpace(greenSpaceDto)
