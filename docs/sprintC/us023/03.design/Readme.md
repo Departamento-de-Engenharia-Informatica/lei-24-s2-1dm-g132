@@ -1,43 +1,35 @@
-# US001 - Register a skill
+# US023 - Assign a Team to an entry in the Agenda
 
 ## 3. Design - User Story Realization
 
 ### 3.1. Rationale
 
-_**Note that SSD - Alternative One is adopted.**_
-
-| Interaction ID | Question: Which class is responsible for...   | Answer                | Justification (with patterns)                                                                                 |
-|:-------------  |:----------------------------------------------|:----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		 | 	... interacting with the actor?              | CreateSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		 | 	... coordinating the US?                     | CreateSkillController | Controller                                                                                                    |
-| 			  		 | 	... instantiating a new Skill?               | Organization          | Creator (Rule 1): in the DM Organization has a Task.                                                          |
-| 			  		 | ... knowing the user using the system?        | UserSession           | IE: cf. A&A component documentation.                                                                          |
-| 			  		 | 							                                       | Organization          | IE: knows/has its own Employees                                                                               |
-| 			  		 | 							                                       | Employee              | IE: knows its own data (skill name)                                                                           |
-| Step 2  		 | 							                                       |                       |                                                                                                               |
-| Step 3  		 | 	...saving the inputted data?                 | Skill                 | IE: object created in step 1 has its own data.                                                                |
-| Step 4  		 | 	...knowing the task categories to show?      | System                | IE: Skill Categories are defined by the Administrators.                                                       |
-| Step 5  		 | 	... saving the selected category?            | Skill                 | IE: object created in step 1 is classified in one Category.                                                   |
-| Step 6  		 | 							                                       |                       |                                                                                                               |              
-| Step 7  		 | 	... validating all data (local validation)?  | Skill                 | IE: owns its data.                                                                                            | 
-| 			  		 | 	... validating all data (global validation)? | Organization          | IE: knows all its skills.                                                                                     | 
-| 			  		 | 	... saving the created task?                 | Organization          | IE: owns all its skills.                                                                                      | 
-| Step 9         | ...adding skills to repository               | SkillRepository         |                                 |
-| Step 8  		 | 	... informing operation success?             | CreateSkillUI         | IE: is responsible for user interactions.                                                                     | 
+| Interaction ID | Question: Which class is responsible for...  | Answer               | Justification (with patterns)        |
+|:---------------|:---------------------------------------------|:---------------------|:-------------------------------------|
+| Step 1  		     | 	... interacting with the actor?             | AssignTeamUI         | Pure Fabrication                     |
+|                | ... coordinating the US?                     | AssignTeamController | Pure Fabrication, Controller         |
+| 			  		        | 	... obtaining the Agenda entries?           | Agenda               | Information Expert                   |
+| Step 2  		     | ... displaying the Agenda entries?						     | AssignTeamUI         | Pure Fabrication                     |
+| Step 3  		     | 	... temporarily keeping the selected entry? | AssignTeamUI         | Pure Fabrication                     |
+|                | ... obtaining the Teams?                     | TeamRepository       | Pure Fabrication, Information Expert |
+| Step 4  		     | 	... displaying the Teams?                   | AssignTeamUI         | Pure Fabrication                     |
+| Step 5  		     | 	... temporarily keeping the selected team?  | AssignTeamUI         | Pure Fabrication                     |
+|                | ... saving the edited entry?                 | Agenda               | Information Expert                   |
+|                | ... validating all data (local validation)?  | Task                 | Information Expert                   |
+|                | ... sending message through email?           | Task                 | Information Expert                   |
+| Step 6  		     | 	... informing operation success? 	          | AssignTeamUI         | Pure Fabrication                     |
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* Collaborator
-* Skill
-
+* Task
+* Agenda
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* CreateSkillUI
-* CreateSkillController
-* SkillRepository
+* AssignTeamUI
+* AssignTeamController
 
 
 ## 3.2. Sequence Diagram (SD)
@@ -46,7 +38,7 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us001-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us003-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -54,8 +46,20 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us001-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us003-sequence-diagram-split.svg)
+
+**Get Job List**
+
+![Sequence Diagram - Partial - Get Job List](svg/us003-sequence-diagram-partial-get-job-list.svg)
+
+**Get Job Object**
+
+![Sequence Diagram - Partial - Get Job Object](svg/us003-sequence-diagram-partial-get-job-object.svg)
+
+**Register Collaborator**
+
+![Sequence Diagram - Partial - Register Collaborator](svg/us003-sequence-diagram-partial-register-collaborator.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us001-class-diagram.svg)
+![Class Diagram](svg/us003-class-diagram.svg)

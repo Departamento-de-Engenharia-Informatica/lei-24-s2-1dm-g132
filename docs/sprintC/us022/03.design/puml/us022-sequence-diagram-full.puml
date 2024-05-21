@@ -50,7 +50,7 @@ activate GSM
 
                     ToDoList --> associatedToDoEntriesList** : create()
 
-                    loop for each know Task
+                    loop for each known Task
 
                         ToDoList -> EntriesList : entry = get(i)
                         activate EntriesList

@@ -1,0 +1,244 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Space Manager" as GSM
+participant ":AssignTeamUI" as UI
+participant ":AssignTeamController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "agenda:\nAgenda" as Agenda
+participant "entriesList:\nList<Task>" as EntriesList
+participant ":TaskMapper" as TaskMapper
+participant "freeAgendaEntriesList\nList<Task>" as freeAgendaEntriesList
+participant "freeAgendaEntriesListDto\nList<TaskDto>" as freeAgendaEntriesListDto
+participant "objDto\n:TaskDto" as taskDto
+participant "taskDto\n:TaskDto" as TaskDto
+participant "teamRepository:\nTeamRepository" as TeamRepository
+participant ":TeamMapper" as TeamMapper
+participant "teamsListDto\nList<TeamDto>" as teamsListDto
+participant "objDto\n:TeamDto" as teamDto
+participant "task\n:Task" as Task
+
+activate GSM
+
+    GSM -> UI : asks to assign a Team to an entry in the Agenda
+    activate UI
+
+        UI --> CTRL** : create()
+        UI -> CTRL : getAgendaEntries()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getAgenda()
+                activate PLAT
+
+                    PLAT --> CTRL : Agenda
+                deactivate PLAT
+
+                CTRL -> Agenda : getAgendaEntries()
+                activate Agenda
+
+                    Agenda --> freeAgendaEntriesList** : create()
+
+                    loop for each known Task
+
+                        Agenda -> EntriesList : entry = get(i)
+                        activate EntriesList
+                        deactivate EntriesList
+
+                        Agenda -> Task : hasTeam = hasTeam()
+                        activate Task
+                        deactivate Task
+
+                        opt hasTeam == false
+
+                            Agenda -> freeAgendaEntriesList : add(entry)
+                            activate freeAgendaEntriesList
+                            deactivate freeAgendaEntriesList
+
+                        end opt
+
+                    end loop
+
+                    Agenda --> CTRL : freeAgendaEntriesList
+                deactivate Agenda
+
+                CTRL -> TaskMapper : toDTO(freeAgendaEntriesList)
+                activate TaskMapper
+
+                    TaskMapper --> freeAgendaEntriesListDto** : create()
+
+                    loop for each object in freeAgendaEntriesList
+                        TaskMapper -> freeAgendaEntriesList : obj = get(i)
+                        activate freeAgendaEntriesList
+
+                            deactivate freeAgendaEntriesList
+
+                        TaskMapper -> TaskMapper : objDto = toDTO(obj)
+                        activate TaskMapper
+
+                            TaskMapper -> taskDto** :create(...)
+                            deactivate TaskMapper
+
+                        TaskMapper -> freeAgendaEntriesListDto : add(objDto)
+                        activate freeAgendaEntriesListDto
+
+                            deactivate freeAgendaEntriesListDto
+
+                        end loop
+
+                    TaskMapper --> CTRL : freeAgendaEntriesListDto
+                    deactivate TaskMapper
+
+                CTRL --> UI : freeAgendaEntriesListDto
+                deactivate CTRL
+            UI --> GSM : shows entries from the Agenda and asks to select one
+            deactivate UI
+
+        GSM -> UI : selects an entry
+        activate UI
+
+            UI -> freeAgendaEntriesListDto : get(i)
+            activate freeAgendaEntriesListDto
+
+                freeAgendaEntriesListDto --> UI : taskDto
+            deactivate freeAgendaEntriesListDto
+
+            UI -> CTRL : getSelectedTask(taskDto)
+            activate CTRL
+
+                CTRL -> Agenda : getSelectedTask(taskDto)
+                activate Agenda
+
+                    Agenda -> TaskMapper : toModel(taskDto)
+                    activate TaskMapper
+
+                        TaskMapper -> TaskDto : title = getTitle()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : description = getDescription()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : degreeOfUrgency = getDegreeOfUrgency()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : expectedDuration = getExpectedDuration()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : selectedGreenSpace = getSelectedGreenSpace()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> TaskDto : startingDate = getStartingDate()
+                        activate TaskDto
+                        deactivate TaskDto
+
+                        TaskMapper -> Task : create(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace, startingDate)
+                        activate Task
+
+                            Task --> TaskMapper : selectedTaskCopy
+                        deactivate Task
+
+                        TaskMapper --> Agenda : selectedTaskCopy
+                        deactivate TaskMapper
+
+                    Agenda -> EntriesList: contains(selectedTaskCopy)
+                    activate EntriesList
+
+                        EntriesList -> EntriesList: get(selectedTaskCopy)
+                        activate EntriesList
+                            EntriesList --> EntriesList : selectedTask
+                        deactivate EntriesList
+
+                        EntriesList --> Agenda : selectedTask
+                    deactivate EntriesList
+
+                    Agenda --> CTRL : selectedTask
+                    deactivate Agenda
+
+                    CTRL -> PLAT : getTeamRepository()
+                    activate PLAT
+
+                        PLAT --> CTRL : teamRepository()
+                    deactivate PLAT
+
+                    CTRL -> TeamRepository : getTeams()
+                    activate TeamRepository
+
+                        TeamRepository --> CTRL : teamsList
+                    deactivate TeamRepository
+
+                CTRL -> TeamMapper : toDTO(teamsList)
+                activate TeamMapper
+
+                    TeamMapper --> teamsListDto** : create()
+
+                    loop for each object in teamsList
+
+                        TeamMapper -> TeamMapper : objDto = toDTO(obj)
+                        activate TeamMapper
+
+                            TeamMapper -> teamDto** :create(...)
+                            deactivate TeamMapper
+
+                        TeamMapper -> teamsListDto : add(objDto)
+                        activate teamsListDto
+
+                            deactivate teamsListDto
+
+                        end loop
+
+                    TeamMapper --> CTRL : teamsListDto
+                    deactivate TeamMapper
+
+                CTRL --> UI : teamsListDto
+                deactivate CTRL
+
+            UI --> GSM : shows Teams list and asks to select one
+            deactivate UI
+
+        GSM -> UI : selects a Team
+        activate UI
+
+            UI -> CTRL : addEntry(startingDate)
+            activate CTRL
+
+                CTRL -> Agenda : addEntry(startingDate, selectedTaskCopy)
+                activate Agenda
+
+                    Agenda -> Task : selectedTaskCopy.setStartingDate(startingDate)
+                    activate Task
+                    deactivate Task
+
+                    Agenda -> Agenda : add(selectedTaskCopy)
+                    activate Agenda
+
+                        Agenda --> Agenda : selectedTaskCopy
+                    deactivate Agenda
+
+                    Agenda --> CTRL : selectedTaskCopy
+                    deactivate Agenda
+
+                CTRL --> UI : selectedTaskCopy
+                deactivate CTRL
+
+            UI --> GSM : displays operation success
+            deactivate UI
+
+        deactivate GSM
+
+@enduml

@@ -1,22 +1,22 @@
-# US021 - Add a new entry in the Agenda
+# US022 - Add a new entry in the Agenda
 
 ## 3. Design - User Story Realization
 
 ### 3.1. Rationale
 
-| Interaction ID | Question: Which class is responsible for...                    | Answer                   | Justification (with patterns)        |
-|:---------------|:---------------------------------------------------------------|:-------------------------|:-------------------------------------|
-| Step 1  		     | 	... interacting with the actor?                               | AddEntryAgendaUI         | Pure Fabrication                     |
-|                | ... coordinating the US?                                       | AddEntryAgendaController | Pure Fabrication, Controller         |
-|                | ... knowing the GSM using the system?                          | UserSession              | Information Expert                   |
-| 			  		        | 	... obtaining the To-Do list entries?                         | ToDoList                 | Pure Fabrication, Information Expert |
-| Step 2  		     | ... displaying the To-Do List entries?						                   | AddEntryAgendaUI         | Pure Fabrication                     |
-| Step 3  		     | 	... temporarily keeping the selected entry?                   | AddEntryAgendaUI         | Pure Fabrication                     |
-| Step 4  		     | 	... displaying the form for the actor to input starting date? | AddEntryAgendaUI         | Pure Fabrication                     |
-| Step 5  		     | 	... temporarily keeping the input data?                       | AddEntryAgendaUI         | Pure Fabrication                     |
-|                | ... saving the created entry?                                  | Agenda                   | Creator (R: 1, 2)                    |
-|                | ... validating all data (local validation)?                    | Task                     | Information Expert                   |
-| Step 6  		     | 	... informing operation success? 	                            | AddEntryAgendaUI         | Pure Fabrication                     |
+| Interaction ID | Question: Which class is responsible for...                    | Answer                   | Justification (with patterns) |
+|:---------------|:---------------------------------------------------------------|:-------------------------|:------------------------------|
+| Step 1  		     | 	... interacting with the actor?                               | AddEntryAgendaUI         | Pure Fabrication              |
+|                | ... coordinating the US?                                       | AddEntryAgendaController | Pure Fabrication, Controller  |
+|                | ... knowing the GSM using the system?                          | UserSession              | Information Expert            |
+| 			  		        | 	... obtaining the To-Do list entries?                         | ToDoList                 | Information Expert            |
+| Step 2  		     | ... displaying the To-Do List entries?						                   | AddEntryAgendaUI         | Pure Fabrication              |
+| Step 3  		     | 	... temporarily keeping the selected entry?                   | AddEntryAgendaUI         | Pure Fabrication              |
+| Step 4  		     | 	... displaying the form for the actor to input starting date? | AddEntryAgendaUI         | Pure Fabrication              |
+| Step 5  		     | 	... temporarily keeping the input data?                       | AddEntryAgendaUI         | Pure Fabrication              |
+|                | ... saving the created entry?                                  | Agenda                   | Creator (R: 1, 2)             |
+|                | ... validating all data (local validation)?                    | Task                     | Information Expert            |
+| Step 6  		     | 	... informing operation success? 	                            | AddEntryAgendaUI         | Pure Fabrication              |
 
 ### Systematization ##
 
