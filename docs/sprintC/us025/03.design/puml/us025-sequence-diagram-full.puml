@@ -70,6 +70,8 @@ activate Employee
             CTRL -> TaskRepository : getTasksByGreenSpace(greenSpace)
             activate TaskRepository
 
+            TaskRepository --> TaskRepository : getTasksUndone()
+
             TaskRepository --> CTRL : tasksByGreenSpace
             deactivate TaskRepository
 
