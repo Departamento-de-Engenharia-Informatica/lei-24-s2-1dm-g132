@@ -46,7 +46,7 @@ public class WaterSuplyPointsCsvRepository {
 
     public boolean loadGraph(String filePath) {
         try {
-            if (csvGraph.numEdges() != 0){
+            if (csvGraph.numEdges() != 0) {
                 csvGraph = new MatrixGraph<>(csvGraph.isDirected());
             }
             File file = new File(filePath);
@@ -91,9 +91,8 @@ public class WaterSuplyPointsCsvRepository {
         graph.setName(getCsvGraphCopy().getName());
 
         generateGraphPNG(getCsvGraphCopy(), "FullGraph.png");
-
-        if (!graph.isDirected()){
-            generateGraphPNG(removeDups(graph),"MinimalCostGraph.png");
+        if (!graph.isDirected()) {
+            generateGraphPNG(removeDups(graph), "MinimalCostGraph.png");
         } else {
             generateGraphPNG(graph, "MinimalCostGraph.png");
         }
@@ -102,11 +101,12 @@ public class WaterSuplyPointsCsvRepository {
     }
 
     private MatrixGraph<Vertice, Double> removeDups(MatrixGraph<Vertice, Double> graph) {
-        MatrixGraph<Vertice, Double> newGraph = new MatrixGraph<>(graph.isDirected());;
-        for (Edge<Vertice, Double> edge : graph.edges()){
+        MatrixGraph<Vertice, Double> newGraph = new MatrixGraph<>(graph.isDirected());
+        newGraph.setName(graph.getName());
+        for (Edge<Vertice, Double> edge : graph.edges()) {
             if (newGraph.edge(edge.getVOrig(), edge.getVDest()) == null &&
-                    newGraph.edge(edge.getVDest(), edge.getVOrig()) == null){
-                    newGraph.addEdge(edge.getVOrig(), edge.getVDest(), edge.getWeight());
+                    newGraph.edge(edge.getVDest(), edge.getVOrig()) == null) {
+                newGraph.addEdge(edge.getVOrig(), edge.getVDest(), edge.getWeight());
             }
         }
         return newGraph;

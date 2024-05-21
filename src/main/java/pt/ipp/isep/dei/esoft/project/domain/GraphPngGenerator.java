@@ -14,6 +14,8 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GraphPngGenerator {
 
@@ -21,6 +23,7 @@ public class GraphPngGenerator {
         String graphFolderPath = getDesktopPath() + File.separator + "output" + File.separator + "us13";
         String graphPath = graphFolderPath + File.separator + graph.getName() + "-" + fileName;
         setupDirs(graph, fileName, graphFolderPath);
+        generateCsvOfGraph(graph, graph.getName()+"-"+fileName.replace(".png", ""));
 
         System.setProperty("org.graphstream.ui", "javafx");
         //System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -122,6 +125,59 @@ public class GraphPngGenerator {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        return true;
+    }
+
+    private boolean generateCsvOfGraph(MatrixGraph<Vertice, Double> graph, String fileName) {
+        String graphFolderPath = getDesktopPath() + File.separator + "output" + File.separator + "us13";
+        File graphFolder = new File(graphFolderPath);
+        try {
+            if (!graphFolder.exists()) {
+                if (!graphFolder.mkdirs()) {
+                    throw new RuntimeException("Failed to create folder: " + graphFolderPath);
+                } else {
+                    System.out.println("Created: " + graphFolderPath);
+                }
+            } else {
+                File a = new File(graphFolderPath + File.separator + fileName);
+                if (a.exists()) {
+                    if (!a.delete()) {
+                        throw new RuntimeException("Failed to delete file: " + a.getAbsolutePath());
+                    } else {
+                        System.out.println("Deleted: " + a.getAbsolutePath());
+                    }
+
+                }
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        FileWriter fileWriter = null;
+        File csvFile = new File(graphFolderPath + File.separator + fileName + ".csv");
+        try {
+            fileWriter = new FileWriter(csvFile);
+            for (Edge<Vertice, Double> edge : graph.edges()){
+                fileWriter.append(edge.getVOrig().getNome())
+                        .append(";")
+                        .append(edge.getVDest().getNome())
+                        .append(";")
+                        .append(String.valueOf(edge.getWeight()))
+                        .append("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (fileWriter != null) {
+                    fileWriter.flush();
+                    fileWriter.close();
+                    System.out.println("CSV file '" + csvFile.getAbsolutePath() + "' created successfully.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         return true;
     }
 
