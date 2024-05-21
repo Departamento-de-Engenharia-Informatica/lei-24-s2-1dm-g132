@@ -19,10 +19,13 @@ participant "freeAgendaEntriesListDto\nList<TaskDto>" as freeAgendaEntriesListDt
 participant "objDto\n:TaskDto" as taskDto
 participant "taskDto\n:TaskDto" as TaskDto
 participant "teamRepository:\nTeamRepository" as TeamRepository
+participant "teamsList\n:List<Team>" as teamsList
 participant ":TeamMapper" as TeamMapper
-participant "teamsListDto\nList<TeamDto>" as teamsListDto
+participant "teamsListDto\n:List<TeamDto>" as teamsListDto
 participant "objDto\n:TeamDto" as teamDto
+participant "teamDto\n:TeamDto" as TeamDto
 participant "task\n:Task" as Task
+participant "em:\n ExternalModule" as EM
 
 activate GSM
 
@@ -189,6 +192,11 @@ activate GSM
 
                     loop for each object in teamsList
 
+                        TeamMapper -> teamsList : obj = get(i)
+                        activate teamsList
+                        deactivate teamsList
+
+
                         TeamMapper -> TeamMapper : objDto = toDTO(obj)
                         activate TeamMapper
 
@@ -214,30 +222,67 @@ activate GSM
         GSM -> UI : selects a Team
         activate UI
 
-            UI -> CTRL : addEntry(startingDate)
+            UI -> teamsListDto : get(i)
+            activate teamsListDto
+
+                teamsListDto --> UI : teamDto
+
+            UI -> CTRL : assignTeam(teamDto)
             activate CTRL
 
-                CTRL -> Agenda : addEntry(startingDate, selectedTaskCopy)
-                activate Agenda
+                CTRL -> TeamRepository : getSelectedTeam(teamDto)
+                activate TeamRepository
 
-                    Agenda -> Task : selectedTaskCopy.setStartingDate(startingDate)
-                    activate Task
-                    deactivate Task
+                    TeamRepository -> TeamMapper : toModel(teamDto)
+                    activate TeamMapper
 
-                    Agenda -> Agenda : add(selectedTaskCopy)
+                        TeamMapper -> TeamDto : collaborators = getCollaborators()
+                        activate TeamDto
+                        deactivate TeamDto
+
+                        TeamMapper -> Team : create(collaborators)
+                        activate Team
+
+                            Team --> TeamMapper : selectedTeamCopy
+                        deactivate Team
+
+                        TeamMapper --> TeamRepository : selectedTeamCopy
+                        deactivate TeamMapper
+
+                    TeamRepository -> teamsList: contains(selectedTeamCopy)
+                    activate teamsList
+
+                        teamsList -> teamsList: get(selectedTeamCopy)
+                        activate teamsList
+                            teamsList --> teamsList : selectedTeam
+                        deactivate teamsList
+
+                        teamsList --> TeamRepository : selectedTeam
+                    deactivate teamsList
+
+                    TeamRepository --> CTRL : selectedTeam
+                    deactivate TeamRepository
+
+                    CTRL -> Agenda : assignTeam(selectedTask, selectedTeam)
                     activate Agenda
 
-                        Agenda --> Agenda : selectedTaskCopy
-                    deactivate Agenda
+                        Agenda -> Task : selectedTask.assignTeam(selectedTeam)
+                        activate Task
 
-                    Agenda --> CTRL : selectedTaskCopy
-                    deactivate Agenda
+                            Task -> EM : sendEmail(title, startingDate, selectedTeam)
+                            activate EM
+                            deactivate EM
 
-                CTRL --> UI : selectedTaskCopy
-                deactivate CTRL
+                            Task --> Agenda : selectedTask
+                            deactivate Task
 
-            UI --> GSM : displays operation success
-            deactivate UI
+                        Agenda --> CTRL : selectedTask
+                        deactivate Agenda
+
+                    CTRL --> UI : selectedTask
+                    deactivate CTRL
+
+                UI --> GSM : displays operation success
 
         deactivate GSM
 
