@@ -8,10 +8,10 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "TaskRepository" as TaskRepository
 
-autonumber 3
--> CTRL : getGreenSpaces()
+autonumber 13
+-> CTRL : getTasksByGreenSpace(greenSpace)
 
-autonumber 3.1
+autonumber 13.1
 
 activate CTRL
     group Get Tasks By Green Space
@@ -34,7 +34,7 @@ activate CTRL
            deactivate TaskRepository
 
 end group
-autonumber 4
-<-- CTRL : greenSpaces
+autonumber 14
+<-- CTRL : tasksByGreenSpace
 
 @enduml
