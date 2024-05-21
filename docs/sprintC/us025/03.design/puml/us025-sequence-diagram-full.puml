@@ -3,13 +3,13 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title US024 - Postpone an entry in the agenda
+title US025 - Cancel an entry in the agenda
 
 autonumber
 
 actor "GSM" as Employee
-participant ":PostponeEntryUI" as UI
-participant ":PostponeEntryController" as CTRL
+participant ":CancelEntryUI" as UI
+participant ":CancelEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "greenSpaceRepository\n:GreenSpaceRepository" as GreenSpaceRepository
@@ -17,7 +17,7 @@ participant "taskRepository\n:TaskRepository" as TaskRepository
 
 activate Employee
 
-    Employee -> UI : asks to postpone an entry in the agenda
+    Employee -> UI : asks to cancel an entry in the agenda
     activate UI
 
     UI -> CTRL** : create
@@ -81,22 +81,14 @@ activate Employee
     UI --> Employee : shows list of entries in the agenda of the selected green space
     deactivate UI
 
-    Employee -> UI : selects one entry
+    Employee -> UI : selects one entry to cancel
     activate UI
 
-    UI --> Employee : requests the new date
-    deactivate UI
-
-    Employee -> UI : types the new date
-    activate UI
-
-    UI -> CTRL : postponeEntry(task, newDate)
+    UI -> CTRL : cancelEntry(task)
     activate CTRL
 
-    CTRL -> TaskRepository : postponeEntry(task, newDate)
+    CTRL -> TaskRepository : cancelEntry(task)
     activate TaskRepository
-
-    TaskRepository -> TaskRepository : validateNewDate(newDate)
 
     TaskRepository --> CTRL : entry
     deactivate TaskRepository

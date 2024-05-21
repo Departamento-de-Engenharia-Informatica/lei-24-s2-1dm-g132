@@ -7,20 +7,21 @@
 
 As a GSM, I want to cancel an entry in the Agenda.
 
-### 1.2. Customer Specifications and Clarifications 
-
-**From the specifications document:**
-
-//TODO
+### 1.2. Customer Specifications and Clarifications
 
 **From the client clarifications:**
 
-//TODO
+> **Question:** When a task is cancelled, is it possible to put it back on the agenda again later?
+>
+> **Answer:** yes
 
+> **Question:** When we cancel a task, do we move it again to the To-Do List?
+>
+> **Answer:** no
 
 ### 1.3. Acceptance Criteria
 
-* There's no acceptance criteria defined for this user story.
+* **AC1:** A canceled task should not be deleted but rather change its state.
 
 ### 1.4. Found out Dependencies
 

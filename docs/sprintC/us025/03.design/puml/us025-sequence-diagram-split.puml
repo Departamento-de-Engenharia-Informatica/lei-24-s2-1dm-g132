@@ -1,0 +1,70 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US025 - Cancel an entry in the agenda
+
+autonumber
+
+actor "GSM" as Employee
+participant ":CancelEntryUI" as UI
+participant ":CancelEntryController" as CTRL
+participant "taskRepository\n:TaskRepository" as TaskRepository
+
+activate Employee
+
+    Employee -> UI : asks to postpone an entry in the agenda
+    activate UI
+
+    UI -> CTRL** : create
+
+                UI -> CTRL : getGreenSpaces()
+                activate CTRL
+
+                    ref over CTRL
+                        Get Green Spaces
+                    end
+
+                    CTRL --> UI : greenSpaces
+                deactivate CTRL
+
+    UI --> Employee : shows list of green spaces to select one
+    deactivate UI
+
+    Employee -> UI : selects the green space
+    activate UI
+
+        UI -> CTRL : getTasksByGreenSpace(greenSpace)
+        activate CTRL
+
+            ref over CTRL
+               Get Tasks by Green Space
+            end
+
+            CTRL --> UI : tasksByGreenSpace
+        deactivate CTRL
+
+    UI --> Employee : shows list of entries in the agenda of the selected green space
+    deactivate UI
+
+    Employee -> UI : selects one entry to cancel
+    activate UI
+
+    UI -> CTRL : cancelEntry(task)
+    activate CTRL
+
+    CTRL -> TaskRepository : cancelEntry(task)
+    activate TaskRepository
+
+    TaskRepository --> CTRL : entry
+    deactivate TaskRepository
+
+    CTRL --> UI : entry
+    deactivate CTRL
+
+    UI --> Employee : displays operation success
+    deactivate UI
+
+deactivate Employee
+@enduml

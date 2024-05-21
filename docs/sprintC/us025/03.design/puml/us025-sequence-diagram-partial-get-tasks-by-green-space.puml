@@ -37,6 +37,6 @@ activate CTRL
 
 end group
 autonumber 14
-<-- CTRL : tasksByGreenSpace
+<-- CTRL : tasksByGreenSpaces
 
 @enduml
