@@ -1,0 +1,101 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US025 - Cancel an entry in the agenda
+
+autonumber
+
+actor "GSM" as Employee
+participant ":CancelEntryUI" as UI
+participant ":CancelEntryController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "greenSpaceRepository\n:GreenSpaceRepository" as GreenSpaceRepository
+participant "taskRepository\n:TaskRepository" as TaskRepository
+
+activate Employee
+
+    Employee -> UI : asks to cancel an entry in the agenda
+    activate UI
+
+    UI -> CTRL** : create
+
+                UI -> CTRL : getGreenSpaces()
+                activate CTRL
+
+                    CTRL -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
+
+                        RepositorySingleton --> CTRL: repositories
+                    deactivate RepositorySingleton
+
+                    CTRL -> PLAT : getGreenSpaceRepository()
+                    activate PLAT
+
+                        PLAT --> CTRL: greenSpaceRepository
+                    deactivate PLAT
+
+                    CTRL -> GreenSpaceRepository : getGreenSpaces()
+                    activate GreenSpaceRepository
+
+                        GreenSpaceRepository --> CTRL : greenSpaces
+                    deactivate GreenSpaceRepository
+
+                    CTRL --> UI : greenSpaces
+                deactivate CTRL
+
+    UI --> Employee : shows list of green spaces to select one
+    deactivate UI
+
+    Employee -> UI : selects the green space
+    activate UI
+
+        UI -> CTRL : getTasksByGreenSpace(greenSpace)
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getTaskRepository()
+            activate PLAT
+
+            PLAT --> CTRL: taskRepository
+            deactivate PLAT
+
+            CTRL -> TaskRepository : getTasksByGreenSpace(greenSpace)
+            activate TaskRepository
+
+            TaskRepository --> CTRL : tasksByGreenSpace
+            deactivate TaskRepository
+
+            CTRL --> UI : tasksByGreenSpace
+        deactivate CTRL
+
+    UI --> Employee : shows list of entries in the agenda of the selected green space
+    deactivate UI
+
+    Employee -> UI : selects one entry to cancel
+    activate UI
+
+    UI -> CTRL : cancelEntry(task)
+    activate CTRL
+
+    CTRL -> TaskRepository : cancelEntry(task)
+    activate TaskRepository
+
+    TaskRepository --> CTRL : entry
+    deactivate TaskRepository
+
+    CTRL --> UI : entry
+    deactivate CTRL
+
+    UI --> Employee : displays operation success
+    deactivate UI
+
+deactivate Employee
+@enduml

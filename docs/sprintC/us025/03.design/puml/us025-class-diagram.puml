@@ -1,0 +1,70 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+title US025 - Cancel an entry in the agenda
+
+class CancelEntryUI {
+}
+
+class CancelEntryController {
+    + postponeEntryController(taskRepository, greenSpaceRepository)
+    + getGreenSpaces()
+    + getTasksByGreenSpace(greenSpace)
+    + postponeEntry(task, newDate)
+}
+
+class Task {
+    title
+    description
+    degreeOfUrgency
+    expectedDuration
+    status
+    startingDate
+}
+
+class GreenSpace {
+    name
+    area
+    type
+    address
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getGreenSpaceRepository()
+    + getTaskRepository()
+}
+
+class TaskRepository {
+    + getTasksByGreenSpace(greenSpace)
+    + cancelEntry(task)
+}
+
+class GreenSpaceRepository {
+    + getGreenSpaces()
+}
+
+
+CancelEntryUI ..> CancelEntryController
+CancelEntryController ...> Repositories: repositories
+CancelEntryController ..> TaskRepository: taskRepository
+CancelEntryController ..> GreenSpaceRepository: greenSpaceRepository
+
+Repositories -> Repositories : instance
+Repositories ---> "1" TaskRepository: taskRepository
+Repositories ---> "1" GreenSpaceRepository: greenSpaceRepository
+
+TaskRepository --> Task: tasks
+GreenSpaceRepository --> GreenSpace: green spaces
+
+
+@enduml
