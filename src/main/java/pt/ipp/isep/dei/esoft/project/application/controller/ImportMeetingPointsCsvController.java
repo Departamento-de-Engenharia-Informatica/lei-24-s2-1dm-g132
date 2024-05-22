@@ -12,6 +12,7 @@ public class ImportMeetingPointsCsvController {
 
             meetingPointsRepository = repositories.getMeetingPointsRepository();
         }
+        return this.meetingPointsRepository;
     }
 
     public boolean loadGraph(String filePath) {
