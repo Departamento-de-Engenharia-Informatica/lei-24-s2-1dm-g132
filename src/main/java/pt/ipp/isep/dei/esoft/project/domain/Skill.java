@@ -4,10 +4,11 @@
  The Skill class represents a skill.
  */
 package pt.ipp.isep.dei.esoft.project.domain;
+import java.io.Serializable;
 import java.util.Objects;
 import java.lang.IllegalArgumentException;
 
-public class Skill {
+public class Skill implements Serializable {
 
     private String name;
 

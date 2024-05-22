@@ -1,11 +1,14 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.repository.serialization.CollaboratorRepositoryFile;
+
 public class Repositories {
 
     private static Repositories instance;
     private final OrganizationRepository organizationRepository;
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
+    private CollaboratorRepositoryFile collaboratorRepositoryFile;
     private final WaterSupplyPointsRepository waterSupplyPointsRepository;
     private final JobRepository jobRepository;
     private final CollaboratorRepository collaboratorRepository;
@@ -14,12 +17,13 @@ public class Repositories {
     private final MeetingPointsRepository meetingPointsRepository;
 
     private Repositories() {
+        collaboratorRepositoryFile = new CollaboratorRepositoryFile();
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
         waterSupplyPointsRepository = new WaterSupplyPointsRepository(false);
         jobRepository = new JobRepository();
-        collaboratorRepository = new CollaboratorRepository();
+        collaboratorRepository = collaboratorRepositoryFile.read();
         skillRepository = new SkillRepository();
         teamRepository = new TeamRepository();
         meetingPointsRepository = new MeetingPointsRepository(false);

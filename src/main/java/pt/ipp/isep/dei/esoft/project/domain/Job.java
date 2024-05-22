@@ -4,10 +4,11 @@
  The Job class represents a job.
  */
 package pt.ipp.isep.dei.esoft.project.domain;
+import java.io.Serializable;
 import java.util.Objects;
 import java.lang.IllegalArgumentException;
 
-public class Job {
+public class Job implements Serializable {
 
 
     private String name;

@@ -4,7 +4,9 @@ import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
+import pt.ipp.isep.dei.esoft.project.repository.serialization.CollaboratorRepositoryFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,8 @@ public class RegisterCollaboratorController {
      */
     private CollaboratorRepository collaboratorRepository;
 
+    private CollaboratorRepositoryFile collaboratorRepositoryFile;
+
     /**
      * Constructs a new RegisterCollaboratorController object.
      */
@@ -30,6 +34,7 @@ public class RegisterCollaboratorController {
     {
         getJobRepository();
         getCollaboratorRepository();
+        collaboratorRepositoryFile = new CollaboratorRepositoryFile();
     }
 
     /**
@@ -79,15 +84,21 @@ public class RegisterCollaboratorController {
 
         Job job = getJobByName(jobName);
 
-        Optional<CollaboratorRepository> collaboratorRepository = Optional.ofNullable(getCollaboratorRepository());
+        collaboratorRepository = getCollaboratorRepository();
 
         Optional<Collaborator> newCollaborator = Optional.empty();
 
-        if (collaboratorRepository.isPresent()) {
-            newCollaborator = collaboratorRepository.get()
-                    .registerCollaborator(name, birthdate, admissionDate, address, phoneNumber, email, taxpayerNumber,
+            newCollaborator = collaboratorRepository.registerCollaborator(name, birthdate, admissionDate, address, phoneNumber, email, taxpayerNumber,
                             identificationDocumentType, identificationDocumentNumber, job);
+
+        if (newCollaborator.isPresent())
+        {
+            if(!collaboratorRepositoryFile.save(collaboratorRepository))
+            {
+                System.out.println("Error while saving Collaborator!");
+            }
         }
+
         return newCollaborator;
     }
 

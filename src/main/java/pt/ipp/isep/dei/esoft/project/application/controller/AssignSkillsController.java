@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+import pt.ipp.isep.dei.esoft.project.repository.serialization.CollaboratorRepositoryFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,12 +25,15 @@ public class AssignSkillsController {
      */
     private SkillRepository skillRepository;
 
+    private CollaboratorRepositoryFile collaboratorRepositoryFile;
+
     /**
      * Constructs a new AssignSkillsController object.
      */
     public AssignSkillsController(){
         getCollaboratorRepository();
         getSkillRepository();
+        collaboratorRepositoryFile = new CollaboratorRepositoryFile();
     }
 
     /**
@@ -69,13 +73,19 @@ public class AssignSkillsController {
 
         Collaborator collaborator = getCollaboratorByIdNumber(collaboratorIdNumber);
 
-        Optional<CollaboratorRepository> collaboratorRepository = Optional.ofNullable(getCollaboratorRepository());
+        collaboratorRepository = getCollaboratorRepository();
 
         Optional<Collaborator> updatedCollaborator = Optional.empty();
 
-        if (collaboratorRepository.isPresent()) {
-            updatedCollaborator = collaboratorRepository.get()
-                    .assignSkill(collaborator, selectedSkillsList);
+
+        updatedCollaborator = collaboratorRepository.assignSkill(collaborator, selectedSkillsList);
+
+        if (updatedCollaborator.isPresent())
+        {
+            if(!collaboratorRepositoryFile.save(collaboratorRepository))
+            {
+                System.out.println("Error while saving Collaborator!");
+            }
         }
 
         return updatedCollaborator;

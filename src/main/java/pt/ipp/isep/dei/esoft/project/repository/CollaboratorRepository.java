@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +10,7 @@ import java.util.Optional;
 /**
  * Repository class responsible for managing collaborator data.
  */
-public class CollaboratorRepository {
+public class CollaboratorRepository implements Serializable {
 
     /**
      * A list of collaborators which consists of all the registered collaborators.

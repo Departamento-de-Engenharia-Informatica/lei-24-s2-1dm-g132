@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Represents a collaborator in the system.
  */
-public class Collaborator {
+public class Collaborator implements Serializable {
 
     /**
      * The name of the collaborator.
