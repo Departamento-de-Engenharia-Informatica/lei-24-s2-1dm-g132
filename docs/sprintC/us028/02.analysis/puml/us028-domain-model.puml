@@ -8,26 +8,33 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
+title US028 - Consult the tasks assigned to a collaborator
 
-class GSM {
+class Collaborator {
 }
+
 class Agenda {
 }
 
-class Vehicle {
-      vehiclePlate
-      brand
-      model
-      type
-      tare
-      grossWeight
-      currentKms
-      registerDate
-      acquisitionDate
-      checkUpFrequency
-
+class Task {
+    title
+    description
+    degreeOfUrgency
+    expectedDuration
+    status
+    startingDate
 }
-GSM "1" -- "*" Vehicle : assigns >
-Vehicle "1" -- "*" Agenda : > is assigned on
+
+class GreenSpace {
+    name
+    area
+    type
+    address
+}
+
+
+Task "*" -- "1" Agenda : was added >
+Task "1" -- "1" GreenSpace : is associated with >
+Collaborator "1" -- "*" Task : is assigned to <
 
 @enduml

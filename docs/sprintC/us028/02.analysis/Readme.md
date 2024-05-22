@@ -1,4 +1,4 @@
-# US 028 - s a Collaborator, I wish to consult the tasks assigned to me
+# US 028 - Consult the tasks assigned to a collaborator
 
 ## 2. Analysis
 
