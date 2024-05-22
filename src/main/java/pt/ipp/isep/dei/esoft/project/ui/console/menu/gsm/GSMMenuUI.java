@@ -16,6 +16,7 @@ public class GSMMenuUI implements Runnable{
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("US12", new ImportWaterSupplyPointsCsvUI()));
         options.add(new MenuItem("US13", new MinimalAcumulatedCostGraphUI()));
+        options.add(new MenuItem("US17", new ImportMeetingPointsCsvUI()));
 
 
         int option = 0;

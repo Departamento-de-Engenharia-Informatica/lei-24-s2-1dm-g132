@@ -11,6 +11,7 @@ public class Repositories {
     private final CollaboratorRepository collaboratorRepository;
     private final SkillRepository skillRepository;
     private final TeamRepository teamRepository;
+    private final MeetingPointsRepository meetingPointsRepository;
 
     private Repositories() {
         organizationRepository = new OrganizationRepository();
@@ -21,6 +22,7 @@ public class Repositories {
         collaboratorRepository = new CollaboratorRepository();
         skillRepository = new SkillRepository();
         teamRepository = new TeamRepository();
+        meetingPointsRepository = new MeetingPointsRepository(false);
     }
 
     public static Repositories getInstance() {
@@ -44,7 +46,7 @@ public class Repositories {
         return authenticationRepository;
     }
 
-    public WaterSupplyPointsRepository getWaterSuplyPointsCsvRepository() {
+    public WaterSupplyPointsRepository getWaterSupplyPointsRepository() {
         return waterSupplyPointsRepository;
     }
 
@@ -61,4 +63,8 @@ public class Repositories {
     }
 
     public TeamRepository getTeamRepository() {return teamRepository;}
+
+    public MeetingPointsRepository getMeetingPointsRepository() {
+        return meetingPointsRepository;
+    }
 }

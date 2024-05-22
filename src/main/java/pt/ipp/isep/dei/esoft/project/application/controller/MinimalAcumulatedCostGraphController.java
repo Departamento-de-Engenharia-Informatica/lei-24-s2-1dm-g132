@@ -14,7 +14,7 @@ public class MinimalAcumulatedCostGraphController {
         if (waterSupplyPointsRepository == null){
             Repositories repositories = Repositories.getInstance();
 
-            waterSupplyPointsRepository = repositories.getWaterSuplyPointsCsvRepository();
+            waterSupplyPointsRepository = repositories.getWaterSupplyPointsRepository();
         }
         return waterSupplyPointsRepository;
     }
