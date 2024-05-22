@@ -3,10 +3,10 @@ package pt.ipp.isep.dei.esoft.project.ui.console.menu.gsm;
 import pt.ipp.isep.dei.esoft.project.application.controller.ImportWaterSupplyPointsCsvController;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
-public class ImportWaterSupplyPointsCsv implements Runnable {
+public class ImportWaterSupplyPointsCsvUI implements Runnable {
     private ImportWaterSupplyPointsCsvController controller;
 
-    public ImportWaterSupplyPointsCsv() {
+    public ImportWaterSupplyPointsCsvUI() {
         this.controller = new ImportWaterSupplyPointsCsvController();
     }
 
