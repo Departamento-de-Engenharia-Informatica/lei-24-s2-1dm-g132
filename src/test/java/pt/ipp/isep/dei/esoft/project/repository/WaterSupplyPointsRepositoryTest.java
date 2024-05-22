@@ -8,7 +8,7 @@ import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WaterSuplyPointsCsvRepositoryTest{
+public class WaterSupplyPointsRepositoryTest {
 
     @Test
     void getMinimalCostGraphTest(){

@@ -1,25 +1,25 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.repository.WaterSuplyPointsCsvRepository;
+import pt.ipp.isep.dei.esoft.project.repository.WaterSupplyPointsRepository;
 
 public class ImportWaterSupplyPointsCsvController {
-    private WaterSuplyPointsCsvRepository waterSuplyPointsCsvRepository;
+    private WaterSupplyPointsRepository waterSupplyPointsRepository;
 
     public ImportWaterSupplyPointsCsvController() {
         getWaterSuplyPointsCsvRepository();
     }
 
-    private WaterSuplyPointsCsvRepository getWaterSuplyPointsCsvRepository() {
-        if (waterSuplyPointsCsvRepository == null){
+    private WaterSupplyPointsRepository getWaterSuplyPointsCsvRepository() {
+        if (waterSupplyPointsRepository == null){
             Repositories repositories = Repositories.getInstance();
 
-            waterSuplyPointsCsvRepository = repositories.getWaterSuplyPointsCsvRepository();
+            waterSupplyPointsRepository = repositories.getWaterSuplyPointsCsvRepository();
         }
-        return waterSuplyPointsCsvRepository;
+        return waterSupplyPointsRepository;
     }
 
     public boolean loadGraph(String filePath){
-        return waterSuplyPointsCsvRepository.loadGraph(filePath);
+        return waterSupplyPointsRepository.loadGraph(filePath);
     }
 }

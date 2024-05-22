@@ -3,7 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
 import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
-import pt.ipp.isep.dei.esoft.project.repository.WaterSuplyPointsCsvRepository;
+import pt.ipp.isep.dei.esoft.project.repository.WaterSupplyPointsRepository;
 
 import java.io.*;
 import java.util.*;
@@ -40,7 +40,7 @@ public class AsymptoticBehaviorAnalyser {
             for (File file : fileList) {
                 fileName = file.getName();
                 System.out.println("Reading file: " + fileName);
-                WaterSuplyPointsCsvRepository tempRepo = new WaterSuplyPointsCsvRepository(true);
+                WaterSupplyPointsRepository tempRepo = new WaterSupplyPointsRepository(true);
                 if (tempRepo.loadGraph(file.getAbsolutePath())) {
                     long begining = System.currentTimeMillis();
                     MatrixGraph<Vertice, Double> graph = Algorithms.minDistGraph(tempRepo.getCsvGraphCopy(), Comparator.naturalOrder());

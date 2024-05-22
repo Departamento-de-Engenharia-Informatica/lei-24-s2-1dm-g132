@@ -6,7 +6,7 @@ public class Repositories {
     private final OrganizationRepository organizationRepository;
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
-    private final WaterSuplyPointsCsvRepository waterSuplyPointsCsvRepository;
+    private final WaterSupplyPointsRepository waterSupplyPointsRepository;
     private final JobRepository jobRepository;
     private final CollaboratorRepository collaboratorRepository;
     private final SkillRepository skillRepository;
@@ -16,7 +16,7 @@ public class Repositories {
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
-        waterSuplyPointsCsvRepository = new WaterSuplyPointsCsvRepository(false);
+        waterSupplyPointsRepository = new WaterSupplyPointsRepository(false);
         jobRepository = new JobRepository();
         collaboratorRepository = new CollaboratorRepository();
         skillRepository = new SkillRepository();
@@ -44,8 +44,8 @@ public class Repositories {
         return authenticationRepository;
     }
 
-    public WaterSuplyPointsCsvRepository getWaterSuplyPointsCsvRepository() {
-        return waterSuplyPointsCsvRepository;
+    public WaterSupplyPointsRepository getWaterSuplyPointsCsvRepository() {
+        return waterSupplyPointsRepository;
     }
 
     public JobRepository getJobRepository() {

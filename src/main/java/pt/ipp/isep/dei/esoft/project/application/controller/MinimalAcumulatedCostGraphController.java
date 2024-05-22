@@ -1,27 +1,25 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.repository.WaterSuplyPointsCsvRepository;
-
-import java.util.List;
+import pt.ipp.isep.dei.esoft.project.repository.WaterSupplyPointsRepository;
 
 public class MinimalAcumulatedCostGraphController {
-    private WaterSuplyPointsCsvRepository waterSuplyPointsCsvRepository;
+    private WaterSupplyPointsRepository waterSupplyPointsRepository;
 
     public MinimalAcumulatedCostGraphController() {
         getWaterSuplyPointsCsvRepository();
     }
 
-    private WaterSuplyPointsCsvRepository getWaterSuplyPointsCsvRepository() {
-        if (waterSuplyPointsCsvRepository == null){
+    private WaterSupplyPointsRepository getWaterSuplyPointsCsvRepository() {
+        if (waterSupplyPointsRepository == null){
             Repositories repositories = Repositories.getInstance();
 
-            waterSuplyPointsCsvRepository = repositories.getWaterSuplyPointsCsvRepository();
+            waterSupplyPointsRepository = repositories.getWaterSuplyPointsCsvRepository();
         }
-        return waterSuplyPointsCsvRepository;
+        return waterSupplyPointsRepository;
     }
 
     public boolean getMinimalCostGraph(){
-        return waterSuplyPointsCsvRepository.getMinimalCostGraph();
+        return waterSupplyPointsRepository.getMinimalCostGraph();
     }
 }

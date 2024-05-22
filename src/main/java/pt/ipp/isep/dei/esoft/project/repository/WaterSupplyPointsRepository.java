@@ -10,17 +10,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class WaterSuplyPointsCsvRepository {
+public class WaterSupplyPointsRepository {
 
     // Para já, considerei que cada edge é uma String e o custo é um Double, podem mudar mais tarde se for o caso.
     private MatrixGraph<Vertice, Double> csvGraph;
 
-    public WaterSuplyPointsCsvRepository(boolean directed) {
+    public WaterSupplyPointsRepository(boolean directed) {
         csvGraph = new MatrixGraph<>(directed);
-    }
-
-    public WaterSuplyPointsCsvRepository() {
-        csvGraph = new MatrixGraph<>(false);
     }
 
     public boolean addEdge(String ori, String dest, Double weight) {
