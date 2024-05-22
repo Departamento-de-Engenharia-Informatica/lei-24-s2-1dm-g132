@@ -19,6 +19,14 @@ Done).
 
 **From the client clarifications:**
 
+> **Question:** Can a Team be assigned to multiple entries?
+>
+> **Answer:** Yes.
+
+> **Question:** Can an Agenda entry have more than one team assigned to it?
+>
+> **Answer:** No.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** A message must be sent to all team members informing them about the assignment.

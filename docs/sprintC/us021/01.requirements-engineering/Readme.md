@@ -80,6 +80,10 @@ and Low), and the approximate expected duration.
 >
 > **Answer:** Hours and/or days.
 
+> **Question:** When a To-Do List entry is planned and moves to the Agenda, the status change from "Pending" to "Planned". Should this entry be removed from the To-Do List or just change status to "Planned" as it is on the Agenda?
+>
+> **Answer:** Changing the status in the To-Do list to Planned seems to be a good approach.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The new entry must be associated with a green space managed by the GSM.
