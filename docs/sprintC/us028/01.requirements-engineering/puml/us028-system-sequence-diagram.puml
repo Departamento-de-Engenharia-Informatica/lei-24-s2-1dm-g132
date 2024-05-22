@@ -3,26 +3,37 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - US 001
+title US28 - Consult the tasks assigned to me between two dates
 
 autonumber
 
-actor "HRM" as HRM
+actor "Collaborator" as Employee
 participant ":System" as System
 
-activate HRM
+activate Employee
 
-    HRM -> System: selects "create skill" option
+    Employee -> System : asks to consult the tasks assigned to collaborator
     activate System
 
-         System --> HRM: request skill name
-            deactivate System
-                HRM -> System: enters skill name
-                    activate System
-                       System --> HRM: asks for validation of skill
-                                deactivate System
-                                                HRM -> System: validates skill
-                                                    activate System
-                                                                           System --> HRM: shows operation success
-                                                                                    deactivate System
+    System --> Employee : requests first date
+    deactivate System
+
+    Employee -> System : types first date
+    activate System
+
+    System --> Employee : requests second date
+    deactivate System
+
+    Employee -> System : types second date
+    activate System
+
+    System --> Employee : asks if collaborator wants to view tasks filtered by status
+    deactivate System
+
+    Employee -> System : answers yes or no
+    activate System
+
+    System --> Employee : shows tasks assigned to collaborator between those two dates
+    deactivate System
+
 @enduml
