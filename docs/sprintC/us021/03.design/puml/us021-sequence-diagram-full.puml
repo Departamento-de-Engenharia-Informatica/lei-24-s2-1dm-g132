@@ -12,6 +12,7 @@ participant ":AddEntryToDoController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
+participant "greenSpacesList:\nList<GreenSpace>" as greenSpacesList
 participant "greenSpace\n:GreenSpace" as greenSpace
 participant ":GreenSpaceMapper" as GreenSpaceMapper
 participant "associatedGreenSpacesList\nList<GreenSpace>" as associatedGreenSpacesList
@@ -49,7 +50,19 @@ activate GSM
                 CTRL -> GreenSpaceRepository : getGreenSpaces()
                 activate GreenSpaceRepository
 
-                    GreenSpaceRepository --> associatedGreenSpacesList** : clone(greenSpacesList)
+                    GreenSpaceRepository --> associatedGreenSpacesList** : create()
+
+                    loop for each known Green Space
+                        GreenSpaceRepository -> greenSpacesList : greenSpace = get(i)
+                        activate greenSpacesList
+                        deactivate greenSpacesList
+
+                        GreenSpaceRepository -> associatedGreenSpacesList : add(greenSpace)
+                        activate associatedGreenSpacesList
+                        deactivate associatedGreenSpacesList
+
+                    end loop
+
                     GreenSpaceRepository --> CTRL : associatedGreenSpacesList
                 deactivate GreenSpaceRepository
 
@@ -128,11 +141,11 @@ activate GSM
                         GreenSpaceMapper --> GreenSpaceRepository : selectedGreenSpaceCopy
                         deactivate GreenSpaceMapper
 
-                    GreenSpaceRepository -> GreenSpaceRepository: greenSpacesList.contains(selectedGreenSpaceCopy)
-                    activate GreenSpaceRepository
+                    GreenSpaceRepository -> greenSpacesList: contains(selectedGreenSpaceCopy)
+                    activate greenSpacesList
 
-                        GreenSpaceRepository --> GreenSpaceRepository : selectedGreenSpace
-                    deactivate GreenSpaceRepository
+                        greenSpacesList --> GreenSpaceRepository : selectedGreenSpace
+                    deactivate greenSpacesList
 
                     GreenSpaceRepository --> CTRL : selectedGreenSpace
                     deactivate GreenSpaceRepository
