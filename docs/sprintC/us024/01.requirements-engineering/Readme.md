@@ -25,7 +25,7 @@ The date you want to postpone in this US24 is the date referring to the "approxi
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** It should not be able to postpone an entry that is done.
+* **AC1:** It should not be able to postpone a task that is done.
 
 ### 1.4. Found out Dependencies
 
