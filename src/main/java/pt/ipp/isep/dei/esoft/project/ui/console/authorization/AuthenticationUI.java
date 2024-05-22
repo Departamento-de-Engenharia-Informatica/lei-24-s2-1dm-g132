@@ -2,6 +2,13 @@ package pt.ipp.isep.dei.esoft.project.ui.console.authorization;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.ui.console.menu.*;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.admin.AdminMenuUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.collaborator.CollaboratorMenuUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.gsm.GSMMenuUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.gsu.GSUMenuUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.hrm.HRMMenuUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.qam.QAMMenuUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.menu.vtf.VTFMenuUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 

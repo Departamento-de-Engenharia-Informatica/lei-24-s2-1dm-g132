@@ -1,12 +1,9 @@
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.menu.qam;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.AsymptoticBehaviorAnalyzerController;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.io.File;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AsymptoticBehaviorAnalyzerUI implements Runnable {
 

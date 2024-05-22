@@ -5,7 +5,7 @@
  It interacts with the user to input skill details, submits the data to the controller,
  and displays the list of skills in the repository.
  */
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.menu.hrm;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillController;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import java.lang.IllegalArgumentException;

@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.console.menu;
+package pt.ipp.isep.dei.esoft.project.ui.console.menu.gsu;
 
 public class GSUMenuUI implements Runnable {
     @Override

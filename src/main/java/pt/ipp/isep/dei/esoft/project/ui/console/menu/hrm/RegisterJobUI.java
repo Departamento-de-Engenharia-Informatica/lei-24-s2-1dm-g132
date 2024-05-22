@@ -5,14 +5,13 @@
  It interacts with the user to input job details, submits the data to the controller,
  and displays the list of jobs in the repository.
  */
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.menu.hrm;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterJobController;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
-import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
+
 import java.lang.IllegalArgumentException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class RegisterJobUI implements Runnable {
