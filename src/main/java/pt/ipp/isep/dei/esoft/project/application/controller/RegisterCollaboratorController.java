@@ -95,7 +95,7 @@ public class RegisterCollaboratorController {
         {
             if(!collaboratorRepositoryFile.save(collaboratorRepository))
             {
-                System.out.println("Error while saving Collaborator!");
+                System.out.println("Error while saving Collaborator Repository in external file!");
             }
         }
 

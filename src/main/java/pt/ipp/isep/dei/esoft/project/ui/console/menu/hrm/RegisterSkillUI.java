@@ -31,7 +31,6 @@ public class RegisterSkillUI implements Runnable {
         System.out.println("\n\n--- Register Skill ------------------------");
         requestData();
         submitData();
-        displaySkills();
     }
 
     /**
