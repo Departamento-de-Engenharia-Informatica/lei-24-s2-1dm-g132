@@ -22,7 +22,7 @@ André Azevedo
 > 
 > **Answer:** The classification is not automatic, it's up to GSM decide about it.
 Best regards.
->
+
 > **Question:** Good afternoon,
 Should the Green Space have any field in which it would store the GSM who created it, meaning that green space is managed by that GSM?
 Best regards
@@ -30,11 +30,11 @@ Best regards
 > **Answer:** Hi,
 I have no knowledge about data models.
 Best regards.
->
+
 > **Question:** Can two green spaces have the same name?
 >
 > **Answer:** No
-> 
+ 
 > **Question:** Should the green space have any more traits, other than the type of green space and area?
 In which unit should the area be measured in?
 Can the GSM register multiple green spaces at once?
@@ -42,6 +42,10 @@ Can the GSM register multiple green spaces at once?
 > **Answer:** Already answered in the forum and client session.
 Usually, areas are measured in hectares.
 That's a matter of UX/UI, each dev team can decide about it.
+ 
+> **Question:**
+>
+> **Answer:**
 
 
 

@@ -29,7 +29,7 @@ activate GSM
 
         activate UI
 
-        UI -> CTRL : Green space (name, area, type)
+        UI -> CTRL : Green space (name, area, type, adress)
 
         activate CTRL
 
@@ -59,11 +59,11 @@ activate GSM
 
         deactivate GreenSpaceRepository
 
-        CTRL -> GreenSpaceRepository : RegisterGreenSpace(name, area, type)
+        CTRL -> GreenSpaceRepository : RegisterGreenSpace(name, area, type, adress)
 
         activate GreenSpaceRepository
 
-        GreenSpaceRepository -> GreenSpace** : createGreenSpace(name, area, type)
+        GreenSpaceRepository -> GreenSpace** : createGreenSpace(name, area, type, adress)
 
 
         GreenSpaceRepository -> GreenSpaceRepository : saveGreenSpace(GreenSpace)

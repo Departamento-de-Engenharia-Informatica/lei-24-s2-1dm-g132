@@ -19,7 +19,7 @@
 > **Question:** Dear client, which info about Green Spaces do you want the GSM see when listing? only the name ?
 > 
 > **Answer:** Each de team can decide about the aspects related to UX/UI.
->
+
 > **Question:** 
 
 

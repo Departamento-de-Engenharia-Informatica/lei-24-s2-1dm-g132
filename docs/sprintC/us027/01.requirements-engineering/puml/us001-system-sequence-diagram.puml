@@ -19,7 +19,7 @@ activate GSM
     loop until end of Green Space list
     System --> GSM : requests to update the current names of the Green Space
     deactivate System
-    GSM -> System : updates the current kms of the vehicle
+    GSM -> System : updates the current Green Spaces
     activate System
     end
 
@@ -27,3 +27,20 @@ activate GSM
     deactivate System
 
 @enduml
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title US027- As a GSM, I need to list all green spaces
+
+activate GSM
+
+GSM -> System : Request to produce a list with all the green Spaces
+activate System
+
+
+
+@enduml
+
