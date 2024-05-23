@@ -9,6 +9,9 @@ autonumber
 actor "Green Space Manager" as GSM
 participant ":AddEntryToDoUI" as UI
 participant ":AddEntryToDoController" as CTRL
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSION
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
@@ -33,7 +36,22 @@ activate GSM
         UI -> CTRL : getGreenSpaces()
         activate CTRL
 
-            CTRL -> : identifyGSM()
+            CTRL -> _APP: getInstance()
+                activate _APP
+                    _APP -> CTRL: appSession
+                deactivate _APP
+
+                CTRL -> APP: getCurrentSession()
+                activate APP
+
+                    APP --> CTRL: currentSession
+                deactivate APP
+
+                CTRL -> SESSION: email = getUserEmail()
+                activate SESSION
+
+                    SESSION --> CTRL: email
+                deactivate SESSION
 
             CTRL -> RepositorySingleton : getInstance()
                 activate RepositorySingleton
@@ -47,7 +65,7 @@ activate GSM
                     PLAT --> CTRL : greenSpaceRepository
                 deactivate PLAT
 
-                CTRL -> GreenSpaceRepository : getGreenSpaces()
+                CTRL -> GreenSpaceRepository : getGreenSpaces(email)
                 activate GreenSpaceRepository
 
                     GreenSpaceRepository --> associatedGreenSpacesList** : create()
@@ -57,9 +75,15 @@ activate GSM
                         activate greenSpacesList
                         deactivate greenSpacesList
 
-                        GreenSpaceRepository -> associatedGreenSpacesList : add(greenSpace)
-                        activate associatedGreenSpacesList
-                        deactivate associatedGreenSpacesList
+                        GreenSpaceRepository -> greenSpace : associated = hasUserEmail(email)
+                        activate greenSpace
+                        deactivate greenSpace
+
+                        opt associated == true
+                            GreenSpaceRepository -> associatedGreenSpacesList : add(greenSpace)
+                            activate associatedGreenSpacesList
+                            deactivate associatedGreenSpacesList
+                        end opt
 
                     end loop
 
