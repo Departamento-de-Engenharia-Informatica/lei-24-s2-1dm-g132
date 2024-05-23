@@ -8,6 +8,8 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+import pt.ipp.isep.dei.esoft.project.repository.serialization.SkillRepositoryFile;
+
 import java.lang.IllegalArgumentException;
 
 import java.util.List;
@@ -15,12 +17,15 @@ import java.util.List;
 public class RegisterSkillController {
     private SkillRepository skillRepository;
 
+    private SkillRepositoryFile skillRepositoryFile;
+
     /**
      * Constructs a new RegisterSkillController object.
      * Initializes the skill repository by obtaining it from the Repositories singleton instance.
      */
     public RegisterSkillController() {
         getSkillRepository();
+        skillRepositoryFile = new SkillRepositoryFile();
     }
 
     /**
@@ -64,9 +69,12 @@ public class RegisterSkillController {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Skill name cannot be null or empty");
         }
-        SkillRepository skillRepository = getSkillRepository();
         Skill newSkill = new Skill(name);
         skillRepository.add(newSkill);
+        if(!skillRepositoryFile.save(skillRepository))
+        {
+            System.out.println("Error while saving Skill Repository in external file!");
+        }
         return newSkill;
     }
 }
