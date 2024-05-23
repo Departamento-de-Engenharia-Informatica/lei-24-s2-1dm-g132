@@ -88,7 +88,7 @@ public class RegisterCollaboratorController {
 
         Optional<Collaborator> newCollaborator = Optional.empty();
 
-            newCollaborator = collaboratorRepository.registerCollaborator(name, birthdate, admissionDate, address, phoneNumber, email, taxpayerNumber,
+        newCollaborator = collaboratorRepository.registerCollaborator(name, birthdate, admissionDate, address, phoneNumber, email, taxpayerNumber,
                             identificationDocumentType, identificationDocumentNumber, job);
 
         if (newCollaborator.isPresent())

@@ -7,6 +7,7 @@ import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
+import pt.ipp.isep.dei.esoft.project.repository.serialization.TeamRepositoryFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,8 @@ public class GenerateTeamController {
      */
     private TeamRepository teamRepository;
 
+    private TeamRepositoryFile teamRepositoryFile;
+
     /**
      * Constructs a new GenerateTeamController object.
      */
@@ -38,6 +41,7 @@ public class GenerateTeamController {
         getCollaboratorRepository();
         getSkillRepository();
         getTeamRepository();
+        teamRepositoryFile = new TeamRepositoryFile();
     }
 
     /**
@@ -88,14 +92,21 @@ public class GenerateTeamController {
     public Optional<Team> registerTeam(List<Collaborator> teamProposal) {
 
 
-        Optional<TeamRepository> teamRepository = Optional.ofNullable(getTeamRepository());
+        teamRepository = getTeamRepository();
 
         Optional<Team> newTeam = Optional.empty();
 
-        if (teamRepository.isPresent()) {
-            newTeam = teamRepository.get()
-                    .registerTeam(teamProposal);
+
+        newTeam = teamRepository.registerTeam(teamProposal);
+
+        if (newTeam.isPresent())
+        {
+            if(!teamRepositoryFile.save(teamRepository))
+            {
+                System.out.println("Error while saving Collaborator Repository in external file!");
+            }
         }
+
         return newTeam;
     }
 

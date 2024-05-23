@@ -1,11 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Represents a team in the system.
  */
-public class Team {
+public class Team implements Serializable {
 
     /**
      * The list of collaborators in which the team consists.

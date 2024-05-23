@@ -2,12 +2,13 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.lang.IllegalArgumentException;
 
-public class SkillRepository {
+public class SkillRepository implements Serializable {
 
 
     private final List<Skill> skills;
