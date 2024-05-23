@@ -1,28 +1,47 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Objects;
 import java.lang.IllegalArgumentException;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class GreenSpace {
+public class GreenSpaceDTO {
 
     private String name;
     private String address;
     private int area;
     private String type;
 
-    public GreenSpace(String name, String address, int area, String type) {
+    public GreenSpaceDTO(String name, String address, int area, String type) {
         setName(name);
         setAddress(address);
         setArea(area);
         setType(type);
     }
-    public String getName() {
-        return name;
+
+
+
+    public List<GreenSpaceDTO> greenSpaces(){
+        GreenSpaceRepository greenSpaceRepository = new GreenSpaceRepository();
+        return greenSpaceRepository.getGreenSpaces().stream()
+                .map(greenSpace -> {
+                    GreenSpaceDTO dto = new GreenSpaceDTO(address, name, area, type);
+                    dto.setName(greenSpace.getName());
+                    dto.setAddress(greenSpace.getAddress());
+                    dto.setArea(greenSpace.getArea());
+                    dto.setType(greenSpace.getType());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
     public String getAddress() {
         return address;
+    }
+    public String getName() {
+        return name;
     }
     public int getArea() {
         return area;
@@ -32,7 +51,7 @@ public class GreenSpace {
     }
 
 
-    private void setName(String name) {
+    public void setName(String name) {
 
         if (name.matches(".*\\d.*")) {
             // If the input name contains numeric characters, throw an exception or handle it accordingly
@@ -56,7 +75,7 @@ public class GreenSpace {
 
     }
 
-    private void setAddress(String address) {
+    public void setAddress(String address) {
         String[] components = address.trim().split(",");
 
         if (components.length != 3) {
@@ -83,7 +102,7 @@ public class GreenSpace {
         this.address = address;
     }
 
-    private void setArea(int area) {
+    public void setArea(int area) {
         if (area == 0) {
             throw new IllegalArgumentException("Area cannot be zero.");
         }
@@ -94,7 +113,7 @@ public class GreenSpace {
         this.area = area;
     }
 
-    private void setType(String type) {
+    public void setType(String type) {
         if (type.isEmpty()) {
             throw new IllegalArgumentException("Type cannot be empty.");
         }
@@ -118,13 +137,13 @@ public class GreenSpace {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        GreenSpace greenSpace = (GreenSpace) o;
+        GreenSpaceDTO greenSpace = (GreenSpaceDTO) o;
         return name.equalsIgnoreCase(greenSpace.name);
     }
 
     @Override
-    public GreenSpace clone() {
-        return new GreenSpace(this.name, this.address, this.area, this.type);
+    public GreenSpaceDTO clone() {
+        return new GreenSpaceDTO(this.name, this.address, this.area, this.type);
     }
 
     public String toString() {
