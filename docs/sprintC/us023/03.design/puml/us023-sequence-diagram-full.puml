@@ -16,6 +16,7 @@ participant "entriesList:\nList<Task>" as EntriesList
 participant ":TaskMapper" as TaskMapper
 participant "freeAgendaEntriesList\nList<Task>" as freeAgendaEntriesList
 participant "freeAgendaEntriesListDto\nList<TaskDto>" as freeAgendaEntriesListDto
+participant "teamSchedule\nList<Task>" as teamSchedule
 participant "objDto\n:TaskDto" as taskDto
 participant "taskDto\n:TaskDto" as TaskDto
 participant "teamRepository:\nTeamRepository" as TeamRepository
@@ -263,6 +264,47 @@ activate GSM
                     TeamRepository --> CTRL : selectedTeam
                     deactivate TeamRepository
 
+                    CTRL -> Agenda : possible = checkTeamSchedule(selectedTeam, selectedTask)
+                    activate Agenda
+
+                        Agenda --> teamSchedule** : create()
+
+                        loop for each known Task
+
+                            Agenda -> EntriesList : entry = get(i)
+                            activate EntriesList
+                            deactivate EntriesList
+
+                            Agenda -> Task : result = belongsToTeam(selectedTeam)
+                            activate Task
+                            deactivate Task
+
+                            opt result == true
+
+                                Agenda -> teamSchedule : add(entry)
+                                activate teamSchedule
+                                deactivate teamSchedule
+
+                            end opt
+
+                        end loop
+
+                        loop for each object in teamSchedule
+
+                            Agenda -> teamSchedule : obj = get(i)
+                            activate teamSchedule
+                            deactivate teamSchedule
+
+                            Agenda -> Task : obj.hasConflict(selectedTask)
+                            activate Task
+                            deactivate Task
+
+                        end loop
+
+                    deactivate Agenda
+
+                    opt possible == true
+
                     CTRL -> Agenda : assignTeam(selectedTask, selectedTeam)
                     activate Agenda
 
@@ -278,6 +320,8 @@ activate GSM
 
                         Agenda --> CTRL : selectedTask
                         deactivate Agenda
+
+                        end opt
 
                     CTRL --> UI : selectedTask
                     deactivate CTRL
