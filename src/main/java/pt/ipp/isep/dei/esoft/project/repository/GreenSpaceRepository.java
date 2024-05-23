@@ -30,7 +30,7 @@ public class GreenSpaceRepository {
         }
         return success;
     }
-
+    
     private boolean validate(GreenSpaceDTO greenSpace) {
         return greenSpacesDoNotContain(greenSpace);
     }

@@ -36,7 +36,7 @@ public class RegisterGreenSpaceController {
         return greenSpaceRepository.getGreenSpaces();
     }
 
-    public GreenSpaceDTO registerGreenSpace(String name, String address, int area, String type) {
+    /*public GreenSpaceDTO registerGreenSpace(String name, String address, int area, String type) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Green Space name cannot be null or empty");
         }
@@ -45,7 +45,7 @@ public class RegisterGreenSpaceController {
         greenSpaceRepository.add(newGreenSpace);
         return newGreenSpace;
     }
-
+*/
 
 
 
