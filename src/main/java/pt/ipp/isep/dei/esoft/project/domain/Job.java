@@ -74,7 +74,7 @@ public class Job implements Serializable {
      * @return True if the job has the specified name, false otherwise.
      */
     public boolean hasName(String name) {
-        return this.name.equals(name);
+        return this.name.equalsIgnoreCase(name);
     }
 
     /**
@@ -91,7 +91,7 @@ public class Job implements Serializable {
             return false;
         }
         Job job = (Job) o;
-        return name.equals(job.name);
+        return name.equalsIgnoreCase(job.name);
     }
 
     /**

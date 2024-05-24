@@ -73,7 +73,7 @@ public class Skill implements Serializable {
      * @return True if the skill has the specified name, false otherwise.
      */
     public boolean hasName(String name) {
-        return this.name.equals(name);
+        return this.name.equalsIgnoreCase(name);
     }
 
     /**
@@ -90,7 +90,7 @@ public class Skill implements Serializable {
             return false;
         }
         Skill skill = (Skill) o;
-        return name.equals(skill.name);
+        return name.equalsIgnoreCase(skill.name);
     }
 
     /**
