@@ -67,6 +67,8 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.repository.serialization.JobRepositoryFile;
+
 import java.lang.IllegalArgumentException;
 
 import java.util.List;
@@ -75,12 +77,15 @@ public class RegisterJobController {
 
     private JobRepository jobRepository;
 
+    private JobRepositoryFile jobRepositoryFile;
+
     /**
      * Constructs a new RegisterJobController object.
      * Initializes the job repository by obtaining it from the Repositories singleton instance.
      */
     public RegisterJobController() {
         getJobRepository();
+        jobRepositoryFile = new JobRepositoryFile();
     }
 
     /**
@@ -127,6 +132,10 @@ public class RegisterJobController {
         JobRepository jobRepository = getJobRepository();
         Job newJob = new Job(name);
         jobRepository.add(newJob);
+        if(!jobRepositoryFile.save(jobRepository))
+        {
+            System.out.println("Error while saving Job Repository in external file!");
+        }
         return newJob;
     }
 }

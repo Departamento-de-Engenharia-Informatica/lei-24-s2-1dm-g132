@@ -32,7 +32,6 @@ public class RegisterJobUI implements Runnable {
         System.out.println("\n\n--- Register Job ------------------------");
         requestData();
         submitData();
-        displayJobs();
     }
 
     /**

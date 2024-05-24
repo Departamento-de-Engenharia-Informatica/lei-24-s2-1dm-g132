@@ -69,6 +69,7 @@ public class RegisterSkillController {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Skill name cannot be null or empty");
         }
+        SkillRepository skillRepository = getSkillRepository();
         Skill newSkill = new Skill(name);
         skillRepository.add(newSkill);
         if(!skillRepositoryFile.save(skillRepository))
