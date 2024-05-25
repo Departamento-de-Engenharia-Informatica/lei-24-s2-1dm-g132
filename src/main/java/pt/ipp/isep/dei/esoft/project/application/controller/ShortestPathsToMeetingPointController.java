@@ -1,12 +1,16 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
 import pt.ipp.isep.dei.esoft.project.repository.MeetingPointsRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
-public class ImportMeetingPointsCsvController {
+import java.util.List;
+
+public class ShortestPathsToMeetingPointController {
+
     private MeetingPointsRepository meetingPointsRepository;
 
-    public ImportMeetingPointsCsvController() {
+    public ShortestPathsToMeetingPointController() {
         getMeetingPointsRepository();
     }
 
@@ -16,7 +20,11 @@ public class ImportMeetingPointsCsvController {
         return meetingPointsRepository;
     }
 
-    public boolean loadGraph(String filePath) {
-        return meetingPointsRepository.loadGraph(filePath);
+    public boolean getShortestPathsToMeetingPoint(Vertice meetingPoint){
+        return meetingPointsRepository.getShortestPathsToMeetingPoint(meetingPoint);
+    }
+
+    public List<Vertice> getAllMeetingPoints(){
+        return meetingPointsRepository.getCsvGraphCopy().vertices();
     }
 }

@@ -17,13 +17,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class GraphPngGenerator {
+public class GraphPngAndCsvGenerator {
 
-    public boolean generateGraphSim(MatrixGraph<Vertice, Double> graph, String fileName) {
-        String graphFolderPath = getDesktopPath() + File.separator + "output" + File.separator + "us13";
+    public boolean generate(MatrixGraph<Vertice, Double> graph, String fileName, String desktopOutputFolder) {
+        String graphFolderPath = getDesktopPath() + File.separator + desktopOutputFolder;
         String graphPath = graphFolderPath + File.separator + graph.getName() + "-" + fileName;
         setupDirs(graph, fileName, graphFolderPath);
-        generateCsvOfGraph(graph, graph.getName()+"-"+fileName.replace(".png", ""));
+        generateCsvOfGraph(graph, desktopOutputFolder,graph.getName()+"-"+fileName.replace(".png", ""));
 
         System.setProperty("org.graphstream.ui", "javafx");
         //System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -128,8 +128,8 @@ public class GraphPngGenerator {
         return true;
     }
 
-    private boolean generateCsvOfGraph(MatrixGraph<Vertice, Double> graph, String fileName) {
-        String graphFolderPath = getDesktopPath() + File.separator + "output" + File.separator + "us13";
+    private boolean generateCsvOfGraph(MatrixGraph<Vertice, Double> graph, String desktopOutputFolder, String fileName) {
+        String graphFolderPath = getDesktopPath() + File.separator + desktopOutputFolder;
         File graphFolder = new File(graphFolderPath);
         try {
             if (!graphFolder.exists()) {

@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.GraphPngGenerator;
+import pt.ipp.isep.dei.esoft.project.domain.GraphPngAndCsvGenerator;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
@@ -86,11 +86,11 @@ public class WaterSupplyPointsRepository {
         MatrixGraph<Vertice, Double> graph = Algorithms.minDistGraph(getCsvGraphCopy(), Double::compareTo);
         graph.setName(getCsvGraphCopy().getName());
 
-        generateGraphPNG(getCsvGraphCopy(), "FullGraph.png");
+        generateFilesFromGraph(getCsvGraphCopy(), "FullGraph.png");
         if (!graph.isDirected()) {
-            generateGraphPNG(removeDups(graph), "MinimalCostGraph.png");
+            generateFilesFromGraph(removeDups(graph), "MinimalCostGraph.png");
         } else {
-            generateGraphPNG(graph, "MinimalCostGraph.png");
+            generateFilesFromGraph(graph, "MinimalCostGraph.png");
         }
 
         return true;
@@ -108,8 +108,9 @@ public class WaterSupplyPointsRepository {
         return newGraph;
     }
 
-    private boolean generateGraphPNG(MatrixGraph<Vertice, Double> graph, String fileName) {
-        GraphPngGenerator graphPngGenerator = new GraphPngGenerator();
-        return graphPngGenerator.generateGraphSim(graph, fileName);
+    private boolean generateFilesFromGraph(MatrixGraph<Vertice, Double> graph, String fileName) {
+        GraphPngAndCsvGenerator graphPngAndCsvGenerator = new GraphPngAndCsvGenerator();
+        String outputFolder = "output" + File.separator + "us13";
+        return graphPngAndCsvGenerator.generate(graph, fileName, outputFolder);
     }
 }
