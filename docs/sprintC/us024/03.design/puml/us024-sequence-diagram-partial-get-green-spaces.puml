@@ -7,6 +7,10 @@ participant ":PostponeEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "greenSpaceRepository\n:GreenSpaceRepository" as GreenSpaceRepository
+participant "greenSpaceMapper\n:GreenSpaceMapper" as GreenSpaceMapper
+participant "greenSpaceList\n:List<GreenSpace>" as GreenSpaceList
+participant "greenSpaceDtoList\n:List<GreenSpaceDto>" as GreenSpaceDtoList
+participant "greenSpaceDto\n:GreenSpaceDto" as GreenSpaceDto
 
 autonumber 3
 -> CTRL : getGreenSpaces()
@@ -30,11 +34,43 @@ activate CTRL
            CTRL -> GreenSpaceRepository : getGreenSpaces()
            activate GreenSpaceRepository
 
-           GreenSpaceRepository --> CTRL : greenSpaces
+           GreenSpaceRepository -> GreenSpaceList : getGreenSpaces()
+           activate GreenSpaceList
+
+           GreenSpaceList --> GreenSpaceRepository : greenSpaces
+           deactivate GreenSpaceList
+
+           GreenSpaceRepository -> GreenSpaceMapper : toDTO(greenSpaces)
+           activate GreenSpaceMapper
+
+           GreenSpaceMapper -> GreenSpaceDtoList ** : create()
+
+           loop for each greenSpace in list
+           GreenSpaceMapper -> GreenSpaceList : greenSpace = get(i)
+           activate GreenSpaceList
+
+           deactivate GreenSpaceList
+
+           GreenSpaceMapper -> GreenSpaceMapper : greenSpaceDTO = toDTO(greeenSpace)
+           activate GreenSpaceMapper
+
+           GreenSpaceMapper --> GreenSpaceDto ** : create()
+           deactivate GreenSpaceMapper
+
+           GreenSpaceMapper -> GreenSpaceDtoList : add(greenSpaceDTO)
+           activate GreenSpaceDtoList
+           deactivate GreenSpaceDtoList
+
+           end
+
+           GreenSpaceMapper --> GreenSpaceRepository : greenSpacesDTO
+           deactivate GreenSpaceMapper
+
+           GreenSpaceRepository --> CTRL : greenSpacesDTO
            deactivate GreenSpaceRepository
 
 end group
-autonumber 4
-<-- CTRL : greenSpaces
+autonumber 19
+<-- CTRL : greenSpacesDTO
 
 @enduml
