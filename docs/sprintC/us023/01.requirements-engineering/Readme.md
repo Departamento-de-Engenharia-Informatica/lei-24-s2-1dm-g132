@@ -27,6 +27,18 @@ Done).
 >
 > **Answer:** No.
 
+> **Question:** When the task is created, the GSM must input the estimated execution time (which can be in days and/or hours and/or minutes). If he inputs, for example, "2 Days + 2 hours," does that mean 24 + 24 + 2 hours of work for that task, or does each workday have a fixed number of hours, for example, 8h + 8h + 2h?
+>
+> **Answer:** Working days should be considered; the duration of a working day could be defined as a configuration at bootstrap.
+
+> **Question:** When the task enters in Agenda and the execution date is set, nothing is referenced regarding at what time the task execution starts. In this sense, although we have the start date of the task execution, we don't have the time it starts, so we can't calculate the team's availability accurately.
+>
+> **Answer:** The GSM can insert the date and the starting time for the task in the agenda.
+
+> **Question:** So, how are we supposed to evaluate the team's availability? Regardless of what time the task finishes, a team cannot have more than one task on the same day? In other words, if it's to start a new task, it will have to be the next day?
+>
+> **Answer:** In terms of planning, the expected duration of the task should be considered, as soon a collaborator states the task is completed, the team is free.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** A message must be sent to all team members informing them about the assignment.
