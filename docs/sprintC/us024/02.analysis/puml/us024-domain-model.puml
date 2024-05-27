@@ -21,7 +21,9 @@ class Task {
     degreeOfUrgency
     expectedDuration
     status
-    startingDate
+    plannedStartDate
+    startDate
+    endDate
 }
 
 class GSM {
