@@ -30,11 +30,27 @@ class GreenSpaceRepository {
    + getGreenSpacebyName(name)
 }
 
+class GreenSpaceMapper {
+    + List<GreenSpaceDTO> toDTO(List<GreenSpace> greenSpaces)
+    + GreenSpaceDTO toDTO(GreenSpace greenSpace)
+}
+class GreenSpaceDTO{
+    - String name
+    - String Type
+    - int area
+    - int adress
+    + GreenSpaceDTO(name, type, area, adress)
+}
+
 RegisterGreenSpaceUI ..> RegisterGreenSpaceController
 RegisterGreenSpaceController ..> GreenSpaceRepository : greenSpaceRepository
-GreenSpaceRepository ..> GreenSpace : greenSpace
+GreenSpaceRepository ---> GreenSpace : greenSpace
 Repositories ..> GreenSpaceRepository : greenSpaceRepository
 RegisterGreenSpaceController ..> Repositories : repositories
+GreenSpaceMapper ..> GreenSpace
+GreenSpaceMapper ..> GreenSpaceDTO
+GreenSpaceRepository ..> GreenSpaceMapper : greenSpaceMapper
+
 'RegisterGreenSpaceController ..> GreenSpace : greenSpace
 
 @enduml

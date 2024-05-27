@@ -12,6 +12,8 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "GreenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
 participant "GreenSpace\n:GreenSpace" as GreenSpace
+participant "greenSpaceDto\n:GreenSpaceDto" as GreenSpaceDto
+participant "GreenSpaceMapper\n:GreenSpaceMapper" as GreenSpaceMapper
 
 activate GSM
 
@@ -54,6 +56,10 @@ activate GSM
         CTRL -> GreenSpaceRepository : getGreenSpaceByName(name)
 
         activate GreenSpaceRepository
+
+        GreenSpaceRepository -> GreenSpaceMapper : Dto(GreenSpace)
+
+        activate GreenSpaceMapper
 
         GreenSpaceRepository -> CTRL : GreenSpace
 
