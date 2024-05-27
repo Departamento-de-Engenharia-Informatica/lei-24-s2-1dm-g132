@@ -28,19 +28,3 @@ activate GSM
 
 @enduml
 
-@startuml
-skinparam monochrome true
-skinparam packageStyle rectangle
-skinparam shadowing false
-
-title US027- As a GSM, I need to list all green spaces
-
-activate GSM
-
-GSM -> System : Request to produce a list with all the green Spaces
-activate System
-
-
-
-@enduml
-

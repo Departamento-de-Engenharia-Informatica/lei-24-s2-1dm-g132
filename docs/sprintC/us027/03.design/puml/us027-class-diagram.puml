@@ -1,27 +1,33 @@
 @startuml
-skinparam classAttributeIconSize 0
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
 
 skinparam classAttributeIconSize 0
 
-class RegisterGreenSpaceController {
-     + RegisterGreenSpaceController(GreenSpaceRepository)
-        + GreenSpace(name, type, area, adress)
+'left to right direction
 
+class GreenSpace {
+  - String name
+  - String adress
+  - String type
+  - Int area
 }
 
 
-class RegisterGreenSpaceUI {
+
+class ListGreenSpacesUI {
+}
+
+class ListGreenSpacesController {
+    + ListGreenSpacesController(GreenSpaceRepository)
+    + getGreenSpaceList()
+    + addGreenSpaceToList(GreenSpace)
 
 }
 
-class GreenSpace
-{
-    - String name
-    - String Type
-    - int area
-    - int adress
-    + GreenSpace(name, type, area, adress)
-}
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
@@ -29,14 +35,20 @@ class Repositories {
 }
 
 class GreenSpaceRepository {
-   + getGreenSpacebyName(name)
+    + getGreenSpaceList()
 }
 
-RegisterGreenSpaceUI ..> RegisterGreenSpaceController
-RegisterGreenSpaceController ..> GreenSpaceRepository : greenSpaceRepository
-GreenSpaceRepository ..> GreenSpace : greenSpace
-Repositories ..> GreenSpaceRepository : greenSpaceRepository
-RegisterGreenSpaceController ..> Repositories : repositories
-'RegisterGreenSpaceController ..> GreenSpace : greenSpace
+
+
+Repositories -> Repositories : instance
+Repositories --> "1" GreenSpaceRepository: GreenSpaceRepository
+ListGreenSpacesController ...> Repositories: repositories
+ListGreenSpacesController ...> reenSpaceRepository: GreenSpaceRepository
+
+ListGreenSpacesUI ..> ListGreenSpacesController
+
+GreenSpaceRepository "1" -> "*" GreenSpace : GreenSpace
+
+
 
 @enduml

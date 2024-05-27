@@ -22,6 +22,19 @@ public class GreenSpaceRepository {
         }
         return optionalValue;
     }
+    public GreenSpaceDTO getGreenSpaceByName(String name, String address, int area, String type) {
+        GreenSpaceDTO newgreenSpace = new GreenSpaceDTO(name, address, area, type);
+        GreenSpaceDTO greenSpace = null;
+        if (greenSpaces.contains(newgreenSpace)) {
+            greenSpace = greenSpaces.get(greenSpaces.indexOf(newgreenSpace));
+        }
+        if (greenSpace == null) {
+            throw new IllegalArgumentException(
+                    "Green Space requested for [" + name + "] does not exist.");
+        }
+        return greenSpace;
+    }
+
 
     private boolean addGreenSpace(GreenSpaceDTO greenSpace) {
         boolean success = false;
@@ -30,7 +43,11 @@ public class GreenSpaceRepository {
         }
         return success;
     }
-    
+    public void add(GreenSpaceDTO greenSpace) {
+        this.greenSpaces.add(greenSpace);
+    }
+
+
     private boolean validate(GreenSpaceDTO greenSpace) {
         return greenSpacesDoNotContain(greenSpace);
     }

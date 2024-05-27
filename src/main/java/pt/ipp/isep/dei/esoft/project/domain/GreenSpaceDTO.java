@@ -14,12 +14,15 @@ public class GreenSpaceDTO {
     private String address;
     private int area;
     private String type;
+    private Collaborator email;
 
-    public GreenSpaceDTO(String name, String address, int area, String type) {
+
+    public GreenSpaceDTO(String name, String address, int area, String type, Collaborator email) {
         setName(name);
         setAddress(address);
         setArea(area);
         setType(type);
+        this.email = email;
     }
 
 
@@ -28,7 +31,7 @@ public class GreenSpaceDTO {
         GreenSpaceRepository greenSpaceRepository = new GreenSpaceRepository();
         return greenSpaceRepository.getGreenSpaces().stream()
                 .map(greenSpace -> {
-                    GreenSpaceDTO dto = new GreenSpaceDTO(address, name, area, type);
+                    GreenSpaceDTO dto = new GreenSpaceDTO(address, name, area, type, email);
                     dto.setName(greenSpace.getName());
                     dto.setAddress(greenSpace.getAddress());
                     dto.setArea(greenSpace.getArea());
@@ -143,7 +146,7 @@ public class GreenSpaceDTO {
 
     @Override
     public GreenSpaceDTO clone() {
-        return new GreenSpaceDTO(this.name, this.address, this.area, this.type);
+        return new GreenSpaceDTO(this.name, this.address, this.area, this.type, this.email);
     }
 
     public String toString() {
