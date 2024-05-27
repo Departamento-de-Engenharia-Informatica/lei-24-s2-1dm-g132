@@ -3,48 +3,139 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+title US028 - Consult the tasks assigned to a collaborator
+
 autonumber
 
-'hide footbox
-actor "HRM" as HRM
-participant ":RegisterSkillUI" as UI
-participant ":RegisterSkillController" as CTRL
+actor "Collaborator" as Employee
+participant ":ConsultTasksUI" as UI
+participant ":ConsultTasksController" as CTRL
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSION
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "taskDTO\n:TaskDTO" as TaskDTO
 
-activate HRM
+activate Employee
 
-        HRM -> UI : asks to register a new skill
-activate UI
+    Employee -> UI : asks to consult the tasks assigned to collaborator
+    activate UI
 
-        UI --> HRM : requests data (skill name)
-         deactivate UI
+    UI -> CTRL** : create
 
-    HRM -> UI : confirm and submits data
-        activate UI
+    UI --> Employee : requests first date
+    deactivate UI
 
-                UI -> CTRL : registerSkill (skill name)
-            activate CTRL
-    group Create Skill
+    Employee -> UI : types first date
+    activate UI
 
-                                        CTRL -> CTRL: addSkill(skill)
+    UI --> Employee : requests second date
+    deactivate UI
 
-                                                                           activate CTRL
-                                                                               CTRL -> CTRL: validateSkill(skill)
-                                                                               activate CTRL
-                                                                                   CTRL --> CTRL
-                                                                               deactivate CTRL
+    Employee -> UI : types second date
+    activate UI
 
-                                                                               CTRL --> CTRL
-                                                                               deactivate CTRL
-                                                                               end
+    UI --> Employee : asks if collaborator wants to view tasks filtered by status
+    deactivate UI
 
-            CTRL --> UI : Skill
-            deactivate CTRL
+    Employee -> UI : answers yes or no
+    activate UI
+
+    UI -> CTRL : getEmailCollaborator()
+    activate CTRL
+
+    CTRL -> _APP : getInstance()
+    activate _APP
+
+    _APP --> CTRL : appSession
+    deactivate _APP
+
+    CTRL -> APP : getCurrentSession()
+    activate APP
+
+    APP --> CTRL : currentSession
+    deactivate APP
+
+    CTRL -> SESSION : email = getUser(email)
+    activate SESSION
+
+    SESSION --> CTRL : email
+    deactivate SESSION
+
+    CTRL --> UI : email
+    deactivate CTRL
+
+    UI -> CTRL : getTasksByCollaborator(email)
+    activate CTRL
+
+    CTRL -> RepositorySingleton : getInstance()
+    activate RepositorySingleton
+
+    RepositorySingleton --> CTRL: repositories
+    deactivate RepositorySingleton
+
+    CTRL -> PLAT : getTaskRepository()
+    activate PLAT
+
+    PLAT --> CTRL: taskRepository
+    deactivate PLAT
+
+    CTRL -> TaskRepository : getTasksByCollaborator(email)
+    activate TaskRepository
+    TaskRepository -> TaskRepository : getTasksByCollaborator(email)
+    activate TaskRepository
+    loop for each task
+    TaskRepository -> TaskDTO : hasCollaboratorEmail(email)
+    activate TaskDTO
+    TaskDTO --> TaskRepository : true/false
+    deactivate TaskDTO
+    end
+    TaskRepository --> TaskRepository : tasksByCollaborator
+    deactivate TaskRepository
 
 
-            UI --> HRM : displays operation success
-        deactivate UI
+    TaskRepository --> CTRL : tasksByCollaborator
+    deactivate TaskRepository
+
+    CTRL --> UI : tasksByCollaborator
+    deactivate CTRL
 
 
+    alt answer is yes
+        UI -> CTRL : consultTasksByStatus(email, tasksByCollaborator)
+        activate CTRL
+
+        CTRL -> TaskRepository : consultTasksByStatus(email, tasksByCollaborator)
+        activate TaskRepository
+
+        TaskRepository --> TaskRepository : getTasksByStatus(email, tasksByCollaborator)
+        TaskRepository --> TaskRepository : orderTasksByDate()
+        TaskRepository --> CTRL : tasks
+        deactivate TaskRepository
+
+        CTRL --> UI : tasks
+        deactivate CTRL
+    end
+
+    alt answer is no
+        UI -> CTRL : consultTasks(email, tasksByCollaborator)
+        activate CTRL
+
+        CTRL -> TaskRepository : consultTasks(email, tasksByCollaborator)
+        activate TaskRepository
+
+        TaskRepository --> TaskRepository : orderTasksByDate()
+        TaskRepository --> CTRL : tasks
+        deactivate TaskRepository
+
+        CTRL --> UI : tasks
+    end
 
 
+    UI --> Employee : shows tasks assigned to collaborator \nbetween two dates requested
+    deactivate UI
+
+deactivate Employee
 @enduml

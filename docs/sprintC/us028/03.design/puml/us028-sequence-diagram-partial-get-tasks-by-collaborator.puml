@@ -1,0 +1,52 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":ConsultTasksController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "taskDTO\n:TaskDTO" as TaskDTO
+
+autonumber 11
+-> CTRL : getTasksByCollaborator(email)
+
+autonumber 11.1
+
+activate CTRL
+    group Get Tasks by Collaborator
+           CTRL -> RepositorySingleton : getInstance()
+           activate RepositorySingleton
+
+           RepositorySingleton --> CTRL: repositories
+           deactivate RepositorySingleton
+
+           CTRL -> PLAT : getTaskRepository()
+           activate PLAT
+
+           PLAT --> CTRL: taskRepository
+           deactivate PLAT
+
+           CTRL -> TaskRepository : getTasksByCollaborator(email)
+           activate TaskRepository
+           TaskRepository -> TaskRepository : getTasksByCollaborator(email)
+           activate TaskRepository
+           loop for each task
+           TaskRepository -> TaskDTO : hasCollaboratorEmail(email)
+           activate TaskDTO
+           TaskDTO --> TaskRepository : true/false
+           deactivate TaskDTO
+           end
+           TaskRepository --> TaskRepository : tasksByCollaborator
+           deactivate TaskRepository
+
+
+           TaskRepository --> CTRL : tasksByCollaborator
+           deactivate TaskRepository
+
+end group
+autonumber 22
+<-- CTRL : email
+
+@enduml
