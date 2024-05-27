@@ -71,7 +71,9 @@ public class Bootstrap implements Runnable {
                 AuthenticationController.ROLE_VTF);
         authenticationRepository.addUserWithRole("Collaborator", "collaborator@this.app", "pwd",
                 AuthenticationController.ROLE_COLLABORATOR);
-        authenticationRepository.addUserWithRole("Green Spaces Manager", "gsm@this.app", "pwd",
+        authenticationRepository.addUserWithRole("Green Spaces Manager1", "gsm1@this.app", "pwd",
+                AuthenticationController.ROLE_GSM);
+        authenticationRepository.addUserWithRole("Green Spaces Manager2", "gsm2@this.app", "pwd",
                 AuthenticationController.ROLE_GSM);
         authenticationRepository.addUserWithRole("Green Spaces User", "gsu@this.app", "pwd",
                 AuthenticationController.ROLE_GSU);
