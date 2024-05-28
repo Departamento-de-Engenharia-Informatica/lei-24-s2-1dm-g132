@@ -58,7 +58,7 @@ public class GraphPngAndCsvGenerator {
             e.setAttribute("layout.weight", 4);
         }
 
-        tempGraph.setAttribute("ui.stylesheet", "node { fill-color: red; size: 20px; text-size: 16; text-color: red; } " +
+        tempGraph.setAttribute("ui.stylesheet", "node { fill-color: red; size: 5px; text-size: 16; text-color: red; } " +
                 "edge { fill-color: black; size: 2px; text-size: 16; text-color: black; }");
 
 

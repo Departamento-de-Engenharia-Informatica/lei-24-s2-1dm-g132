@@ -30,7 +30,7 @@ public class Repositories {
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
-        waterSupplyPointsRepository = new WaterSupplyPointsRepository(false);
+        waterSupplyPointsRepository = new WaterSupplyPointsRepository(true);
         jobRepository = jobRepositoryFile.read();
         collaboratorRepository = collaboratorRepositoryFile.read();
         skillRepository = skillRepositoryFile.read();
