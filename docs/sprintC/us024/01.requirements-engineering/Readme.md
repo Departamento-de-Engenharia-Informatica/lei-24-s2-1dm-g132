@@ -16,9 +16,7 @@ As a GSM, I want to postpone an entry in the Agenda to a future date.
 >
 > **Answer:** When postponing a task, the new predicated date for execution should be inserted.
 
-> **Question:**
-As a GSM, I want to Postpone an entry in the Agenda to a future date.
-The date you want to postpone in this US24 is the date referring to the "approximate expected duration" field when we registered the task?
+> **Question:** The date you want to postpone in this US24 is the date referring to the "approximate expected duration" field when we registered the task?
 >
 > **Answer:** No; sometimes, for various reasons (e.g. insufficient staff, faulty equipment or adverse weather conditions) a task has to be postponed to a new date; task duration is not directly related to this.
  
@@ -26,6 +24,7 @@ The date you want to postpone in this US24 is the date referring to the "approxi
 ### 1.3. Acceptance Criteria
 
 * **AC1:** It should not be able to postpone a task that is done.
+* **AC2:** It should only be able to postpone a task to a future date.
 
 ### 1.4. Found out Dependencies
 

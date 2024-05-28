@@ -3,37 +3,94 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+title US028 - Consult the tasks assigned to a collaborator
+
 autonumber
 
-'hide footbox
-participant ":RegisterSkillController" as CTRL
+actor "Collaborator" as Employee
+participant ":ConsultTasksUI" as UI
+participant ":ConsultTasksController" as CTRL
+participant "taskRepository\n:TaskRepository" as TaskRepository
+
+activate Employee
+
+    Employee -> UI : asks to consult the tasks assigned to collaborator
+    activate UI
+
+    UI -> CTRL** : create
+
+    UI --> Employee : requests first date
+    deactivate UI
+
+    Employee -> UI : types first date
+    activate UI
+
+    UI --> Employee : requests second date
+    deactivate UI
+
+    Employee -> UI : types second date
+    activate UI
+
+    UI --> Employee : asks if collaborator wants to view tasks filtered by status
+    deactivate UI
+
+    Employee -> UI : answers yes or no
+    activate UI
+
+    UI -> CTRL : getEmailCollaborator()
+    activate CTRL
+
+    ref over CTRL
+        Get Email
+    end
+
+    CTRL --> UI : email
+    deactivate CTRL
+
+    UI -> CTRL : getTasksByCollaborator(email)
+    activate CTRL
+
+    ref over CTRL
+         Get Tasks by Collaborator
+    end
+
+    CTRL --> UI : tasksByCollaborator
+    deactivate CTRL
 
 
+    alt answer is yes
+        UI -> CTRL : consultTasksByStatus(email, tasksByCollaborator)
+        activate CTRL
+
+        CTRL -> TaskRepository : consultTasksByStatus(email, tasksByCollaborator)
+        activate TaskRepository
+
+        TaskRepository --> TaskRepository : getTasksByStatus(email, tasksByCollaborator)
+        TaskRepository --> TaskRepository : orderTasksByDate()
+        TaskRepository --> CTRL : tasks
+        deactivate TaskRepository
+
+        CTRL --> UI : tasks
+        deactivate CTRL
+    end
+
+    alt answer is no
+        UI -> CTRL : consultTasks(email, tasksByCollaborator)
+        activate CTRL
+
+        CTRL -> TaskRepository : consultTasks(email, tasksByCollaborator)
+        activate TaskRepository
+
+        TaskRepository --> TaskRepository : orderTasksByDate()
+        TaskRepository --> CTRL : tasks
+        deactivate TaskRepository
+
+        CTRL --> UI : tasks
+    end
 
 
+    UI --> Employee : shows tasks assigned to collaborator \nbetween two dates requested
+    deactivate UI
 
-                 -> CTRL : registerSkill (skill name)
-            activate CTRL
-    group Create Skill
-
-                                        CTRL -> CTRL: addSkill(skill)
-
-                                                                           activate CTRL
-                                                                               CTRL -> CTRL: validateSkill(skill)
-                                                                               activate CTRL
-                                                                                   CTRL --> CTRL
-                                                                               deactivate CTRL
-
-                                                                               CTRL --> CTRL
-                                                                               deactivate CTRL
-                                                                               end
-
-             <-- CTRL : Skill
-            deactivate CTRL
-
-
-
-
-
-
+deactivate Employee
 @enduml

@@ -11,6 +11,7 @@ actor "GSM" as Employee
 participant ":PostponeEntryUI" as UI
 participant ":PostponeEntryController" as CTRL
 participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "taskDto\n:TaskDto" as TaskDto
 
 activate Employee
 
@@ -26,7 +27,7 @@ activate Employee
                         Get Green Spaces
                     end
 
-                    CTRL --> UI : greenSpaces
+                    CTRL --> UI : greenSpacesDTO
                 deactivate CTRL
 
     UI --> Employee : shows list of green spaces to select one
@@ -35,14 +36,14 @@ activate Employee
     Employee -> UI : selects the green space
     activate UI
 
-        UI -> CTRL : getTasksByGreenSpace(greenSpace)
+        UI -> CTRL : getTasksByGreenSpace(greenSpaceDTO)
         activate CTRL
 
             ref over CTRL
                Get Tasks by Green Space
             end
 
-            CTRL --> UI : tasksByGreenSpace
+            CTRL --> UI : tasksByGreenSpaceDTO
         deactivate CTRL
 
     UI --> Employee : shows list of entries in the agenda of the selected green space
@@ -57,19 +58,20 @@ activate Employee
     Employee -> UI : types the new date
     activate UI
 
-    UI -> CTRL : postponeEntry(task, newDate)
+    UI -> CTRL : postponeEntry(taskDTO, newDate)
     activate CTRL
 
-    CTRL -> TaskRepository : postponeEntry(task, newDate)
+    CTRL --> CTRL : validateNewDate(newDate)
+    CTRL -> TaskRepository : postponeEntry(taskDTO, newDate)
     activate TaskRepository
 
-    TaskRepository -> TaskRepository : validateNewDate(newDate)
+    TaskRepository -> TaskDto : startingDate = newDate
+    activate TaskDto
+    deactivate TaskDto
 
-    TaskRepository --> CTRL : entry
     deactivate TaskRepository
-
-    CTRL --> UI : entry
     deactivate CTRL
+
 
     UI --> Employee : displays operation success
     deactivate UI

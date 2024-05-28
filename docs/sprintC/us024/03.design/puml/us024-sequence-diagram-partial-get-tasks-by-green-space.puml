@@ -6,12 +6,16 @@ skinparam shadowing false
 participant ":PostponeEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "TaskRepository" as TaskRepository
+participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "taskMapper\n:TaskMapper" as TaskMapper
+participant "taskList\n:List<Task>" as TaskList
+participant "taskDtoList\n:List<TaskDto>" as TaskDtoList
+participant "taskDto\n:TaskDto" as TaskDto
 
-autonumber 13
--> CTRL : getTasksByGreenSpace(greenSpace)
+autonumber 22
+-> CTRL : getTasksByGreenSpace(greenSpaceDTO)
 
-autonumber 13.1
+autonumber 22.1
 
 activate CTRL
     group Get Tasks By Green Space
@@ -27,16 +31,49 @@ activate CTRL
            PLAT --> CTRL: taskRepository
            deactivate PLAT
 
-           CTRL -> TaskRepository : getTasksByGreenSpace(greenSpace)
+           CTRL -> TaskRepository : getTasksByGreenSpace(greenSpaceDTO)
            activate TaskRepository
 
-           TaskRepository --> TaskRepository : getTasksUndone()
+           TaskRepository -> TaskList : getTasksByGreenSpace(greenSpaceDTO)
+           activate TaskList
 
-           TaskRepository --> CTRL : tasksByGreenSpace
+           TaskList --> TaskList : getTasksUndone()
+
+           TaskList --> TaskRepository : tasks
+           deactivate TaskList
+
+           TaskRepository -> TaskMapper : toDTO(tasks)
+           activate TaskMapper
+
+           TaskMapper -> TaskDtoList ** : create()
+
+           loop for each Task in list
+
+           TaskMapper -> TaskList : task = get(i)
+           activate TaskList
+           deactivate TaskList
+
+           TaskMapper -> TaskMapper : taskDTO = toDTO(task)
+           activate TaskMapper
+
+           TaskMapper --> TaskDto ** : create()
+           deactivate TaskMapper
+
+           TaskMapper -> TaskDtoList : add(taskDTO)
+           activate TaskDtoList
+           deactivate TaskDtoList
+
+
+           end
+           TaskMapper --> TaskRepository : tasksByGreenSpaceDTO
+           deactivate TaskMapper
+
+
+           TaskRepository --> CTRL : tasksByGreenSpaceDTO
            deactivate TaskRepository
 
 end group
-autonumber 14
-<-- CTRL : tasksByGreenSpace
+autonumber 39
+<-- CTRL : tasksByGreenSpaceDTO
 
 @enduml

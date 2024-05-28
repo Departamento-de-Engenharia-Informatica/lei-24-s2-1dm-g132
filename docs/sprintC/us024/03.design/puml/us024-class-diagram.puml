@@ -17,8 +17,55 @@ class PostponeEntryUI {
 class PostponeEntryController {
     + postponeEntryController(taskRepository, greenSpaceRepository)
     + getGreenSpaces()
+    + List<GreenSpaceDTO> getGreenSpaces()
+    + List<TaskDTO> getTasksByGreenSpace(greenSpaceDTO)
+    + postponeEntry(taskDTO, newDate)
+
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getGreenSpaceRepository()
+    + getTaskRepository()
+}
+
+class TaskRepository {
     + getTasksByGreenSpace(greenSpace)
+    + toDTO(tasks)
     + postponeEntry(task, newDate)
+}
+
+class GreenSpaceRepository {
+    + List<GreenSpace> getGreenSpaces()
+    + toDTO(greenSpaces)
+
+}
+
+class GreenSpaceMapper {
+    + List<GreenSpaceDTO> toDTO(List<GreenSpace> greenSpaces)
+    + GreenSpaceDTO toDTO(GreenSpace greenSpace)
+}
+
+class TaskMapper {
+    + List<TaskDTO> toDTO(List<Task> tasks)
+    + TaskDTO toDTO(Task task)
+}
+
+class GreenSpaceDTO {
+    name
+    area
+    type
+    address
+}
+
+class TaskDTO {
+    title
+    description
+    degreeOfUrgency
+    expectedDuration
+    status
+    startingDate
 }
 
 class Task {
@@ -37,23 +84,6 @@ class GreenSpace {
     address
 }
 
-class Repositories {
-    - Repositories()
-    + getInstance() : Repositories
-    + getGreenSpaceRepository()
-    + getTaskRepository()
-}
-
-class TaskRepository {
-    + getTasksByGreenSpace(greenSpace)
-    + postponeEntry(task, newDate)
-}
-
-class GreenSpaceRepository {
-    + getGreenSpaces()
-}
-
-
 PostponeEntryUI ..> PostponeEntryController
 PostponeEntryController ...> Repositories: repositories
 PostponeEntryController ..> TaskRepository: taskRepository
@@ -66,5 +96,11 @@ Repositories ---> "1" GreenSpaceRepository: greenSpaceRepository
 TaskRepository --> Task: tasks
 GreenSpaceRepository --> GreenSpace: green spaces
 
+TaskRepository ..> TaskMapper
+TaskMapper ..> TaskDTO
+TaskMapper ..> Task
+GreenSpaceRepository ..> GreenSpaceMapper
+GreenSpaceMapper ..> GreenSpaceDTO
+GreenSpaceMapper ..> GreenSpace
 
 @enduml
