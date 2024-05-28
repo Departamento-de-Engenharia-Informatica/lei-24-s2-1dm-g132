@@ -4,12 +4,10 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import pt.ipp.isep.dei.esoft.project.domain.GraphPngAndCsvGenerator;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
-import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
 import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -18,7 +16,7 @@ public class MeetingPointsRepository {
 
     private MatrixGraph<Vertice, Double> graph;
 
-    public MeetingPointsRepository(boolean directed){
+    public MeetingPointsRepository(boolean directed) {
         this.graph = new MatrixGraph<>(directed);
     }
 
@@ -43,49 +41,88 @@ public class MeetingPointsRepository {
         return graph.clone();
     }
 
-    public boolean loadGraph(String filePath) {
+    public boolean loadGraph(String verticesFilePath, String distancesMatrixFilePath) {
+        List<Vertice> listOfVertices = loadGraphvertices(verticesFilePath);
+        return loadGraphEdges(distancesMatrixFilePath, listOfVertices);
+    }
+
+    private List<Vertice> loadGraphvertices(String verticesFilePath) {
+        List<Vertice> graphVertices = new ArrayList<>();
         try {
             if (graph.numEdges() != 0) {
                 graph = new MatrixGraph<>(graph.isDirected());
             }
-            File file = new File(filePath);
-            graph.setName(file.getName());
+            File file = new File(verticesFilePath);
             if (!file.getName().endsWith("csv")) {
-                if (file.getName().endsWith("png")) {
-                    return false;
-                }
                 throw new IllegalArgumentException("Invalid File Format! Should be <.csv>");
             }
+            graph.setName(file.getName());
+
             Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
+                Vertice vertice = new Vertice(line.strip());
+                graph.addVertex(vertice);
+                graphVertices.add(vertice);
+            }
+        } catch (Exception e) {
+            graph = new MatrixGraph<>(graph.isDirected());
+            e.printStackTrace();
+
+        }
+        return graphVertices;
+    }
+
+    public boolean loadGraphEdges(String distancesMatrixFilePath, List<Vertice> listOfVertices) {
+        try {
+            if (graph.numEdges() != 0) {
+                graph = new MatrixGraph<>(graph.isDirected());
+            }
+            File file = new File(distancesMatrixFilePath);
+            if (!file.getName().endsWith("csv")) {
+                throw new IllegalArgumentException("Invalid File Format! Should be <.csv>");
+            }
+            Scanner scanner = new Scanner(file);
+            int lineNumber = 0;
+            while (scanner.hasNext()) {
+                lineNumber++;
+                String line = scanner.nextLine();
                 String separator = getSeparator(line);
-                String[] args = line.split(separator);
-                if (args.length != 3) {
-                    throw new RuntimeException("Invalid Entry: <" + line + ">, Should be <arg, arg, arg");
-                } else {
-                    String ori = args[0].strip();
-                    String dest = args[1].strip();
-                    double weight = Double.parseDouble(args[2].strip());
-                    addEdge(ori, dest, weight);
+                String[] arr = line.split(separator);
+                if (arr.length != listOfVertices.size()) {
+                    throw new IllegalArgumentException("Invalid line entry! Size " + arr.length + ". Line: " + lineNumber);
+                }
+                for (int i = 0; i < 4; i++) {
+                    int distance = Integer.parseInt(arr[i].trim());
+                    if (distance != 0) {
+                        addEdge(listOfVertices.get(lineNumber - 1), listOfVertices.get(i), (double) distance);
+                    }
                 }
             }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            if (lineNumber > listOfVertices.size()) {
+                throw new IllegalArgumentException("The distance matrix contains more vertices than the file with the vertices: " + lineNumber + " > " + listOfVertices.size());
+            } else if (lineNumber < listOfVertices.size()) {
+                throw new IllegalArgumentException("The distance matrix contains less vertices than the file with the vertices: " + lineNumber + " < " + listOfVertices.size());
+            }
+            graph.setName(file.getName());
+
+        } catch (Exception e) {
+            graph = new MatrixGraph<>(graph.isDirected());
+            e.printStackTrace();
+
         }
         return true;
     }
 
-    public boolean getShortestPathsToMeetingPoint(Vertice meetingPoint){
+    public boolean getShortestPathsToMeetingPoint(Vertice meetingPoint) {
         Set<Pair<Double, LinkedList<Vertice>>> distanceAndPathSetToReturn = new HashSet<>();
-        for (Vertice vertice : graph.vertices()){
-            if (!vertice.equals(meetingPoint)){
+        for (Vertice vertice : graph.vertices()) {
+            if (!vertice.equals(meetingPoint)) {
                 LinkedList<Vertice> shortestPath = new LinkedList<>();
                 Double distance = Algorithms.shortestPath(getCsvGraphCopy(), vertice, meetingPoint,
                         Comparator.naturalOrder(), Double::sum, 0.0, shortestPath);
 
-                if (distance != null){
+                if (distance != null) {
                     distanceAndPathSetToReturn.add(new ImmutablePair<>(distance, shortestPath));
                 }
             }
@@ -93,13 +130,13 @@ public class MeetingPointsRepository {
 
         generateFiles(getCsvGraphCopy(), "FullGraph.png");
         MatrixGraph<Vertice, Double> graph = new MatrixGraph<>(false);
-        for (Pair<Double, LinkedList<Vertice>> pair : distanceAndPathSetToReturn){
+        for (Pair<Double, LinkedList<Vertice>> pair : distanceAndPathSetToReturn) {
             LinkedList<Vertice> path = pair.getRight();
             double distance = pair.getLeft();
-            for (int i = 1; i < path.size(); i++){
-                if (graph.edge(path.get(i), path.get(i-1)) == null &&
-                        graph.edge(path.get(i-1), path.get(i)) == null){
-                    graph.addEdge(path.get(i-1), path.get(i), distance);
+            for (int i = 1; i < path.size(); i++) {
+                if (graph.edge(path.get(i), path.get(i - 1)) == null &&
+                        graph.edge(path.get(i - 1), path.get(i)) == null) {
+                    graph.addEdge(path.get(i - 1), path.get(i), distance);
                 }
             }
         }
@@ -110,7 +147,7 @@ public class MeetingPointsRepository {
         return true;
     }
 
-    private boolean generatePathsCsv(Set<Pair<Double, LinkedList<Vertice>>> distanceAndPathSet, String fileName){
+    private boolean generatePathsCsv(Set<Pair<Double, LinkedList<Vertice>>> distanceAndPathSet, String fileName) {
         String outputFolder = getDesktopPath() + File.separator + "output" + File.separator + "us18";
         File graphFolder = new File(outputFolder);
         try {
@@ -141,8 +178,8 @@ public class MeetingPointsRepository {
             fileWriter = new FileWriter(csvFile);
 
             fileWriter.append("(");
-            for (Pair<Double, LinkedList<Vertice>> pair : distanceAndPathSet){
-                for (Vertice vertice : pair.getRight()){
+            for (Pair<Double, LinkedList<Vertice>> pair : distanceAndPathSet) {
+                for (Vertice vertice : pair.getRight()) {
                     fileWriter.append(vertice.getNome())
                             .append(",");
                 }

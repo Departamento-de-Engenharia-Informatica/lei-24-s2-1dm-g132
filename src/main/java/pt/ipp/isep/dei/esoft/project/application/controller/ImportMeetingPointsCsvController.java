@@ -16,7 +16,7 @@ public class ImportMeetingPointsCsvController {
         return meetingPointsRepository;
     }
 
-    public boolean loadGraph(String filePath) {
-        return meetingPointsRepository.loadGraph(filePath);
+    public boolean loadGraph(String placesFilePath, String distancesMatrixFilePath) {
+        return meetingPointsRepository.loadGraph(placesFilePath, distancesMatrixFilePath);
     }
 }

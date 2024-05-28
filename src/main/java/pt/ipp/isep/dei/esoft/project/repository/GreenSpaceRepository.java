@@ -14,6 +14,7 @@ public class GreenSpaceRepository {
         greenSpaces = new ArrayList<>();
     }
 
+    /*
     public Optional<GreenSpaceDTO> registerGreenSpace(String name, String address, int area, String type) {
         Optional<GreenSpaceDTO> optionalValue = Optional.empty();
         GreenSpaceDTO greenSpace = new GreenSpaceDTO(name, address, area, type);
@@ -35,6 +36,8 @@ public class GreenSpaceRepository {
         return greenSpace;
     }
 
+
+     */
 
     private boolean addGreenSpace(GreenSpaceDTO greenSpace) {
         boolean success = false;

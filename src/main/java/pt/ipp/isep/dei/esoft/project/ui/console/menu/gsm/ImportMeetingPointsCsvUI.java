@@ -14,8 +14,9 @@ public class ImportMeetingPointsCsvUI implements Runnable {
     @Override
     public void run() {
         try{
-            String filePath = Utils.readLineFromConsole("Type the file path to the csv: ");
-            if (controller.loadGraph(filePath)){
+            String placesFilePath = Utils.readLineFromConsole("Type the file path with the places: ");
+            String distancesFilePath = Utils.readLineFromConsole("Type the file path with the distances matrix: ");
+            if (controller.loadGraph(placesFilePath, distancesFilePath)){
                 System.out.println("Success");
             } else {
                 System.out.println("Error");

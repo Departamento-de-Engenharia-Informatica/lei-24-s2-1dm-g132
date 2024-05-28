@@ -10,13 +10,18 @@ import java.util.List;
 public class RegisterGreenSpaceController {
 
     public void registerGreenSpace(GreenSpaceDTO greenSpaceDTO) {
+        /*
         GreenSpaceDTO greenSpace = new GreenSpaceDTO(greenSpaceDTO.getName(), greenSpaceDTO.getAddress(), greenSpaceDTO.getArea(), greenSpaceDTO.getType());
         greenSpace.setName(greenSpaceDTO.getName());
         greenSpace.setAddress(greenSpaceDTO.getAddress());
         greenSpace.setArea(greenSpaceDTO.getArea());
         greenSpace.setType(greenSpaceDTO.getType());
 
-        greenSpaceRepository.registerGreenSpace(greenSpace.getName(), greenSpace.getAddress(), greenSpace.getArea(), greenSpace.getType());
+
+
+        greenSpaceRepository.registerGreenSpace(greenSpaceDTO.getName(), greenSpaceDTO.getAddress(), greenSpaceDTO.getArea(), greenSpaceDTO.getType());
+
+         */
     }
 
     private GreenSpaceRepository greenSpaceRepository;
