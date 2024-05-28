@@ -21,7 +21,6 @@ participant ":TaskMapper" as TaskMapper
 participant "associatedToDoEntriesList\nList<Task>" as associatedToDoEntriesList
 participant "associatedToDoEntriesListDto\nList<TaskDto>" as associatedToDoEntriesListDto
 participant "objDto\n:TaskDto" as taskDto
-participant "taskDto\n:TaskDto" as TaskDto
 participant "agenda:\nAgenda" as Agenda
 participant "task\n:Task" as Task
 
@@ -135,57 +134,26 @@ activate GSM
         GSM -> UI : selects an entry
         activate UI
 
-            UI -> associatedToDoEntriesListDto : get(i)
-            activate associatedToDoEntriesListDto
-
-                associatedToDoEntriesListDto --> UI : taskDto
-            deactivate associatedToDoEntriesListDto
-
-            UI -> CTRL : getSelectedTask(taskDto)
+            UI -> CTRL : getSelectedTask(i)
             activate CTRL
 
-                CTRL -> ToDoList : getSelectedTask(taskDto)
+                CTRL -> ToDoList : getSelectedTask(i)
                 activate ToDoList
 
-                    ToDoList -> TaskMapper : toModel(taskDto)
-                    activate TaskMapper
+                    ToDoList -> associatedToDoEntriesList : get(i)
+                    activate associatedToDoEntriesList
 
-                        TaskMapper -> TaskDto : title = getTitle()
-                        activate TaskDto
-                        deactivate TaskDto
+                        associatedToDoEntriesList --> ToDoList : selectedTask
 
-                        TaskMapper -> TaskDto : description = getDescription()
-                        activate TaskDto
-                        deactivate TaskDto
+                    deactivate associatedToDoEntriesList
 
-                        TaskMapper -> TaskDto : degreeOfUrgency = getDegreeOfUrgency()
-                        activate TaskDto
-                        deactivate TaskDto
+                    ToDoList -> Task : clone(selectedTask)
+                    activate Task
 
-                        TaskMapper -> TaskDto : expectedDuration = getExpectedDuration()
-                        activate TaskDto
-                        deactivate TaskDto
+                        Task --> ToDoList : selectedTaskClone
+                    deactivate Task
 
-                        TaskMapper -> TaskDto : selectedGreenSpace = getSelectedGreenSpace()
-                        activate TaskDto
-                        deactivate TaskDto
-
-                        TaskMapper -> Task : create(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
-                        activate Task
-
-                            Task --> TaskMapper : selectedTaskCopy
-                        deactivate Task
-
-                        TaskMapper --> ToDoList : selectedTaskCopy
-                        deactivate TaskMapper
-
-                    ToDoList -> EntriesList: contains(selectedTaskCopy)
-                    activate EntriesList
-
-                        EntriesList --> ToDoList : selectedTaskCopy
-                    deactivate EntriesList
-
-                    ToDoList --> CTRL : selectedTaskCopy
+                    ToDoList --> CTRL : selectedTaskClone
                     deactivate ToDoList
 
                 deactivate CTRL
@@ -199,23 +167,23 @@ activate GSM
             UI -> CTRL : addEntry(startingDate)
             activate CTRL
 
-                CTRL -> Agenda : addEntry(startingDate, selectedTaskCopy)
+                CTRL -> Agenda : addEntry(startingDate, selectedTaskClone)
                 activate Agenda
 
-                    Agenda -> Task : selectedTaskCopy.setStartingDate(startingDate)
+                    Agenda -> Task : selectedTaskClone.setStartingDate(startingDate)
                     activate Task
                     deactivate Task
 
-                    Agenda -> Agenda : add(selectedTaskCopy)
+                    Agenda -> Agenda : add(selectedTaskClone)
                     activate Agenda
 
-                        Agenda --> Agenda : selectedTaskCopy
+                        Agenda --> Agenda : selectedTaskClone
                     deactivate Agenda
 
-                    Agenda --> CTRL : selectedTaskCopy
+                    Agenda --> CTRL : selectedTaskClone
                     deactivate Agenda
 
-                CTRL --> UI : selectedTaskCopy
+                CTRL --> UI : selectedTaskClone
                 deactivate CTRL
 
             UI --> GSM : displays operation success
