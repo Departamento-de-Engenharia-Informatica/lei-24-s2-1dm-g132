@@ -16,6 +16,18 @@ class GreenSpace {
   - Int area
 }
 
+class GreenSpacedto {
+  - String name
+  - String adress
+  - String type
+  - Int area
+}
+
+class GreenSpaceMapper {
+  + GreenSpaceDTO toDTO(GreenSpace greenSpace)
+  + GreenSpace toEntity(GreenSpaceDTO greenSpaceDTO)
+}
+
 
 
 class ListGreenSpacesUI {
@@ -43,11 +55,14 @@ class GreenSpaceRepository {
 Repositories -> Repositories : instance
 Repositories --> "1" GreenSpaceRepository: GreenSpaceRepository
 ListGreenSpacesController ...> Repositories: repositories
-ListGreenSpacesController ...> reenSpaceRepository: GreenSpaceRepository
+ListGreenSpacesController ...> GreenSpaceRepository: GreenSpaceRepository
 
 ListGreenSpacesUI ..> ListGreenSpacesController
 
 GreenSpaceRepository "1" -> "*" GreenSpace : GreenSpace
+ListGreenSpacesController ..> GreenSpaceMapper: greenSpaceMapper
+GreenSpaceMapper ..> GreenSpacedto
+GreenSpaceMapper ..> GreenSpace
 
 
 
