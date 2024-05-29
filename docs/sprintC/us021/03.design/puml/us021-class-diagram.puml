@@ -56,7 +56,6 @@ class GreenSpace
     - int area
     - String address
     - Email gsmEmail
-    + GreenSpace(name, type, area, address, gsmEmail)
     + hasUserEmail(email)
 }
 
@@ -64,7 +63,7 @@ class GreenSpaceMapper
 {
     - List<GreenSpaceDto> associatedGreenSpacesListDto
     + toDTO(associatedGreenSpacesList)
-    + toDTO(obj)
+    - toDTO(obj)
 }
 
 class GreenSpaceDto
