@@ -21,7 +21,6 @@ participant ":GreenSpaceMapper" as GreenSpaceMapper
 participant "associatedGreenSpacesList\nList<GreenSpace>" as associatedGreenSpacesList
 participant "associatedGreenSpacesListDto\nList<GreenSpaceDto>" as associatedGreenSpacesListDto
 participant "objDto\n:GreenSpaceDto" as greenSpaceDto
-participant "greenSpaceDto\n:GreenSpaceDto" as GreenSpaceDto
 participant "toDoList:\nToDoList" as ToDoList
 participant ":TaskMapper" as TaskMapper
 participant "taskDto\n:TaskDto" as TaskDto

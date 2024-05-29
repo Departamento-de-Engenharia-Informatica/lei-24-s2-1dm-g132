@@ -28,15 +28,120 @@ class ApplicationSession
     + getCurrentSession()
 }
 
-class Repositories {
+class Repositories
+{
     - Repositories()
     + getInstance() : Repositories
     + getGreenSpaceRepository()
     + getToDoList()
 }
 
+class UserSession
+{
+    + getUserEmail()
+}
+
+class GreenSpaceRepository
+{
+    - List<GreenSpace> greenSpacesList
+    - List<GreenSpace> associatedGreenSpacesList
+    + getGreenSpaces(email)
+    + getSelectedGreenSpace(i)
+}
+
+class GreenSpace
+{
+    - String name
+    - String type
+    - int area
+    - String address
+    - Email gsmEmail
+    + GreenSpace(name, type, area, address, gsmEmail)
+    + hasUserEmail(email)
+}
+
+class GreenSpaceMapper
+{
+    - List<GreenSpaceDto> associatedGreenSpacesListDto
+    + toDTO(associatedGreenSpacesList)
+    + toDTO(obj)
+}
+
+class GreenSpaceDto
+{
+    - String name
+    - String type
+    - int area
+    - String address
+    + GreenSpaceDto(name, type, area, address)
+}
+
+class ToDoList
+{
+    - add(createdTask)
+    + addEntry(taskDto, selectedGreenSpace)
+}
+
+class Task
+{
+    - String title
+    - String description
+    - String degreeOfUrgency
+    - int expectedDuration
+    - String status
+    - Calendar startingDate
+    + Task(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
+}
+
+class TaskMapper
+{
+    + toModel(taskDto, selectedGreenSpace)
+}
+
+class TaskDto
+{
+    - String title
+    - String description
+    - String degreeOfUrgency
+    - int expectedDuration
+    + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
+    + getTitle()
+    + getDescription()
+    + getDegreeOfUrgency()
+    + getExpectedDuration()
+}
+
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
+
+AddEntryToDoUI .> AddEntryToDoController
+AddEntryToDoUI ..> GreenSpaceDto
+AddEntryToDoUI ..> TaskDto
+
+AddEntryToDoController .> Repositories : repositories
+
+Repositories -> "1" GreenSpaceRepository
+Repositories -> "1" ToDoList
+
+AddEntryToDoController ..> GreenSpaceRepository : greenSpaceRepostory
+AddEntryToDoController ..> ToDoList : toDoList
+AddEntryToDoController ..> ApplicationSession
+AddEntryToDoController ..> UserSession
+AddEntryToDoController ..> GreenSpaceMapper
+
+ApplicationSession --> "1" UserSession : userSession
+
+GreenSpaceRepository "1" --> "*" GreenSpace
+ToDoList "1" --> "*" Task
+"Task" "*" --> "1" GreenSpace
+
+ToDoList ..> TaskMapper
+
+TaskMapper ..> TaskDto
+TaskMapper ..> Task
+
+GreenSpaceMapper ..> GreenSpaceDto
+GreenSpaceMapper ..> GreenSpace
 
 @enduml
