@@ -1,0 +1,42 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class AddEntryToDoUI
+{
+
+}
+
+class AddEntryToDoController
+{
+    + AddEntryToDoController()
+    + getGreenSpaces()
+    + getSelectedGreenSpace(i)
+    + addEntry(taskDto)
+}
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getGreenSpaceRepository()
+    + getToDoList()
+}
+
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+@enduml

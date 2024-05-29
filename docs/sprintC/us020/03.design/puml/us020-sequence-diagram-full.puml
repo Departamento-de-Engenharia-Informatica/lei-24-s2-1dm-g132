@@ -12,8 +12,9 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "GreenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
 participant "GreenSpace\n:GreenSpace" as GreenSpace
-participant "greenSpaceDto\n:GreenSpaceDto" as GreenSpaceDto
 participant "GreenSpaceMapper\n:GreenSpaceMapper" as GreenSpaceMapper
+participant "GreenSpaceList\n:List<GreenSpace>" as GreenSpaceList
+participant "greenSpaceDto\n:GreenSpaceDto" as GreenSpaceDto
 
 activate GSM
 
@@ -57,11 +58,39 @@ activate GSM
 
         activate GreenSpaceRepository
 
-        GreenSpaceRepository -> GreenSpaceMapper : Dto(GreenSpace)
+        GreenSpaceRepository -> GreenSpaceList : getGreenSpace()
+
+        activate GreenSpaceList
+
+        GreenSpaceList -> GreenSpaceRepository : GreenSpaceList
+
+        deactivate GreenSpaceList
+
+        GreenSpaceRepository -> GreenSpaceMapper : dtoGreenSpaces(GreenSpace)
 
         activate GreenSpaceMapper
 
-        GreenSpaceRepository -> CTRL : GreenSpace
+        GreenSpaceMapper -> GreenSpaceList : greenSpace=get()
+
+        activate GreenSpaceList
+
+        deactivate GreenSpaceList
+
+        GreenSpaceMapper -> GreenSpaceMapper : greenSpaceDto(greenSpace) = dto(greenSpace)
+
+        GreenSpaceMapper -> greenSpaceDto** :create greenSpaceDto()
+
+       GreenSpaceMapper-> GreenSpaceList : add(greenSpaceDto)
+
+       activate GreenSpaceList
+
+       deactivate GreenSpaceList
+
+       GreenSpaceMapper -> GreenSpaceRepository : greenSpacedto
+
+       deactivate GreenSpaceMapper
+
+        GreenSpaceRepository -> CTRL : GreenSpacedto
 
         deactivate GreenSpaceRepository
 
@@ -89,21 +118,5 @@ activate GSM
         deactivate UI
 
         deactivate GSM
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @enduml

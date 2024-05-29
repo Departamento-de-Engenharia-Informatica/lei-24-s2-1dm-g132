@@ -125,51 +125,17 @@ activate GSM
         GSM -> UI : selects a green space
         activate UI
 
-            UI -> associatedGreenSpacesListDto : get(i)
-            activate associatedGreenSpacesListDto
-
-                associatedGreenSpacesListDto --> UI : greenSpaceDto
-            deactivate associatedGreenSpacesListDto
-
-            UI -> CTRL : getSelectedGreenSpace(greenSpaceDto)
+            UI -> CTRL : getSelectedGreenSpace(i)
             activate CTRL
 
-                CTRL -> GreenSpaceRepository : getSelectedGreenSpace(greenSpaceDto)
+                CTRL -> GreenSpaceRepository : getSelectedGreenSpace(i)
                 activate GreenSpaceRepository
 
-                    GreenSpaceRepository -> GreenSpaceMapper : toModel(greenSpaceDto)
-                    activate GreenSpaceMapper
+                    GreenSpaceRepository -> associatedGreenSpacesList : get(i)
+                    activate associatedGreenSpacesList
 
-                        GreenSpaceMapper -> GreenSpaceDto : name = getName()
-                        activate GreenSpaceDto
-                        deactivate GreenSpaceDto
-
-                        GreenSpaceMapper -> GreenSpaceDto : area = getArea()
-                        activate GreenSpaceDto
-                        deactivate GreenSpaceDto
-
-                        GreenSpaceMapper -> GreenSpaceDto : type = getType()
-                        activate GreenSpaceDto
-                        deactivate GreenSpaceDto
-
-                        GreenSpaceMapper -> GreenSpaceDto : address = getAddress()
-                        activate GreenSpaceDto
-                        deactivate GreenSpaceDto
-
-                        GreenSpaceMapper -> greenSpace : create(name, area, type, address)
-                        activate greenSpace
-
-                            greenSpace --> GreenSpaceMapper : selectedGreenSpaceCopy
-                        deactivate greenSpace
-
-                        GreenSpaceMapper --> GreenSpaceRepository : selectedGreenSpaceCopy
-                        deactivate GreenSpaceMapper
-
-                    GreenSpaceRepository -> greenSpacesList: contains(selectedGreenSpaceCopy)
-                    activate greenSpacesList
-
-                        greenSpacesList --> GreenSpaceRepository : selectedGreenSpace
-                    deactivate greenSpacesList
+                        associatedGreenSpacesList --> GreenSpaceRepository : selectedGreenSpace
+                        deactivate associatedGreenSpacesList
 
                     GreenSpaceRepository --> CTRL : selectedGreenSpace
                     deactivate GreenSpaceRepository
@@ -184,6 +150,11 @@ activate GSM
 
             UI -> CTRL : addEntry(taskDto)
             activate CTRL
+
+                CTRL -> PLAT : getToDoList()
+                activate PLAT
+                    PLAT --> CTRL : toDoList
+                deactivate PLAT
 
                 CTRL -> ToDoList : addEntry(taskDto, selectedGreenSpace)
                 activate ToDoList

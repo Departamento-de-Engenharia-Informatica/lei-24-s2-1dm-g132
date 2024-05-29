@@ -13,6 +13,10 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "GreenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
 participant "GreenSpace\n:GreenSpace" as GreenSpace
+participant "GreenSpaceMapper\n:GreenSpaceMapper" as GreenSpaceMapper
+participant "GreenSpaceList\n:List<GreenSpace>" as GreenSpaceList
+participant "greenSpaceDto\n:GreenSpaceDto" as GreenSpaceDto
+
 
 activate GSM
 
@@ -43,13 +47,46 @@ activate GSM
 
     CTRL -> GreenSpaceRepository : getGreenSpaceList()
     activate GreenSpaceRepository
-    GreenSpaceRepository --> CTRL : GreenSpaceList
+        GreenSpaceRepository -> GreenSpaceList : getGreenSpace()
+
+        activate GreenSpaceList
+
+        GreenSpaceList -> GreenSpaceRepository : GreenSpaceList
+
+        deactivate GreenSpaceList
+
+        GreenSpaceRepository -> GreenSpaceMapper : dtoGreenSpaces(GreenSpace)
+
+        activate GreenSpaceMapper
+
+        GreenSpaceMapper -> GreenSpaceList : greenSpace=get()
+
+        activate GreenSpaceList
+
+        deactivate GreenSpaceList
+
+        GreenSpaceMapper -> GreenSpaceMapper : greenSpaceDto(greenSpace) = dto(greenSpace)
+
+        GreenSpaceMapper -> greenSpaceDto** :create greenSpaceDto()
+
+       GreenSpaceMapper-> GreenSpaceList : add(greenSpaceDto)
+
+       activate GreenSpaceList
+
+       deactivate GreenSpaceList
+
+       GreenSpaceMapper -> GreenSpaceRepository : greenSpaceListdto
+
+
+    GreenSpaceRepository --> CTRL : GreenSpaceListdto
+
     deactivate GreenSpaceRepository
-    CTRL --> UI : GreenSpaceList
+    deactivate GreenSpaceMapper
+    CTRL --> UI : GreenSpaceListdto
     deactivate CTRL
 
 
-    UI --> GSM : gives to sorting options to the user to chose from
+    UI --> GSM : shows list of GreenSpaces
     deactivate UI
     GSM -> UI : chose one of the sorting options
     activate UI
@@ -64,12 +101,5 @@ activate GSM
 
         UI --> GSM : shows sorted list of GreenSpaces
         deactivate UI
-
-
-
-
-
-
-
 
 @enduml
