@@ -151,6 +151,11 @@ activate GSM
             UI -> CTRL : addEntry(taskDto)
             activate CTRL
 
+                CTRL -> PLAT : getToDoList()
+                activate PLAT
+                    PLAT --> CTRL : toDoList
+                deactivate PLAT
+
                 CTRL -> ToDoList : addEntry(taskDto, selectedGreenSpace)
                 activate ToDoList
 
