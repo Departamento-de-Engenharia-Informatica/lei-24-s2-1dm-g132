@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import pt.ipp.isep.dei.esoft.project.domain.GraphPngAndCsvGenerator;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
+import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
 import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
 import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
 
@@ -115,7 +116,7 @@ public class MeetingPointsRepository {
     }
 
     public boolean getShortestPathsToMeetingPoint(Vertice meetingPoint) {
-        Set<Pair<Double, LinkedList<Vertice>>> distanceAndPathSetToReturn = new HashSet<>();
+        List<Pair<Double, LinkedList<Vertice>>> distanceAndPathSetToReturn = new ArrayList<>();
         for (Vertice vertice : graph.vertices()) {
             if (!vertice.equals(meetingPoint)) {
                 LinkedList<Vertice> shortestPath = new LinkedList<>();
@@ -127,27 +128,37 @@ public class MeetingPointsRepository {
                 }
             }
         }
-
+        distanceAndPathSetToReturn.sort(Comparator.comparing((Pair<Double, LinkedList<Vertice>> p) -> p.getRight().size())
+                        .thenComparing(Pair::getLeft)
+        );
         generateFiles(getCsvGraphCopy(), "FullGraph.png");
-        MatrixGraph<Vertice, Double> graph = new MatrixGraph<>(false);
-        for (Pair<Double, LinkedList<Vertice>> pair : distanceAndPathSetToReturn) {
+        generatePathsCsv(distanceAndPathSetToReturn, graph.getName() + "-PathsToMeetingPoint.csv");
+        MatrixGraph<Vertice, Double> graph = new MatrixGraph<>(true);
+        graph.setName(this.graph.getName());
+        for (Pair<Double, LinkedList<Vertice>> pair : distanceAndPathSetToReturn){
+            double weight = pair.getLeft();
             LinkedList<Vertice> path = pair.getRight();
-            double distance = pair.getLeft();
-            for (int i = 1; i < path.size(); i++) {
-                if (graph.edge(path.get(i), path.get(i - 1)) == null &&
-                        graph.edge(path.get(i - 1), path.get(i)) == null) {
-                    graph.addEdge(path.get(i - 1), path.get(i), distance);
+            for (int i = 1; i < path.size(); i++){
+                Edge<Vertice, Double> edge0 = this.graph.edge(path.get(i-1), path.get(i));
+                if (edge0 == null){
+                    edge0 = this.graph.edge(path.get(i), path.get(i-1));
+                }
+                Edge<Vertice, Double> edge1 = graph.edge(path.get(i-1), path.get(i));
+                Edge<Vertice, Double> edge2 = graph.edge(path.get(i), path.get(i-1));
+                if (edge1 == null && edge2 == null){
+                    graph.addEdge(edge0.getVOrig(), edge0.getVDest(), edge0.getWeight());
+                }
+                if (edge1 != null && edge1.getWeight() > weight) {
+                    graph.addEdge(edge0.getVOrig(), edge0.getVDest(), edge0.getWeight());
                 }
             }
         }
-        graph.setName(this.graph.getName());
         generateFiles(graph, "PathsToMeetingPointGraph.png");
-        generatePathsCsv(distanceAndPathSetToReturn, graph.getName() + "-PathsToMeetingPoint.csv");
 
         return true;
     }
 
-    private boolean generatePathsCsv(Set<Pair<Double, LinkedList<Vertice>>> distanceAndPathSet, String fileName) {
+    private boolean generatePathsCsv(List<Pair<Double, LinkedList<Vertice>>> distanceAndPathSet, String fileName) {
         String outputFolder = getDesktopPath() + File.separator + "output" + File.separator + "us18";
         File graphFolder = new File(outputFolder);
         try {

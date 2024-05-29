@@ -1,8 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain.graph;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Vertice {
+public class Vertice implements Comparable<Vertice> {
     private String nome;
 
     public Vertice(String nome){
@@ -31,5 +32,10 @@ public class Vertice {
     @Override
     public int hashCode() {
         return Objects.hashCode(nome);
+    }
+
+    @Override
+    public int compareTo(Vertice o) {
+        return this.nome.compareTo(o.nome);
     }
 }
