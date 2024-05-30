@@ -167,6 +167,12 @@ activate GSM
             UI -> CTRL : addEntry(startingDate)
             activate CTRL
 
+                CTRL -> PLAT : getAgenda()
+                activate PLAT
+
+                    PLAT --> CTRL : agenda
+                deactivate PLAT
+
                 CTRL -> Agenda : addEntry(startingDate, selectedTaskClone)
                 activate Agenda
 

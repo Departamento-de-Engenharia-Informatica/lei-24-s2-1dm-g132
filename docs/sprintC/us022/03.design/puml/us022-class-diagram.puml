@@ -1,0 +1,118 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class AddEntryAgendaUI
+{
+
+}
+
+class AddEntryAgendaController
+{
+    + AddEntryAgendaController()
+    + getToDoListEntries()
+    + getSelectedTask(i)
+    + addEntry(startingDate)
+}
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class Repositories
+{
+    - Repositories()
+    + getInstance() : Repositories
+    + getToDoList()
+    + getAgenda()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class ToDoList
+{
+    - List<Task> entriesList
+    - List<Task> associatedToDoEntriesList
+    + getToDoListEntries(email)
+    + getSelectedTask(i)
+}
+
+class GreenSpace
+{
+    - String name
+    - String type
+    - int area
+    - String address
+    + hasUserEmail(email)
+}
+
+class TaskMapper
+{
+    - List<TaskDto> associatedToDoEntriesListDto
+    + toDTO(associatedToDoEntriesList)
+    - toDTO(obj)
+}
+
+class TaskDto
+{
+    - String title
+    - String description
+    - String degreeOfUrgency
+    - int expectedDuration
+    + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
+}
+
+class Task
+{
+    - String title
+    - String description
+    - String degreeOfUrgency
+    - int expectedDuration
+    - String status
+    - Calendar startingDate
+    + isPending()
+    + hasUserEmail(email)
+    + clone(selectedTask)
+    + setStartingDate(startingDate)
+}
+
+class Agenda
+{
+    + addEntry(startingDate, selectedTaskClone)
+    - add(selectedTaskClone)
+}
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+AddEntryAgendaUI .> AddEntryAgendaController
+
+AddEntryAgendaController .> Repositories : repositories
+AddEntryAgendaController ..> ApplicationSession
+AddEntryAgendaController ..> UserSession
+AddEntryAgendaController ..> ToDoList : toDoList
+AddEntryAgendaController ..> Agenda : agenda
+AddEntryAgendaController ..> TaskMapper
+
+ToDoList "1" --> "*" Task
+Agenda "1" --> "*" Task
+"Task" "*" --> "1" GreenSpace
+
+TaskMapper ..> TaskDto
+TaskMapper ..> Task
+
+ApplicationSession --> "1" UserSession : userSession
+
+@enduml
