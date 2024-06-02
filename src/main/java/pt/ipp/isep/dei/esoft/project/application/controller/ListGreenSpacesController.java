@@ -3,11 +3,13 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.mapper.dto.GreenSpaceDTO;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
 
-public class RegisterGreenSpaceController {
+import java.util.List;
+
+public class ListGreenSpacesController {
 
     private GreenSpaceRepository greenSpaceRepository;
 
-    private RegisterGreenSpaceController() {
+    private ListGreenSpacesController() {
         this.greenSpaceRepository = new GreenSpaceRepository();
     }
 
@@ -18,7 +20,8 @@ public class RegisterGreenSpaceController {
         return greenSpaceRepository;
     }
 
-    public boolean registerGreenSpace(GreenSpaceDTO greenSpace) {
-        return greenSpaceRepository.registerGreenSpace(greenSpace);
+
+    public List<GreenSpaceDTO> greenSpaces() {
+        return greenSpaceRepository.getGreenSpaces();
     }
 }
