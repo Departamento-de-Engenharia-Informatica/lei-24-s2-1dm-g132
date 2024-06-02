@@ -21,6 +21,7 @@ public class Repositories {
     private final SkillRepository skillRepository;
     private final TeamRepository teamRepository;
     private final MeetingPointsRepository meetingPointsRepository;
+    private final GreenSpaceRepository greenSpaceRepository;
 
     private Repositories() {
         skillRepositoryFile = new SkillRepositoryFile();
@@ -36,6 +37,7 @@ public class Repositories {
         skillRepository = skillRepositoryFile.read();
         teamRepository = teamRepositoryFile.read();
         meetingPointsRepository = new MeetingPointsRepository(false);
+        greenSpaceRepository = new GreenSpaceRepository();
     }
 
     public static Repositories getInstance() {
@@ -79,5 +81,9 @@ public class Repositories {
 
     public MeetingPointsRepository getMeetingPointsRepository() {
         return meetingPointsRepository;
+    }
+
+    public GreenSpaceRepository getGreenSpaceRepository() {
+        return greenSpaceRepository;
     }
 }
