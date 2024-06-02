@@ -90,6 +90,10 @@ and Low), and the approximate expected duration.
 Generic Task: "Prunning Trees".
 Concrete Task at To-Do List: name(Prunning Trees); park(Arca De Agua); urgency(low); estimated duration(2 working days).
 
+> **Question:** One task can be associated to more than one green space?
+>
+> **Answer:** A generic task, yes; like "Prunning Trees" but not a concrete task, like "Prunning Trees" in Parque da Cidade.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The new entry must be associated with a green space managed by the GSM.

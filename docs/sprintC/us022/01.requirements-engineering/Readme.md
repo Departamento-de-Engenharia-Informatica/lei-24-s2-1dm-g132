@@ -38,6 +38,15 @@ at a determined time interval and on a specific date.
 a) there are many parks to manage;
 b) different tasks can be executed at same time in the same park;
 
+> **Question:** Tasks have a status of Planned, Postponed, Canceled or Done. When do they pass to "Planned" status? When they are added to the agenda (before the GSM assigns a team) or when a team is assigned to them?
+>
+> **Answer:** The use of states and their values is a technical modeling issue, it is not the client's responsibility.
+Assuming you are using states, a task would become "Planned" as soon as it enters the Agenda.
+
+> **Question:** Task duration should be considered in hours or in half days (morning/afternoon)?
+>
+> **Answer:** Hours should be ok, but keep in mind, that the storage format doesn't need to be same as the input/output format.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The new entry must be associated with a green space managed by the GSM.
