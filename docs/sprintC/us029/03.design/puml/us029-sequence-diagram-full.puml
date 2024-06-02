@@ -3,48 +3,117 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+title US024 - Postpone an entry in the agenda
+
 autonumber
 
-'hide footbox
-actor "HRM" as HRM
-participant ":RegisterSkillUI" as UI
-participant ":RegisterSkillController" as CTRL
+actor "Collaborator" as Employee
+participant ":ChangeStatusUI" as UI
+participant ":ChangeStatusController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "taskDto\n:TaskDto" as TaskDto
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "taskDTO\n:TaskDTO" as TaskDTO
+participant "currentSession\n:UserSession" as SESSION
+participant "repositories\n:Repositories" as PLAT
+participant "taskRepository\n:TaskRepository" as TaskRepository
 
-activate HRM
+activate Employee
 
-        HRM -> UI : asks to register a new skill
-activate UI
+    Employee -> UI : asks to change task status to complete
+    activate UI
 
-        UI --> HRM : requests data (skill name)
-         deactivate UI
+    UI -> CTRL** : create
+ UI -> CTRL : getEmailCollaborator()
+    activate CTRL
 
-    HRM -> UI : confirm and submits data
-        activate UI
+    CTRL -> _APP : getInstance()
+    activate _APP
 
-                UI -> CTRL : registerSkill (skill name)
-            activate CTRL
-    group Create Skill
+    _APP --> CTRL : appSession
+    deactivate _APP
 
-                                        CTRL -> CTRL: addSkill(skill)
+    CTRL -> APP : getCurrentSession()
+    activate APP
 
-                                                                           activate CTRL
-                                                                               CTRL -> CTRL: validateSkill(skill)
-                                                                               activate CTRL
-                                                                                   CTRL --> CTRL
-                                                                               deactivate CTRL
+    APP --> CTRL : currentSession
+    deactivate APP
 
-                                                                               CTRL --> CTRL
-                                                                               deactivate CTRL
-                                                                               end
+    CTRL -> SESSION : email = getUser(email)
+    activate SESSION
 
-            CTRL --> UI : Skill
-            deactivate CTRL
+    SESSION --> CTRL : email
+    deactivate SESSION
+
+    CTRL --> UI : email
+    deactivate CTRL
+
+    UI -> CTRL : getTasksByCollaborator(email)
+    activate CTRL
+
+    CTRL -> RepositorySingleton : getInstance()
+    activate RepositorySingleton
+
+    RepositorySingleton --> CTRL: repositories
+    deactivate RepositorySingleton
+
+    CTRL -> PLAT : getTaskRepository()
+    activate PLAT
+
+    PLAT --> CTRL: taskRepository
+    deactivate PLAT
+
+    CTRL -> TaskRepository : getTasksByCollaborator(email)
+    activate TaskRepository
+    TaskRepository -> TaskRepository : getTasksByCollaborator(email)
+    activate TaskRepository
+    loop for each task
+    TaskRepository -> TaskDTO : hasCollaboratorEmail(email)
+    activate TaskDTO
+    TaskDTO --> TaskRepository : true/false
+    deactivate TaskDTO
+    end
+    TaskRepository --> TaskRepository : tasksByCollaborator
+    deactivate TaskRepository
 
 
-            UI --> HRM : displays operation success
-        deactivate UI
+    TaskRepository --> CTRL : tasksByCollaborator
+    deactivate TaskRepository
+
+    CTRL --> UI : tasksByCollaborator
+    deactivate CTRL
+    UI --> Employee : shows list of own tasks
+    deactivate UI
+
+    Employee -> UI : selects a task
+    activate UI
+
+    UI --> Employee : requests confirmation of completion of task
+    deactivate UI
+
+    Employee -> UI : confirms
+    activate UI
+
+    UI -> CTRL :            completeTask(taskDTO, newStatusnewStatus)
+
+    activate CTRL
+
+    CTRL --> CTRL : validateNewStatus(newStatus)
+    CTRL -> TaskRepository :            completeTask(taskDTO, newStatus)
+
+    activate TaskRepository
+
+    TaskRepository -> TaskDto : status = newStatus
+    activate TaskDto
+    deactivate TaskDto
+
+    deactivate TaskRepository
+    deactivate CTRL
 
 
+    UI --> Employee : displays operation success
+    deactivate UI
 
-
+deactivate Employee
 @enduml

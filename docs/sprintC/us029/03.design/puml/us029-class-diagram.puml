@@ -1,33 +1,107 @@
 @startuml
-skinparam classAttributeIconSize 0
 
-class CreateSkillController {
-    +registerSkill(name)
-}
+       'skinparam monochrome true
+       skinparam packageStyle rectangle
+       skinparam shadowing false
+       skinparam linetype polyline
+       skinparam linetype orto
 
+       skinparam classAttributeIconSize 0
 
-class CreateSkillUI {
+       'left to right direction
 
-}
+       title US029 - Change task status to complete
 
-class Skill
-{
-    - name
-    + Skill(name)
-}
-class Repositories {
-    - Repositories()
-    + getInstance() : Repositories
-    + getSkillRepository()
-}
+       class ChangeStatusUI {
+       }
 
-class SkillRepository {
-   + add(skill)
-}
-CreateSkillUI ..> CreateSkillController
-CreateSkillController ..> Repositories : repositories
+       class ChangeStatusController {
+           + completeTaskController(taskRepository, greenSpaceRepository)
+           + getGreenSpaces()
+           + List<GreenSpaceDTO> getGreenSpaces()
+           + List<TaskDTO> getTasksByGreenSpace(greenSpaceDTO)
+           + completeTask(taskDTO, newStatus)
 
-Repositories ..> SkillRepository : skillRepository
-SkillRepository ..> Skill : skill
+       }
 
-@enduml
+       class Repositories {
+           - Repositories()
+           + getInstance() : Repositories
+           + getGreenSpaceRepository()
+           + getTaskRepository()
+       }
+
+       class TaskRepository {
+           + getTasksByGreenSpace(greenSpace)
+           + toDTO(tasks)
+           + completeTask(taskDTO, newStatus)
+       }
+
+       class GreenSpaceRepository {
+           + List<GreenSpace> getGreenSpaces()
+           + toDTO(greenSpaces)
+
+       }
+
+       class GreenSpaceMapper {
+           + List<GreenSpaceDTO> toDTO(List<GreenSpace> greenSpaces)
+           + GreenSpaceDTO toDTO(GreenSpace greenSpace)
+       }
+
+       class TaskMapper {
+           + List<TaskDTO> toDTO(List<Task> tasks)
+           + TaskDTO toDTO(Task task)
+       }
+
+       class GreenSpaceDTO {
+           name
+           area
+           type
+           address
+       }
+
+       class TaskDTO {
+           title
+           description
+           degreeOfUrgency
+           expectedDuration
+           status
+           startingDate
+       }
+
+       class Task {
+           title
+           description
+           degreeOfUrgency
+           expectedDuration
+           status
+           startingDate
+       }
+
+       class GreenSpace {
+           name
+           area
+           type
+           address
+       }
+
+       ChangeStatusUI ..> ChangeStatusController
+       ChangeStatusController ...> Repositories: repositories
+       ChangeStatusController ..> TaskRepository: taskRepository
+       ChangeStatusController ..> GreenSpaceRepository: greenSpaceRepository
+
+       Repositories -> Repositories : instance
+       Repositories ---> "1" TaskRepository: taskRepository
+       Repositories ---> "1" GreenSpaceRepository: greenSpaceRepository
+
+       TaskRepository --> Task: tasks
+       GreenSpaceRepository --> GreenSpace: green spaces
+
+       TaskRepository ..> TaskMapper
+       TaskMapper ..> TaskDTO
+       TaskMapper ..> Task
+       GreenSpaceRepository ..> GreenSpaceMapper
+       GreenSpaceMapper ..> GreenSpaceDTO
+       GreenSpaceMapper ..> GreenSpace
+
+       @enduml

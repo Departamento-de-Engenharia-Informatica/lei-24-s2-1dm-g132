@@ -3,37 +3,82 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+title US028 - Consult the tasks assigned to a collaborator
+
 autonumber
 
-'hide footbox
-participant ":RegisterSkillController" as CTRL
+actor "Collaborator" as Employee
+participant ":ChangeStatusUI" as UI
+participant ":ChangeStatusController" as CTRL
+participant "taskRepository\n:TaskRepository" as TaskRepository
 
+activate Employee
 
+    Employee -> UI : asks to change task status to complete
+    activate UI
 
-
-
-                 -> CTRL : registerSkill (skill name)
-            activate CTRL
-    group Create Skill
-
-                                        CTRL -> CTRL: addSkill(skill)
-
-                                                                           activate CTRL
-                                                                               CTRL -> CTRL: validateSkill(skill)
-                                                                               activate CTRL
-                                                                                   CTRL --> CTRL
-                                                                               deactivate CTRL
-
-                                                                               CTRL --> CTRL
-                                                                               deactivate CTRL
-                                                                               end
-
-             <-- CTRL : Skill
-            deactivate CTRL
+    UI -> CTRL** : create
 
 
 
 
 
 
+
+
+
+    UI -> CTRL : getEmailCollaborator()
+    activate CTRL
+
+    ref over CTRL
+        Get Email
+    end
+
+    CTRL --> UI : email
+    deactivate CTRL
+
+    UI -> CTRL : getTasksByCollaborator(email)
+    activate CTRL
+
+    ref over CTRL
+         Get Tasks by Collaborator
+    end
+
+    CTRL --> UI : tasksByCollaborator
+    deactivate CTRL
+
+
+    UI --> Employee : shows list of own tasks
+    deactivate UI
+
+    Employee -> UI : selects a task
+    activate UI
+
+    UI --> Employee : requests confirmation of completion of task
+    deactivate UI
+
+    Employee -> UI : confirms
+    activate UI
+
+    UI -> CTRL :            completeTask(taskDTO, newStatusnewStatus)
+
+    activate CTRL
+
+    CTRL --> CTRL : validateNewStatus(newStatus)
+    CTRL -> TaskRepository :            completeTask(taskDTO, newStatus)
+
+    activate TaskRepository
+
+    TaskRepository -> TaskDto : status = newStatus
+    activate TaskDto
+    deactivate TaskDto
+
+    deactivate TaskRepository
+    deactivate CTRL
+
+
+    UI --> Employee : displays operation success
+    deactivate UI
+
+deactivate Employee
 @enduml
