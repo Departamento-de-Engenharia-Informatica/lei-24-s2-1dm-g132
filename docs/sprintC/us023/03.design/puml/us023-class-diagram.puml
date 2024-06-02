@@ -1,0 +1,169 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class AssignTeamUI
+{
+
+}
+
+class AssignTeamController
+{
+    + AssignTeamController()
+    + getAgendaEntries()
+    + getSelectedTask(i)
+    + assignTeam(i)
+}
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class Repositories
+{
+    - Repositories()
+    + getInstance() : Repositories
+    + getAgenda()
+    + getTeamRepository()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+class Agenda
+{
+    - List<Task> entriesList
+    - List<Task> freeAgendaEntriesList
+    - List<Task> teamSchedule
+    + getAgendaEntries(email)
+    + getSelectedTask(i)
+    + checkTeamSchedule(selectedTeam, selectedTask)
+    + assignTeam(selectedTask, selectedTeam)
+}
+
+class TaskMapper
+{
+    - List<TaskDto> freeAgendaEntriesListDto
+    + toDTO(freeAgendaEntriesList)
+    - toDTO(obj)
+}
+
+class TaskDto
+{
+    - String title
+    - String description
+    - String degreeOfUrgency
+    - int expectedDuration
+    - Calendar startingDate
+    + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace, startingDate)
+}
+
+class Task
+{
+    - String title
+    - String description
+    - String degreeOfUrgency
+    - int expectedDuration
+    - String status
+    - Calendar startingDate
+    + hasTeam()
+    + hasUserEmail(email)
+    + belongsToTeam(selectedTeam)
+    + hasConflict(selectedTask)
+    + assignTeam(selectedTeam)
+}
+
+class TeamRepository
+{
+    - List<Team> teamsList
+    + getTeams()
+    + getSelectedTeam(i)
+}
+
+class TeamMapper
+{
+    - List<TeamDto> teamsListDto
+    + toDTO(teamsList)
+    - toDTO(obj)
+}
+
+class TeamDto
+{
+    - List<Collaborator> collaborators
+    + TeamDto(collaborators)
+}
+
+class Team
+{
+    - List<Collaborator> collaborators
+}
+
+class GreenSpace
+{
+    + hasUserEmail(email)
+}
+
+interface EmailGenerator
+{
+    + sendEmail(title, startingDate, selectedTeam)
+}
+
+class EmailThroughGmail
+{
+    + sendEmail(title, startingDate, selectedTeam)
+}
+
+class EmailThroughDEIService
+{
+    + sendEmail(title, startingDate, selectedTeam)
+}
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+AssignTeamUI .> AssignTeamController
+
+AssignTeamController .> Repositories : repositories
+
+Repositories --> "1" TeamRepository
+Repositories --> "1" Agenda
+
+AssignTeamController ..> ApplicationSession
+AssignTeamController ..> UserSession
+ApplicationSession --> "1" UserSession : userSession
+AssignTeamController ..> Agenda : agenda
+AssignTeamController ..> TeamRepository : teamRepository
+AssignTeamController ..> TaskMapper
+AssignTeamController ..> TeamMapper
+
+Agenda "1" --> "*" Task
+TeamRepository "1" ---> "*" Team
+
+TaskMapper ...> TaskDto
+TaskMapper ..> Task
+
+Task "*" --> "1" GreenSpace
+TaskDto "*" --> "1" GreenSpace
+
+TeamMapper ..> TeamDto
+TeamMapper ..> Team
+
+Task "*" --> "1" Team
+
+Task "*" --> "1" EmailGenerator : makes use of
+
+EmailThroughGmail ..|> EmailGenerator
+EmailThroughDEIService ..|> EmailGenerator
+
+@enduml

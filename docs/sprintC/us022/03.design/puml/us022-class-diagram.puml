@@ -100,6 +100,10 @@ ApplicationSession -> ApplicationSession : instance
 AddEntryAgendaUI .> AddEntryAgendaController
 
 AddEntryAgendaController .> Repositories : repositories
+
+Repositories -> "1" Agenda
+Repositories -> "1" ToDoList
+
 AddEntryAgendaController ..> ApplicationSession
 AddEntryAgendaController ..> UserSession
 AddEntryAgendaController ..> ToDoList : toDoList
@@ -108,7 +112,9 @@ AddEntryAgendaController ..> TaskMapper
 
 ToDoList "1" --> "*" Task
 Agenda "1" --> "*" Task
-"Task" "*" --> "1" GreenSpace
+
+Task "*" --> "1" GreenSpace
+TaskDto "*" --> "1" GreenSpace
 
 TaskMapper ..> TaskDto
 TaskMapper ..> Task

@@ -133,12 +133,14 @@ ApplicationSession --> "1" UserSession : userSession
 
 GreenSpaceRepository "1" --> "*" GreenSpace
 ToDoList "1" --> "*" Task
-"Task" "*" --> "1" GreenSpace
+
+Task "*" --> "1" GreenSpace
 
 ToDoList ..> TaskMapper
 
 TaskMapper ..> TaskDto
 TaskMapper ..> Task
+TaskDto "*" --> "1" GreenSpace
 
 GreenSpaceMapper ..> GreenSpaceDto
 GreenSpaceMapper ..> GreenSpace

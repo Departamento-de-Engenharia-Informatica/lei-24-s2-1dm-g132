@@ -28,7 +28,7 @@ participant "teamsListDto\n:List<TeamDto>" as teamsListDto
 participant "objDto\n:TeamDto" as teamDto
 participant "task\n:Task" as Task
 participant "greenSpace\n:GreenSpace" as greenSpace
-participant "em:\n ExternalModule" as EM
+participant "EmailGenerator:\n ExternalModule" as EM
 
 activate GSM
 
@@ -65,7 +65,7 @@ activate GSM
                 CTRL -> PLAT : getAgenda()
                 activate PLAT
 
-                    PLAT --> CTRL : Agenda
+                    PLAT --> CTRL : agenda
                 deactivate PLAT
 
                 CTRL -> Agenda : getAgendaEntries(email)
