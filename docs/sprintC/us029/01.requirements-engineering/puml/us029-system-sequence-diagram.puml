@@ -3,26 +3,26 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - US 001
+title System Sequence Diagram (SSD) - US 029
 
 autonumber
 
-actor "HRM" as HRM
+actor "Collaborator" as Employee
 participant ":System" as System
 
-activate HRM
+activate Employee
 
-    HRM -> System: selects "create skill" option
+    Employee -> System: selects "Record the completion of a task" option
     activate System
 
-         System --> HRM: request skill name
+         System --> Employee: asks to choose a skill
             deactivate System
-                HRM -> System: enters skill name
+                Employee -> System: chooses skill from list
                     activate System
-                       System --> HRM: asks for validation of skill
+                       System --> Employee: asks for confirmation of completion of task
                                 deactivate System
-                                                HRM -> System: validates skill
+                                                Employee -> System: validates new task status
                                                     activate System
-                                                                           System --> HRM: shows operation success
+                                                                           System --> Employee: shows operation success
                                                                                     deactivate System
 @enduml

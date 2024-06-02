@@ -8,19 +8,34 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-'title Domain Model
+title US029 -  Record the completion of a task.
 
-'class Platform {
-'  -description
-'}
 
-class HRM {
+class Collaborator {
 }
 
-class Skill {
+class Agenda {
+}
+
+class Task {
+    title
+    description
+    degreeOfUrgency
+    expectedDuration
+    status
+    startingDate
+}
+
+class GreenSpace {
     name
+    area
+    type
+    address
 }
 
-HRM "1" -- "*" Skill : registers >
+
+Task "*" -- "1" Agenda : was added >
+Task "1" -- "1" GreenSpace : is associated with >
+Collaborator "1" -- "*" Task : is assigned to <
 
 @enduml
