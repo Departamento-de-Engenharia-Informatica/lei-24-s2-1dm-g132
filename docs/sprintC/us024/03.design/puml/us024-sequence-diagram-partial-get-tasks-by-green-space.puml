@@ -4,76 +4,82 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 participant ":PostponeEntryController" as CTRL
-participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskRepository\n:TaskRepository" as TaskRepository
 participant "taskMapper\n:TaskMapper" as TaskMapper
-participant "taskList\n:List<Task>" as TaskList
-participant "taskDtoList\n:List<TaskDto>" as TaskDtoList
-participant "taskDto\n:TaskDto" as TaskDto
+participant "agenda\n:Agenda" as Agenda
+participant "entriesList\n:List<Task>" as entriesList
+participant "entriesListByGreenSpace\n:List<Task>" as entriesListByGreenSpace
+participant "task\n:Task" as task
+participant "entriesListByGreenSpaceDTO\n:List<TaskDTO>" as entriesListByGreenSpaceDTO
+participant "taskDTO\n:TaskDTO" as TaskDTO
 
-autonumber 22
+autonumber 30
 -> CTRL : getTasksByGreenSpace(greenSpaceDTO)
 
-autonumber 22.1
+autonumber 30.1
 
 activate CTRL
     group Get Tasks By Green Space
-           CTRL -> RepositorySingleton : getInstance()
-           activate RepositorySingleton
-
-           RepositorySingleton --> CTRL: repositories
-           deactivate RepositorySingleton
-
-           CTRL -> PLAT : getTaskRepository()
+           CTRL -> PLAT : getAgenda()
            activate PLAT
 
-           PLAT --> CTRL: taskRepository
+           PLAT --> CTRL : agenda
            deactivate PLAT
 
-           CTRL -> TaskRepository : getTasksByGreenSpace(greenSpaceDTO)
-           activate TaskRepository
+           CTRL -> Agenda : getAgendaEntries(greenSpace)
+           activate Agenda
 
-           TaskRepository -> TaskList : getTasksByGreenSpace(greenSpaceDTO)
-           activate TaskList
+           Agenda --> entriesListByGreenSpace** : create()
 
-           TaskList --> TaskList : getTasksUndone()
+           loop for each known task
 
-           TaskList --> TaskRepository : tasks
-           deactivate TaskList
+           Agenda -> entriesList : entry = get(i)
+           activate entriesList
+           deactivate entriesList
 
-           TaskRepository -> TaskMapper : toDTO(tasks)
+           Agenda -> task : taskGreenSpace = greenSpace
+           activate task
+           deactivate task
+
+           opt greenSpace == true
+           Agenda -> entriesListByGreenSpace : add(entry)
+           activate entriesListByGreenSpace
+           deactivate entriesListByGreenSpace
+           end opt
+
+           end loop
+
+           Agenda --> CTRL : entriesListByGreenSpace
+           deactivate Agenda
+
+           CTRL -> TaskMapper : toDTO(entriesList)
            activate TaskMapper
 
-           TaskMapper -> TaskDtoList ** : create()
+           TaskMapper --> entriesListByGreenSpaceDTO** : create()
 
-           loop for each Task in list
+           loop for each task in entriesListByGreenSpace
 
-           TaskMapper -> TaskList : task = get(i)
-           activate TaskList
-           deactivate TaskList
+           TaskMapper -> entriesListByGreenSpace : obj = get(i)
+           activate entriesListByGreenSpace
+           deactivate entriesListByGreenSpace
 
-           TaskMapper -> TaskMapper : taskDTO = toDTO(task)
+           TaskMapper -> TaskMapper : objDto = toDTO(obj)
            activate TaskMapper
 
-           TaskMapper --> TaskDto ** : create()
+           TaskMapper -> TaskDTO** : create(...)
            deactivate TaskMapper
 
-           TaskMapper -> TaskDtoList : add(taskDTO)
-           activate TaskDtoList
-           deactivate TaskDtoList
+           TaskMapper -> entriesListByGreenSpaceDTO : add(objDto)
+           activate entriesListByGreenSpaceDTO
+           deactivate entriesListByGreenSpaceDTO
 
+           end loop
 
-           end
-           TaskMapper --> TaskRepository : tasksByGreenSpaceDTO
+           TaskMapper --> CTRL : entriesListByGreenSpaceDTO
            deactivate TaskMapper
-
-
-           TaskRepository --> CTRL : tasksByGreenSpaceDTO
-           deactivate TaskRepository
 
 end group
-autonumber 39
-<-- CTRL : tasksByGreenSpaceDTO
+autonumber 46
+<-- CTRL : entriesListByGreenSpaceDTO
 
 @enduml

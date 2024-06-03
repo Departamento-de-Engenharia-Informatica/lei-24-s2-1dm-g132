@@ -4,13 +4,18 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 participant ":PostponeEntryController" as CTRL
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSION
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "greenSpaceRepository\n:GreenSpaceRepository" as GreenSpaceRepository
+participant "greenSpacesList\n:List<GreenSpace>" as greenSpacesList
 participant "greenSpaceMapper\n:GreenSpaceMapper" as GreenSpaceMapper
-participant "greenSpaceList\n:List<GreenSpace>" as GreenSpaceList
-participant "greenSpaceDtoList\n:List<GreenSpaceDto>" as GreenSpaceDtoList
-participant "greenSpaceDto\n:GreenSpaceDto" as GreenSpaceDto
+participant "greenSpace\n:GreenSpace" as greenSpace
+participant "GSMGreenSpacesList\n:List<GreenSpace>" as GSMGreenSpacesList
+participant "GSMGreenSpacesListDto\n:List<GreenSpaceDto>" as GSMGreenSpacesListDto
+participant "greenSpaceDTO\n:GreenSpaceDTO" as greenSpaceDTO
 
 autonumber 3
 -> CTRL : getGreenSpaces()
@@ -19,6 +24,25 @@ autonumber 3.1
 
 activate CTRL
     group Get Green Spaces
+
+           CTRL -> _APP: getInstance()
+           activate _APP
+
+           _APP -> CTRL: appSession
+           deactivate _APP
+
+           CTRL -> APP: getCurrentSession()
+           activate APP
+
+           APP --> CTRL: currentSession
+           deactivate APP
+
+           CTRL -> SESSION: email = getUserEmail()
+           activate SESSION
+
+           SESSION --> CTRL: email
+           deactivate SESSION
+
            CTRL -> RepositorySingleton : getInstance()
            activate RepositorySingleton
 
@@ -28,49 +52,64 @@ activate CTRL
            CTRL -> PLAT : getGreenSpaceRepository()
            activate PLAT
 
-           PLAT --> CTRL: greenSpaceRepository
+           PLAT --> CTRL : greenSpaceRepository
            deactivate PLAT
 
-           CTRL -> GreenSpaceRepository : getGreenSpaces()
+           CTRL -> GreenSpaceRepository : getGreenSpaces(email)
            activate GreenSpaceRepository
 
-           GreenSpaceRepository -> GreenSpaceList : getGreenSpaces()
-           activate GreenSpaceList
+           GreenSpaceRepository --> GSMGreenSpacesList** : create()
 
-           GreenSpaceList --> GreenSpaceRepository : greenSpaces
-           deactivate GreenSpaceList
+           loop for each known Green Space
+           GreenSpaceRepository -> greenSpacesList : greenSpace = get(i)
+           activate greenSpacesList
+           deactivate greenSpacesList
 
-           GreenSpaceRepository -> GreenSpaceMapper : toDTO(greenSpaces)
-           activate GreenSpaceMapper
+           GreenSpaceRepository -> greenSpace : GSM = hasUserEmail(email)
+           activate greenSpace
+           deactivate greenSpace
 
-           GreenSpaceMapper -> GreenSpaceDtoList ** : create()
+           opt hasUserEmail
+           GreenSpaceRepository -> GSMGreenSpacesList : add(greenSpace)
+           activate GSMGreenSpacesList
+           deactivate GSMGreenSpacesList
+           end opt
 
-           loop for each greenSpace in list
-           GreenSpaceMapper -> GreenSpaceList : greenSpace = get(i)
-           activate GreenSpaceList
+           end loop
 
-           deactivate GreenSpaceList
-
-           GreenSpaceMapper -> GreenSpaceMapper : greenSpaceDTO = toDTO(greeenSpace)
-           activate GreenSpaceMapper
-
-           GreenSpaceMapper --> GreenSpaceDto ** : create()
-           deactivate GreenSpaceMapper
-
-           GreenSpaceMapper -> GreenSpaceDtoList : add(greenSpaceDTO)
-           activate GreenSpaceDtoList
-           deactivate GreenSpaceDtoList
-
-           end
-
-           GreenSpaceMapper --> GreenSpaceRepository : greenSpacesDTO
-           deactivate GreenSpaceMapper
-
-           GreenSpaceRepository --> CTRL : greenSpacesDTO
+           GreenSpaceRepository --> CTRL : GSMGreenSpacesList
            deactivate GreenSpaceRepository
 
+           CTRL -> GreenSpaceMapper : toDTO(associatedGreenSpacesList)
+           activate GreenSpaceMapper
+
+           GreenSpaceMapper --> GSMGreenSpacesListDto** : create()
+
+           loop for each object in GSMGreenSpacesList
+           GreenSpaceMapper -> GSMGreenSpacesList : obj = get(i)
+           activate GSMGreenSpacesList
+
+           deactivate GSMGreenSpacesList
+
+           GreenSpaceMapper -> GreenSpaceMapper : objDto = toDTO(obj)
+           activate GreenSpaceMapper
+
+           GreenSpaceMapper -> greenSpaceDTO** :create(...)
+           deactivate GreenSpaceMapper
+
+           GreenSpaceMapper -> GSMGreenSpacesListDto : add(objDto)
+           activate GSMGreenSpacesListDto
+
+           deactivate GSMGreenSpacesListDto
+
+           end loop
+
+           GreenSpaceMapper --> CTRL : GSMGreenSpacesListDto
+           deactivate GreenSpaceMapper
+
+
 end group
-autonumber 19
-<-- CTRL : greenSpacesDTO
+autonumber 27
+<-- CTRL : GSMGreenSpacesListDto
 
 @enduml

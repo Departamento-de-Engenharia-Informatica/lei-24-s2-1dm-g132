@@ -11,40 +11,40 @@ actor "GSM" as Employee
 participant ":PostponeEntryUI" as UI
 participant ":PostponeEntryController" as CTRL
 participant "taskRepository\n:TaskRepository" as TaskRepository
-participant "taskDto\n:TaskDto" as TaskDto
+participant "taskDTO\n:TaskDTO" as TaskDTO
+
 
 activate Employee
 
     Employee -> UI : asks to postpone an entry in the agenda
     activate UI
 
-    UI -> CTRL** : create
+    UI --> CTRL** : create()
+    UI -> CTRL : getGreenSpaces()
+    activate CTRL
 
-                UI -> CTRL : getGreenSpaces()
-                activate CTRL
+    ref over CTRL
+        Get Green Spaces
+    end ref
 
-                    ref over CTRL
-                        Get Green Spaces
-                    end
-
-                    CTRL --> UI : greenSpacesDTO
-                deactivate CTRL
+    CTRL --> UI : GSMGreenSpacesListDto
+    deactivate CTRL
 
     UI --> Employee : shows list of green spaces to select one
     deactivate UI
 
-    Employee -> UI : selects the green space
+    Employee -> UI : selects one green space
     activate UI
 
-        UI -> CTRL : getTasksByGreenSpace(greenSpaceDTO)
-        activate CTRL
+    UI -> CTRL : getEntriesByGreenSpace()
+    activate CTRL
 
-            ref over CTRL
-               Get Tasks by Green Space
-            end
+    ref over CTRL
+        Get Tasks by Green Space
+    end ref
 
-            CTRL --> UI : tasksByGreenSpaceDTO
-        deactivate CTRL
+    CTRL --> UI : entriesListByGreenSpaceDTO
+    deactivate CTRL
 
     UI --> Employee : shows list of entries in the agenda of the selected green space
     deactivate UI
@@ -65,16 +65,21 @@ activate Employee
     CTRL -> TaskRepository : postponeEntry(taskDTO, newDate)
     activate TaskRepository
 
-    TaskRepository -> TaskDto : startingDate = newDate
-    activate TaskDto
-    deactivate TaskDto
+    TaskRepository -> TaskDTO : postponeEntry(taskDTO, newDate)
+    activate TaskDTO
 
+    TaskDTO --> TaskRepository : taskDTO
+    deactivate TaskDTO
+
+    TaskRepository --> CTRL : taskDTO
     deactivate TaskRepository
-    deactivate CTRL
 
+    CTRL --> UI : taskDTO
+    deactivate CTRL
 
     UI --> Employee : displays operation success
     deactivate UI
 
 deactivate Employee
+
 @enduml
