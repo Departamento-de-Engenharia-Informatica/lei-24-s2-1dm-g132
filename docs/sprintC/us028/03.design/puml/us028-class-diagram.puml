@@ -1,33 +1,65 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-class CreateSkillController {
-    +registerSkill(name)
-}
+title US028 - Consult the tasks assigned to a Collaborator
 
-
-class CreateSkillUI {
+class ConsultTasksUI {
 
 }
 
-class Skill
-{
-    - name
-    + Skill(name)
+class ConsultTasksController {
+    + consultTasksController(taskRepository)
+    + getEmailCollaborator()
+    + List<TaskDTO> getTasks(email, startDate, endDate)
+    + getStatusList()
+    + consultTasksByStatus(tasksDTO)
 }
+
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getSkillRepository()
+    + getGreenSpaceRepository()
+    + getTaskRepository()
 }
 
-class SkillRepository {
-   + add(skill)
+class TaskRepository {
+    + getTasksByCollaborator(email)
+    + getStatusList()
+    + toDTO(tasks)
+    + consultTasksByStatus(tasksDTO, status)
+    + consultTasks(tasksDTO)
 }
-CreateSkillUI ..> CreateSkillController
-CreateSkillController ..> Repositories : repositories
 
-Repositories ..> SkillRepository : skillRepository
-SkillRepository ..> Skill : skill
+class TaskMapper {
+    + List<TaskDTO> toDTO(List<Task> tasks)
+    + TaskDTO toDTO(Task task)
+}
 
+class TaskDTO {
+    title
+    description
+    degreeOfUrgency
+    expectedDuration
+    status
+    startingDate
+}
+
+class Task {
+    title
+    description
+    degreeOfUrgency
+    expectedDuration
+    status
+    startingDate
+}
+
+ConsultTasksUI ..> ConsultTasksController
+ConsultTasksController ..> Repositories : repositories
+ConsultTasksController ..> TaskRepository : taskRepository
+Repositories ---> "1" TaskRepository: taskRepository
+TaskRepository --> Task: tasks
+
+TaskRepository ..> TaskMapper
+TaskMapper ..> TaskDTO
+TaskMapper ..> Task
 @enduml
