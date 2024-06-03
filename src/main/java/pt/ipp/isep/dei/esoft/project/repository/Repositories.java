@@ -13,6 +13,7 @@ public class Repositories {
     private JobRepositoryFile jobRepositoryFile;
     private TeamRepositoryFile teamRepositoryFile;
     private GreenSpaceRepositoryFile greenSpaceRepositoryFile;
+    private ToDoListFile toDoListFile;
     private final WaterSupplyPointsRepository waterSupplyPointsRepository;
     private final JobRepository jobRepository;
     private final CollaboratorRepository collaboratorRepository;
@@ -28,6 +29,7 @@ public class Repositories {
         collaboratorRepositoryFile = new CollaboratorRepositoryFile();
         teamRepositoryFile = new TeamRepositoryFile();
         greenSpaceRepositoryFile = new GreenSpaceRepositoryFile();
+        toDoListFile = new ToDoListFile();
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
@@ -38,7 +40,7 @@ public class Repositories {
         teamRepository = teamRepositoryFile.read();
         meetingPointsRepository = new MeetingPointsRepository(false);
         greenSpaceRepository = greenSpaceRepositoryFile.read();
-        toDoList = new ToDoList();
+        toDoList = toDoListFile.read();
     }
 
     public static Repositories getInstance() {

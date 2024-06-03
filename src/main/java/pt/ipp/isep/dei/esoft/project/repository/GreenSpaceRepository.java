@@ -14,6 +14,8 @@ public class GreenSpaceRepository implements Serializable {
 
     private final List<GreenSpace> greenSpaces;
 
+    private List<GreenSpace> associatedGreenSpacesList;
+
     public GreenSpaceRepository() {
         greenSpaces = new ArrayList<>();
     }
@@ -36,6 +38,23 @@ public class GreenSpaceRepository implements Serializable {
 
     public List<GreenSpaceDTO> getGreenSpaces() {
         return greenSpaces.stream().map(GreenSpaceMapper::toDTO).collect(Collectors.toList());
+    }
+
+    public List<GreenSpace> getGreenSpaces(String email) {
+        associatedGreenSpacesList = new ArrayList<>();
+        for(GreenSpace greenSpace : greenSpaces)
+        {
+            if(greenSpace.hasUserEmail(email))
+            {
+                associatedGreenSpacesList.add(greenSpace);
+            }
+        }
+        return associatedGreenSpacesList;
+    }
+
+    public GreenSpace getSelectedGreenSpace(int i)
+    {
+        return associatedGreenSpacesList.get(i);
     }
 
 }
