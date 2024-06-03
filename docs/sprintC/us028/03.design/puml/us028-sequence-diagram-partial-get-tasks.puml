@@ -1,0 +1,91 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":ConsultTasksController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "taskMapper\n:TaskMapper" as TaskMapper
+participant "task\n:Task" as Task
+participant "tasksList\n:List<Task>" as TasksList
+participant "tasksList\n:List<TaskDTO>" as TasksListDTO
+participant "taskDTO\n:TaskDTO" as TaskDTO
+
+autonumber 11
+-> CTRL : getTasksByCollaborator(email)
+
+autonumber 11.1
+
+activate CTRL
+    group Get Tasks By Collaborator and Date Range
+           CTRL -> RepositorySingleton : getInstance()
+           activate RepositorySingleton
+
+           RepositorySingleton --> CTRL: repositories
+           deactivate RepositorySingleton
+
+           CTRL -> PLAT : getTaskRepository()
+           activate PLAT
+
+           PLAT --> CTRL: taskRepository
+           deactivate PLAT
+
+           CTRL -> TaskRepository : getTasksByCollaborator(email)
+           activate TaskRepository
+
+           TaskRepository -> TasksList ** : create()
+           loop for each task
+           TaskRepository -> Task : hasCollaboratorEmail(email)
+           activate Task
+
+           Task --> TaskRepository : true/false
+           deactivate Task
+
+           TaskRepository -> Task : betweenDates(startDate, endDate)
+           activate Task
+
+           Task --> TaskRepository : true/false
+           deactivate Task
+
+           opt hasCollaboratorEmail == true && betweenDates == true
+               TaskRepository -> TasksList : add(task)
+               activate TasksList
+               deactivate TasksList
+           end opt
+
+           end loop
+
+           TaskRepository --> CTRL : tasks
+           deactivate TaskRepository
+
+           CTRL -> TaskMapper : toDTO(tasks)
+           activate TaskMapper
+
+           TaskMapper -> TasksListDTO ** : create()
+           loop for each task in TaskList
+           TaskMapper -> TasksList : obj = get(i)
+           activate TasksList
+           deactivate TasksList
+
+           TaskMapper -> TaskMapper : objDTO = toDTO(obj)
+           activate TaskMapper
+
+           TaskMapper -> TaskDTO ** : create(...)
+           deactivate TaskMapper
+
+           TaskMapper -> TasksListDTO : add(objDTO)
+           activate TasksListDTO
+           deactivate TasksListDTO
+
+           end loop
+
+           TaskMapper --> CTRL : tasksDTO
+           deactivate TaskMapper
+
+end group
+autonumber 22
+<-- CTRL : tasksDTO
+
+@enduml

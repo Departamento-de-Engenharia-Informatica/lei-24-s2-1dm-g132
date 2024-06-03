@@ -31,63 +31,79 @@ activate Employee
     Employee -> UI : types second date
     activate UI
 
+    UI -> CTRL : getEmailCollaborator()
+    activate CTRL
+
+    ref over CTRL
+        Get Collaborator's Email
+    end ref
+
+    CTRL --> UI : email
+    deactivate CTRL
+
+    UI -> CTRL : getTasks(email, startDate, endDate)
+    activate CTRL
+
+    ref over CTRL
+        Get Tasks List by Collaborator and Date Range
+    end ref
+
+    CTRL --> UI : tasksDTO
+    deactivate CTRL
+
     UI --> Employee : asks if collaborator wants to view tasks filtered by status
     deactivate UI
 
     Employee -> UI : answers yes or no
     activate UI
 
-    UI -> CTRL : getEmailCollaborator()
-    activate CTRL
+    opt answer is yes
+        UI --> Employee : shows status list and requests one to filter tasks
+        deactivate UI
 
-    ref over CTRL
-        Get Email
-    end
+        Employee -> UI : selects one status
+        activate UI
 
-    CTRL --> UI : email
-    deactivate CTRL
-
-    UI -> CTRL : getTasksByCollaborator(email)
-    activate CTRL
-
-    ref over CTRL
-         Get Tasks by Collaborator
-    end
-
-    CTRL --> UI : tasksByCollaborator
-    deactivate CTRL
-
-
-    alt answer is yes
-        UI -> CTRL : consultTasksByStatus(email, tasksByCollaborator)
+        UI -> CTRL : getStatusList()
         activate CTRL
 
-        CTRL -> TaskRepository : consultTasksByStatus(email, tasksByCollaborator)
+        CTRL -> TaskRepository : getStatusList()
         activate TaskRepository
 
-        TaskRepository --> TaskRepository : getTasksByStatus(email, tasksByCollaborator)
-        TaskRepository --> TaskRepository : orderTasksByDate()
-        TaskRepository --> CTRL : tasks
+        TaskRepository --> CTRL : statusList
         deactivate TaskRepository
 
-        CTRL --> UI : tasks
+        CTRL --> UI : statusList
         deactivate CTRL
-    end
 
-    alt answer is no
-        UI -> CTRL : consultTasks(email, tasksByCollaborator)
+        UI -> CTRL : consultTasksByStatus(tasksDTO)
         activate CTRL
 
-        CTRL -> TaskRepository : consultTasks(email, tasksByCollaborator)
+        CTRL -> TaskRepository : consultTasksByStatus(tasksDTO, status)
+        activate TaskRepository
+
+        TaskRepository --> TaskRepository : getTasksByStatus(tasksDTO, status)
+        TaskRepository --> TaskRepository : orderTasksByDate()
+        TaskRepository --> CTRL : tasksDTO
+        deactivate TaskRepository
+
+        CTRL --> UI : tasksDTO
+        deactivate CTRL
+    end opt
+
+    opt answer is no
+        UI -> CTRL : consultTasks(tasksDTO)
+        activate CTRL
+
+        CTRL -> TaskRepository : consultTasks(tasksDTO)
         activate TaskRepository
 
         TaskRepository --> TaskRepository : orderTasksByDate()
-        TaskRepository --> CTRL : tasks
+        TaskRepository --> CTRL : tasksDTO
         deactivate TaskRepository
-
-        CTRL --> UI : tasks
-    end
-
+        CTRL --> UI : tasksDTO
+        deactivate CTRL
+    end opt
 
     UI --> Employee : shows tasks assigned to collaborator \nbetween two dates requested
     deactivate UI

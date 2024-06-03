@@ -16,6 +16,10 @@ participant "currentSession\n:UserSession" as SESSION
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "taskMapper\n:TaskMapper" as TaskMapper
+participant "task\n:Task" as Task
+participant "tasksList\n:List<Task>" as TasksList
+participant "tasksList\n:List<TaskDTO>" as TasksListDTO
 participant "taskDTO\n:TaskDTO" as TaskDTO
 
 activate Employee
@@ -35,12 +39,6 @@ activate Employee
     deactivate UI
 
     Employee -> UI : types second date
-    activate UI
-
-    UI --> Employee : asks if collaborator wants to view tasks filtered by status
-    deactivate UI
-
-    Employee -> UI : answers yes or no
     activate UI
 
     UI -> CTRL : getEmailCollaborator()
@@ -67,72 +65,129 @@ activate Employee
     CTRL --> UI : email
     deactivate CTRL
 
-    UI -> CTRL : getTasksByCollaborator(email)
+    UI -> CTRL : getTasks(email, startDate, endDate)
     activate CTRL
 
-    CTRL -> RepositorySingleton : getInstance()
-    activate RepositorySingleton
+        CTRL -> RepositorySingleton : getInstance()
+        activate RepositorySingleton
 
-    RepositorySingleton --> CTRL: repositories
-    deactivate RepositorySingleton
+        RepositorySingleton --> CTRL: repositories
+        deactivate RepositorySingleton
 
-    CTRL -> PLAT : getTaskRepository()
-    activate PLAT
+        CTRL -> PLAT : getTaskRepository()
+        activate PLAT
 
-    PLAT --> CTRL: taskRepository
-    deactivate PLAT
+        PLAT --> CTRL: taskRepository
+        deactivate PLAT
 
-    CTRL -> TaskRepository : getTasksByCollaborator(email)
-    activate TaskRepository
-    TaskRepository -> TaskRepository : getTasksByCollaborator(email)
-    activate TaskRepository
-    loop for each task
-    TaskRepository -> TaskDTO : hasCollaboratorEmail(email)
-    activate TaskDTO
-    TaskDTO --> TaskRepository : true/false
-    deactivate TaskDTO
-    end
-    TaskRepository --> TaskRepository : tasksByCollaborator
-    deactivate TaskRepository
+        CTRL -> TaskRepository : getTasksByCollaborator(email)
+        activate TaskRepository
 
+        TaskRepository -> TasksList ** : create()
+        loop for each task
+        TaskRepository -> Task : hasCollaboratorEmail(email)
+        activate Task
 
-    TaskRepository --> CTRL : tasksByCollaborator
-    deactivate TaskRepository
+        Task --> TaskRepository : true/false
+        deactivate Task
 
-    CTRL --> UI : tasksByCollaborator
+        TaskRepository -> Task : betweenDates(startDate, endDate)
+        activate Task
+
+        Task --> TaskRepository : true/false
+        deactivate Task
+
+        opt hasCollaboratorEmail == true && betweenDates == true
+            TaskRepository -> TasksList : add(task)
+            activate TasksList
+            deactivate TasksList
+        end opt
+
+        end loop
+
+        TaskRepository --> CTRL : tasks
+        deactivate TaskRepository
+
+        CTRL -> TaskMapper : toDTO(tasks)
+        activate TaskMapper
+
+        TaskMapper -> TasksListDTO ** : create()
+        loop for each task in TaskList
+        TaskMapper -> TasksList : obj = get(i)
+        activate TasksList
+        deactivate TasksList
+
+        TaskMapper -> TaskMapper : objDTO = toDTO(obj)
+        activate TaskMapper
+
+        TaskMapper -> TaskDTO ** : create(...)
+        deactivate TaskMapper
+
+        TaskMapper -> TasksListDTO : add(objDTO)
+        activate TasksListDTO
+        deactivate TasksListDTO
+
+        end loop
+
+        TaskMapper --> CTRL : tasksDTO
+        deactivate TaskMapper
+
+    CTRL --> UI : tasksDTO
     deactivate CTRL
 
+    UI --> Employee : asks if collaborator wants to view tasks filtered by status
+    deactivate UI
 
-    alt answer is yes
-        UI -> CTRL : consultTasksByStatus(email, tasksByCollaborator)
+    Employee -> UI : answers yes or no
+    activate UI
+
+    opt answer is yes
+        UI --> Employee : shows status list and requests one to filter tasks
+        deactivate UI
+
+        Employee -> UI : selects one status
+        activate UI
+
+        UI -> CTRL : getStatusList()
         activate CTRL
 
-        CTRL -> TaskRepository : consultTasksByStatus(email, tasksByCollaborator)
+        CTRL -> TaskRepository : getStatusList()
         activate TaskRepository
 
-        TaskRepository --> TaskRepository : getTasksByStatus(email, tasksByCollaborator)
-        TaskRepository --> TaskRepository : orderTasksByDate()
-        TaskRepository --> CTRL : tasks
+        TaskRepository --> CTRL : statusList
         deactivate TaskRepository
 
-        CTRL --> UI : tasks
+        CTRL --> UI : statusList
         deactivate CTRL
-    end
 
-    alt answer is no
-        UI -> CTRL : consultTasks(email, tasksByCollaborator)
+        UI -> CTRL : consultTasksByStatus(tasksDTO)
         activate CTRL
 
-        CTRL -> TaskRepository : consultTasks(email, tasksByCollaborator)
+        CTRL -> TaskRepository : consultTasksByStatus(tasksDTO, status)
+        activate TaskRepository
+
+        TaskRepository --> TaskRepository : getTasksByStatus(tasksDTO, status)
+        TaskRepository --> TaskRepository : orderTasksByDate()
+        TaskRepository --> CTRL : tasksDTO
+        deactivate TaskRepository
+
+        CTRL --> UI : tasksDTO
+        deactivate CTRL
+    end opt
+
+    opt answer is no
+        UI -> CTRL : consultTasks(tasksDTO)
+        activate CTRL
+
+        CTRL -> TaskRepository : consultTasks(tasksDTO)
         activate TaskRepository
 
         TaskRepository --> TaskRepository : orderTasksByDate()
-        TaskRepository --> CTRL : tasks
+        TaskRepository --> CTRL : tasksDTO
         deactivate TaskRepository
-
-        CTRL --> UI : tasks
-    end
-
+        CTRL --> UI : tasksDTO
+        deactivate CTRL
+    end opt
 
     UI --> Employee : shows tasks assigned to collaborator \nbetween two dates requested
     deactivate UI
