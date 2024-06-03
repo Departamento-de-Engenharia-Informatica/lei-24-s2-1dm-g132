@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title US28 - Consult the tasks assigned to me between two dates
+title US28 - Consult the tasks assigned to \n a collaborator between two dates
 
 autonumber
 
@@ -32,6 +32,14 @@ activate Employee
 
     Employee -> System : answers yes or no
     activate System
+
+    opt answer is yes
+    System --> Employee : shows status list and requests one to filter tasks
+    deactivate System
+
+    Employee -> System : selects one status
+    activate System
+    end opt
 
     System --> Employee : shows tasks assigned to collaborator between those two dates
     deactivate System
