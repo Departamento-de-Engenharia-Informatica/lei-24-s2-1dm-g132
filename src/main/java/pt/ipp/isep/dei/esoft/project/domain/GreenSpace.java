@@ -73,6 +73,10 @@ public class GreenSpace implements Serializable {
         this.gsmEmail = gsmEmail;
     }
 
+    public boolean hasUserEmail(String email){
+        return this.gsmEmail.equalsIgnoreCase(email);
+    }
+
     @Override
     public String toString() {
         return "GreenSpace{" +
