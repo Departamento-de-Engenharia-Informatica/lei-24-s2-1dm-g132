@@ -14,6 +14,7 @@ public class Repositories {
     private TeamRepositoryFile teamRepositoryFile;
     private GreenSpaceRepositoryFile greenSpaceRepositoryFile;
     private ToDoListFile toDoListFile;
+    private AgendaFile agendaFile;
     private final WaterSupplyPointsRepository waterSupplyPointsRepository;
     private final JobRepository jobRepository;
     private final CollaboratorRepository collaboratorRepository;
@@ -22,6 +23,7 @@ public class Repositories {
     private final MeetingPointsRepository meetingPointsRepository;
     private final GreenSpaceRepository greenSpaceRepository;
     private final ToDoList toDoList;
+    private final Agenda agenda;
 
     private Repositories() {
         skillRepositoryFile = new SkillRepositoryFile();
@@ -30,6 +32,7 @@ public class Repositories {
         teamRepositoryFile = new TeamRepositoryFile();
         greenSpaceRepositoryFile = new GreenSpaceRepositoryFile();
         toDoListFile = new ToDoListFile();
+        agendaFile = new AgendaFile();
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
@@ -41,6 +44,7 @@ public class Repositories {
         meetingPointsRepository = new MeetingPointsRepository(false);
         greenSpaceRepository = greenSpaceRepositoryFile.read();
         toDoList = toDoListFile.read();
+        agenda = agendaFile.read();
     }
 
     public static Repositories getInstance() {
@@ -91,4 +95,6 @@ public class Repositories {
     }
 
     public ToDoList getToDoList() { return toDoList; }
+
+    public Agenda getAgenda() { return agenda; }
 }

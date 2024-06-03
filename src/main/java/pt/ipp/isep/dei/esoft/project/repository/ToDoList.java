@@ -20,6 +20,8 @@ public class ToDoList implements Serializable {
      */
     private final List<GSTask> entriesList;
 
+    private List<GSTask> associatedToDoEntriesList;
+
     /**
      * Constructs a new ToDoList object.
      */
@@ -44,6 +46,26 @@ public class ToDoList implements Serializable {
     private boolean addTask(GSTask task)
     {
         return entriesList.add(task);
+    }
+
+    public List<GSTask> getToDoListEntries(String email)
+    {
+        associatedToDoEntriesList = new ArrayList<>();
+        for(GSTask gSTask : entriesList)
+        {
+            if(gSTask.isPending() && gSTask.hasUserEmail(email))
+            {
+                associatedToDoEntriesList.add(gSTask);
+            }
+        }
+        return associatedToDoEntriesList;
+    }
+
+    public GSTask getSelectedTask(int i)
+    {
+        GSTask selectedTask = associatedToDoEntriesList.get(i);
+        selectedTask.setProcessed();
+        return selectedTask.clone();
     }
 
 }
