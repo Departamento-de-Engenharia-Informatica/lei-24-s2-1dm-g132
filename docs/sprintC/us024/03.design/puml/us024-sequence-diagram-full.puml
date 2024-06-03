@@ -25,9 +25,9 @@ participant "greenSpaceDTO\n:GreenSpaceDTO" as greenSpaceDTO
 participant "taskMapper\n:TaskMapper" as TaskMapper
 participant "agenda\n:Agenda" as Agenda
 participant "entriesList\n:List<Task>" as entriesList
-participant "entriesListByGreenSpace\n:List<Task>" as entriesListByGreenSpace
+participant "tasksListByGreenSpace\n:List<Task>" as tasksListByGreenSpace
 participant "task\n:Task" as task
-participant "entriesListByGreenSpaceDTO\n:List<TaskDTO>" as entriesListByGreenSpaceDTO
+participant "tasksListByGreenSpaceDTO\n:List<TaskDTO>" as tasksListByGreenSpaceDTO
 participant "taskRepository\n:TaskRepository" as TaskRepository
 participant "taskDTO\n:TaskDTO" as TaskDTO
 
@@ -131,7 +131,7 @@ activate Employee
     Employee -> UI : selects one green space
     activate UI
 
-    UI -> CTRL : getEntriesByGreenSpace()
+    UI -> CTRL : getTasksByGreenSpace(greenSpace)
     activate CTRL
 
             CTRL -> PLAT : getAgenda()
@@ -140,14 +140,14 @@ activate Employee
             PLAT --> CTRL : agenda
             deactivate PLAT
 
-            CTRL -> Agenda : getAgendaEntries(greenSpace)
+            CTRL -> Agenda : getAgendaTasks(greenSpace)
             activate Agenda
 
-            Agenda --> entriesListByGreenSpace** : create()
+            Agenda --> tasksListByGreenSpace** : create()
 
             loop for each known task
 
-            Agenda -> entriesList : entry = get(i)
+            Agenda -> entriesList : task = get(i)
             activate entriesList
             deactivate entriesList
 
@@ -156,26 +156,26 @@ activate Employee
             deactivate task
 
             opt greenSpace == true
-            Agenda -> entriesListByGreenSpace : add(entry)
-            activate entriesListByGreenSpace
-            deactivate entriesListByGreenSpace
+            Agenda -> tasksListByGreenSpace : add(entry)
+            activate tasksListByGreenSpace
+            deactivate tasksListByGreenSpace
             end opt
 
             end loop
 
-            Agenda --> CTRL : entriesListByGreenSpace
+            Agenda --> CTRL : tasksListByGreenSpace
             deactivate Agenda
 
             CTRL -> TaskMapper : toDTO(entriesList)
             activate TaskMapper
 
-            TaskMapper --> entriesListByGreenSpaceDTO** : create()
+            TaskMapper --> tasksListByGreenSpaceDTO** : create()
 
-            loop for each task in entriesListByGreenSpace
+            loop for each task in tasksListByGreenSpace
 
-            TaskMapper -> entriesListByGreenSpace : obj = get(i)
-            activate entriesListByGreenSpace
-            deactivate entriesListByGreenSpace
+            TaskMapper -> tasksListByGreenSpace : obj = get(i)
+            activate tasksListByGreenSpace
+            deactivate tasksListByGreenSpace
 
             TaskMapper -> TaskMapper : objDto = toDTO(obj)
             activate TaskMapper
@@ -183,16 +183,16 @@ activate Employee
             TaskMapper -> TaskDTO** : create(...)
             deactivate TaskMapper
 
-            TaskMapper -> entriesListByGreenSpaceDTO : add(objDto)
-            activate entriesListByGreenSpaceDTO
-            deactivate entriesListByGreenSpaceDTO
+            TaskMapper -> tasksListByGreenSpaceDTO : add(objDto)
+            activate tasksListByGreenSpaceDTO
+            deactivate tasksListByGreenSpaceDTO
 
             end loop
 
-            TaskMapper --> CTRL : entriesListByGreenSpaceDTO
+            TaskMapper --> CTRL : tasksListByGreenSpaceDTO
             deactivate TaskMapper
 
-            CTRL --> UI : entriesListByGreenSpaceDTO
+            CTRL --> UI : tasksListByGreenSpaceDTO
             deactivate CTRL
 
     UI --> Employee : shows list of entries in the agenda of the selected green space

@@ -16,9 +16,8 @@ class PostponeEntryUI {
 
 class PostponeEntryController {
     + postponeEntryController(taskRepository, greenSpaceRepository)
-    + getGreenSpaces()
     + List<GreenSpaceDTO> getGreenSpaces()
-    + List<TaskDTO> getTasksByGreenSpace(greenSpaceDTO)
+    + List<TaskDTO> getTasksByGreenSpace(greenSpace)
     + postponeEntry(taskDTO, newDate)
 
 }
