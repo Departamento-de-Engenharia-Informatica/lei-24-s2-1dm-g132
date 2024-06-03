@@ -111,6 +111,11 @@ class Team
 
 class GreenSpace
 {
+    - String name
+    - String type
+    - int area
+    - String address
+    - String gsmEmail
     + hasUserEmail(email)
 }
 

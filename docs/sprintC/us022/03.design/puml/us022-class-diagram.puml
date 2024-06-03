@@ -55,6 +55,7 @@ class GreenSpace
     - String type
     - int area
     - String address
+    - String gsmEmail
     + hasUserEmail(email)
 }
 
