@@ -8,10 +8,10 @@ participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSION
 
-autonumber 9
+autonumber 7
 -> CTRL : getEmailCollaborator()
 
-autonumber 9.1
+autonumber 7.1
 
 activate CTRL
     group Get Email of Collaborator
@@ -34,7 +34,7 @@ activate CTRL
            deactivate SESSION
 
 end group
-autonumber 16
+autonumber 14
 <-- CTRL : email
 
 @enduml

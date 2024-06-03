@@ -142,12 +142,6 @@ activate Employee
     activate UI
 
     opt answer is yes
-        UI --> Employee : shows status list and requests one to filter tasks
-        deactivate UI
-
-        Employee -> UI : selects one status
-        activate UI
-
         UI -> CTRL : getStatusList()
         activate CTRL
 
@@ -160,16 +154,17 @@ activate Employee
         CTRL --> UI : statusList
         deactivate CTRL
 
-        UI -> CTRL : consultTasksByStatus(tasksDTO)
+        UI --> Employee : shows status list and requests one to filter tasks
+        deactivate UI
+
+        Employee -> UI : selects one status
+        activate UI
+
+        UI -> CTRL : consultTasksByStatus(tasksDTO, status)
         activate CTRL
 
-        CTRL -> TaskRepository : consultTasksByStatus(tasksDTO, status)
-        activate TaskRepository
-
-        TaskRepository --> TaskRepository : getTasksByStatus(tasksDTO, status)
-        TaskRepository --> TaskRepository : orderTasksByDate()
-        TaskRepository --> CTRL : tasksDTO
-        deactivate TaskRepository
+        CTRL --> CTRL : filterTasks(tasksDTO, status)
+        CTRL --> CTRL : orderTasksByDate(tasksDTO)
 
         CTRL --> UI : tasksDTO
         deactivate CTRL
@@ -179,12 +174,8 @@ activate Employee
         UI -> CTRL : consultTasks(tasksDTO)
         activate CTRL
 
-        CTRL -> TaskRepository : consultTasks(tasksDTO)
-        activate TaskRepository
+        CTRL --> CTRL : orderTasksByDate(tasksDTO)
 
-        TaskRepository --> TaskRepository : orderTasksByDate()
-        TaskRepository --> CTRL : tasksDTO
-        deactivate TaskRepository
         CTRL --> UI : tasksDTO
         deactivate CTRL
     end opt

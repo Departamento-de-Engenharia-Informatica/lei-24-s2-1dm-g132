@@ -13,10 +13,10 @@ participant "tasksList\n:List<Task>" as TasksList
 participant "tasksList\n:List<TaskDTO>" as TasksListDTO
 participant "taskDTO\n:TaskDTO" as TaskDTO
 
-autonumber 11
+autonumber 15
 -> CTRL : getTasksByCollaborator(email)
 
-autonumber 11.1
+autonumber 15.1
 
 activate CTRL
     group Get Tasks By Collaborator and Date Range
@@ -85,7 +85,7 @@ activate CTRL
            deactivate TaskMapper
 
 end group
-autonumber 22
+autonumber 35
 <-- CTRL : tasksDTO
 
 @enduml
