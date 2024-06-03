@@ -36,12 +36,11 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 ### Full Diagram
 
-
-![US04 - Sequence Diagram - Full](svg/us024-sequence-diagram-full.svg)
+![US24 - Sequence Diagram - Full](svg/us024-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
-![US04 - Sequence Diagram - split](svg/us024-sequence-diagram-split.svg)
+![US24 - Sequence Diagram - split](svg/us024-sequence-diagram-split.svg)
 
 **Get Green Spaces**
 
@@ -54,4 +53,4 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 ## 3.3. Class Diagram (CD)
 
-![US04 - Class Diagram](svg/us024-class-diagram.svg)
+![US24 - Class Diagram](svg/us024-class-diagram.svg)
