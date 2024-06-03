@@ -80,7 +80,7 @@ activate CTRL
            GreenSpaceRepository --> CTRL : GSMGreenSpacesList
            deactivate GreenSpaceRepository
 
-           CTRL -> GreenSpaceMapper : toDTO(associatedGreenSpacesList)
+           CTRL -> GreenSpaceMapper : toDTO(GSMGreenSpacesList)
            activate GreenSpaceMapper
 
            GreenSpaceMapper --> GSMGreenSpacesListDto** : create()
