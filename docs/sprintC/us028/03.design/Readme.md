@@ -6,36 +6,30 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...   | Answer                | Justification (with patterns)                                                                                 |
-|:-------------  |:----------------------------------------------|:----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		 | 	... interacting with the actor?              | CreateSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		 | 	... coordinating the US?                     | CreateSkillController | Controller                                                                                                    |
-| 			  		 | 	... instantiating a new Skill?               | Organization          | Creator (Rule 1): in the DM Organization has a Task.                                                          |
-| 			  		 | ... knowing the user using the system?        | UserSession           | IE: cf. A&A component documentation.                                                                          |
-| 			  		 | 							                                       | Organization          | IE: knows/has its own Employees                                                                               |
-| 			  		 | 							                                       | Employee              | IE: knows its own data (skill name)                                                                           |
-| Step 2  		 | 							                                       |                       |                                                                                                               |
-| Step 3  		 | 	...saving the inputted data?                 | Skill                 | IE: object created in step 1 has its own data.                                                                |
-| Step 4  		 | 	...knowing the task categories to show?      | System                | IE: Skill Categories are defined by the Administrators.                                                       |
-| Step 5  		 | 	... saving the selected category?            | Skill                 | IE: object created in step 1 is classified in one Category.                                                   |
-| Step 6  		 | 							                                       |                       |                                                                                                               |              
-| Step 7  		 | 	... validating all data (local validation)?  | Skill                 | IE: owns its data.                                                                                            | 
-| 			  		 | 	... validating all data (global validation)? | Organization          | IE: knows all its skills.                                                                                     | 
-| 			  		 | 	... saving the created task?                 | Organization          | IE: owns all its skills.                                                                                      | 
-| Step 9         | ...adding skills to repository               | SkillRepository         |                                 |
-| Step 8  		 | 	... informing operation success?             | CreateSkillUI         | IE: is responsible for user interactions.                                                                     | 
+| Interaction ID | Question: Which class is responsible for...      | Answer                    | Justification (with patterns)                               |
+|:---------------|:-------------------------------------------------|:--------------------------|:------------------------------------------------------------|
+| Step 1         | ...interacting with the actor?                   | ConsultTasksUI            | Pure Fabrication                                            |
+|                | ...coordinating the US?                          | ConsultTasksController    | Pure Fabrication, Controller                                |
+| Step 2         | ...requesting first date?                        | ConsultTasksUI            | Pure Fabrication                                            |
+| Step 3         | ...saving typed date?                            | ConsultTasksUI            | Pure Fabrication                                            |
+| Step 4         | ...requesting second date?                       | ConsultTasksUI            | Pure Fabrication                                            |
+| Step 5         | ...saving typed date?                            | ConsultTasksUI            | Pure Fabrication                                            |
+|                | ...obtaining list of collaborator's tasks?       | TaskRepository            | Pure Fabrication, Information Expert                        |
+| Step 6         | ...asking if collaborator wants to filter tasks? | ConsultTasksUI            | Pure Fabrication                                            |              
+| Step 7         | ...obtaining status list?                        | TaskRepository            | Pure Fabrication, Information Expert                        | 
+| Step 8         | ...displaying status list?                       | ConsultTasksUI            | Pure Fabrication, Information Expert                        | 
+| Step 9         | ...obtaining tasks ordered by date?              | ConsultTasksController    | Pure Fabrication, Controller                                |
+| Step 10        | ...displaying tasks?                             | ConsultTasksUI            | Pure Fabrication                                            |
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* Collaborator
 * Task
-
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* ConsultTaskslUI
+* ConsultTasksUI
 * ConsultTasksController
 * TaskRepository
 
@@ -44,18 +38,21 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 ### Full Diagram
 
-This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
-
-![Sequence Diagram - Full](svg/us028-sequence-diagram-full.svg)
+![US28 - Sequence Diagram - Full](svg/us028-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
-The following diagram shows the same sequence of interactions between the classes involved in the realization of this user story, but it is split in partial diagrams to better illustrate the interactions between the classes.
+![US28 - Sequence Diagram - split](svg/us028-sequence-diagram-split.svg)
 
-It uses Interaction Occurrence (a.k.a. Interaction Use).
+**Get Email**
 
-![Sequence Diagram - split](svg/us028-sequence-diagram-split.svg)
+![Sequence Diagram - Partial - Get Email](svg/us028-sequence-diagram-partial-get-email.svg)
+
+**Get Tasks**
+
+![Sequence Diagram - Partial - Get Tasks](svg/us028-sequence-diagram-partial-get-tasks.svg)
+
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us028-class-diagram.svg)
+![US28 - Class Diagram](svg/us028-class-diagram.svg)
