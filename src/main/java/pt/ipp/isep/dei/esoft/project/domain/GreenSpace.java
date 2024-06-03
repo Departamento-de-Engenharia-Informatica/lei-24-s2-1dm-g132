@@ -3,9 +3,10 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.application.session.UserSession;
 
+import java.io.Serializable;
 import java.lang.IllegalArgumentException;
 
-public class GreenSpace {
+public class GreenSpace implements Serializable {
 
     private String name;
     private String address;

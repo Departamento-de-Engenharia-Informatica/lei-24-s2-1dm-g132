@@ -1,9 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.repository.serialization.CollaboratorRepositoryFile;
-import pt.ipp.isep.dei.esoft.project.repository.serialization.JobRepositoryFile;
-import pt.ipp.isep.dei.esoft.project.repository.serialization.SkillRepositoryFile;
-import pt.ipp.isep.dei.esoft.project.repository.serialization.TeamRepositoryFile;
+import pt.ipp.isep.dei.esoft.project.repository.serialization.*;
 
 public class Repositories {
 
@@ -15,6 +12,7 @@ public class Repositories {
     private SkillRepositoryFile skillRepositoryFile;
     private JobRepositoryFile jobRepositoryFile;
     private TeamRepositoryFile teamRepositoryFile;
+    private GreenSpaceRepositoryFile greenSpaceRepositoryFile;
     private final WaterSupplyPointsRepository waterSupplyPointsRepository;
     private final JobRepository jobRepository;
     private final CollaboratorRepository collaboratorRepository;
@@ -22,12 +20,14 @@ public class Repositories {
     private final TeamRepository teamRepository;
     private final MeetingPointsRepository meetingPointsRepository;
     private final GreenSpaceRepository greenSpaceRepository;
+    private final ToDoList toDoList;
 
     private Repositories() {
         skillRepositoryFile = new SkillRepositoryFile();
         jobRepositoryFile = new JobRepositoryFile();
         collaboratorRepositoryFile = new CollaboratorRepositoryFile();
         teamRepositoryFile = new TeamRepositoryFile();
+        greenSpaceRepositoryFile = new GreenSpaceRepositoryFile();
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
@@ -37,7 +37,8 @@ public class Repositories {
         skillRepository = skillRepositoryFile.read();
         teamRepository = teamRepositoryFile.read();
         meetingPointsRepository = new MeetingPointsRepository(false);
-        greenSpaceRepository = new GreenSpaceRepository();
+        greenSpaceRepository = greenSpaceRepositoryFile.read();
+        toDoList = new ToDoList();
     }
 
     public static Repositories getInstance() {
@@ -86,4 +87,6 @@ public class Repositories {
     public GreenSpaceRepository getGreenSpaceRepository() {
         return greenSpaceRepository;
     }
+
+    public ToDoList getToDoList() { return toDoList; }
 }
