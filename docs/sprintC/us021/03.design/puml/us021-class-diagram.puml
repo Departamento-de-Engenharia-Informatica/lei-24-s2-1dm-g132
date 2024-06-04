@@ -72,8 +72,7 @@ class GreenSpaceDto
     - String type
     - int area
     - String address
-    - String gsmEmail
-    + GreenSpaceDto(name, type, area, address, gsmEmail)
+    + GreenSpaceDto(name, type, area, address)
 }
 
 class ToDoList
@@ -86,11 +85,26 @@ class Task
 {
     - String title
     - String description
-    - String degreeOfUrgency
     - int expectedDuration
-    - String status
     - Calendar startingDate
     + Task(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
+}
+
+enum DegreeOfUrgency
+{
+    Low
+    Medium
+    High
+}
+
+enum GSTaskStatus
+{
+    Pending
+    Processed
+    Planned
+    Postponed
+    Canceled
+    Done
 }
 
 class TaskMapper
@@ -104,6 +118,7 @@ class TaskDto
     - String description
     - String degreeOfUrgency
     - int expectedDuration
+    - Calendar startingDate
     + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
     + getTitle()
     + getDescription()
@@ -111,6 +126,8 @@ class TaskDto
     + getExpectedDuration()
 }
 
+Task +-- DegreeOfUrgency
+Task +-- GSTaskStatus
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance

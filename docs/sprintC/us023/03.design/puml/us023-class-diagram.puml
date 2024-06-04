@@ -73,15 +73,30 @@ class Task
 {
     - String title
     - String description
-    - String degreeOfUrgency
     - int expectedDuration
-    - String status
     - Calendar startingDate
     + hasTeam()
     + hasUserEmail(email)
     + belongsToTeam(selectedTeam)
     + hasConflict(selectedTask)
     + assignTeam(selectedTeam)
+}
+
+enum DegreeOfUrgency
+{
+    Low
+    Medium
+    High
+}
+
+enum GSTaskStatus
+{
+    Pending
+    Processed
+    Planned
+    Postponed
+    Canceled
+    Done
 }
 
 class TeamRepository
@@ -133,6 +148,9 @@ class EmailThroughDEIService
 {
     + sendEmail(title, startingDate, selectedTeam)
 }
+
+Task +-- DegreeOfUrgency
+Task +-- GSTaskStatus
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
