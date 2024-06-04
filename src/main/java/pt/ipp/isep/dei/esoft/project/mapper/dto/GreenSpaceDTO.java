@@ -31,8 +31,4 @@ public class GreenSpaceDTO {
     public GreenSpaceType getType() {
         return type;
     }
-
-    public String getGsmEmail() {
-        return gsmEmail;
-    }
 }
