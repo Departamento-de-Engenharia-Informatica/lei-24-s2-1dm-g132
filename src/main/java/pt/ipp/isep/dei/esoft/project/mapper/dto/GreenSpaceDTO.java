@@ -8,14 +8,12 @@ public class GreenSpaceDTO {
     private String address;
     private int area;
     private GreenSpaceType type;
-    private String gsmEmail;
 
-    public GreenSpaceDTO(String name, String address, int area, GreenSpaceType type, String gsmEmail) {
+    public GreenSpaceDTO(String name, String address, int area, GreenSpaceType type) {
         this.name = name;
         this.address = address;
         this.area = area;
         this.type = type;
-        this.gsmEmail = gsmEmail;
     }
 
     public String getName() {

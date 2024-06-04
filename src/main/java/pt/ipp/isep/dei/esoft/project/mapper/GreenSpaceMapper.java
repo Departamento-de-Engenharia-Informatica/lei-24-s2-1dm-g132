@@ -9,7 +9,7 @@ import java.util.List;
 public class GreenSpaceMapper {
 
     public static GreenSpaceDTO toDTO(GreenSpace greenSpace) {
-        return new GreenSpaceDTO(greenSpace.getName(), greenSpace.getAddress(), greenSpace.getArea(), greenSpace.getType(), greenSpace.getGsmEmail());
+        return new GreenSpaceDTO(greenSpace.getName(), greenSpace.getAddress(), greenSpace.getArea(), greenSpace.getType());
     }
 
     public static List<GreenSpaceDTO> toDTO(List<GreenSpace> associatedGreenSpacesList)
@@ -23,7 +23,7 @@ public class GreenSpaceMapper {
     }
 
     public static GreenSpace fromDTO(GreenSpaceDTO greenSpaceDto){
-        return new GreenSpace(greenSpaceDto.getName(), greenSpaceDto.getAddress(), greenSpaceDto.getArea(), greenSpaceDto.getType(), greenSpaceDto.getGsmEmail());
+        return new GreenSpace(greenSpaceDto.getName(), greenSpaceDto.getAddress(), greenSpaceDto.getArea(), greenSpaceDto.getType());
     }
 
 }

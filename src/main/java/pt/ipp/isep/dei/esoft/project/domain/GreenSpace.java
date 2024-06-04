@@ -15,7 +15,7 @@ public class GreenSpace implements Serializable {
     private String gsmEmail;
 
 
-    public GreenSpace(String name, String address, int area, GreenSpaceType type, String gsmEmail) {
+    public GreenSpace(String name, String address, int area, GreenSpaceType type) {
         if(name.isEmpty() || name.isBlank()){
             throw new IllegalArgumentException("Green Spaces Names Cannot Be Empty");
         }

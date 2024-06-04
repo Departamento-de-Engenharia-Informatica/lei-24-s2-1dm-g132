@@ -23,6 +23,7 @@ public class GreenSpaceRepository implements Serializable {
     public boolean registerGreenSpace(GreenSpaceDTO greenSpaceDto) {
         return add(GreenSpaceMapper.fromDTO(greenSpaceDto));
     }
+
     public Optional<GreenSpaceDTO> getGreenSpaceByName(String name) {
         for (GreenSpace greenSpace : greenSpaces){
             if (greenSpace.getName().equals(name)){
