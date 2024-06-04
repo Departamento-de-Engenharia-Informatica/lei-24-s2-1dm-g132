@@ -73,7 +73,7 @@ public class AddEntryAgendaController {
     {
         String email = applicationSession.getCurrentSession().getUserEmail();
         List<GSTask> associatedToDoEntriesList = toDoList.getToDoListEntries(email);
-        List<GSTaskDTO> associatedToDoEntriesListDTO = GSTaskMapper.toDTO(associatedToDoEntriesList);
+        List<GSTaskDTO> associatedToDoEntriesListDTO = GSTaskMapper.toDTOToDo(associatedToDoEntriesList);
         return associatedToDoEntriesListDTO;
     }
 

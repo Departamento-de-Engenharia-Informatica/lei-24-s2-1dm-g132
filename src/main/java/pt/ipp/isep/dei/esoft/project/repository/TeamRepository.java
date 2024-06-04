@@ -76,4 +76,9 @@ public class TeamRepository implements Serializable {
     public List<Team> getTeams() {
         return List.copyOf(teams);
     }
+
+    public Team getSelectedTeam(int i)
+    {
+        return teams.get(i);
+    }
 }

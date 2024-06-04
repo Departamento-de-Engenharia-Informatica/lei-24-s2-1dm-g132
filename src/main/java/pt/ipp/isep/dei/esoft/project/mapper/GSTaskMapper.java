@@ -13,18 +13,32 @@ public class GSTaskMapper {
         return new GSTask(taskDTO.getTitle(), taskDTO.getDescription(), taskDTO.getDegreeOfUrgency(), taskDTO.getExpectedDuration(), selectedGreenSpace);
     }
 
-    public static GSTaskDTO toDTO(GSTask gSTask) {
+    public static GSTaskDTO toDTOToDo(GSTask gSTask) {
         return new GSTaskDTO(gSTask.getTitle(), gSTask.getDescription(), gSTask.getDegreeOfUrgency(), gSTask.getExpectedDuration(), gSTask.getGreenSpace());
     }
 
-    public static List<GSTaskDTO> toDTO(List<GSTask> associatedToDoEntriesList)
+    public static List<GSTaskDTO> toDTOToDo(List<GSTask> associatedToDoEntriesList)
     {
         List<GSTaskDTO> associatedToDoEntriesListDTO = new ArrayList<>();
         for(GSTask gSTask : associatedToDoEntriesList)
         {
-            associatedToDoEntriesListDTO.add(toDTO(gSTask));
+            associatedToDoEntriesListDTO.add(toDTOToDo(gSTask));
         }
         return associatedToDoEntriesListDTO;
+    }
+
+    public static GSTaskDTO toDTOAgenda(GSTask gSTask) {
+        return new GSTaskDTO(gSTask.getTitle(), gSTask.getDescription(), gSTask.getDegreeOfUrgency(), gSTask.getExpectedDuration(), gSTask.getGreenSpace(), gSTask.getStartingDate());
+    }
+
+    public static List<GSTaskDTO> toDTOAgenda(List<GSTask> freeAgendaEntriesList)
+    {
+        List<GSTaskDTO> freeAgendaEntriesListDTO = new ArrayList<>();
+        for(GSTask gSTask : freeAgendaEntriesList)
+        {
+            freeAgendaEntriesListDTO.add(toDTOAgenda(gSTask));
+        }
+        return freeAgendaEntriesListDTO;
     }
 
 

@@ -22,6 +22,8 @@ public class GSTask implements Serializable {
 
     private Calendar startingDate;
 
+    private Team assignedTeam;
+
     private enum DegreeOfUrgency {
         Low, Medium, High
     }
@@ -58,6 +60,10 @@ public class GSTask implements Serializable {
 
     public GreenSpace getGreenSpace() {
         return greenSpace;
+    }
+
+    public Calendar getStartingDate() {
+        return startingDate;
     }
 
     private void setTitle(String title)
@@ -140,6 +146,21 @@ public class GSTask implements Serializable {
     public boolean hasUserEmail(String email)
     {
         return this.greenSpace.hasUserEmail(email);
+    }
+
+    public boolean hasTeam()
+    {
+        return this.assignedTeam != null;
+    }
+
+    public boolean belongsToTeam(Team selectedTeam)
+    {
+        return this.assignedTeam.equals(selectedTeam);
+    }
+
+    public GSTask assignTeam(Team selectedTeam) {
+        this.assignedTeam = selectedTeam;
+        return this;
     }
 
     @Override

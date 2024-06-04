@@ -34,6 +34,10 @@ public class Team implements Serializable {
         }
     }
 
+    public List<Collaborator> getCollaborators() {
+        return collaborators;
+    }
+
     /**
      * Checks if this team is equal to another object.
      *
