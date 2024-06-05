@@ -8,7 +8,7 @@
 
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.DevTeamUI">
    <children>
-      <HBox prefHeight="45.0" prefWidth="575.0">
+      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="575.0">
          <children>
             <Label text="Development Team:">
                <font>

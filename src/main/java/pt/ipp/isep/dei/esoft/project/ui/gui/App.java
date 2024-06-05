@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 
 import java.io.IOException;
 
@@ -16,6 +17,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.run();
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/pt/ipp/isep/dei/esoft/project/ui/gui/mainMenu.fxml"));
             Parent root = loader.load();
