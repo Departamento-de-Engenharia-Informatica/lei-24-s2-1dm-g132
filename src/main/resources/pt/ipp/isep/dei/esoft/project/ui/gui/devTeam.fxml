@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.DevTeamUI">
+   <children>
+      <HBox prefHeight="45.0" prefWidth="575.0">
+         <children>
+            <Label text="Development Team:">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#goBack" prefHeight="45.0" prefWidth="76.0" text="Back">
+               <HBox.margin>
+                  <Insets left="215.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <Label text="José Silva - 1201123@isep.ipp.pt">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label text="Eduardo Carreiro - 1211199@isep.ipp.pt">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label text="João Silva - 1221293@isep.ipp.pt">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label text="Beatriz Morais - 1221401@isep.ipp.pt">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label text="Rui Moreira - 1221401@isep.ipp.pt">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+   <padding>
+      <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+   </padding>
+</VBox>

@@ -1,8 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
-import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,20 +14,23 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
-public class App extends Application {
+public class DevTeamUI {
 
-    @Override
-    public void start(Stage stage) throws IOException {
+    @FXML
+    public void goBack(ActionEvent actionEvent) {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/pt/ipp/isep/dei/esoft/project/ui/gui/mainMenu.fxml"));
-            Parent root = loader.load();
+            Parent devTeamUI = loader.load();
 
-            Scene scene = new Scene(root);
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Stage mainMenuUIStage = new Stage();
+            mainMenuUIStage.setTitle("Green Spaces App");
+            Scene scene = new Scene(devTeamUI);
+            mainMenuUIStage.setScene(scene);
+            currentStage.close();
+            mainMenuUIStage.show();
 
-            stage.setTitle("Green Spaces App");
-            stage.setScene(scene);
-
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            mainMenuUIStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
                     Alert alerta = AlertUI.createAlert(Alert.AlertType.CONFIRMATION, "Green Spaces App",
@@ -35,14 +40,10 @@ public class App extends Application {
                     }
                 }
             });
-            stage.show();
+            mainMenuUIStage.show();
         }catch (IOException ex) {
             AlertUI.createAlert(Alert.AlertType.ERROR, "Green Spaces App",
                     "Problems starting the application.", ex.getMessage()).show();
         }
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }
