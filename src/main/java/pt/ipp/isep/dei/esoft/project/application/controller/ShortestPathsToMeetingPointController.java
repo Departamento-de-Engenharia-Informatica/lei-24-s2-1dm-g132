@@ -20,8 +20,8 @@ public class ShortestPathsToMeetingPointController {
         return meetingPointsRepository;
     }
 
-    public boolean getShortestPathsToMeetingPoint(Vertice meetingPoint){
-        return meetingPointsRepository.getShortestPathsToMeetingPoint(meetingPoint);
+    public boolean getShortestPathsToMeetingPoint(){
+        return meetingPointsRepository.getShortestPathsToMeetingPoint();
     }
 
     public List<Vertice> getAllMeetingPoints(){
