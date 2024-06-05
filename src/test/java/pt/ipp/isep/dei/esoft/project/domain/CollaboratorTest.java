@@ -38,7 +38,7 @@ class CollaboratorTest {
     }
 
     @Test
-    void ensureTwoCollaboratorsWithSameIdentificationDocumentNumberNotEquals() {
+    void ensureTwoCollaboratorsWithoutSameIdentificationDocumentNumberNotEquals() {
         Job job = new Job("Jardineiro");
         Collaborator collaborator1 = new Collaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);

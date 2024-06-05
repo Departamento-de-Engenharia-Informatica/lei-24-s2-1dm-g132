@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -70,6 +69,10 @@ public class GSTask implements Serializable {
         return startingDate;
     }
 
+    public String getStatus() {
+        return status.toString();
+    }
+
     private void setTitle(String title)
     {
         if (title.matches("[a-zA-Z ]*" )) {
@@ -114,23 +117,26 @@ public class GSTask implements Serializable {
         String[] parts = startingDate.trim().split("/");
 
         if (parts.length != 3) {
-            throw new IllegalArgumentException("Invalid birthdate format. Use year/month/day.");
+            throw new IllegalArgumentException("Invalid starting date format. Use year/month/day.");
         }
 
         for (String part : parts) {
             if (!part.matches("\\d+")) {
-                throw new IllegalArgumentException("Non-numeric value found in birthdate.");
+                throw new IllegalArgumentException("Non-numeric value found in starting date.");
             }
         }
 
         int year = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
         int day = Integer.parseInt(parts[2]);
-
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month - 1);
         cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
 
         Calendar currentDate = Calendar.getInstance();
 
