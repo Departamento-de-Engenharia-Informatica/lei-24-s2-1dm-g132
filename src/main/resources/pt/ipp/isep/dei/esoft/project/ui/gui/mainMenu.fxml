@@ -12,7 +12,7 @@
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <Button mnemonicParsing="false" text="Do Login">
+      <Button mnemonicParsing="false" onAction="#openLoginUI" text="Do Login">
          <font>
             <Font size="20.0" />
          </font></Button>

@@ -48,5 +48,34 @@ public class MainMenuUI {
     }
 
 
+    @FXML
+    public void openLoginUI(ActionEvent actionEvent) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pt/ipp/isep/dei/esoft/project/ui/gui/login.fxml"));
+            Parent loginUI = loader.load();
 
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Stage loginUIStage = new Stage();
+            loginUIStage.setTitle("Login UI");
+            Scene scene = new Scene(loginUI);
+            loginUIStage.setScene(scene);
+            currentStage.close();
+            loginUIStage.show();
+
+            loginUIStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    Alert alerta = AlertUI.createAlert(Alert.AlertType.CONFIRMATION, "Login UI",
+                            "Action confirmation.", "Do you wish to close the app?");
+                    if (alerta.showAndWait().get() == ButtonType.CANCEL) {
+                        event.consume();
+                    }
+                }
+            });
+            loginUIStage.show();
+        }catch (IOException ex) {
+            AlertUI.createAlert(Alert.AlertType.ERROR, "Login UI",
+                    "Problems opening Login UI.", ex.getMessage()).show();
+        }
+    }
 }
