@@ -1,0 +1,85 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":ConsultTasksController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "teamRepository\n:TeamRepository" as TeamRepository
+participant "team\n:Team" as Team
+participant "teamsList\n:List<Team>" as TeamsList
+participant "teamMapper\n:TeamMapper" as TeamMapper
+participant "teamsList\n:List<TeamDTO>" as TeamsListDTO
+participant "teamDTO\n:TeamDTO" as TeamDTO
+
+autonumber 15
+-> CTRL : getTeamsByCollaborator(email)
+
+autonumber 15.1
+
+activate CTRL
+    group Get Teams By Collaborator
+           CTRL -> RepositorySingleton : getInstance()
+           activate RepositorySingleton
+
+           RepositorySingleton --> CTRL: repositories
+           deactivate RepositorySingleton
+
+           CTRL -> PLAT : getTaskRepository()
+           activate PLAT
+
+           PLAT --> CTRL: taskRepository
+           deactivate PLAT
+
+           CTRL -> TeamRepository : getTeamsByCollaborator(email)
+               activate TeamRepository
+
+               TeamRepository -> TeamsList ** : create()
+               loop for each task
+               TeamRepository -> Team : hasCollaboratorEmail(email)
+               activate Team
+
+               Team --> TeamRepository : true/false
+               deactivate Team
+
+               opt hasCollaboratorEmail == true
+                   TeamRepository -> TeamsList : add(team)
+                   activate TeamsList
+                   deactivate TeamsList
+               end opt
+
+               end loop
+
+               TeamRepository --> CTRL : teams
+               deactivate TeamRepository
+
+           CTRL -> TeamMapper : toDTO(teams)
+               activate TeamMapper
+
+               TeamMapper -> TeamsListDTO ** : create()
+               loop for each team in TeamList
+               TeamMapper -> TeamsList : obj = get(i)
+               activate TeamsList
+               deactivate TeamsList
+
+               TeamMapper -> TeamMapper : objDTO = toDTO(obj)
+               activate TeamMapper
+
+               TeamMapper -> TeamDTO ** : create(...)
+               deactivate TeamMapper
+
+               TeamMapper -> TeamsListDTO : add(objDTO)
+               activate TeamsListDTO
+               deactivate TeamsListDTO
+
+               end loop
+
+               TeamMapper --> CTRL : teamsDTO
+               deactivate TeamMapper
+
+end group
+autonumber 33
+<-- CTRL : teamsDTO
+
+@enduml

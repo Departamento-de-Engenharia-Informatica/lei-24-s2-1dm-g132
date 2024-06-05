@@ -41,12 +41,22 @@ activate Employee
     CTRL --> UI : email
     deactivate CTRL
 
-    UI -> CTRL : getTasks(email, startDate, endDate)
+    UI -> CTRL : getTeamsByCollaborator(email)
     activate CTRL
 
-    ref over CTRL
-        Get Tasks List by Collaborator and Date Range
-    end ref
+        ref over CTRL
+            Get Teams By Collaborator
+        end ref
+
+        CTRL --> UI : teamsDTO
+        deactivate CTRL
+
+        UI -> CTRL : getTasks(teamsDTO, startDate, endDate)
+            activate CTRL
+
+        ref over CTRL
+            Get Tasks
+        end ref
 
     CTRL --> UI : tasksDTO
     deactivate CTRL

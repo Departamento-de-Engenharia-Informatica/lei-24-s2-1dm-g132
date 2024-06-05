@@ -15,10 +15,16 @@ participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSION
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
+participant "teamRepository\n:TeamRepository" as TeamRepository
+participant "team\n:Team" as Team
+participant "teamsList\n:List<Team>" as TeamsList
+participant "teamMapper\n:TeamMapper" as TeamMapper
+participant "teamsList\n:List<TeamDTO>" as TeamsListDTO
+participant "teamDTO\n:TeamDTO" as TeamDTO
 participant "taskRepository\n:TaskRepository" as TaskRepository
-participant "taskMapper\n:TaskMapper" as TaskMapper
 participant "task\n:Task" as Task
 participant "tasksList\n:List<Task>" as TasksList
+participant "taskMapper\n:TaskMapper" as TaskMapper
 participant "tasksList\n:List<TaskDTO>" as TasksListDTO
 participant "taskDTO\n:TaskDTO" as TaskDTO
 
@@ -65,7 +71,7 @@ activate Employee
     CTRL --> UI : email
     deactivate CTRL
 
-    UI -> CTRL : getTasks(email, startDate, endDate)
+    UI -> CTRL : getTeamsByCollaborator(email)
     activate CTRL
 
         CTRL -> RepositorySingleton : getInstance()
@@ -80,33 +86,82 @@ activate Employee
         PLAT --> CTRL: taskRepository
         deactivate PLAT
 
-        CTRL -> TaskRepository : getTasksByCollaborator(email)
-        activate TaskRepository
+        CTRL -> TeamRepository : getTeamsByCollaborator(email)
+            activate TeamRepository
 
-        TaskRepository -> TasksList ** : create()
-        loop for each task
-        TaskRepository -> Task : hasCollaboratorEmail(email)
-        activate Task
+            TeamRepository -> TeamsList ** : create()
+            loop for each task
+            TeamRepository -> Team : hasCollaboratorEmail(email)
+            activate Team
 
-        Task --> TaskRepository : true/false
-        deactivate Task
+            Team --> TeamRepository : true/false
+            deactivate Team
 
-        TaskRepository -> Task : betweenDates(startDate, endDate)
-        activate Task
+            opt hasCollaboratorEmail == true
+                TeamRepository -> TeamsList : add(team)
+                activate TeamsList
+                deactivate TeamsList
+            end opt
 
-        Task --> TaskRepository : true/false
-        deactivate Task
+            end loop
 
-        opt hasCollaboratorEmail == true && betweenDates == true
-            TaskRepository -> TasksList : add(task)
-            activate TasksList
-            deactivate TasksList
-        end opt
+            TeamRepository --> CTRL : teams
+            deactivate TeamRepository
 
-        end loop
+        CTRL -> TeamMapper : toDTO(teams)
+            activate TeamMapper
 
-        TaskRepository --> CTRL : tasks
-        deactivate TaskRepository
+            TeamMapper -> TeamsListDTO ** : create()
+            loop for each team in TeamList
+            TeamMapper -> TeamsList : obj = get(i)
+            activate TeamsList
+            deactivate TeamsList
+
+            TeamMapper -> TeamMapper : objDTO = toDTO(obj)
+            activate TeamMapper
+
+            TeamMapper -> TeamDTO ** : create(...)
+            deactivate TeamMapper
+
+            TeamMapper -> TeamsListDTO : add(objDTO)
+            activate TeamsListDTO
+            deactivate TeamsListDTO
+
+            end loop
+
+            TeamMapper --> CTRL : teamsDTO
+            deactivate TeamMapper
+
+        CTRL --> UI : teamsDTO
+        deactivate CTRL
+
+        UI -> CTRL : getTasks(teamsDTO, startDate, endDate)
+            activate CTRL
+
+        CTRL -> TaskRepository : getTasks(teamsDTO, startDate, endDate)
+            activate TaskRepository
+
+            TaskRepository -> TasksList ** : create()
+            loop for each task
+                opt assignedTeam exists in teamsDTO
+                    TaskRepository -> Task : betweenDates(startDate, endDate)
+                    activate Task
+
+                    Task --> TaskRepository : true/false
+                    deactivate Task
+
+                    opt betweenDates == true
+                        TaskRepository -> TasksList : add(task)
+                        activate TasksList
+                        deactivate TasksList
+                    end opt
+
+                end opt
+
+            end loop
+
+            TaskRepository --> CTRL : tasks
+            deactivate TaskRepository
 
         CTRL -> TaskMapper : toDTO(tasks)
         activate TaskMapper
