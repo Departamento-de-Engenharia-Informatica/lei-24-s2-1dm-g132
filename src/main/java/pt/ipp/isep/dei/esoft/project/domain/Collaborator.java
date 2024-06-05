@@ -181,6 +181,14 @@ public class Collaborator implements Serializable {
     }
 
     /**
+     * Gets the email of the collaborator.
+     * @return The email of the collaborator.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
      * Sets the name of the collaborator.
      * @param name The name to set.
      * @throws IllegalArgumentException If the name contains numeric characters,

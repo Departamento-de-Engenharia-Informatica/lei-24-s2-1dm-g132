@@ -15,7 +15,7 @@ public class GreenSpace implements Serializable {
     private String gsmEmail;
 
 
-    public GreenSpace(String name, String address, int area, GreenSpaceType type) {
+    public GreenSpace(String name, String address, int area, String type, String gsmEmail) {
         if(name.isEmpty() || name.isBlank()){
             throw new IllegalArgumentException("Green Spaces Names Cannot Be Empty");
         }
@@ -29,8 +29,8 @@ public class GreenSpace implements Serializable {
         this.name = name;
         this.address = address;
         this.area = area;
-        this.type = type;
-        this.gsmEmail = ApplicationSession.getInstance().getCurrentSession().getUserEmail();
+        setType(type);
+        this.gsmEmail = gsmEmail;
     }
 
     public String getName() {
@@ -57,12 +57,18 @@ public class GreenSpace implements Serializable {
         this.area = area;
     }
 
-    public GreenSpaceType getType() {
-        return type;
+    public String getType() {
+        return type.toString();
     }
 
-    public void setType(GreenSpaceType type) {
-        this.type = type;
+    public void setType(String type) {
+        if(type.equalsIgnoreCase(GreenSpaceType.garden.toString()))
+            this.type = GreenSpaceType.garden;
+        else if(type.equalsIgnoreCase(GreenSpaceType.mediumSizedPark.toString()))
+            this.type = GreenSpaceType.mediumSizedPark;
+        else if(type.equalsIgnoreCase(GreenSpaceType.largeSizedPark.toString()))
+            this.type = GreenSpaceType.largeSizedPark;
+        else throw new IllegalArgumentException("Invalid green space type.");
     }
 
     public String getGsmEmail() {

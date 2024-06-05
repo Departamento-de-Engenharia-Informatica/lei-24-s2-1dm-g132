@@ -1,7 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Properties;
 
 /**
  * Represents a Green Space Task in the system.
@@ -160,6 +164,34 @@ public class GSTask implements Serializable {
 
     public GSTask assignTeam(Team selectedTeam) {
         this.assignedTeam = selectedTeam;
+
+        InputStream inputStream;
+
+        try{
+            Properties props = new Properties();
+
+            inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
+            if (inputStream != null) {
+                props.load(inputStream);
+            } else {
+                throw new FileNotFoundException("property file not found in the classpath");
+            }
+
+            String className = props.getProperty("EmailGenerator.Class");
+
+            Class<?> oClass = Class.forName(className);
+
+            EmailGenerator eg = (EmailGenerator) oClass.newInstance();
+
+            if(!eg.sendEmail(this.title, this.startingDate, this.assignedTeam))
+            {
+                System.out.println("Error sending email to collaborators.");
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
+
         return this;
     }
 

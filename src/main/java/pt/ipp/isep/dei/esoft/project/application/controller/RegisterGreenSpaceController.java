@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.mapper.dto.GreenSpaceDTO;
 import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
@@ -24,7 +25,8 @@ public class RegisterGreenSpaceController {
     }
 
     public boolean registerGreenSpace(GreenSpaceDTO greenSpace) {
-        if(!greenSpaceRepository.registerGreenSpace(greenSpace))
+        String gsmEmail = ApplicationSession.getInstance().getCurrentSession().getUserEmail();
+        if(!greenSpaceRepository.registerGreenSpace(greenSpace, gsmEmail))
         {
             return false;
         }

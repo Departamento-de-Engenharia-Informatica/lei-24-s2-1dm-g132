@@ -20,8 +20,8 @@ public class GreenSpaceRepository implements Serializable {
         greenSpaces = new ArrayList<>();
     }
 
-    public boolean registerGreenSpace(GreenSpaceDTO greenSpaceDto) {
-        return add(GreenSpaceMapper.fromDTO(greenSpaceDto));
+    public boolean registerGreenSpace(GreenSpaceDTO greenSpaceDto, String gsmEmail) {
+        return add(GreenSpaceMapper.fromDTO(greenSpaceDto, gsmEmail));
     }
 
     public Optional<GreenSpaceDTO> getGreenSpaceByName(String name) {

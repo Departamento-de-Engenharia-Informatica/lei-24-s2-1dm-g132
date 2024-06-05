@@ -22,8 +22,8 @@ public class GreenSpaceMapper {
         return associatedGreenSpacesListDTO;
     }
 
-    public static GreenSpace fromDTO(GreenSpaceDTO greenSpaceDto){
-        return new GreenSpace(greenSpaceDto.getName(), greenSpaceDto.getAddress(), greenSpaceDto.getArea(), greenSpaceDto.getType());
+    public static GreenSpace fromDTO(GreenSpaceDTO greenSpaceDto, String gsmEmail){
+        return new GreenSpace(greenSpaceDto.getName(), greenSpaceDto.getAddress(), greenSpaceDto.getArea(), greenSpaceDto.getType(), gsmEmail);
     }
 
 }
