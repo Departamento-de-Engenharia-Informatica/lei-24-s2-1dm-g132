@@ -4,20 +4,26 @@
 
 ### 3.1. Rationale
 
-| Interaction ID | Question: Which class is responsible for...  | Answer               | Justification (with patterns)        |
-|:---------------|:---------------------------------------------|:---------------------|:-------------------------------------|
-| Step 1  		     | 	... interacting with the actor?             | AssignTeamUI         | Pure Fabrication                     |
-|                | ... coordinating the US?                     | AssignTeamController | Pure Fabrication, Controller         |
-| 			  		        | 	... obtaining the Agenda entries?           | Agenda               | Information Expert                   |
-| Step 2  		     | ... displaying the Agenda entries?						     | AssignTeamUI         | Pure Fabrication                     |
-| Step 3  		     | 	... temporarily keeping the selected entry? | AssignTeamUI         | Pure Fabrication                     |
-|                | ... obtaining the Teams?                     | TeamRepository       | Pure Fabrication, Information Expert |
-| Step 4  		     | 	... displaying the Teams?                   | AssignTeamUI         | Pure Fabrication                     |
-| Step 5  		     | 	... temporarily keeping the selected team?  | AssignTeamUI         | Pure Fabrication                     |
-|                | ... saving the edited entry?                 | Agenda               | Information Expert                   |
-|                | ... validating all data (local validation)?  | Task                 | Information Expert                   |
-|                | ... sending message through email?           | Task                 | Information Expert                   |
-| Step 6  		     | 	... informing operation success? 	          | AssignTeamUI         | Pure Fabrication                     |
+| Interaction ID | Question: Which class is responsible for...               | Answer               | Justification (with patterns)             |
+|:---------------|:----------------------------------------------------------|:---------------------|:------------------------------------------|
+| Step 1  		     | 	... interacting with the actor?                          | AssignTeamUI         | Pure Fabrication                          |
+|                | ... coordinating the US?                                  | AssignTeamController | Pure Fabrication, Controller              |
+|                | ... knowing the GSM using the system?                     | UserSession          | Information Expert                        |
+|                | ... knowing to which GSM belongs the entry?               | GreenSpace           | Information Expert                        |
+|                | ... knowing if entry already has a team?                  | Task                 | Information Expert                        |
+| 			  		        | 	... obtaining the Agenda entries?                        | Agenda               | Information Expert                        |
+|                | ... converting the entries list into DTO?                 | TaskMapper           | Pure Fabrication, Information Expert, DTO |
+| Step 2  		     | ... displaying the Agenda entries?						                  | AssignTeamUI         | Pure Fabrication                          |
+| Step 3  		     | 	... identifying the selected Task?                       | Agenda               | Information Expert                        |
+|                | ... obtaining the Teams?                                  | TeamRepository       | Pure Fabrication, Information Expert      |
+|                | ... converting the teams list into DTO?                   | TeamMapper           | Pure Fabrication, Information Expert, DTO |
+| Step 4  		     | 	... displaying the Teams?                                | AssignTeamUI         | Pure Fabrication                          |
+| Step 5  		     | 	... identifying the selected team?                       | TeamRepository       | Pure Fabrication, Information Expert      |
+|                | ... checking if the task belongs to the selected team?    | Task                 | Information Expert                        |
+|                | ... checking if there are conflicts with team's schedule? | Task                 | Information Expert                        |
+|                | ... saving the edited entry?                              | Agenda               | Creator                                   |
+|                | ... sending message through email?                        | Email Generator      | Adapter                                   |
+| Step 6  		     | 	... informing operation success? 	                       | AssignTeamUI         | Pure Fabrication                          |
 
 ### Systematization ##
 
@@ -25,11 +31,16 @@ According to the taken rationale, the conceptual classes promoted to software cl
 
 * Task
 * Agenda
+* GreenSpace
+* Email Generator
 
 Other software classes (i.e. Pure Fabrication) identified:
 
 * AssignTeamUI
 * AssignTeamController
+* TaskMapper
+* TeamRepository
+* TeamMapper
 
 
 ## 3.2. Sequence Diagram (SD)
