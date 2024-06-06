@@ -9,7 +9,7 @@
 | Step 1  		     | 	... interacting with the actor?                      | AddEntryToDoUI         | Pure Fabrication                     |
 |                | ... coordinating the US?                              | AddEntryToDoController | Pure Fabrication, Controller         |
 |                | ... knowing the GSM using the system?                 | UserSession            | Information Expert                   |
-|                | ... knowing to which GSM belongs?                     | GreenSpace             | Information Expert                   |
+|                | ... knowing to which GSM belongs the green space?     | GreenSpace             | Information Expert                   |
 | 			  		        | 	... obtaining the green spaces list?                 | GreenSpaceRepository   | Pure Fabrication, Information Expert |
 |                | ... converting the green spaces list into DTO?        | GreenSpaceMapper       | Pure Fabrication, Information Expert |
 | Step 2  		     | ... displaying the green spaces?						                | AddEntryToDoUI         | Pure Fabrication                     |
