@@ -2,70 +2,95 @@
 
 ## 4. Tests 
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+**Test 1:** Check that it is possible to complete an entry in the Agenda.
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
+	@Test
+    public void ensureEntryCanBeCompleted() {
+    Agenda agenda = new Agenda();
+    Task task = new Task("Task 1", "Description", "Informal", "Technical", 10, 100.0, new TaskCategory(), new Employee());
+    agenda.addTask(task);
+    agenda.completeTask(task);
+    assertTrue(task.isCompleted());
+    }
 	
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+**Test 2:** Check that the agenda updates appropriately when a task is completed.
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
+	@Test
+    public void ensureAgendaUpdatesOnCompletion() {
+    Agenda agenda = new Agenda();
+    Task task = new Task("Task 1", "Description", "Informal", "Technical", 10, 100.0, new TaskCategory(), new Employee());
+    agenda.addTask(task);
+    agenda.completeTask(task);
+    assertTrue(task.isCompleted());
+    }
 
-_It is also recommended to organize this content by subsections._ 
 
 
 ## 5. Construction (Implementation)
 
-### Class CreateTaskController 
+### Class ChangeStatusController 
 
 ```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
+public Task completeTask(String taskReference) {
+    Employee employee = getEmployeeFromSession();
+    Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
+    Agenda agenda = organization.getAgenda();
 
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
+    Task task = agenda.getTaskByReference(taskReference)
+            .orElseThrow(() -> new NoSuchElementException("Task with reference " + taskReference + " not found"));
 
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
+    agenda.completeTask(task);
 
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
+    return task;
+}
+
+private Employee getEmployeeFromSession() {
+    // Method to get the current logged-in employee
+    // Implement according to your authentication system
+}
+
+private OrganizationRepository getOrganizationRepository() {
+    // Method to get the organization repository
+    // Implement according to your system structure
 }
 ```
 
-### Class Organization
+### Class Agenda
 
 ```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
+public class Agenda {
 
-    addTask(task);
-        
-    return task;
+    private List<Task> tasks = new ArrayList<>();
+
+    public Optional<Task> getTaskByReference(String reference) {
+        return tasks.stream()
+                .filter(task -> task.getReference().equals(reference))
+                .findFirst();
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
+
+    public void completeTask(Task task) {
+        if (task.isCompleted()) {
+            throw new IllegalStateException("Task is already completed");
+        }
+        task.complete();
+    }
+
+    public List<Task> getTasks() {
+        return new ArrayList<>(tasks);
+    }
 }
 ```
 
 
 ## 6. Integration and Demo 
 
-* A new option on the Employee menu options was added.
+* A new option on the GSM menu options was added.
 
 * For demo purposes some tasks are bootstrapped while system starts.
 
 
-## 7. Observations
-
-n/a
