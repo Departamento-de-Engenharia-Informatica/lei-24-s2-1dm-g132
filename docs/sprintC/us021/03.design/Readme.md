@@ -9,11 +9,13 @@
 | Step 1  		     | 	... interacting with the actor?                      | AddEntryToDoUI         | Pure Fabrication                     |
 |                | ... coordinating the US?                              | AddEntryToDoController | Pure Fabrication, Controller         |
 |                | ... knowing the GSM using the system?                 | UserSession            | Information Expert                   |
+|                | ... knowing to which GSM belongs?                     | GreenSpace             | Information Expert                   |
 | 			  		        | 	... obtaining the green spaces list?                 | GreenSpaceRepository   | Pure Fabrication, Information Expert |
+|                | ... converting the green spaces list into DTO?        | GreenSpaceMapper       | Pure Fabrication, Information Expert |
 | Step 2  		     | ... displaying the green spaces?						                | AddEntryToDoUI         | Pure Fabrication                     |
-| Step 3  		     | 	... temporarily keeping the selected green space?    | AddEntryToDoUI         | Pure Fabrication                     |
+| Step 3  		     | 	... identifying the selected green space?            | GreenSpaceRepository   | Pure Fabrication, Information Expert |
 | Step 4  		     | 	... displaying the form for the actor to input data? | AddEntryToDoUI         | Pure Fabrication                     |
-| Step 5  		     | 	... temporarily keeping the input data?              | AddEntryToDoUI         | Pure Fabrication                     |
+| Step 5  		     | 	... converting DTO into a domain object?             | TaskMapper             | Pure Fabrication, Information Expert |
 |                | ... saving the created entry?                         | ToDoList               | Creator (R: 1, 2)                    |
 |                | ... validating all data (local validation)?           | Task                   | Information Expert                   |
 | Step 6  		     | 	... informing operation success? 	                   | AddEntryToDoUI         | Pure Fabrication                     |
@@ -24,12 +26,15 @@ According to the taken rationale, the conceptual classes promoted to software cl
 
 * Task
 * ToDoList
+* GreenSpace
 
 Other software classes (i.e. Pure Fabrication) identified:
 
 * AddEntryToDoUI
 * AddEntryToDoController
 * GreenSpaceRepository
+* GreenSpaceMapper
+* TaskMapper
 
 
 ## 3.2. Sequence Diagram (SD)
