@@ -134,7 +134,7 @@ public class LoginUI {
                 gsmMenuUIStage.show();
             }catch (IOException ex) {
                 AlertUI.createAlert(Alert.AlertType.ERROR, "Green Spaces Manager UI",
-                        "Problems starting the application.", ex.getMessage()).show();
+                        "Problems starting Green Spaces Manager UI.", ex.getMessage()).show();
             }
         }
         else {

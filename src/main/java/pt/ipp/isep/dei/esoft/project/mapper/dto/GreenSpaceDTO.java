@@ -9,7 +9,6 @@ public class GreenSpaceDTO {
     private String address;
     private int area;
     private String  type;
-    private String gsmEmail;
 
     public GreenSpaceDTO(String name, String address, int area, String type) {
         this.name = name;
@@ -35,7 +34,4 @@ public class GreenSpaceDTO {
         return type;
     }
 
-    public String getGsmEmail() {
-        return gsmEmail;
-    }
 }

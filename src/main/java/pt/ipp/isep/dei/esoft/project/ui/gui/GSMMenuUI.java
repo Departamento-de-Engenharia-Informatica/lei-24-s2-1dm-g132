@@ -55,4 +55,35 @@ public class GSMMenuUI {
                     "Problems opening Main Menu UI.", ex.getMessage()).show();
         }
     }
+
+    @FXML
+    public void openRegisterGreenSpace(ActionEvent actionEvent) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pt/ipp/isep/dei/esoft/project/ui/gui/registerGreenSpace.fxml"));
+            Parent registerGreenSpaceUI = loader.load();
+
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Stage registerGreenSpaceUIStage = new Stage();
+            registerGreenSpaceUIStage.setTitle("Register Green Space UI");
+            Scene scene = new Scene(registerGreenSpaceUI);
+            registerGreenSpaceUIStage.setScene(scene);
+            currentStage.close();
+            registerGreenSpaceUIStage.show();
+
+            registerGreenSpaceUIStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    Alert alerta = AlertUI.createAlert(Alert.AlertType.CONFIRMATION, "Register Green Space UI",
+                            "Action confirmation.", "Do you wish to close the app?");
+                    if (alerta.showAndWait().get() == ButtonType.CANCEL) {
+                        event.consume();
+                    }
+                }
+            });
+            registerGreenSpaceUIStage.show();
+        }catch (IOException ex) {
+            AlertUI.createAlert(Alert.AlertType.ERROR, "Register Green Space UI",
+                    "Problems opening Register Green Space UI.", ex.getMessage()).show();
+        }
+    }
 }
