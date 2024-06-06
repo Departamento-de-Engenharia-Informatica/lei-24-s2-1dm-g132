@@ -40,7 +40,7 @@ public class HRMMenuUI implements Runnable {
         } while (option != -1);
     }
 
-    private void printJobRepository() {
+    /*private void printJobRepository() {
         List<Job> jobs = Repositories.getInstance().getJobRepository().getJobs();
         System.out.println("Jobs in repository:");
         for (Job job : jobs) {
@@ -70,5 +70,5 @@ public class HRMMenuUI implements Runnable {
         for (Team team : teams) {
             System.out.println(team);
         }
-    }
+    }*/
 }
