@@ -182,7 +182,7 @@ TaskDto "*" --> "1" GreenSpace
 TeamMapper ..> TeamDto
 TeamMapper ..> Team
 
-Task "*" --> "1" Team
+Task "*" --> "0..1" Team
 
 Task "*" --> "1" EmailGenerator : makes use of
 
