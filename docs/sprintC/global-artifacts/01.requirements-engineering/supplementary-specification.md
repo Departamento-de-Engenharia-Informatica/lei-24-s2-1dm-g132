@@ -3,7 +3,7 @@
 ## Functionality
 
 - Business rules validation must be respected when registering or updating data.
-- The application should use object serialization to ensure data persistence between two runs of the application.
+- The application ought to employ object serialization to guarantee the data persistence across two successive runs.
 - All those who wish to use the application must be authenticated with a password of seven alphanumeric characters, including three capital letters and two digits.
 
 ## Usability
@@ -28,7 +28,7 @@
 ### Implementation Constraints
 
 - The application documentation must be in English language.
-- Application development in Java language using the IntelliJ IDE or NetBeans.
+- Application development in Java language.
 - Graphical interface must be developed in JavaFX 11.
 - Adopt recognized coding standards (e.g., CamelCase).
 - Use Javadoc to generate useful documentation for Java code.
