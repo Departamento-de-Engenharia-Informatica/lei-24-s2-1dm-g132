@@ -10,7 +10,7 @@
 
        'left to right direction
 
-       title US029 - Change task status to complete
+       title US029 - Record the completion of a task.
 
        class ChangeStatusUI {
        }

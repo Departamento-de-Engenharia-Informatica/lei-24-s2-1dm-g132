@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title US024 - Postpone an entry in the agenda
+       title US029 - Record the completion of a task.
 
 autonumber
 

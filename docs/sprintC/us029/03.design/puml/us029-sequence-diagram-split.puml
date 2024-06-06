@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title US028 - Consult the tasks assigned to a collaborator
+       title US029 - Record the completion of a task.
 
 autonumber
 
