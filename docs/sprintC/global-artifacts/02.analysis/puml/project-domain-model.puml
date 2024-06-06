@@ -21,6 +21,9 @@ class HRM {
 class VFM {
 }
 
+class GSM {
+}
+
 class Skill {
     name
 }
@@ -61,10 +64,25 @@ class Vehicle {
 }
 
 class Maintenance {
-vehiclePlate
+    vehiclePlate
     date
     kms
 }
+
+class GreenSpace {
+    name
+    area
+    type
+    address
+    gsmEmail
+}
+
+class ToDoList {
+}
+
+class Agenda {
+}
+
 
 HRM "1" - "*" Skill : registers >
 HRM "1" - "*" Job : registers >
@@ -74,12 +92,19 @@ HRM "1" -- "*" Team : generates >
 Collaborator "*" -- "1" Job : has >
 Collaborator "1" -- "*" Skill : has >
 Team "1" - "1..*" Collaborator : has >
-Task "*" -- "1" Team : is assigned to >
+Task "*" -- "0..1" Team : is assigned to >
 VFM "1" -- "*" Vehicle : registers >
 VFM "1" -- "*" Vehicle : manages >
 Vehicle "1" - "*" Maintenance : has >
 Task "1" - "*" Vehicle : has assigned >
 VFM "1" -- "*" Maintenance : registers >
+Task "*" -- "1" GreenSpace : is associated with >
+Task "*" -- "1" ToDoList : belongs to >
+Task "*" -- "1" Agenda : might be added to >
+GSM "1" -- "*" GreenSpace : registers >
+GSM "1" -- "*" Task : creates and adds to ToDoList >
+GSM "1" -- "*" Task : adds to Agenda >
+GSM "1" -- "*" Team : assigns to Task >
 
 
 

@@ -30,6 +30,7 @@ class GreenSpace {
     area
     type
     address
+    gsmEmail
 }
 
 GSM "1" - "*" Task : creates >
