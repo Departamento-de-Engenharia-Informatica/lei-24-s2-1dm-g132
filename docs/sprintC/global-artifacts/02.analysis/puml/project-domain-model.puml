@@ -101,9 +101,10 @@ VFM "1" -- "*" Maintenance : registers >
 Task "*" -- "1" GreenSpace : is associated with >
 Task "*" -- "1" ToDoList : belongs to >
 Task "*" -- "1" Agenda : might be added to >
-GSM "1" -- "*" GreenSpace : registers >
+GSM "1" ---- "*" GreenSpace : registers >
 GSM "1" -- "*" Task : creates and adds to ToDoList >
 GSM "1" -- "*" Task : adds to Agenda >
+GSM "1" -- "*" Task : postpones/cancels >
 GSM "1" -- "*" Team : assigns to Task >
 
 
