@@ -173,7 +173,7 @@ public class MeetingPointsRepository {
                 .thenComparing(Pair::getLeft)
         );
         generateFiles(getCsvGraphCopy(), "FullGraph.png");
-        generatePathsCsv(distanceAndPathSetToReturn, graph.getName() + "-PathsToMeetingPoint.csv");
+        GraphPngAndCsvGenerator.generatePathsCsv(distanceAndPathSetToReturn, graph.getName() + "-PathsToMeetingPoint.csv");
         MatrixGraph<Vertice, Double> graph = new MatrixGraph<>(true);
         graph.setName(this.graph.getName());
         for (Pair<Double, LinkedList<Vertice>> pair : distanceAndPathSetToReturn) {
@@ -199,81 +199,9 @@ public class MeetingPointsRepository {
         return true;
     }
 
-    private boolean generatePathsCsv(List<Pair<Double, LinkedList<Vertice>>> distanceAndPathSet, String fileName) {
-        String outputFolder = getDesktopPath() + File.separator + "output" + File.separator + "us18";
-        File graphFolder = new File(outputFolder);
-        try {
-            if (!graphFolder.exists()) {
-                if (!graphFolder.mkdirs()) {
-                    throw new RuntimeException("Failed to create folder: " + outputFolder);
-                } else {
-                    System.out.println("Created: " + outputFolder);
-                }
-            } else {
-                File a = new File(outputFolder + File.separator + fileName);
-                if (a.exists()) {
-                    if (!a.delete()) {
-                        throw new RuntimeException("Failed to delete file: " + a.getAbsolutePath());
-                    } else {
-                        System.out.println("Deleted: " + a.getAbsolutePath());
-                    }
-
-                }
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-
-        FileWriter fileWriter = null;
-        File csvFile = new File(outputFolder + File.separator + fileName);
-        try {
-            fileWriter = new FileWriter(csvFile);
-
-            for (Pair<Double, LinkedList<Vertice>> pair : distanceAndPathSet) {
-                fileWriter.write("(");
-                int i = 0;
-                for (Vertice ParkLocation : pair.getRight()) {
-                    i++;
-                    fileWriter.write(ParkLocation.getNome());
-                    if (i != pair.getRight().size()){
-                        fileWriter.write(",");
-                    }
-                }
-                fileWriter.write(")");
-                fileWriter.write(";");
-                fileWriter.write(pair.getLeft().toString());
-                fileWriter.write("\n");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if (fileWriter != null) {
-                    fileWriter.flush();
-                    fileWriter.close();
-                    System.out.println("CSV file '" + csvFile.getAbsolutePath() + "' created successfully.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return true;
-    }
-
     private boolean generateFiles(MatrixGraph<Vertice, Double> graph, String fileName) {
-        GraphPngAndCsvGenerator graphPngAndCsvGenerator = new GraphPngAndCsvGenerator();
         String outputFolder = "output" + File.separator + "us18";
-        return graphPngAndCsvGenerator.generate(graph, fileName, outputFolder);
-    }
-
-    private String getDesktopPath() {
-        try {
-            return System.getProperty("user.home") + File.separator + "Desktop";
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
+        return GraphPngAndCsvGenerator.generate(graph, fileName, outputFolder);
     }
 
     private String getSeparator(String line) {

@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -16,14 +17,18 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class GraphPngAndCsvGenerator {
 
-    public boolean generate(MatrixGraph<Vertice, Double> graph, String fileName, String desktopOutputFolder) {
-        String graphFolderPath = getDesktopPath() + File.separator + desktopOutputFolder;
+    private static final String rootOutputFolder = "mdisc";
+
+    public static boolean generate(MatrixGraph<Vertice, Double> graph, String fileName, String outputFolder) {
+        String graphFolderPath = rootOutputFolder + File.separator + outputFolder;
         String graphPath = graphFolderPath + File.separator + graph.getName() + "-" + fileName;
         setupDirs(graph, fileName, graphFolderPath);
-        generateCsvOfGraph(graph, desktopOutputFolder,graph.getName()+"-"+fileName.replace(".png", ""));
+        generateCsvOfGraph(graph, outputFolder,graph.getName()+"-"+fileName.replace(".png", ""));
 
         System.setProperty("org.graphstream.ui", "javafx");
         //System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -101,7 +106,7 @@ public class GraphPngAndCsvGenerator {
         return true;
     }
 
-    private boolean setupDirs(MatrixGraph<Vertice, Double> graph, String fileName, String graphFolderPath) {
+    private static boolean setupDirs(MatrixGraph<Vertice, Double> graph, String fileName, String graphFolderPath) {
         // setup directories
         File graphFolder = new File(graphFolderPath);
         try {
@@ -128,8 +133,8 @@ public class GraphPngAndCsvGenerator {
         return true;
     }
 
-    private boolean generateCsvOfGraph(MatrixGraph<Vertice, Double> graph, String desktopOutputFolder, String fileName) {
-        String graphFolderPath = getDesktopPath() + File.separator + desktopOutputFolder;
+    private static boolean generateCsvOfGraph(MatrixGraph<Vertice, Double> graph, String outputFolder, String fileName) {
+        String graphFolderPath = rootOutputFolder + File.separator + outputFolder;
         File graphFolder = new File(graphFolderPath);
         try {
             if (!graphFolder.exists()) {
@@ -181,12 +186,65 @@ public class GraphPngAndCsvGenerator {
         return true;
     }
 
-    private String getDesktopPath() {
+    public static boolean generatePathsCsv(List<Pair<Double, LinkedList<Vertice>>> distanceAndPathSet, String fileName) {
+        String outputFolder = rootOutputFolder + File.separator + "output" + File.separator + "us18";
+        File graphFolder = new File(outputFolder);
         try {
-            return System.getProperty("user.home") + File.separator + "Desktop";
-        } catch (Exception e) {
-            e.printStackTrace();
+            if (!graphFolder.exists()) {
+                if (!graphFolder.mkdirs()) {
+                    throw new RuntimeException("Failed to create folder: " + outputFolder);
+                } else {
+                    System.out.println("Created: " + outputFolder);
+                }
+            } else {
+                File a = new File(outputFolder + File.separator + fileName);
+                if (a.exists()) {
+                    if (!a.delete()) {
+                        throw new RuntimeException("Failed to delete file: " + a.getAbsolutePath());
+                    } else {
+                        System.out.println("Deleted: " + a.getAbsolutePath());
+                    }
+
+                }
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
-        return "";
+
+        FileWriter fileWriter = null;
+        File csvFile = new File(outputFolder + File.separator + fileName);
+        try {
+            fileWriter = new FileWriter(csvFile);
+
+            for (Pair<Double, LinkedList<Vertice>> pair : distanceAndPathSet) {
+                fileWriter.write("(");
+                int i = 0;
+                for (Vertice ParkLocation : pair.getRight()) {
+                    i++;
+                    fileWriter.write(ParkLocation.getNome());
+                    if (i != pair.getRight().size()){
+                        fileWriter.write(",");
+                    }
+                }
+                fileWriter.write(")");
+                fileWriter.write(";");
+                fileWriter.write(pair.getLeft().toString());
+                fileWriter.write("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (fileWriter != null) {
+                    fileWriter.flush();
+                    fileWriter.close();
+                    System.out.println("CSV file '" + csvFile.getAbsolutePath() + "' created successfully.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
     }
 }

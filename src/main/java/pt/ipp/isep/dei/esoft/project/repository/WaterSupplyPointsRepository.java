@@ -109,8 +109,7 @@ public class WaterSupplyPointsRepository {
     }
 
     private boolean generateFilesFromGraph(MatrixGraph<Vertice, Double> graph, String fileName) {
-        GraphPngAndCsvGenerator graphPngAndCsvGenerator = new GraphPngAndCsvGenerator();
         String outputFolder = "output" + File.separator + "us13";
-        return graphPngAndCsvGenerator.generate(graph, fileName, outputFolder);
+        return GraphPngAndCsvGenerator.generate(graph, fileName, outputFolder);
     }
 }

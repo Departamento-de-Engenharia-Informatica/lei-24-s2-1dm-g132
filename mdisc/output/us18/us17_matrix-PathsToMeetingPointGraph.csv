@@ -1,0 +1,17 @@
+Pavilhao;AP;5.0
+Teatro;AP;7.0
+Topo;AP;9.0
+Lago;AP;9.0
+﻿Biblioteca;AP;10.0
+Escadas1;AP;10.0
+Miradouro;Topo;3.0
+Capela;Topo;4.0
+Escadas2;Escadas1;3.0
+ParqueInfantil;Topo;7.0
+JardimRoseiral;Escadas2;3.0
+CasaRoseiral;Escadas2;4.0
+Escadas3;Escadas2;5.0
+Fontaine;Miradouro;8.0
+Sentimentos;Escadas2;7.0
+Torreao;Miradouro;9.0
+Macieirinha;ParqueInfantil;10.0
