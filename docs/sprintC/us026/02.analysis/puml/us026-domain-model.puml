@@ -3,31 +3,45 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+'left to right direction
+
 skinparam classAttributeIconSize 0
+title US026 -  Assign one or more vehicles to an entry in the agenda
 
 hide circle
 hide methods
 
-
 class GSM {
 }
-class Agenda {
+
+class Task {
+    title
+    description
+    degreeOfUrgency
+    expectedDuration
+    status
+    startingDate
+}
+
+class Agenda{
 }
 
 class Vehicle {
-      vehiclePlate
-      brand
-      model
-      type
-      tare
-      grossWeight
-      currentKms
-      registerDate
-      acquisitionDate
-      checkUpFrequency
-
 }
-GSM "1" -- "*" Vehicle : assigns >
-Vehicle "1" -- "*" Agenda : > is assigned on
+
+class GreenSpace {
+    name
+    area
+    type
+    address
+}
+
+GSM "1" - "*" Vehicle : assigns >
+
+Vehicle "1" -- "*" Task : is assigned to >
+
+Task "*" -- "1" Agenda : belongs to >
+
+Task "*" - "1" GreenSpace : is associated with >
 
 @enduml
