@@ -69,16 +69,18 @@ public class AssignTeamController {
         return freeAgendaEntriesListDTO;
     }
 
-    public List<TeamDTO> getSelectedTask(int i)
-    {
-        selectedTask = agenda.getSelectedTask(i);
-
+    public List<TeamDTO> getTeams() {
         List<Team> teamsList = teamRepository.getTeams();
         List<TeamDTO> teamsListDTO = TeamMapper.toDTO(teamsList);
         return teamsListDTO;
     }
 
-    public Optional<GSTask> assignTeam(int i)
+    public void getSelectedTask(int i)
+    {
+        selectedTask = agenda.getSelectedTask(i);
+    }
+
+    public boolean assignTeam(int i)
     {
         Optional<GSTask> updatedTask = Optional.empty();
 
@@ -92,16 +94,16 @@ public class AssignTeamController {
             {
                 if(!agendaFile.save(agenda))
                 {
-                    System.out.println("Error while saving Agenda in external file!");
+                    return false;
                 }
             }
         }
         else
         {
-            System.out.printf("Selected team cannot be responsible for the task due to schedule conflicts.");
+            throw new UnsupportedOperationException("Team has scheduling conflicts.");
         }
 
-        return updatedTask;
+        return true;
     }
 
 }

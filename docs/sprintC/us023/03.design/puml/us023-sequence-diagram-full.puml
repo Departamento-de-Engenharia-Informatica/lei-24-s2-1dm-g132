@@ -135,25 +135,9 @@ activate GSM
                 CTRL --> UI : freeAgendaEntriesListDto
                 deactivate CTRL
             UI --> GSM : shows entries from the Agenda and asks to select one
-            deactivate UI
 
-        GSM -> UI : selects an entry
-        activate UI
-
-            UI -> CTRL : getSelectedTask(i)
+            UI -> CTRL: getTeams()
             activate CTRL
-
-                CTRL -> Agenda : getSelectedTask(i)
-                activate Agenda
-
-                    Agenda -> freeAgendaEntriesList : get(i)
-                    activate freeAgendaEntriesList
-
-                        freeAgendaEntriesList --> Agenda : selectedTask
-                    deactivate freeAgendaEntriesList
-
-                    Agenda --> CTRL : selectedTask
-                    deactivate Agenda
 
                     CTRL -> PLAT : getTeamRepository()
                     activate PLAT
@@ -199,6 +183,28 @@ activate GSM
                 deactivate CTRL
 
             UI --> GSM : shows Teams list and asks to select one
+            deactivate UI
+
+        GSM -> UI : selects an entry
+        activate UI
+
+            UI -> CTRL : getSelectedTask(i)
+            activate CTRL
+
+                CTRL -> Agenda : getSelectedTask(i)
+                activate Agenda
+
+                    Agenda -> freeAgendaEntriesList : get(i)
+                    activate freeAgendaEntriesList
+
+                        freeAgendaEntriesList --> Agenda : selectedTask
+                    deactivate freeAgendaEntriesList
+
+                    Agenda --> CTRL : selectedTask
+                    deactivate Agenda
+
+                deactivate CTRL
+
             deactivate UI
 
         GSM -> UI : selects a Team
