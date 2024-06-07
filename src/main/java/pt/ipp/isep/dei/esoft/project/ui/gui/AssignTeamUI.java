@@ -166,12 +166,22 @@ public class AssignTeamUI implements Initializable {
                 selectedEntryIndex = agendaEntry.getSelectionModel().getSelectedIndex();
                 if (selectedEntryIndex >= 0 && selectedEntryIndex < gsTaskDTOList.size()) {
                     GSTaskDTO selectedEntry = gsTaskDTOList.get(selectedEntryIndex);
-                    agendaEntryInfo.setText("Selected Entry additional information:\n" +
-                            "Description: " + selectedEntry.getDescription() + "\n" +
-                            "Degree of Urgency: " + selectedEntry.getDegreeOfUrgency() + "\n" +
-                            "Type: " + selectedEntry.getExpectedDuration() + " working hours\n" +
-                            "Green Space: " + selectedEntry.getGreenSpace().getName() + "\n" +
-                            "Starting Date: " + selectedEntry.getStartingDate().get(Calendar.YEAR) + "/" + selectedEntry.getStartingDate().get(Calendar.MONTH)+1 + "/" + selectedEntry.getStartingDate().get(Calendar.DAY_OF_MONTH));
+                    String text = String.format(
+                            "Selected Entry additional information:\n" +
+                                    "Description: %s\n" +
+                                    "Degree of Urgency: %s\n" +
+                                    "Type: %d working hours\n" +
+                                    "Green Space: %s\n" +
+                                    "Starting Date: %d/%d/%d",
+                            selectedEntry.getDescription(),
+                            selectedEntry.getDegreeOfUrgency(),
+                            selectedEntry.getExpectedDuration(),
+                            selectedEntry.getGreenSpace().getName(),
+                            selectedEntry.getStartingDate().get(Calendar.YEAR),
+                            selectedEntry.getStartingDate().get(Calendar.MONTH) + 1,
+                            selectedEntry.getStartingDate().get(Calendar.DAY_OF_MONTH)
+                    );
+                    agendaEntryInfo.setText(text);
                 } else {
                     agendaEntryInfo.setText("No entry selected");
                 }
