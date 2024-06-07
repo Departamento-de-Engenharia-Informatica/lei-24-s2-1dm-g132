@@ -149,10 +149,9 @@ public class AssignTeamUI implements Initializable {
 
         List<TeamDTO> teamDTOList = ctrl.getTeams();
 
-        String teamtitle = "Composed of:";
-
         for(TeamDTO teamDTO : teamDTOList)
         {
+            String teamtitle = "Composed of:";
             for(Collaborator collaborator : teamDTO.getCollaborators())
             {
                 teamtitle = String.format("%s %s,", teamtitle, collaborator.getName());
