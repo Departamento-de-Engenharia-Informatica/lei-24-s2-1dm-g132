@@ -148,4 +148,35 @@ public class GSMMenuUI {
                     "Problems opening Add Entry to Agenda UI.", ex.getMessage()).show();
         }
     }
+
+    @FXML
+    public void openAssignTeam(ActionEvent actionEvent) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pt/ipp/isep/dei/esoft/project/ui/gui/assignTeam.fxml"));
+            Parent assignTeamUI = loader.load();
+
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Stage assignTeamUIStage = new Stage();
+            assignTeamUIStage.setTitle("Assign Team to Agenda Entry UI");
+            Scene scene = new Scene(assignTeamUI);
+            assignTeamUIStage.setScene(scene);
+            currentStage.close();
+            assignTeamUIStage.show();
+
+            assignTeamUIStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    Alert alerta = AlertUI.createAlert(Alert.AlertType.CONFIRMATION, "Assign Team to Agenda Entry UI",
+                            "Action confirmation.", "Do you wish to close the app?");
+                    if (alerta.showAndWait().get() == ButtonType.CANCEL) {
+                        event.consume();
+                    }
+                }
+            });
+            assignTeamUIStage.show();
+        }catch (IOException ex) {
+            AlertUI.createAlert(Alert.AlertType.ERROR, "Assign Team to Agenda Entry UI",
+                    "Problems opening Assign Team to Agenda Entry UI.", ex.getMessage()).show();
+        }
+    }
 }

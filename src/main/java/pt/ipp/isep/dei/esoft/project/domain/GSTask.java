@@ -170,7 +170,10 @@ public class GSTask implements Serializable {
 
     public boolean belongsToTeam(Team selectedTeam)
     {
-        return this.assignedTeam.equals(selectedTeam);
+        if(this.assignedTeam == null)
+            return false;
+        else
+            return this.assignedTeam.equals(selectedTeam);
     }
 
     public GSTask assignTeam(Team selectedTeam) {

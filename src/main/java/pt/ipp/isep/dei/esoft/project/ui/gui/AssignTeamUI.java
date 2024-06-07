@@ -10,33 +10,43 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import pt.ipp.isep.dei.esoft.project.application.controller.AddEntryAgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.AssignTeamController;
+import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.mapper.dto.GSTaskDTO;
+import pt.ipp.isep.dei.esoft.project.mapper.dto.TeamDTO;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AddEntryAgendaUI implements Initializable {
+public class AssignTeamUI implements Initializable {
 
-    private final AddEntryAgendaController ctrl;
+    private final AssignTeamController ctrl;
 
     @FXML
-    private ChoiceBox<String> toDoListEntry;
+    private ChoiceBox<String> team;
     @FXML
-    private Label toDoListEntryInfo;
+    private ChoiceBox<String> agendaEntry;
     @FXML
-    private TextField startingDate;
+    private Label teamInfo;
+    @FXML
+    private Label agendaEntryInfo;
 
     private int selectedEntryIndex = -1;
 
-    public AddEntryAgendaUI()
+    private int selectedTeamIndex = -1;
+
+    public AssignTeamUI()
     {
-        ctrl = new AddEntryAgendaController();
+        ctrl = new AssignTeamController();
     }
 
     @FXML
@@ -73,20 +83,20 @@ public class AddEntryAgendaUI implements Initializable {
     @FXML
     public void submit(ActionEvent actionEvent) {
         try {
-            String entryStartingDate = startingDate.getText();
-            String entryToDo = toDoListEntry.getValue();
+            String entryAgenda = agendaEntry.getValue();
+            String selectedTeam = team.getValue();
 
             ctrl.getSelectedTask(selectedEntryIndex);
 
-            boolean result = ctrl.addEntry(entryStartingDate);
+            boolean result = ctrl.assignTeam(selectedTeamIndex);
             if (!result)
             {
-                AlertUI.createAlert(Alert.AlertType.ERROR, "Add Entry to Agenda UI",
+                AlertUI.createAlert(Alert.AlertType.ERROR, "Assign Team to Agenda Entry UI",
                         "Problems updating task.", "Task wasn't stored correctly.").show();
             }
             else
             {
-                AlertUI.createAlert(Alert.AlertType.INFORMATION, "Add Entry to Agenda UI",
+                AlertUI.createAlert(Alert.AlertType.INFORMATION, "Assign Team to Agenda Entry UI",
                         "Operation success.", "Task updated successfully.").showAndWait();
 
                 try{
@@ -116,45 +126,75 @@ public class AddEntryAgendaUI implements Initializable {
                     AlertUI.createAlert(Alert.AlertType.ERROR, "Green Spaces Manager UI",
                             "Problems starting Green Spaces Manager UI.", ex.getMessage()).show();
                 }
-
             }
-
-        }catch (IllegalArgumentException ex)
+        }catch (UnsupportedOperationException ex)
         {
-            AlertUI.createAlert(Alert.AlertType.ERROR, "Add Entry to Agenda UI",
-                    "Invalid input value.", ex.getMessage()).show();
+            AlertUI.createAlert(Alert.AlertType.ERROR, "Assign Team to Agenda Entry UI",
+                    "Operation not supported.", ex.getMessage()).show();
         } catch (RuntimeException ex)
         {
-            AlertUI.createAlert(Alert.AlertType.ERROR, "Add Entry to Agenda UI",
+            AlertUI.createAlert(Alert.AlertType.ERROR, "Assign Team to Agenda Entry UI",
                     "Choice box empty.", "Please select values in all choice boxes.").show();
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<GSTaskDTO> gsTaskDTOList = ctrl.getTodoListEntries();
+        List<GSTaskDTO> gsTaskDTOList = ctrl.getAgendaEntries();
 
         for(GSTaskDTO gsTaskDTO : gsTaskDTOList)
         {
-            toDoListEntry.getItems().add(gsTaskDTO.getTitle());
+            agendaEntry.getItems().add(gsTaskDTO.getTitle());
         }
 
-        toDoListEntry.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        List<TeamDTO> teamDTOList = ctrl.getTeams();
+
+        String teamtitle = "Composed of:";
+
+        for(TeamDTO teamDTO : teamDTOList)
+        {
+            for(Collaborator collaborator : teamDTO.getCollaborators())
+            {
+                teamtitle = String.format("%s %s,", teamtitle, collaborator.getName());
+            }
+            team.getItems().add(teamtitle);
+        }
+
+        agendaEntry.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                selectedEntryIndex = toDoListEntry.getSelectionModel().getSelectedIndex();
+                selectedEntryIndex = agendaEntry.getSelectionModel().getSelectedIndex();
                 if (selectedEntryIndex >= 0 && selectedEntryIndex < gsTaskDTOList.size()) {
                     GSTaskDTO selectedEntry = gsTaskDTOList.get(selectedEntryIndex);
-                    toDoListEntryInfo.setText("Selected Entry additional information:\n" +
+                    agendaEntryInfo.setText("Selected Entry additional information:\n" +
                             "Description: " + selectedEntry.getDescription() + "\n" +
                             "Degree of Urgency: " + selectedEntry.getDegreeOfUrgency() + "\n" +
                             "Type: " + selectedEntry.getExpectedDuration() + " working hours\n" +
-                            "Green Space: " + selectedEntry.getGreenSpace().getName());
+                            "Green Space: " + selectedEntry.getGreenSpace().getName() + "\n" +
+                            "Starting Date: " + selectedEntry.getStartingDate().get(Calendar.YEAR) + "/" + selectedEntry.getStartingDate().get(Calendar.MONTH)+1 + "/" + selectedEntry.getStartingDate().get(Calendar.DAY_OF_MONTH));
                 } else {
-                    toDoListEntryInfo.setText("No entry selected");
+                    agendaEntryInfo.setText("No entry selected");
                 }
             }
         });
 
+        team.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                selectedTeamIndex = team.getSelectionModel().getSelectedIndex();
+                if (selectedTeamIndex >= 0 && selectedTeamIndex < teamDTOList.size()) {
+                    TeamDTO selectedTeam = teamDTOList.get(selectedTeamIndex);
+
+                    String printTeam = "Composed of:";
+                    for(Collaborator collaborator : selectedTeam.getCollaborators())
+                    {
+                        printTeam = String.format("%s\n%s: %s", printTeam,  collaborator.getName(), collaborator.getSkills());
+                    }
+                    teamInfo.setText("Selected Team additional information:\n" + printTeam);
+                } else {
+                    teamInfo.setText("No team selected");
+                }
+            }
+        });
     }
 }
