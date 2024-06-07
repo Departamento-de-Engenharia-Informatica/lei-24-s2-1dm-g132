@@ -117,4 +117,35 @@ public class GSMMenuUI {
                     "Problems opening Add Entry to To-Do List UI.", ex.getMessage()).show();
         }
     }
+
+    @FXML
+    public void openAddEntryAgenda(ActionEvent actionEvent) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pt/ipp/isep/dei/esoft/project/ui/gui/addEntryAgenda.fxml"));
+            Parent addEntryAgendaUI = loader.load();
+
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Stage addEntryAgendaUIStage = new Stage();
+            addEntryAgendaUIStage.setTitle("Add Entry to Agenda UI");
+            Scene scene = new Scene(addEntryAgendaUI);
+            addEntryAgendaUIStage.setScene(scene);
+            currentStage.close();
+            addEntryAgendaUIStage.show();
+
+            addEntryAgendaUIStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    Alert alerta = AlertUI.createAlert(Alert.AlertType.CONFIRMATION, "Add Entry to Agenda UI",
+                            "Action confirmation.", "Do you wish to close the app?");
+                    if (alerta.showAndWait().get() == ButtonType.CANCEL) {
+                        event.consume();
+                    }
+                }
+            });
+            addEntryAgendaUIStage.show();
+        }catch (IOException ex) {
+            AlertUI.createAlert(Alert.AlertType.ERROR, "Add Entry to Agenda UI",
+                    "Problems opening Add Entry to Agenda UI.", ex.getMessage()).show();
+        }
+    }
 }

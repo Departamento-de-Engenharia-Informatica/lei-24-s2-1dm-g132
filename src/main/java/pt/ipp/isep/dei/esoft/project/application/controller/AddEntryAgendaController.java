@@ -82,7 +82,7 @@ public class AddEntryAgendaController {
         selectedTaskClone = toDoList.getSelectedTask(i);
     }
 
-    public Optional<GSTask> addEntry(String startingDate)
+    public boolean addEntry(String startingDate)
     {
         Optional<GSTask> updatedTask = Optional.empty();
 
@@ -92,14 +92,14 @@ public class AddEntryAgendaController {
         {
             if(!toDoListFile.save(toDoList))
             {
-                System.out.println("Error while saving To-Do List in external file!");
+                return false;
             }
             if(!agendaFile.save(agenda))
             {
-                System.out.println("Error while saving Agenda in external file!");
+                return false;
             }
         }
 
-        return updatedTask;
+        return true;
     }
 }

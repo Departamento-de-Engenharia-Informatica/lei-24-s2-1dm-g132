@@ -103,7 +103,6 @@ public class AddEntryToDoController {
         {
             if(!toDoListFile.save(toDoList))
             {
-                System.out.println("Error while saving To-Do List in external file!");
                 return false;
             }
         }
