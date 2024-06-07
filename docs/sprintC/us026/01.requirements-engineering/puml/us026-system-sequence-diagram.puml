@@ -20,12 +20,23 @@ activate GSM
     GSM -> System : selects an entry
     activate System
 
-        System --> GSM : shows Vehicles list and asks to select desired vehicles
+        System --> GSM : shows Vehicles list and asks to select vehicle
     deactivate System
 
-    GSM -> System : selects vehicle(s)
+    GSM -> System : selects vehicle
+    activate System
+       System --> GSM : asks if user wants to select more vehicles
+        deactivate System
+GSM -> System : answers yes or no
     activate System
 
+    opt answer is yes
+    System --> GSM : shows Vehicles list and asks to select vehicles
+    deactivate System
+
+    GSM -> System : selects a vehicle
+    activate System
+    end opt
         System --> GSM : displays operation success
     deactivate System
 

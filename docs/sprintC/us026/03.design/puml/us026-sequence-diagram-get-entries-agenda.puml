@@ -1,0 +1,128 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":AssignVehicleController" as CTRL
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSION
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "agenda:\nAgenda" as Agenda
+participant "entriesList:\nList<Task>" as EntriesList
+participant ":TaskMapper" as TaskMapper
+participant "freeAgendaEntriesList\nList<Task>" as freeAgendaEntriesList
+participant "freeAgendaEntriesListDto\nList<TaskDto>" as freeAgendaEntriesListDto
+participant "objDto\n:TaskDto" as taskDto
+participant "task\n:Task" as Task
+participant "greenSpace\n:GreenSpace" as greenSpace
+
+
+
+
+         -> CTRL : getAgendaEntries()
+        activate CTRL
+
+        CTRL -> _APP: getInstance()
+            activate _APP
+                _APP -> CTRL: appSession
+            deactivate _APP
+
+            CTRL -> APP: getCurrentSession()
+            activate APP
+
+                APP --> CTRL: currentSession
+            deactivate APP
+
+            CTRL -> SESSION: email = getUserEmail()
+                activate SESSION
+
+                SESSION --> CTRL: email
+            deactivate SESSION
+
+            CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getAgenda()
+                activate PLAT
+
+                    PLAT --> CTRL : agenda
+                deactivate PLAT
+
+                CTRL -> Agenda : getAgendaEntries(email)
+                activate Agenda
+
+                    Agenda --> freeAgendaEntriesList** : create()
+
+                    loop for each known Task
+
+                        Agenda -> EntriesList : entry = get(i)
+                        activate EntriesList
+                        deactivate EntriesList
+
+                        Agenda -> Task : hasTeam = hasTeam()
+                        activate Task
+                        deactivate Task
+
+                        Agenda -> Task : associated = hasUserEmail(email)
+                        activate Task
+
+                            Task -> greenSpace : associated = hasUserEmail(email)
+                            activate greenSpace
+                            deactivate greenSpace
+
+                        deactivate Task
+
+                        opt hasTeam == false && associated == true
+
+                            Agenda -> freeAgendaEntriesList : add(entry)
+                            activate freeAgendaEntriesList
+                            deactivate freeAgendaEntriesList
+
+                        end opt
+
+                    end loop
+
+                    Agenda --> CTRL : freeAgendaEntriesList
+                deactivate Agenda
+
+                CTRL -> TaskMapper : toDTO(freeAgendaEntriesList)
+                activate TaskMapper
+
+                    TaskMapper --> freeAgendaEntriesListDto** : create()
+
+                    loop for each object in freeAgendaEntriesList
+                        TaskMapper -> freeAgendaEntriesList : obj = get(i)
+                        activate freeAgendaEntriesList
+
+                            deactivate freeAgendaEntriesList
+
+                        TaskMapper -> TaskMapper : objDto = toDTO(obj)
+                        activate TaskMapper
+
+                            TaskMapper -> taskDto** :create(...)
+                            deactivate TaskMapper
+
+                        TaskMapper -> freeAgendaEntriesListDto : add(objDto)
+                        activate freeAgendaEntriesListDto
+
+                            deactivate freeAgendaEntriesListDto
+
+                        end loop
+
+                    TaskMapper --> CTRL : freeAgendaEntriesListDto
+                    deactivate TaskMapper
+
+                <-- CTRL : freeAgendaEntriesListDto
+                deactivate CTRL
+
+
+
+@enduml
