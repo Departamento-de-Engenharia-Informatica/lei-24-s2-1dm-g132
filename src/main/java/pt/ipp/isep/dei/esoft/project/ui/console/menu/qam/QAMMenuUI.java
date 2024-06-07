@@ -10,7 +10,7 @@ public class QAMMenuUI implements Runnable {
     @Override
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("US14", new AsymptoticBehaviorAnalyzerUI()));
+        options.add(new MenuItem("Run tests for inputs of variable size, to observe the asymptotic behavior of the execution time", new AsymptoticBehaviorAnalyzerUI()));
 
 
         int option = 0;
