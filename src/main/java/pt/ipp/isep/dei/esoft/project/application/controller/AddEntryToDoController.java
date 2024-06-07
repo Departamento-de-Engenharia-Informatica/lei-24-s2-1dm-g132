@@ -93,7 +93,7 @@ public class AddEntryToDoController {
         selectedGreenSpace = greenSpaceRepository.getSelectedGreenSpace(i);
     }
 
-    public Optional<GSTask> addEntry(GSTaskDTO taskDto)
+    public boolean addEntry(GSTaskDTO taskDto)
     {
         Optional<GSTask> newTask = Optional.empty();
 
@@ -104,10 +104,11 @@ public class AddEntryToDoController {
             if(!toDoListFile.save(toDoList))
             {
                 System.out.println("Error while saving To-Do List in external file!");
+                return false;
             }
         }
 
-        return newTask;
+        return true;
     }
 
 }

@@ -75,6 +75,11 @@ public class GSTask implements Serializable {
 
     private void setTitle(String title)
     {
+        if (title.isBlank())
+        {
+            throw new IllegalArgumentException("Title is empty. Please enter a task title.");
+        }
+
         if (title.matches("[a-zA-Z ]*" )) {
             this.title = title.trim();
         } else {

@@ -10,6 +10,7 @@
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <Button layoutX="49.0" layoutY="45.0" mnemonicParsing="false" onAction="#openRegisterGreenSpace" text="Register&#10;Green Space" textAlignment="CENTER" />
+            <Button layoutX="42.0" layoutY="121.0" mnemonicParsing="false" onAction="#openAddEntryToDo" text="Add new entry&#10;to To-Do List" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="410.0">
          <children>

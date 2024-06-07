@@ -86,4 +86,35 @@ public class GSMMenuUI {
                     "Problems opening Register Green Space UI.", ex.getMessage()).show();
         }
     }
+
+    @FXML
+    public void openAddEntryToDo(ActionEvent actionEvent) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pt/ipp/isep/dei/esoft/project/ui/gui/addEntryToDo.fxml"));
+            Parent addEntryToDoUI = loader.load();
+
+            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Stage addEntryToDoUIStage = new Stage();
+            addEntryToDoUIStage.setTitle("Add Entry to To-Do List UI");
+            Scene scene = new Scene(addEntryToDoUI);
+            addEntryToDoUIStage.setScene(scene);
+            currentStage.close();
+            addEntryToDoUIStage.show();
+
+            addEntryToDoUIStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    Alert alerta = AlertUI.createAlert(Alert.AlertType.CONFIRMATION, "Add Entry to To-Do List UI",
+                            "Action confirmation.", "Do you wish to close the app?");
+                    if (alerta.showAndWait().get() == ButtonType.CANCEL) {
+                        event.consume();
+                    }
+                }
+            });
+            addEntryToDoUIStage.show();
+        }catch (IOException ex) {
+            AlertUI.createAlert(Alert.AlertType.ERROR, "Add Entry to To-Do List UI",
+                    "Problems opening Add Entry to To-Do List UI.", ex.getMessage()).show();
+        }
+    }
 }

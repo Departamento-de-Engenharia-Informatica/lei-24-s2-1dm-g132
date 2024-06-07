@@ -18,6 +18,13 @@ public class GSTaskDTO {
 
     private Calendar startingDate;
 
+    public GSTaskDTO(String title, String description, String degreeOfUrgency, int expectedDuration) {
+        this.title = title;
+        this.description = description;
+        this.degreeOfUrgency = degreeOfUrgency;
+        this.expectedDuration = expectedDuration;
+    }
+
     public GSTaskDTO(String title, String description, String degreeOfUrgency, int expectedDuration, GreenSpace greenSpace) {
         this.title = title;
         this.description = description;
