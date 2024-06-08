@@ -14,9 +14,20 @@ import java.lang.IllegalArgumentException;
 
 import java.util.List;
 
+/**
+ * Controller class for registering skills.
+ * Provides methods to interact with the skill repository and to register new skills.
+ */
 public class RegisterSkillController {
+
+    /**
+     * The skill repository instance used to manage skills.
+     */
     private SkillRepository skillRepository;
 
+    /**
+     * The file instance used to manage the serialization of the skill repository.
+     */
     private SkillRepositoryFile skillRepositoryFile;
 
     /**

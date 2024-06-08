@@ -15,18 +15,41 @@ import pt.ipp.isep.dei.esoft.project.repository.serialization.AgendaFile;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller class for assigning teams to tasks in the agenda.
+ * Provides methods to interact with the agenda, teams, and tasks.
+ */
 public class AssignTeamController {
 
+    /**
+     * The application session instance used to manage the current user session.
+     */
     private ApplicationSession applicationSession;
 
+    /**
+     * The agenda instance used to manage agenda entries.
+     */
     private Agenda agenda;
 
+    /**
+     * The team repository instance used to manage teams.
+     */
     private TeamRepository teamRepository;
 
+    /**
+     * The file instance used to manage the serialization of the agenda.
+     */
     private AgendaFile agendaFile;
 
+    /**
+     * The selected task instance.
+     */
     private GSTask selectedTask;
 
+    /**
+     * Initializes a new instance of the AssignTeamController class.
+     * Initializes necessary repositories and files.
+     */
     public AssignTeamController() {
         getApplicationSession();
         getAgenda();
@@ -34,6 +57,11 @@ public class AssignTeamController {
         agendaFile = new AgendaFile();
     }
 
+    /**
+     * Retrieves the application session instance.
+     *
+     * @return The ApplicationSession object.
+     */
     private ApplicationSession getApplicationSession() {
         if (applicationSession == null) {
             applicationSession = ApplicationSession.getInstance();
@@ -41,6 +69,11 @@ public class AssignTeamController {
         return applicationSession;
     }
 
+    /**
+     * Retrieves the agenda instance.
+     *
+     * @return The Agenda object.
+     */
     private Agenda getAgenda() {
         if (agenda == null) {
             Repositories repositories = Repositories.getInstance();
@@ -62,6 +95,11 @@ public class AssignTeamController {
         return teamRepository;
     }
 
+    /**
+     * Retrieves the list of agenda entries for the current user session.
+     *
+     * @return A list of GSTaskDTO objects representing the agenda entries.
+     */
     public List<GSTaskDTO> getAgendaEntries() {
         String email = applicationSession.getCurrentSession().getUserEmail();
         List<GSTask> freeAgendaEntriesList = agenda.getAgendaEntries(email);
@@ -69,17 +107,35 @@ public class AssignTeamController {
         return freeAgendaEntriesListDTO;
     }
 
+    /**
+     * Retrieves the list of teams.
+     *
+     * @return A list of TeamDTO objects representing the teams.
+     */
     public List<TeamDTO> getTeams() {
         List<Team> teamsList = teamRepository.getTeams();
         List<TeamDTO> teamsListDTO = TeamMapper.toDTO(teamsList);
         return teamsListDTO;
     }
 
+    /**
+     * Selects a task from the agenda based on its index.
+     *
+     * @param i The index of the task to be selected.
+     */
     public void getSelectedTask(int i)
     {
         selectedTask = agenda.getSelectedTask(i);
     }
 
+    /**
+     * Assigns a team to the selected task based on the team's index.
+     * Updates the agenda file if the team is successfully assigned and there are no scheduling conflicts.
+     *
+     * @param i The index of the team to be assigned.
+     * @return True if the team is successfully assigned and file is updated, false otherwise.
+     * @throws UnsupportedOperationException If the team has scheduling conflicts.
+     */
     public boolean assignTeam(int i)
     {
         Optional<GSTask> updatedTask = Optional.empty();

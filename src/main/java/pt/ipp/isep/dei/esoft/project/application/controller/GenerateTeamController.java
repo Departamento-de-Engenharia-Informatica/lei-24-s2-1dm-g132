@@ -32,6 +32,9 @@ public class GenerateTeamController {
      */
     private TeamRepository teamRepository;
 
+    /**
+     * The file instance used to manage the serialization of the team repository.
+     */
     private TeamRepositoryFile teamRepositoryFile;
 
     /**

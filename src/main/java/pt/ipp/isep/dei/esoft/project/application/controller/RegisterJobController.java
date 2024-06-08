@@ -13,10 +13,20 @@ import java.lang.IllegalArgumentException;
 
 import java.util.List;
 
+/**
+ * Controller class for registering jobs.
+ * Provides methods to interact with the job repository and to register new jobs.
+ */
 public class RegisterJobController {
 
+    /**
+     * The job repository instance used to manage jobs.
+     */
     private JobRepository jobRepository;
 
+    /**
+     * The file instance used to manage the serialization of the job repository.
+     */
     private JobRepositoryFile jobRepositoryFile;
 
     /**
