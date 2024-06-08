@@ -17,10 +17,10 @@ class CollaboratorRepositoryTest {
     void testRegisterCollaborator() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         Job job = new Job("Jardineiro");
-        Collaborator collaborator = new Collaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        Collaborator collaborator = new Collaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
-        Optional<Collaborator> returnCollaborator = collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        Optional<Collaborator> returnCollaborator = collaboratorRepository.registerCollaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
         assertEquals(collaborator, returnCollaborator.get());
@@ -30,10 +30,10 @@ class CollaboratorRepositoryTest {
     void testAssignSkill() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         Job job = new Job("Jardineiro");
-        Collaborator collaborator = new Collaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        Collaborator collaborator = new Collaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
-        Skill skill = new Skill("Podar árvores");
+        Skill skill = new Skill("Podar arvores");
         List<Skill> skills = new ArrayList<>();
         skills.add(skill);
 
@@ -44,12 +44,12 @@ class CollaboratorRepositoryTest {
     void testRemoveAlreadyAssignedSkills() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         Job job = new Job("Jardineiro");
-        collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        collaboratorRepository.registerCollaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
         Collaborator collaborator = collaboratorRepository.getCollaboratorByIdNumber("20735924 7");
 
-        Skill skill = new Skill("Podar árvores");
+        Skill skill = new Skill("Podar arvores");
         List<Skill> skills = new ArrayList<>();
         skills.add(skill);
         collaboratorRepository.assignSkill(collaborator, skills);
@@ -168,9 +168,9 @@ class CollaboratorRepositoryTest {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         String idNumber = "20735924 7";
         Job job = new Job("Jardineiro");
-        collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        collaboratorRepository.registerCollaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
-        Collaborator collaborator = new Collaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        Collaborator collaborator = new Collaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
         Collaborator collaborator1 = collaboratorRepository.getCollaboratorByIdNumber(idNumber);
 
@@ -182,7 +182,7 @@ class CollaboratorRepositoryTest {
         //Arrange
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         Job job = new Job("Jardineiro");
-        collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        collaboratorRepository.registerCollaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
         int expectedSize = 1;
 
@@ -198,11 +198,11 @@ class CollaboratorRepositoryTest {
     void ensureGenerateTeamWorks(){
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         Job job = new Job("Jardineiro");
-        collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        collaboratorRepository.registerCollaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
         Collaborator collaborator = collaboratorRepository.getCollaboratorByIdNumber("20735924 7");
-        Skill skill = new Skill("Podar árvores");
+        Skill skill = new Skill("Podar arvores");
         List<Skill> skills = new ArrayList<>();
         skills.add(skill);
 
@@ -217,11 +217,11 @@ class CollaboratorRepositoryTest {
     void ensureGenerateTeamNotAllSkillsAreCovered(){
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         Job job = new Job("Jardineiro");
-        collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        collaboratorRepository.registerCollaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
         Collaborator collaborator = collaboratorRepository.getCollaboratorByIdNumber("20735924 7");
-        Skill skill1 = new Skill("Podar árvores");
+        Skill skill1 = new Skill("Podar arvores");
         Skill skill2 = new Skill("Conduzir pesados");
         List<Skill> skills = new ArrayList<>();
         skills.add(skill1);
@@ -240,11 +240,11 @@ class CollaboratorRepositoryTest {
     void ensureGenerateTeamNotEnoughCollaborators(){
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         Job job = new Job("Jardineiro");
-        collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        collaboratorRepository.registerCollaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
         Collaborator collaborator = collaboratorRepository.getCollaboratorByIdNumber("20735924 7");
-        Skill skill = new Skill("Podar árvores");
+        Skill skill = new Skill("Podar arvores");
         List<Skill> skills = new ArrayList<>();
         skills.add(skill);
 
@@ -260,15 +260,15 @@ class CollaboratorRepositoryTest {
     void ensureGenerateTeamMaxCollaboratorsExceeded() {
         CollaboratorRepository collaboratorRepository = new CollaboratorRepository();
         Job job = new Job("Jardineiro");
-        collaboratorRepository.registerCollaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        collaboratorRepository.registerCollaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
-        collaboratorRepository.registerCollaborator("João Oliveira", "2000/2/2", "2020/3/30", "Rua Passada, 3786-089, Porto",
+        collaboratorRepository.registerCollaborator("Joao Oliveira", "2000/2/2", "2020/3/30", "Rua Passada, 3786-089, Porto",
                 913333333, "joaipassado3@gmail.com", 546002206, "BI", "20731224 7", job);
 
         Collaborator collaborator1 = collaboratorRepository.getCollaboratorByIdNumber("20735924 7");
         Collaborator collaborator2 = collaboratorRepository.getCollaboratorByIdNumber("20731224 7");
-        Skill skill1 = new Skill("Podar árvores");
+        Skill skill1 = new Skill("Podar arvores");
         Skill skill2 = new Skill("Conduzir pesados");
         List<Skill> skills = new ArrayList<>();
         skills.add(skill1);

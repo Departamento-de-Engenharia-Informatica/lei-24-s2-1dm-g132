@@ -1,0 +1,331 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > CollaboratorRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: CollaboratorRepository (pt.ipp.isep.dei.esoft.project.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CollaboratorRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (24/26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95,7%
+  </span>
+  <span class="absValue">
+    (44/46)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.repository;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.*;
+&nbsp;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;/**
+&nbsp; * Repository class responsible for managing collaborator data.
+&nbsp; */
+&nbsp;public class CollaboratorRepository implements Serializable {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * A list of collaborators which consists of all the registered collaborators.
+&nbsp;     */
+&nbsp;    private final List&lt;Collaborator&gt; collaborators;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * A temporary list of collaborators for collaborator selection.
+&nbsp;     */
+&nbsp;    private List&lt;Collaborator&gt; tempCollaboratorsList;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new CollaboratorRepository object.
+&nbsp;     */
+<b class="fc">&nbsp;    public CollaboratorRepository() {</b>
+<b class="fc">&nbsp;        collaborators = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers a new collaborator with the provided details.
+&nbsp;     *
+&nbsp;     * @param name                        The name of the collaborator.
+&nbsp;     * @param birthdate                   The birthdate of the collaborator.
+&nbsp;     * @param admissionDate               The admission date of the collaborator.
+&nbsp;     * @param address                     The address of the collaborator.
+&nbsp;     * @param phoneNumber                 The phone number of the collaborator.
+&nbsp;     * @param email                       The email of the collaborator.
+&nbsp;     * @param taxpayerNumber              The taxpayer number of the collaborator.
+&nbsp;     * @param identificationDocumentType  The type of identification document of the collaborator.
+&nbsp;     * @param identificationDocumentNumber The identification document number of the collaborator.
+&nbsp;     * @param job                         The job of the collaborator.
+&nbsp;     * @return An Optional containing the newly registered collaborator, if registration was successful.
+&nbsp;     */
+&nbsp;    public Optional&lt;Collaborator&gt; registerCollaborator(String name, String birthdate, String admissionDate,
+&nbsp;                                                       String address, int phoneNumber, String email, int taxpayerNumber,
+&nbsp;                                                       String identificationDocumentType, String identificationDocumentNumber, Job job) {
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        Optional&lt;Collaborator&gt; optionalValue = Optional.empty();</b>
+&nbsp;
+<b class="fc">&nbsp;        Collaborator collaborator = new Collaborator(name, birthdate, admissionDate, address, phoneNumber, email, taxpayerNumber,</b>
+&nbsp;                identificationDocumentType, identificationDocumentNumber, job);
+&nbsp;
+<b class="fc">&nbsp;        if (addCollaborator(collaborator)) {</b>
+<b class="fc">&nbsp;            optionalValue = Optional.of(collaborator);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return optionalValue;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Assigns skills to a collaborator.
+&nbsp;     *
+&nbsp;     * @param collaborator         The collaborator to assign skills to.
+&nbsp;     * @param selectedSkillsList   The list of skills to assign.
+&nbsp;     * @return An Optional containing the updated collaborator with assigned skills.
+&nbsp;     */
+&nbsp;    public Optional&lt;Collaborator&gt; assignSkill(Collaborator collaborator, List&lt;Skill&gt; selectedSkillsList){
+&nbsp;        Optional&lt;Collaborator&gt; optionalValue;
+&nbsp;
+<b class="fc">&nbsp;        optionalValue = Optional.of(collaborator.assignSkill(selectedSkillsList));</b>
+&nbsp;
+<b class="fc">&nbsp;        return optionalValue;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Removes the skills already assigned to the collaborator identified by the provided identification number
+&nbsp;     * from the given list of skills.
+&nbsp;     *
+&nbsp;     * @param collaboratorIdNumber The identification number of the collaborator whose assigned skills are to be removed.
+&nbsp;     * @param skills               The list of skills to remove already assigned skills from.
+&nbsp;     * @return                     The updated list of skills after removing the assigned skills of the collaborator.
+&nbsp;     */
+&nbsp;    public List&lt;Skill&gt; removeAlreadyAssignedSkills(String collaboratorIdNumber, List&lt;Skill&gt; skills){
+<b class="fc">&nbsp;        Collaborator collaborator = getCollaboratorByIdNumber(collaboratorIdNumber);</b>
+<b class="fc">&nbsp;        collaborator.removeAlreadyAssignedSkills(skills);</b>
+&nbsp;
+<b class="fc">&nbsp;        return skills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a collaborator to the repository if it passes validation.
+&nbsp;     *
+&nbsp;     * @param collaborator The collaborator to be added.
+&nbsp;     * @return True if the collaborator was successfully added, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean addCollaborator(Collaborator collaborator) {
+<b class="fc">&nbsp;        boolean success = false;</b>
+<b class="fc">&nbsp;        if (validate(collaborator)) {</b>
+<b class="fc">&nbsp;            success = collaborators.add(collaborator.clone());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Validates if a collaborator can be added to the repository.
+&nbsp;     *
+&nbsp;     * @param collaborator The collaborator to be validated.
+&nbsp;     * @return True if the collaborator can be added, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean validate(Collaborator collaborator) {
+<b class="fc">&nbsp;        return collaboratorsDoNotContain(collaborator);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the repository already contains a collaborator with the same details.
+&nbsp;     *
+&nbsp;     * @param collaborator The collaborator to check.
+&nbsp;     * @return True if the repository does not contain the collaborator, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean collaboratorsDoNotContain(Collaborator collaborator) {
+<b class="fc">&nbsp;        return !collaborators.contains(collaborator);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a defensive copy of the list of collaborators.
+&nbsp;     *
+&nbsp;     * @return A list of Collaborator objects.
+&nbsp;     */
+&nbsp;    public List&lt;Collaborator&gt; getCollaborators() {
+<b class="fc">&nbsp;        return List.copyOf(collaborators);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a collaborator by their identification number.
+&nbsp;     *
+&nbsp;     * @param collaboratorIdNumber The identification number of the collaborator.
+&nbsp;     * @return The Collaborator object corresponding to the provided identification number.
+&nbsp;     * @throws RuntimeException if the collaborator is not found.
+&nbsp;     */
+&nbsp;    public Collaborator getCollaboratorByIdNumber(String collaboratorIdNumber){
+<b class="fc">&nbsp;        for(Collaborator collaborator: collaborators)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            if(collaborator.sameIdNumber(collaboratorIdNumber))</b>
+&nbsp;            {
+<b class="fc">&nbsp;                return collaborator;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        throw new RuntimeException(&quot;Collaborator not found.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a temporary list of collaborators, which can be used for operations such as team generation.
+&nbsp;     *
+&nbsp;     * @return A list of Collaborator objects.
+&nbsp;     */
+&nbsp;    public List&lt;Collaborator&gt; createTempCollaboratorsList(){
+<b class="fc">&nbsp;        tempCollaboratorsList = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (Collaborator collaborator : collaborators) {</b>
+<b class="fc">&nbsp;            tempCollaboratorsList.add(collaborator.clone());</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return tempCollaboratorsList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates a team of collaborators based on selected skills and team size constraints.
+&nbsp;     *
+&nbsp;     * @param selectedSkillsList The list of skills required for the team.
+&nbsp;     * @param minTeamSize        The minimum size of the team.
+&nbsp;     * @param maxTeamSize        The maximum size of the team.
+&nbsp;     * @return A list of Collaborator objects representing the proposed team.
+&nbsp;     * @throws IllegalArgumentException if not all required skills are covered or if there are insufficient collaborators to form the team.
+&nbsp;     */
+&nbsp;    public List&lt;Collaborator&gt; generateTeam(List&lt;Skill&gt; selectedSkillsList, int minTeamSize, int maxTeamSize){
+<b class="fc">&nbsp;        List&lt;Collaborator&gt; teamProposal = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        List&lt;Skill&gt; skillsNeeded = new ArrayList&lt;&gt;(selectedSkillsList); // Copy of the selectedSkillsList</b>
+&nbsp;
+<b class="fc">&nbsp;        for (Collaborator collaborator : tempCollaboratorsList) {</b>
+<b class="fc">&nbsp;            for (Skill skill : collaborator.getSkills()) {</b>
+<b class="pc">&nbsp;                if (skillsNeeded.contains(skill)) {</b>
+<b class="fc">&nbsp;                    if(!teamProposal.contains(collaborator))</b>
+&nbsp;                    {
+<b class="fc">&nbsp;                        teamProposal.add(collaborator); // Add collaborator to the team</b>
+&nbsp;                    }
+<b class="fc">&nbsp;                    skillsNeeded.remove(skill); // Reduce the quantity needed for this skill</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        tempCollaboratorsList.removeAll(teamProposal);</b>
+&nbsp;
+&nbsp;        // Check if all required skills are covered by the team
+<b class="fc">&nbsp;        if (!skillsNeeded.isEmpty()) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Cannot generate team. Not all required skills are covered.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if(teamProposal.size() &gt; maxTeamSize) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Cannot generate team. Maximum number of collaborators exceeded to cover required skills.&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Adjust team size if necessary
+<b class="fc">&nbsp;        while (teamProposal.size() &lt; minTeamSize) {</b>
+<b class="pc">&nbsp;            if (tempCollaboratorsList.isEmpty()) {</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Cannot generate team. Insufficient collaborators.&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            Collaborator collaboratorToAdd = tempCollaboratorsList.remove(0); // Remove collaborator from the beginning of the list</b>
+<b class="nc">&nbsp;            teamProposal.add(collaboratorToAdd);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return teamProposal;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

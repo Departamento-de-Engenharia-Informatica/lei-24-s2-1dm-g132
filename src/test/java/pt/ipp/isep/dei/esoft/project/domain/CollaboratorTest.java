@@ -99,10 +99,10 @@ class CollaboratorTest {
     @Test
     void ensureAssignSkillWorks() {
         Job job = new Job("Jardineiro");
-        Collaborator collaborator = new Collaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        Collaborator collaborator = new Collaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
-        Skill skill1 = new Skill("Podar árvores");
+        Skill skill1 = new Skill("Podar arvores");
         Skill skill2 = new Skill("Conduzir pesados");
 
         List<Skill> skills = new ArrayList<>();
@@ -115,10 +115,10 @@ class CollaboratorTest {
     @Test
     void testRemoveAlreadyAssignedSkills() {
         Job job = new Job("Jardineiro");
-        Collaborator collaborator = new Collaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        Collaborator collaborator = new Collaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
-        Skill skill1 = new Skill("Podar árvores");
+        Skill skill1 = new Skill("Podar arvores");
         Skill skill2 = new Skill("Conduzir pesados");
 
         List<Skill> skills = new ArrayList<>();
@@ -136,10 +136,10 @@ class CollaboratorTest {
     @Test
     void ensureGetSkillsWorks() {
         Job job = new Job("Jardineiro");
-        Collaborator collaborator = new Collaborator("André Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
+        Collaborator collaborator = new Collaborator("Andre Gomes", "2000/1/1", "2020/2/20", "Rua Amanhã, 3366-089, Porto",
                 919191919, "andreamanha3@gmail.com", 546882206, "BI", "20735924 7", job);
 
-        Skill skill1 = new Skill("Podar árvores");
+        Skill skill1 = new Skill("Podar arvores");
         Skill skill2 = new Skill("Conduzir pesados");
 
         List<Skill> skills = new ArrayList<>();

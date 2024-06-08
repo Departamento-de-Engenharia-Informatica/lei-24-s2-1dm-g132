@@ -1,0 +1,330 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > MeetingPointsRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: MeetingPointsRepository (pt.ipp.isep.dei.esoft.project.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MeetingPointsRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    7,7%
+  </span>
+  <span class="absValue">
+    (1/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/58)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    2,6%
+  </span>
+  <span class="absValue">
+    (3/115)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.repository;
+&nbsp;
+&nbsp;import org.apache.commons.lang3.tuple.ImmutablePair;
+&nbsp;import org.apache.commons.lang3.tuple.Pair;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.AssemblyPoint;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.GraphPngAndCsvGenerator;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.FileWriter;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.*;
+&nbsp;import java.util.regex.Matcher;
+&nbsp;import java.util.regex.Pattern;
+&nbsp;
+&nbsp;public class MeetingPointsRepository {
+&nbsp;
+&nbsp;    private MatrixGraph&lt;Vertice, Double&gt; graph;
+&nbsp;    private List&lt;AssemblyPoint&gt; assemblyPointsList;
+&nbsp;
+<b class="fc">&nbsp;    public MeetingPointsRepository(boolean directed) {</b>
+<b class="fc">&nbsp;        this.graph = new MatrixGraph&lt;&gt;(directed);</b>
+<b class="fc">&nbsp;        this.assemblyPointsList = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addEdge(String ori, String dest, Double weight, boolean isAssemblyPoint1, boolean isAssemblyPoint2) {
+<b class="nc">&nbsp;        return addEdge(new AssemblyPoint(ori, isAssemblyPoint1), new AssemblyPoint(dest, isAssemblyPoint2), weight);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addEdge(AssemblyPoint ori, AssemblyPoint dest, Double weight) {
+<b class="nc">&nbsp;        return graph.addEdge(ori, dest, weight);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getEdge(AssemblyPoint ori, AssemblyPoint dest) {
+<b class="nc">&nbsp;        Double temp = graph.edge(ori, dest).getWeight();</b>
+<b class="nc">&nbsp;        if (temp != null) {</b>
+<b class="nc">&nbsp;            return temp;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public MatrixGraph&lt;Vertice, Double&gt; getCsvGraphCopy() {
+<b class="nc">&nbsp;        return graph.clone();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;AssemblyPoint&gt; getAssemblyPoints() {
+<b class="nc">&nbsp;        return assemblyPointsList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean loadGraph(String MeetingPointsFilePath, String distancesMatrixFilePath) {
+<b class="nc">&nbsp;        List&lt;AssemblyPoint&gt; listOfAssemblyPoints = loadParkLocationPoints(MeetingPointsFilePath);</b>
+<b class="nc">&nbsp;        return loadGraphEdges(distancesMatrixFilePath, listOfAssemblyPoints);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private List&lt;AssemblyPoint&gt; loadParkLocationPoints(String parkLocationsFilePath) {
+<b class="nc">&nbsp;        List&lt;AssemblyPoint&gt; parkLocationsList = new ArrayList&lt;&gt;();</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            if (graph.numEdges() != 0) {</b>
+<b class="nc">&nbsp;                graph = new MatrixGraph&lt;&gt;(graph.isDirected());</b>
+&nbsp;            }
+<b class="nc">&nbsp;            File file = new File(parkLocationsFilePath);</b>
+<b class="nc">&nbsp;            if (!file.getName().endsWith(&quot;csv&quot;)) {</b>
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;Invalid File Format! Should be &lt;.csv&gt;&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            graph.setName(file.getName());</b>
+<b class="nc">&nbsp;            Scanner scanner = new Scanner(file);</b>
+<b class="nc">&nbsp;            String pattern = &quot;AP\\d*&quot;;</b>
+<b class="nc">&nbsp;            Pattern regex = Pattern.compile(pattern);</b>
+<b class="nc">&nbsp;            while (scanner.hasNext()) {</b>
+<b class="nc">&nbsp;                String line = scanner.nextLine();</b>
+<b class="nc">&nbsp;                String seperator = getSeparator(line);</b>
+<b class="nc">&nbsp;                String[] locations = line.split(seperator);</b>
+<b class="nc">&nbsp;                for (String location : locations) {</b>
+<b class="nc">&nbsp;                    Matcher matcher = regex.matcher(location);</b>
+<b class="nc">&nbsp;                    boolean isAssemblyPoint = matcher.find();</b>
+<b class="nc">&nbsp;                    AssemblyPoint assemblyPoint = new AssemblyPoint(location.strip(), isAssemblyPoint);</b>
+<b class="nc">&nbsp;                    if (isAssemblyPoint) {</b>
+<b class="nc">&nbsp;                        assemblyPointsList.add(assemblyPoint);</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    graph.addVertex(assemblyPoint);</b>
+<b class="nc">&nbsp;                    parkLocationsList.add(assemblyPoint);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            graph = new MatrixGraph&lt;&gt;(graph.isDirected());</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        return parkLocationsList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean loadGraphEdges(String distancesMatrixFilePath, List&lt;AssemblyPoint&gt; listOfParkLocations) {
+&nbsp;        try {
+<b class="nc">&nbsp;            if (graph.numEdges() != 0) {</b>
+<b class="nc">&nbsp;                graph = new MatrixGraph&lt;&gt;(graph.isDirected());</b>
+&nbsp;            }
+<b class="nc">&nbsp;            File file = new File(distancesMatrixFilePath);</b>
+<b class="nc">&nbsp;            if (!file.getName().endsWith(&quot;csv&quot;)) {</b>
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;Invalid File Format! Should be &lt;.csv&gt;&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            Scanner scanner = new Scanner(file);</b>
+<b class="nc">&nbsp;            int lineNumber = 0;</b>
+<b class="nc">&nbsp;            scanner.reset();</b>
+<b class="nc">&nbsp;            scanner = new Scanner(file);</b>
+<b class="nc">&nbsp;            while (scanner.hasNext()) {</b>
+<b class="nc">&nbsp;                lineNumber++;</b>
+<b class="nc">&nbsp;                String line = scanner.nextLine();</b>
+<b class="nc">&nbsp;                String separator = getSeparator(line);</b>
+<b class="nc">&nbsp;                String[] arr = line.split(separator);</b>
+<b class="nc">&nbsp;                if (arr.length != listOfParkLocations.size()) {</b>
+<b class="nc">&nbsp;                    throw new IllegalArgumentException(&quot;Invalid line entry! Size &quot; + arr.length + &quot;. Line: &quot; + lineNumber);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                for (int i = 0; i &lt; listOfParkLocations.size(); i++) {</b>
+<b class="nc">&nbsp;                    int distance = Integer.parseInt(extractNumericChars(arr[i]));</b>
+<b class="nc">&nbsp;                    if (distance != 0) {</b>
+<b class="nc">&nbsp;                        addEdge(listOfParkLocations.get(lineNumber - 1), listOfParkLocations.get(i), (double) distance);</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            if (lineNumber &gt; listOfParkLocations.size()) {</b>
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;The distance matrix contains more MeetingPoints than the file with the MeetingPoints: &quot; + lineNumber + &quot; &gt; &quot; + listOfParkLocations.size());</b>
+<b class="nc">&nbsp;            } else if (lineNumber &lt; listOfParkLocations.size()) {</b>
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;The distance matrix contains less MeetingPoints than the file with the MeetingPoints: &quot; + lineNumber + &quot; &lt; &quot; + listOfParkLocations.size());</b>
+&nbsp;            }
+<b class="nc">&nbsp;            graph.setName(file.getName());</b>
+&nbsp;
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            graph = new MatrixGraph&lt;&gt;(graph.isDirected());</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;
+&nbsp;        }
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String extractNumericChars(String str) {
+<b class="nc">&nbsp;        StringBuilder sb = new StringBuilder();</b>
+<b class="nc">&nbsp;        for (int i = 0; i &lt; str.length(); i++) {</b>
+<b class="nc">&nbsp;            if (Character.isDigit(str.charAt(i))) {</b>
+<b class="nc">&nbsp;                sb.append(str.charAt(i));</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return sb.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getShortestPathsToMeetingPoint() {
+<b class="nc">&nbsp;        List&lt;Pair&lt;Double, LinkedList&lt;Vertice&gt;&gt;&gt; distanceAndPathSetToReturn = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Vertice vertice : graph.vertices()) {</b>
+<b class="nc">&nbsp;            double dist = Double.POSITIVE_INFINITY;</b>
+<b class="nc">&nbsp;            LinkedList&lt;Vertice&gt; shortestPath = new LinkedList&lt;&gt;();</b>
+<b class="nc">&nbsp;            for (AssemblyPoint assemblyPoint : assemblyPointsList) {</b>
+<b class="nc">&nbsp;                dist = Double.POSITIVE_INFINITY;</b>
+<b class="nc">&nbsp;                shortestPath = new LinkedList&lt;&gt;();</b>
+<b class="nc">&nbsp;                if (!vertice.equals(assemblyPoint)) {</b>
+<b class="nc">&nbsp;                    LinkedList&lt;Vertice&gt; tempShortestPath = new LinkedList&lt;&gt;();</b>
+<b class="nc">&nbsp;                    Double tempDist = Algorithms.shortestPath(getCsvGraphCopy(), vertice, assemblyPoint,</b>
+<b class="nc">&nbsp;                            Comparator.naturalOrder(), Double::sum, 0.0, tempShortestPath);</b>
+&nbsp;
+<b class="nc">&nbsp;                    if (tempDist != null) {</b>
+<b class="nc">&nbsp;                        if (tempDist &lt; dist) {</b>
+<b class="nc">&nbsp;                            dist = tempDist;</b>
+<b class="nc">&nbsp;                            shortestPath = tempShortestPath;</b>
+&nbsp;                        }
+<b class="nc">&nbsp;                        distanceAndPathSetToReturn.add(new ImmutablePair&lt;&gt;(dist, shortestPath));</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        distanceAndPathSetToReturn.sort(Comparator.comparing((Pair&lt;Double, LinkedList&lt;Vertice&gt;&gt; p) -&gt; p.getRight().size())</b>
+<b class="nc">&nbsp;                .thenComparing(Pair::getLeft)</b>
+&nbsp;        );
+<b class="nc">&nbsp;        generateFiles(getCsvGraphCopy(), &quot;FullGraph.png&quot;);</b>
+<b class="nc">&nbsp;        GraphPngAndCsvGenerator.generatePathsCsv(distanceAndPathSetToReturn, graph.getName() + &quot;-PathsToMeetingPoint.csv&quot;);</b>
+<b class="nc">&nbsp;        MatrixGraph&lt;Vertice, Double&gt; graph = new MatrixGraph&lt;&gt;(true);</b>
+<b class="nc">&nbsp;        graph.setName(this.graph.getName());</b>
+<b class="nc">&nbsp;        for (Pair&lt;Double, LinkedList&lt;Vertice&gt;&gt; pair : distanceAndPathSetToReturn) {</b>
+<b class="nc">&nbsp;            double weight = pair.getLeft();</b>
+<b class="nc">&nbsp;            LinkedList&lt;Vertice&gt; path = pair.getRight();</b>
+<b class="nc">&nbsp;            for (int i = 1; i &lt; path.size(); i++) {</b>
+<b class="nc">&nbsp;                Edge&lt;Vertice, Double&gt; edge0 = this.graph.edge(path.get(i - 1), path.get(i));</b>
+<b class="nc">&nbsp;                if (edge0 == null) {</b>
+<b class="nc">&nbsp;                    edge0 = this.graph.edge(path.get(i), path.get(i - 1));</b>
+&nbsp;                }
+<b class="nc">&nbsp;                Edge&lt;Vertice, Double&gt; edge1 = graph.edge(path.get(i - 1), path.get(i));</b>
+<b class="nc">&nbsp;                Edge&lt;Vertice, Double&gt; edge2 = graph.edge(path.get(i), path.get(i - 1));</b>
+<b class="nc">&nbsp;                if (edge1 == null &amp;&amp; edge2 == null) {</b>
+<b class="nc">&nbsp;                    graph.addEdge(edge0.getVOrig(), edge0.getVDest(), edge0.getWeight());</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (edge1 != null &amp;&amp; edge1.getWeight() &gt; weight) {</b>
+<b class="nc">&nbsp;                    graph.addEdge(edge0.getVOrig(), edge0.getVDest(), edge0.getWeight());</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        generateFiles(graph, &quot;PathsToMeetingPointGraph.png&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean generateFiles(MatrixGraph&lt;Vertice, Double&gt; graph, String fileName) {
+<b class="nc">&nbsp;        String outputFolder = &quot;output&quot; + File.separator + &quot;us18&quot;;</b>
+<b class="nc">&nbsp;        return GraphPngAndCsvGenerator.generate(graph, fileName, outputFolder);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String getSeparator(String line) {
+<b class="nc">&nbsp;        if (line.contains(&quot;;&quot;)) {</b>
+<b class="nc">&nbsp;            return &quot;;&quot;;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return &quot;,&quot;;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

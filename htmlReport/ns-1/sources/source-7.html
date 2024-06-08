@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > Task</title>
+  <title>Coverage Report > GenerateTeamController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.application.controller</a>
 </div>
 
-<h1>Coverage Summary for Class: Task (pt.ipp.isep.dei.esoft.project.domain)</h1>
+<h1>Coverage Summary for Class: GenerateTeamController (pt.ipp.isep.dei.esoft.project.application.controller)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -45,21 +45,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">Task</td>
+  <td class="name">GenerateTeamController</td>
 <td class="coverageStat">
   <span class="percent">
     0%
   </span>
   <span class="absValue">
     (0/1)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/5)
   </span>
 </td>
 <td class="coverageStat">
@@ -75,7 +67,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/20)
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/35)
   </span>
 </td>
 </tr>
@@ -87,69 +87,177 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.application.controller;
 &nbsp;
-&nbsp;import java.util.Objects;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Skill;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Team;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.serialization.TeamRepositoryFile;
 &nbsp;
-&nbsp;public class Task {
-&nbsp;    private final String reference;
-&nbsp;    private String description;
-&nbsp;    private String informalDescription;
-&nbsp;    private String technicalDescription;
-&nbsp;    private int duration;
-&nbsp;    private double cost;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
 &nbsp;
-&nbsp;    private TaskCategory taskCategory;
-&nbsp;
-&nbsp;    private Employee employee;
-&nbsp;
-&nbsp;    public Task(String reference, String description, String informalDescription, String technicalDescription,
-<b class="nc">&nbsp;                int duration, double cost, TaskCategory taskCategory, Employee employee) {</b>
-&nbsp;
-<b class="nc">&nbsp;        validateReference(reference);</b>
-<b class="nc">&nbsp;        this.reference = reference;</b>
-<b class="nc">&nbsp;        this.description = description;</b>
-<b class="nc">&nbsp;        this.informalDescription = informalDescription;</b>
-<b class="nc">&nbsp;        this.technicalDescription = technicalDescription;</b>
-<b class="nc">&nbsp;        this.duration = duration;</b>
-<b class="nc">&nbsp;        this.cost = cost;</b>
-<b class="nc">&nbsp;        this.taskCategory = taskCategory;</b>
-<b class="nc">&nbsp;        this.employee = employee;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    private void validateReference(String reference) {
-&nbsp;        //TODO: missing from the diagrams
-<b class="nc">&nbsp;        if (reference == null || reference.isEmpty()) {</b>
-<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Reference cannot be null or empty.&quot;);</b>
-&nbsp;        }
-&nbsp;    }
-&nbsp;
-&nbsp;    @Override
-&nbsp;    public boolean equals(Object o) {
-<b class="nc">&nbsp;        if (this == o) {</b>
-<b class="nc">&nbsp;            return true;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        if (!(o instanceof Task)) {</b>
-<b class="nc">&nbsp;            return false;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        Task task = (Task) o;</b>
-<b class="nc">&nbsp;        return reference.equals(task.reference) &amp;&amp; employee.equals(task.employee);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @Override
-&nbsp;    public int hashCode() {
-<b class="nc">&nbsp;        return Objects.hash(reference, employee);</b>
-&nbsp;    }
-&nbsp;
+&nbsp;/**
+&nbsp; * Controller class responsible for handling operations related to generating team proposals.
+&nbsp; */
+&nbsp;public class GenerateTeamController {
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Clone method.
-&nbsp;     *
-&nbsp;     * @return A clone of the current instance.
+&nbsp;     * The collaborator repository needed for the operations of this class.
 &nbsp;     */
-&nbsp;    public Task clone() {
-<b class="nc">&nbsp;        return new Task(this.reference, this.description, this.informalDescription, this.technicalDescription,</b>
-&nbsp;                this.duration, this.cost, this.taskCategory, this.employee);
+&nbsp;    private CollaboratorRepository collaboratorRepository;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The skill repository needed for the operations of this class.
+&nbsp;     */
+&nbsp;    private SkillRepository skillRepository;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The team repository needed for the operations of this class.
+&nbsp;     */
+&nbsp;    private TeamRepository teamRepository;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The file instance used to manage the serialization of the team repository.
+&nbsp;     */
+&nbsp;    private TeamRepositoryFile teamRepositoryFile;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new GenerateTeamController object.
+&nbsp;     */
+<b class="nc">&nbsp;    public GenerateTeamController(){</b>
+<b class="nc">&nbsp;        getCollaboratorRepository();</b>
+<b class="nc">&nbsp;        getSkillRepository();</b>
+<b class="nc">&nbsp;        getTeamRepository();</b>
+<b class="nc">&nbsp;        teamRepositoryFile = new TeamRepositoryFile();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the collaborator repository instance.
+&nbsp;     *
+&nbsp;     * @return The CollaboratorRepository object.
+&nbsp;     */
+&nbsp;    private CollaboratorRepository getCollaboratorRepository() {
+<b class="nc">&nbsp;        if (collaboratorRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            collaboratorRepository = repositories.getCollaboratorRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return collaboratorRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the skill repository instance.
+&nbsp;     *
+&nbsp;     * @return The SkillRepository object.
+&nbsp;     */
+&nbsp;    private SkillRepository getSkillRepository() {
+<b class="nc">&nbsp;        if (skillRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            skillRepository = repositories.getSkillRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return skillRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the team repository instance.
+&nbsp;     *
+&nbsp;     * @return The TeamRepository object.
+&nbsp;     */
+&nbsp;    private TeamRepository getTeamRepository() {
+<b class="nc">&nbsp;        if (teamRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            teamRepository = repositories.getTeamRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return teamRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers a new team based on the provided team proposal.
+&nbsp;     *
+&nbsp;     * @param teamProposal The list of collaborators proposed for the team.
+&nbsp;     * @return An Optional containing the newly registered team if successful, otherwise empty.
+&nbsp;     */
+&nbsp;    public Optional&lt;Team&gt; registerTeam(List&lt;Collaborator&gt; teamProposal) {
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        teamRepository = getTeamRepository();</b>
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;Team&gt; newTeam = Optional.empty();</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        newTeam = teamRepository.registerTeam(teamProposal);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (newTeam.isPresent())</b>
+&nbsp;        {
+<b class="nc">&nbsp;            if(!teamRepositoryFile.save(teamRepository))</b>
+&nbsp;            {
+<b class="nc">&nbsp;                System.out.println(&quot;Error while saving Collaborator Repository in external file!&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return newTeam;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the available skills.
+&nbsp;     *
+&nbsp;     * @return The list of available skills.
+&nbsp;     */
+&nbsp;    public List&lt;Skill&gt; getSkills() {
+<b class="nc">&nbsp;        SkillRepository skillRepository = getSkillRepository();</b>
+<b class="nc">&nbsp;        skillRepository.createSelectedSkillsList();</b>
+<b class="nc">&nbsp;        return skillRepository.getSkills();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a selected skill name to the skill repository.
+&nbsp;     *
+&nbsp;     * @param name The name of the selected skill.
+&nbsp;     */
+&nbsp;    public void addSelectedSkillName(String name){
+<b class="nc">&nbsp;        skillRepository.addSelectedSkill(name);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates a team proposal based on the specified criteria.
+&nbsp;     *
+&nbsp;     * @param minTeamSize The minimum team size.
+&nbsp;     * @param maxTeamSize The maximum team size.
+&nbsp;     * @return The list of collaborators proposed for the team.
+&nbsp;     */
+&nbsp;    public List&lt;Collaborator&gt; generateTeamProposal(int minTeamSize, int maxTeamSize){
+<b class="nc">&nbsp;        List&lt;Skill&gt; selectedSkillsList = skillRepository.getSelectedSkillsList();</b>
+&nbsp;
+<b class="nc">&nbsp;        createAvailableCollaboratorsList();</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Collaborator&gt; teamProposal = selectCollaboratorsForTeam(selectedSkillsList, minTeamSize, maxTeamSize);</b>
+&nbsp;
+<b class="nc">&nbsp;        return teamProposal;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a list of available collaborators by removing unavailable collaborators from the team repository.
+&nbsp;     */
+&nbsp;    private void createAvailableCollaboratorsList(){
+<b class="nc">&nbsp;        List&lt;Collaborator&gt; tempCollaboratorsList = collaboratorRepository.createTempCollaboratorsList();</b>
+&nbsp;
+<b class="nc">&nbsp;        teamRepository.removeUnavailableCollaborators(tempCollaboratorsList);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Selects collaborators for the team based on the provided skills and team size criteria.
+&nbsp;     *
+&nbsp;     * @param selectedSkillsList The list of selected skills.
+&nbsp;     * @param minTeamSize The minimum team size.
+&nbsp;     * @param maxTeamSize The maximum team size.
+&nbsp;     * @return The list of collaborators selected for the team.
+&nbsp;     */
+&nbsp;    private List&lt;Collaborator&gt; selectCollaboratorsForTeam(List&lt;Skill&gt; selectedSkillsList, int minTeamSize, int maxTeamSize){
+<b class="nc">&nbsp;        return collaboratorRepository.generateTeam(selectedSkillsList, minTeamSize, maxTeamSize);</b>
 &nbsp;    }
 &nbsp;}
 </code>
@@ -175,7 +283,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-12 20:04</div>
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
 </div>
 </body>
 </html>

@@ -1,0 +1,412 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > AddEntryAgendaUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.ui.gui</a>
+</div>
+
+<h1>Coverage Summary for Class: AddEntryAgendaUI (pt.ipp.isep.dei.esoft.project.ui.gui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AddEntryAgendaUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/50)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AddEntryAgendaUI$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AddEntryAgendaUI$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AddEntryAgendaUI$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/68)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.ui.gui;
+&nbsp;
+&nbsp;import javafx.beans.value.ChangeListener;
+&nbsp;import javafx.beans.value.ObservableValue;
+&nbsp;import javafx.event.ActionEvent;
+&nbsp;import javafx.event.EventHandler;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.fxml.FXMLLoader;
+&nbsp;import javafx.fxml.Initializable;
+&nbsp;import javafx.scene.Node;
+&nbsp;import javafx.scene.Parent;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.*;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import javafx.stage.WindowEvent;
+&nbsp;import pt.ipp.isep.dei.esoft.project.application.controller.AddEntryAgendaController;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.dto.GSTaskDTO;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.net.URL;
+&nbsp;import java.util.List;
+&nbsp;import java.util.ResourceBundle;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controller class for the Add Entry to Agenda user interface.
+&nbsp; */
+&nbsp;public class AddEntryAgendaUI implements Initializable {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The controller responsible for managing the addition of entries to the agenda.
+&nbsp;     */
+&nbsp;    private final AddEntryAgendaController ctrl;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Choice box for selecting a to-do list entry to be added to the agenda.
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    private ChoiceBox&lt;String&gt; toDoListEntry;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Label to display information about the selected to-do list entry.
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    private Label toDoListEntryInfo;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Text field for entering the starting date of the agenda entry.
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    private TextField startingDate;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Index of the selected to-do list entry in the choice box.
+&nbsp;     */
+<b class="nc">&nbsp;    private int selectedEntryIndex = -1;</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor for the AddEntryAgendaUI class.
+&nbsp;     * Initializes the controller.
+&nbsp;     */
+&nbsp;    public AddEntryAgendaUI()
+<b class="nc">&nbsp;    {</b>
+<b class="nc">&nbsp;        ctrl = new AddEntryAgendaController();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the action event for canceling the agenda entry and returning to the GSM menu.
+&nbsp;     *
+&nbsp;     * @param actionEvent The action event that triggered this method.
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    public void cancel(ActionEvent actionEvent) {
+&nbsp;        try{
+<b class="nc">&nbsp;            FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/pt/ipp/isep/dei/esoft/project/ui/gui/gsmMenu.fxml&quot;));</b>
+<b class="nc">&nbsp;            Parent gsmMenuUI = loader.load();</b>
+&nbsp;
+<b class="nc">&nbsp;            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;            Stage gsmMenuUIStage = new Stage();</b>
+<b class="nc">&nbsp;            gsmMenuUIStage.setTitle(&quot;Green Spaces Manager UI&quot;);</b>
+<b class="nc">&nbsp;            Scene scene = new Scene(gsmMenuUI);</b>
+<b class="nc">&nbsp;            gsmMenuUIStage.setScene(scene);</b>
+<b class="nc">&nbsp;            currentStage.close();</b>
+<b class="nc">&nbsp;            gsmMenuUIStage.show();</b>
+&nbsp;
+<b class="nc">&nbsp;            gsmMenuUIStage.setOnCloseRequest(new EventHandler&lt;WindowEvent&gt;() {</b>
+&nbsp;                @Override
+&nbsp;                public void handle(WindowEvent event) {
+<b class="nc">&nbsp;                    Alert alerta = AlertUI.createAlert(Alert.AlertType.CONFIRMATION, &quot;Green Spaces Manager UI&quot;,</b>
+&nbsp;                            &quot;Action confirmation.&quot;, &quot;Do you wish to close the app?&quot;);
+<b class="nc">&nbsp;                    if (alerta.showAndWait().get() == ButtonType.CANCEL) {</b>
+<b class="nc">&nbsp;                        event.consume();</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            });
+<b class="nc">&nbsp;            gsmMenuUIStage.show();</b>
+<b class="nc">&nbsp;        }catch (IOException ex) {</b>
+<b class="nc">&nbsp;            AlertUI.createAlert(Alert.AlertType.ERROR, &quot;Green Spaces Manager UI&quot;,</b>
+<b class="nc">&nbsp;                    &quot;Problems starting Green Spaces Manager UI.&quot;, ex.getMessage()).show();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the action event for submitting the agenda entry.
+&nbsp;     *
+&nbsp;     * @param actionEvent The action event that triggered this method.
+&nbsp;     */
+&nbsp;    @FXML
+&nbsp;    public void submit(ActionEvent actionEvent) {
+&nbsp;        try {
+<b class="nc">&nbsp;            String entryStartingDate = startingDate.getText();</b>
+<b class="nc">&nbsp;            String entryToDo = toDoListEntry.getValue();</b>
+&nbsp;
+<b class="nc">&nbsp;            ctrl.getSelectedTask(selectedEntryIndex);</b>
+&nbsp;
+<b class="nc">&nbsp;            boolean result = ctrl.addEntry(entryStartingDate);</b>
+<b class="nc">&nbsp;            if (!result)</b>
+&nbsp;            {
+<b class="nc">&nbsp;                AlertUI.createAlert(Alert.AlertType.ERROR, &quot;Add Entry to Agenda UI&quot;,</b>
+<b class="nc">&nbsp;                        &quot;Problems updating task.&quot;, &quot;Task wasn&#39;t stored correctly.&quot;).show();</b>
+&nbsp;            }
+&nbsp;            else
+&nbsp;            {
+<b class="nc">&nbsp;                AlertUI.createAlert(Alert.AlertType.INFORMATION, &quot;Add Entry to Agenda UI&quot;,</b>
+<b class="nc">&nbsp;                        &quot;Operation success.&quot;, &quot;Task updated successfully.&quot;).showAndWait();</b>
+&nbsp;
+&nbsp;                try{
+<b class="nc">&nbsp;                    FXMLLoader loader = new FXMLLoader(getClass().getResource(&quot;/pt/ipp/isep/dei/esoft/project/ui/gui/gsmMenu.fxml&quot;));</b>
+<b class="nc">&nbsp;                    Parent gsmMenuUI = loader.load();</b>
+&nbsp;
+<b class="nc">&nbsp;                    Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();</b>
+<b class="nc">&nbsp;                    Stage gsmMenuUIStage = new Stage();</b>
+<b class="nc">&nbsp;                    gsmMenuUIStage.setTitle(&quot;Green Spaces Manager UI&quot;);</b>
+<b class="nc">&nbsp;                    Scene scene = new Scene(gsmMenuUI);</b>
+<b class="nc">&nbsp;                    gsmMenuUIStage.setScene(scene);</b>
+<b class="nc">&nbsp;                    currentStage.close();</b>
+<b class="nc">&nbsp;                    gsmMenuUIStage.show();</b>
+&nbsp;
+<b class="nc">&nbsp;                    gsmMenuUIStage.setOnCloseRequest(new EventHandler&lt;WindowEvent&gt;() {</b>
+&nbsp;                        @Override
+&nbsp;                        public void handle(WindowEvent event) {
+<b class="nc">&nbsp;                            Alert alerta = AlertUI.createAlert(Alert.AlertType.CONFIRMATION, &quot;Green Spaces Manager UI&quot;,</b>
+&nbsp;                                    &quot;Action confirmation.&quot;, &quot;Do you wish to close the app?&quot;);
+<b class="nc">&nbsp;                            if (alerta.showAndWait().get() == ButtonType.CANCEL) {</b>
+<b class="nc">&nbsp;                                event.consume();</b>
+&nbsp;                            }
+&nbsp;                        }
+&nbsp;                    });
+<b class="nc">&nbsp;                    gsmMenuUIStage.show();</b>
+<b class="nc">&nbsp;                }catch (IOException ex) {</b>
+<b class="nc">&nbsp;                    AlertUI.createAlert(Alert.AlertType.ERROR, &quot;Green Spaces Manager UI&quot;,</b>
+<b class="nc">&nbsp;                            &quot;Problems starting Green Spaces Manager UI.&quot;, ex.getMessage()).show();</b>
+&nbsp;                }
+&nbsp;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;        }catch (IllegalArgumentException ex)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            AlertUI.createAlert(Alert.AlertType.ERROR, &quot;Add Entry to Agenda UI&quot;,</b>
+<b class="nc">&nbsp;                    &quot;Invalid input value.&quot;, ex.getMessage()).show();</b>
+<b class="nc">&nbsp;        } catch (RuntimeException ex)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            AlertUI.createAlert(Alert.AlertType.ERROR, &quot;Add Entry to Agenda UI&quot;,</b>
+<b class="nc">&nbsp;                    &quot;Choice box empty.&quot;, &quot;Please select values in all choice boxes.&quot;).show();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes the choice boxes and populates the to-do list entry choice box with available options.
+&nbsp;     *
+&nbsp;     * @param url            The location used to resolve relative paths for the root object.
+&nbsp;     * @param resourceBundle The resources specific to this controller.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void initialize(URL url, ResourceBundle resourceBundle) {
+<b class="nc">&nbsp;        List&lt;GSTaskDTO&gt; gsTaskDTOList = ctrl.getTodoListEntries();</b>
+&nbsp;
+<b class="nc">&nbsp;        for(GSTaskDTO gsTaskDTO : gsTaskDTOList)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            toDoListEntry.getItems().add(gsTaskDTO.getTitle());</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        toDoListEntry.getSelectionModel().selectedItemProperty().addListener(new ChangeListener&lt;String&gt;() {</b>
+&nbsp;            @Override
+&nbsp;            public void changed(ObservableValue&lt;? extends String&gt; observable, String oldValue, String newValue) {
+<b class="nc">&nbsp;                selectedEntryIndex = toDoListEntry.getSelectionModel().getSelectedIndex();</b>
+<b class="nc">&nbsp;                if (selectedEntryIndex &gt;= 0 &amp;&amp; selectedEntryIndex &lt; gsTaskDTOList.size()) {</b>
+<b class="nc">&nbsp;                    GSTaskDTO selectedEntry = gsTaskDTOList.get(selectedEntryIndex);</b>
+<b class="nc">&nbsp;                    toDoListEntryInfo.setText(&quot;Selected Entry additional information:\n&quot; +</b>
+<b class="nc">&nbsp;                            &quot;Description: &quot; + selectedEntry.getDescription() + &quot;\n&quot; +</b>
+<b class="nc">&nbsp;                            &quot;Degree of Urgency: &quot; + selectedEntry.getDegreeOfUrgency() + &quot;\n&quot; +</b>
+<b class="nc">&nbsp;                            &quot;Type: &quot; + selectedEntry.getExpectedDuration() + &quot; working hours\n&quot; +</b>
+<b class="nc">&nbsp;                            &quot;Green Space: &quot; + selectedEntry.getGreenSpace().getName());</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    toDoListEntryInfo.setText(&quot;No entry selected&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,173 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > EmailThroughGmail</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain.adapters</a>
+</div>
+
+<h1>Coverage Summary for Class: EmailThroughGmail (pt.ipp.isep.dei.esoft.project.domain.adapters)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EmailThroughGmail</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85,7%
+  </span>
+  <span class="absValue">
+    (12/14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain.adapters;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.EmailGenerator;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Team;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.Calendar;
+&nbsp;import java.util.Formatter;
+&nbsp;
+&nbsp;/**
+&nbsp; * Adapter class for sending emails through Gmail service.
+&nbsp; * Implements the EmailGenerator interface to send email notifications.
+&nbsp; */
+&nbsp;public class EmailThroughGmail implements EmailGenerator {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new EmailThroughGmail object.
+&nbsp;     */
+<b class="fc">&nbsp;    public EmailThroughGmail() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sends an email notification with the specified title, starting date, and team.
+&nbsp;     * The email is formatted and saved to a file named &quot;EmailMessage.txt&quot;.
+&nbsp;     *
+&nbsp;     * @param title The title of the task.
+&nbsp;     * @param startingDate The starting date of the task.
+&nbsp;     * @param selectedTeam The team assigned to the task.
+&nbsp;     * @return True if the email was successfully saved to the file, false otherwise.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public boolean sendEmail(String title, Calendar startingDate, Team selectedTeam) {
+<b class="fc">&nbsp;        String printEmail = &quot;From: MusgoSublime@gmail.com&quot;;</b>
+<b class="fc">&nbsp;        printEmail = String.format(&quot;%s\nTo:&quot;, printEmail);</b>
+<b class="fc">&nbsp;        for(Collaborator collaborator : selectedTeam.getCollaborators())</b>
+&nbsp;        {
+<b class="fc">&nbsp;            printEmail = String.format(&quot;%s %s;&quot;, printEmail, collaborator.getEmail());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        printEmail = String.format(&quot;%s\n\nYou have been assigned with the task %s, which is planned to start at %d/%d/%d.\n\nBest regards,\nMusgoSublime&quot;, printEmail, title,</b>
+<b class="fc">&nbsp;                startingDate.get(Calendar.YEAR), startingDate.get(Calendar.MONTH)+1, startingDate.get(Calendar.DAY_OF_MONTH));</b>
+&nbsp;
+&nbsp;        Formatter ficheiro;
+&nbsp;        try {
+<b class="fc">&nbsp;            ficheiro = new Formatter(new File(&quot;EmailMessage.txt&quot;));</b>
+&nbsp;            try {
+<b class="fc">&nbsp;                ficheiro.format(&quot;%s&quot;, printEmail);</b>
+&nbsp;            } finally {
+<b class="fc">&nbsp;                ficheiro.close();</b>
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;            return true;</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

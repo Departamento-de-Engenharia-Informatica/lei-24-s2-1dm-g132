@@ -1,0 +1,215 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RegisterSkillController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: RegisterSkillController (pt.ipp.isep.dei.esoft.project.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RegisterSkillController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;
+&nbsp;/**
+&nbsp;
+&nbsp; This class represents the controller for registering a new skill.
+&nbsp; It interacts with the skill repository to store and retrieve skill information.
+&nbsp; */
+&nbsp;package pt.ipp.isep.dei.esoft.project.application.controller;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Skill;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.serialization.SkillRepositoryFile;
+&nbsp;
+&nbsp;import java.lang.IllegalArgumentException;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controller class for registering skills.
+&nbsp; * Provides methods to interact with the skill repository and to register new skills.
+&nbsp; */
+&nbsp;public class RegisterSkillController {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The skill repository instance used to manage skills.
+&nbsp;     */
+&nbsp;    private SkillRepository skillRepository;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The file instance used to manage the serialization of the skill repository.
+&nbsp;     */
+&nbsp;    private SkillRepositoryFile skillRepositoryFile;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new RegisterSkillController object.
+&nbsp;     * Initializes the skill repository by obtaining it from the Repositories singleton instance.
+&nbsp;     */
+<b class="nc">&nbsp;    public RegisterSkillController() {</b>
+<b class="nc">&nbsp;        getSkillRepository();</b>
+<b class="nc">&nbsp;        skillRepositoryFile = new SkillRepositoryFile();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new RegisterSkillController object with a specified skill repository.
+&nbsp;     * @param skillRepository The skill repository to be used by the controller.
+&nbsp;     */
+<b class="nc">&nbsp;    public RegisterSkillController(SkillRepository skillRepository) {</b>
+<b class="nc">&nbsp;        this.skillRepository = skillRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the skill repository, either by initializing it from the Repositories singleton instance
+&nbsp;     * or using the one provided in the constructor.
+&nbsp;     * @return The skill repository.
+&nbsp;     */
+&nbsp;    private SkillRepository getSkillRepository() {
+<b class="nc">&nbsp;        if (skillRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            skillRepository = repositories.getSkillRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return skillRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of skills from the skill repository.
+&nbsp;     * @return The list of skills.
+&nbsp;     */
+&nbsp;    public List&lt;Skill&gt; getSkills() {
+<b class="nc">&nbsp;        SkillRepository skillRepository = getSkillRepository();</b>
+<b class="nc">&nbsp;        return skillRepository.getSkills();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers a new skill with the given name.
+&nbsp;     * Validates the input name and adds the skill to the repository.
+&nbsp;     * @param name The name of the skill to be registered.
+&nbsp;     * @return The newly created skill.
+&nbsp;     * @throws IllegalArgumentException If the name is null or empty.
+&nbsp;     */
+&nbsp;    public Skill registerSkill(String name) {
+<b class="nc">&nbsp;        if (name == null || name.isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Skill name cannot be null or empty&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        SkillRepository skillRepository = getSkillRepository();</b>
+<b class="nc">&nbsp;        Skill newSkill = new Skill(name);</b>
+<b class="nc">&nbsp;        skillRepository.add(newSkill);</b>
+<b class="nc">&nbsp;        if(!skillRepositoryFile.save(skillRepository))</b>
+&nbsp;        {
+<b class="nc">&nbsp;            System.out.println(&quot;Error while saving Skill Repository in external file!&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return newSkill;</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

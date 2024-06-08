@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > Employee</title>
+  <title>Coverage Report > AssignSkillsController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.application.controller</a>
 </div>
 
-<h1>Coverage Summary for Class: Employee (pt.ipp.isep.dei.esoft.project.domain)</h1>
+<h1>Coverage Summary for Class: AssignSkillsController (pt.ipp.isep.dei.esoft.project.application.controller)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -45,7 +45,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">Employee</td>
+  <td class="name">AssignSkillsController</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -59,7 +59,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/5)
+    (0/9)
   </span>
 </td>
 <td class="coverageStat">
@@ -67,7 +67,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/4)
+    (0/8)
   </span>
 </td>
 <td class="coverageStat">
@@ -75,7 +75,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/11)
+    (0/29)
   </span>
 </td>
 </tr>
@@ -87,50 +87,152 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.application.controller;
 &nbsp;
-&nbsp;import java.util.Objects;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Skill;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.serialization.CollaboratorRepositoryFile;
 &nbsp;
-&nbsp;public class Employee {
-&nbsp;    private final String email;
-&nbsp;    private String name;
-&nbsp;    private String position;
-&nbsp;    private String phone;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
 &nbsp;
-<b class="nc">&nbsp;    public Employee(String email) {</b>
-<b class="nc">&nbsp;        this.email = email;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @Override
-&nbsp;    public boolean equals(Object o) {
-<b class="nc">&nbsp;        if (this == o) {</b>
-<b class="nc">&nbsp;            return true;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        if (!(o instanceof Employee)) {</b>
-<b class="nc">&nbsp;            return false;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        Employee employee = (Employee) o;</b>
-<b class="nc">&nbsp;        return email.equals(employee.email);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @Override
-&nbsp;    public int hashCode() {
-<b class="nc">&nbsp;        return Objects.hash(email);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public boolean hasEmail(String email) {
-<b class="nc">&nbsp;        return this.email.equals(email);</b>
-&nbsp;    }
-&nbsp;
+&nbsp;/**
+&nbsp; * Controller class responsible for handling operations related to assigning skills to collaborators.
+&nbsp; */
+&nbsp;public class AssignSkillsController {
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Clone method.
-&nbsp;     *
-&nbsp;     * @return A clone of the current instance.
+&nbsp;     * The collaborator repository needed for the operations of this class.
 &nbsp;     */
-&nbsp;    public Employee clone() {
-<b class="nc">&nbsp;        return new Employee(this.email);</b>
+&nbsp;    private CollaboratorRepository collaboratorRepository;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The skill repository needed for the operations of this class.
+&nbsp;     */
+&nbsp;    private SkillRepository skillRepository;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The file instance used to manage the serialization of the collaborator repository.
+&nbsp;     */
+&nbsp;    private CollaboratorRepositoryFile collaboratorRepositoryFile;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new AssignSkillsController object.
+&nbsp;     */
+<b class="nc">&nbsp;    public AssignSkillsController(){</b>
+<b class="nc">&nbsp;        getCollaboratorRepository();</b>
+<b class="nc">&nbsp;        getSkillRepository();</b>
+<b class="nc">&nbsp;        collaboratorRepositoryFile = new CollaboratorRepositoryFile();</b>
 &nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the collaborator repository instance.
+&nbsp;     *
+&nbsp;     * @return The CollaboratorRepository object.
+&nbsp;     */
+&nbsp;    private CollaboratorRepository getCollaboratorRepository() {
+<b class="nc">&nbsp;        if (collaboratorRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            collaboratorRepository = repositories.getCollaboratorRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return collaboratorRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the skill repository instance.
+&nbsp;     *
+&nbsp;     * @return The SkillRepository object.
+&nbsp;     */
+&nbsp;    private SkillRepository getSkillRepository() {
+<b class="nc">&nbsp;        if (skillRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            skillRepository = repositories.getSkillRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return skillRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Assigns skills to a collaborator.
+&nbsp;     *
+&nbsp;     * @param collaboratorIdNumber The identification number of the collaborator.
+&nbsp;     * @return An optional containing the updated collaborator if the assignment was successful, otherwise empty.
+&nbsp;     */
+&nbsp;    public Optional&lt;Collaborator&gt; assignSkills(String collaboratorIdNumber){
+<b class="nc">&nbsp;        List&lt;Skill&gt; selectedSkillsList = getSelectedSkillsList();</b>
+&nbsp;
+<b class="nc">&nbsp;        Collaborator collaborator = getCollaboratorByIdNumber(collaboratorIdNumber);</b>
+&nbsp;
+<b class="nc">&nbsp;        collaboratorRepository = getCollaboratorRepository();</b>
+&nbsp;
+<b class="nc">&nbsp;        Optional&lt;Collaborator&gt; updatedCollaborator = Optional.empty();</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        updatedCollaborator = collaboratorRepository.assignSkill(collaborator, selectedSkillsList);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (updatedCollaborator.isPresent())</b>
+&nbsp;        {
+<b class="nc">&nbsp;            if(!collaboratorRepositoryFile.save(collaboratorRepository))</b>
+&nbsp;            {
+<b class="nc">&nbsp;                System.out.println(&quot;Error while saving Collaborator Repository in external file!&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return updatedCollaborator;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of selected skills.
+&nbsp;     *
+&nbsp;     * @return The list of selected skills.
+&nbsp;     */
+&nbsp;    private List&lt;Skill&gt; getSelectedSkillsList(){
+<b class="nc">&nbsp;        return skillRepository.getSelectedSkillsList();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a collaborator by its identification number.
+&nbsp;     *
+&nbsp;     * @param collaboratorIdNumber The identification number of the collaborator.
+&nbsp;     * @return The collaborator corresponding to the provided identification number.
+&nbsp;     */
+&nbsp;    private Collaborator getCollaboratorByIdNumber(String collaboratorIdNumber){
+<b class="nc">&nbsp;        return collaboratorRepository.getCollaboratorByIdNumber(collaboratorIdNumber);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of collaborators.
+&nbsp;     *
+&nbsp;     * @return The list of collaborators.
+&nbsp;     */
+&nbsp;    public List&lt;Collaborator&gt; getCollaborators() {
+<b class="nc">&nbsp;        return collaboratorRepository.getCollaborators();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of skills not assigned to the selected collaborator.
+&nbsp;     *
+&nbsp;     * @return The list of skills not assigned to the selected collaborator.
+&nbsp;     */
+&nbsp;    public List&lt;Skill&gt; getSkills(String collaboratorIdNumber) {
+<b class="nc">&nbsp;        SkillRepository skillRepository = getSkillRepository();</b>
+<b class="nc">&nbsp;        skillRepository.createSelectedSkillsList();</b>
+<b class="nc">&nbsp;        List&lt;Skill&gt; tempSkillsList = skillRepository.createTempSkillsList();</b>
+&nbsp;
+<b class="nc">&nbsp;        return collaboratorRepository.removeAlreadyAssignedSkills(collaboratorIdNumber, tempSkillsList);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a selected skill by name.
+&nbsp;     *
+&nbsp;     * @param name The name of the skill to add.
+&nbsp;     */
+&nbsp;    public void addSelectedSkillName(String name){
+<b class="nc">&nbsp;        skillRepository.addSelectedSkill(name);</b>
+&nbsp;    }
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -155,7 +257,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-12 20:04</div>
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
 </div>
 </body>
 </html>

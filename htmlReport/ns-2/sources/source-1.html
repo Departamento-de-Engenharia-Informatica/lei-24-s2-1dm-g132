@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > Algorithms</title>
+  <title>Coverage Report > AuthenticationController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain.graph</a>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.application.controller.authorization</a>
 </div>
 
-<h1>Coverage Summary for Class: Algorithms (pt.ipp.isep.dei.esoft.project.domain.graph)</h1>
+<h1>Coverage Summary for Class: AuthenticationController (pt.ipp.isep.dei.esoft.project.application.controller.authorization)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -45,7 +45,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">Algorithms</td>
+  <td class="name">AuthenticationController</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -59,7 +59,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/14)
+    (0/4)
   </span>
 </td>
 <td class="coverageStat">
@@ -67,7 +67,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/86)
+    (0/2)
   </span>
 </td>
 <td class="coverageStat">
@@ -75,7 +75,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/142)
+    (0/9)
   </span>
 </td>
 </tr>
@@ -87,373 +87,53 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain.graph;
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.application.controller.authorization;
 &nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+&nbsp;import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 &nbsp;
-&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
+&nbsp;import java.util.List;
 &nbsp;
-&nbsp;import java.util.*;
-&nbsp;import java.util.function.BinaryOperator;
+&nbsp;/**
+&nbsp; * @author Paulo Maio pam@isep.ipp.pt
+&nbsp; */
+&nbsp;public class AuthenticationController {
 &nbsp;
-<b class="nc">&nbsp;public class Algorithms {</b>
+&nbsp;    public static final String ROLE_ADMIN = &quot;ADMINISTRATOR&quot;;
+&nbsp;    public static final String ROLE_EMPLOYEE = &quot;EMPLOYEE&quot;;
+&nbsp;    public static final String ROLE_HRM = &quot;HUMAN_RESOURCES_MANAGER&quot;;
+&nbsp;    public static final String ROLE_VTF = &quot;VEHICLE_AND_EQUIPMENT_FLEET_MANAGER&quot;;
+&nbsp;    public static final String ROLE_COLLABORATOR = &quot;COLLABORATOR&quot;;
+&nbsp;    public static final String ROLE_GSM = &quot;GREEN_SPACES_MANAGER&quot;;
+&nbsp;    public static final String ROLE_GSU = &quot;GREEN_SPACES_USER&quot;;
+&nbsp;    public static final String ROLE_QAM = &quot;SOFTWARE_QUALITY_ASSESSMENT_TEAM_MANAGER&quot;;
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Performs breadth-first search of a Graph starting in a vertex
-&nbsp;     *
-&nbsp;     * @param g    Graph instance
-&nbsp;     * @param vert vertex that will be the source of the search
-&nbsp;     * @return a LinkedList with the vertices of breadth-first search
-&nbsp;     */
-&nbsp;    public static &lt;V, E&gt; LinkedList&lt;V&gt; BreadthFirstSearch(Graph&lt;V, E&gt; g, V vert) {
-<b class="nc">&nbsp;        if (!g.validVertex(vert)) {</b>
-<b class="nc">&nbsp;            return null;</b>
-&nbsp;        }
+&nbsp;    //private final ApplicationSession applicationSession;
+&nbsp;    private final AuthenticationRepository authenticationRepository;
 &nbsp;
-<b class="nc">&nbsp;        LinkedList&lt;V&gt; result = new LinkedList&lt;&gt;();</b>
-<b class="nc">&nbsp;        boolean[] visited = new boolean[g.vertices().size()];</b>
-<b class="nc">&nbsp;        LinkedList&lt;V&gt; queue = new LinkedList&lt;&gt;();</b>
-&nbsp;
-<b class="nc">&nbsp;        queue.add(vert);</b>
-<b class="nc">&nbsp;        visited[g.vertices().indexOf(vert)] = true;</b>
-&nbsp;
-<b class="nc">&nbsp;        while (!queue.isEmpty()) {</b>
-<b class="nc">&nbsp;            V currentVertex = queue.poll();</b>
-<b class="nc">&nbsp;            result.add(currentVertex);</b>
-&nbsp;
-<b class="nc">&nbsp;            for (V neighbor : g.adjVertices(currentVertex)) {</b>
-<b class="nc">&nbsp;                if (!visited[g.vertices().indexOf(neighbor)]) {</b>
-<b class="nc">&nbsp;                    visited[g.vertices().indexOf(neighbor)] = true;</b>
-<b class="nc">&nbsp;                    queue.add(neighbor);</b>
-&nbsp;                }
-&nbsp;            }
-&nbsp;        }
-<b class="nc">&nbsp;        return result;</b>
-&nbsp;
+<b class="nc">&nbsp;    public AuthenticationController() {</b>
+<b class="nc">&nbsp;        this.authenticationRepository = Repositories.getInstance().getAuthenticationRepository();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Performs depth-first search starting in a vertex
-&nbsp;     *
-&nbsp;     * @param g       Graph instance
-&nbsp;     * @param vOrig   vertex of graph g that will be the source of the search
-&nbsp;     * @param visited set of previously visited vertices
-&nbsp;     * @param qdfs    return LinkedList with vertices of depth-first search
-&nbsp;     */
-&nbsp;    private static &lt;V, E&gt; void DepthFirstSearch(Graph&lt;V, E&gt; g, V vOrig, boolean[] visited, LinkedList&lt;V&gt; qdfs) {
-<b class="nc">&nbsp;        if (visited[g.key(vOrig)]) {</b>
-&nbsp;            return;
-&nbsp;        }
-<b class="nc">&nbsp;        qdfs.add(vOrig);</b>
-<b class="nc">&nbsp;        visited[g.key(vOrig)] = true;</b>
-<b class="nc">&nbsp;        for (V vAdj : g.adjVertices(vOrig)) {</b>
-<b class="nc">&nbsp;            if (!visited[g.key(vAdj)]) {</b>
-<b class="nc">&nbsp;                DepthFirstSearch(g, vAdj, visited, qdfs);</b>
-&nbsp;            }
+&nbsp;    public boolean doLogin(String email, String pwd) {
+&nbsp;        try {
+<b class="nc">&nbsp;            return authenticationRepository.doLogin(email, pwd);</b>
+<b class="nc">&nbsp;        } catch (IllegalArgumentException ex) {</b>
+<b class="nc">&nbsp;            return false;</b>
 &nbsp;        }
 &nbsp;    }
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Performs depth-first search starting in a vertex
-&nbsp;     *
-&nbsp;     * @param g    Graph instance
-&nbsp;     * @param vert vertex of graph g that will be the source of the search
-&nbsp;     * @return a LinkedList with the vertices of depth-first search
-&nbsp;     */
-&nbsp;    public static &lt;V, E&gt; LinkedList&lt;V&gt; DepthFirstSearch(Graph&lt;V, E&gt; g, V vert) {
-<b class="nc">&nbsp;        if (!g.validVertex(vert)) {</b>
-<b class="nc">&nbsp;            return null;</b>
+&nbsp;    public List&lt;UserRoleDTO&gt; getUserRoles() {
+<b class="nc">&nbsp;        if (authenticationRepository.getCurrentUserSession().isLoggedIn()) {</b>
+<b class="nc">&nbsp;            return authenticationRepository.getCurrentUserSession().getUserRoles();</b>
 &nbsp;        }
-<b class="nc">&nbsp;        boolean[] visited = new boolean[g.numVertices()];</b>
-<b class="nc">&nbsp;        LinkedList&lt;V&gt; qdfs = new LinkedList&lt;&gt;();</b>
-<b class="nc">&nbsp;        DepthFirstSearch(g, vert, visited, qdfs);</b>
-<b class="nc">&nbsp;        return qdfs;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Returns all paths from vOrig to vDest
-&nbsp;     *
-&nbsp;     * @param g       Graph instance
-&nbsp;     * @param vOrig   Vertex that will be the source of the path
-&nbsp;     * @param vDest   Vertex that will be the end of the path
-&nbsp;     * @param visited set of discovered vertices
-&nbsp;     * @param path    stack with vertices of the current path (the path is in reverse order)
-&nbsp;     * @param paths   ArrayList with all the paths (in correct order)
-&nbsp;     */
-&nbsp;    private static &lt;V, E&gt; void allPaths(Graph&lt;V, E&gt; g, V vOrig, V vDest, boolean[] visited, LinkedList&lt;V&gt; path, ArrayList&lt;LinkedList&lt;V&gt;&gt; paths) {
-<b class="nc">&nbsp;        int vOrigKey = g.key(vOrig);</b>
-&nbsp;
-<b class="nc">&nbsp;        visited[vOrigKey] = true;</b>
-<b class="nc">&nbsp;        path.addLast(vOrig);</b>
-&nbsp;
-<b class="nc">&nbsp;        if (vOrig.equals(vDest)) {</b>
-<b class="nc">&nbsp;            paths.add(new LinkedList&lt;&gt;(path));</b>
-&nbsp;        } else {
-<b class="nc">&nbsp;            for (V neighbor : g.adjVertices(vOrig)) {</b>
-<b class="nc">&nbsp;                int neighborKey = g.key(neighbor);</b>
-<b class="nc">&nbsp;                if (!visited[neighborKey]) {</b>
-<b class="nc">&nbsp;                    allPaths(g, neighbor, vDest, visited, path, paths);</b>
-&nbsp;                }
-&nbsp;            }
-&nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        visited[vOrigKey] = false;</b>
-<b class="nc">&nbsp;        path.removeLast();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Returns all paths from vOrig to vDest
-&nbsp;     *
-&nbsp;     * @param g     Graph instance
-&nbsp;     * @param vOrig information of the Vertex origin
-&nbsp;     * @param vDest information of the Vertex destination
-&nbsp;     * @return paths ArrayList with all paths from vOrig to vDest
-&nbsp;     */
-&nbsp;    public static &lt;V, E&gt; ArrayList&lt;LinkedList&lt;V&gt;&gt; allPaths(Graph&lt;V, E&gt; g, V vOrig, V vDest) {
-&nbsp;
-<b class="nc">&nbsp;        if (g == null || !g.validVertex(vOrig) || !g.validVertex(vDest)) {</b>
-<b class="nc">&nbsp;            return null;</b>
-&nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        ArrayList&lt;LinkedList&lt;V&gt;&gt; paths = new ArrayList&lt;&gt;();</b>
-<b class="nc">&nbsp;        boolean[] visited = new boolean[g.numVertices()];</b>
-<b class="nc">&nbsp;        LinkedList&lt;V&gt; path = new LinkedList&lt;&gt;();</b>
-&nbsp;
-<b class="nc">&nbsp;        allPaths(g, vOrig, vDest, visited, path, paths);</b>
-&nbsp;
-<b class="nc">&nbsp;        return paths;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Computes shortest-path distance from a source vertex to all reachable
-&nbsp;     * vertices of a graph g with non-negative edge weights
-&nbsp;     * This implementation uses Dijkstra&#39;s algorithm
-&nbsp;     *
-&nbsp;     * @param g        Graph instance
-&nbsp;     * @param vOrig    Vertex that will be the source of the path
-&nbsp;     * @param visited  set of previously visited vertices
-&nbsp;     * @param pathKeys minimum path vertices keys
-&nbsp;     * @param dist     minimum distances
-&nbsp;     */
-&nbsp;    private static &lt;V, E&gt; void shortestPathDijkstra(Graph&lt;V, E&gt; g, V vOrig, Comparator&lt;E&gt; ce, BinaryOperator&lt;E&gt; sum, E zero, boolean[] visited, V[] pathKeys, E[] dist) {
-<b class="nc">&nbsp;        int vKey = g.key(vOrig);</b>
-<b class="nc">&nbsp;        dist[vKey] = zero;</b>
-<b class="nc">&nbsp;        pathKeys[vKey] = vOrig;</b>
-<b class="nc">&nbsp;        while (vOrig != null) {</b>
-<b class="nc">&nbsp;            vKey = g.key(vOrig);</b>
-<b class="nc">&nbsp;            visited[vKey] = true;</b>
-<b class="nc">&nbsp;            for (Edge&lt;V, E&gt; edge : g.outgoingEdges(vOrig)) {</b>
-<b class="nc">&nbsp;                int vKeyAdj = g.key(edge.getVDest());</b>
-<b class="nc">&nbsp;                if (!visited[vKeyAdj]) {</b>
-<b class="nc">&nbsp;                    E s = sum.apply(dist[vKey], edge.getWeight());</b>
-<b class="nc">&nbsp;                    if (dist[vKeyAdj] == null || ce.compare(dist[vKeyAdj], s) &gt; 0) {</b>
-<b class="nc">&nbsp;                        dist[vKeyAdj] = s;</b>
-<b class="nc">&nbsp;                        pathKeys[vKeyAdj] = vOrig;</b>
-&nbsp;                    }
-&nbsp;                }
-&nbsp;            }
-<b class="nc">&nbsp;            E minDist = null;</b>
-<b class="nc">&nbsp;            vOrig = null;</b>
-<b class="nc">&nbsp;            for (V vert : g.vertices()) {</b>
-<b class="nc">&nbsp;                int i = g.key(vert);</b>
-<b class="nc">&nbsp;                if (!visited[i] &amp;&amp; (dist[i] != null) &amp;&amp; ((minDist == null) || ce.compare(dist[i], minDist) &lt; 0)) {</b>
-<b class="nc">&nbsp;                    minDist = dist[i];</b>
-<b class="nc">&nbsp;                    vOrig = vert;</b>
-&nbsp;                }
-&nbsp;            }
-&nbsp;        }
-&nbsp;    }
-&nbsp;
-&nbsp;    private static &lt;V, E&gt; V getVertMinDist(Graph&lt;V, E&gt; g, E[] dist, boolean[] visited, Comparator&lt;E&gt; ce) {
-<b class="nc">&nbsp;        V minVertex = null;</b>
-<b class="nc">&nbsp;        E minValue = null;</b>
-&nbsp;
-<b class="nc">&nbsp;        for (V vertex : g.vertices()) {</b>
-<b class="nc">&nbsp;            if (!visited[g.key(vertex)] &amp;&amp; (minValue == null || ce.compare(dist[g.key(vertex)], minValue) &lt; 0)) {</b>
-<b class="nc">&nbsp;                minValue = dist[g.key(vertex)];</b>
-<b class="nc">&nbsp;                minVertex = vertex;</b>
-&nbsp;            }
-&nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        return minVertex;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Shortest-path between two vertices
-&nbsp;     *
-&nbsp;     * @param g         graph
-&nbsp;     * @param vOrig     origin vertex
-&nbsp;     * @param vDest     destination vertex
-&nbsp;     * @param ce        comparator between elements of type E
-&nbsp;     * @param sum       sum two elements of type E
-&nbsp;     * @param zero      neutral element of the sum in elements of type E
-&nbsp;     * @param shortPath returns the vertices which make the shortest path
-&nbsp;     * @return if vertices exist in the graph and are connected, true, false otherwise
-&nbsp;     */
-&nbsp;    @SuppressWarnings(&quot;unchecked&quot;)
-&nbsp;    public static &lt;V, E&gt; E shortestPath(Graph&lt;V, E&gt; g, V vOrig, V vDest, Comparator&lt;E&gt; ce, BinaryOperator&lt;E&gt; sum, E zero, LinkedList&lt;V&gt; shortPath) {
-&nbsp;
-<b class="nc">&nbsp;        if (!g.validVertex(vOrig) || !g.validVertex(vDest)) {</b>
-<b class="nc">&nbsp;            return null;</b>
-&nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        if (vOrig == vDest) {</b>
-<b class="nc">&nbsp;            shortPath.add(vOrig);</b>
-<b class="nc">&nbsp;            return zero;</b>
-&nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        shortPath.clear();</b>
-<b class="nc">&nbsp;        int numVerts = g.numVertices();</b>
-<b class="nc">&nbsp;        boolean[] visited = new boolean[numVerts];</b>
-<b class="nc">&nbsp;        V[] pathKeys = (V[]) new Object[numVerts];</b>
-<b class="nc">&nbsp;        E[] dist = (E[]) new Object[numVerts];</b>
-<b class="nc">&nbsp;        initializePathDist(numVerts, pathKeys, dist);</b>
-&nbsp;
-<b class="nc">&nbsp;        shortestPathDijkstra(g, vOrig, ce, sum, zero, visited, pathKeys, dist);</b>
-&nbsp;
-<b class="nc">&nbsp;        E lenghtPath = dist[g.key(vDest)];</b>
-<b class="nc">&nbsp;        if (lenghtPath != null) {</b>
-<b class="nc">&nbsp;            getPath(g, vOrig, vDest, pathKeys, shortPath);</b>
-<b class="nc">&nbsp;            if (lenghtPath.equals(zero)) {</b>
-<b class="nc">&nbsp;                return null;</b>
-&nbsp;            } else {
-<b class="nc">&nbsp;                return lenghtPath;</b>
-&nbsp;            }
-&nbsp;        }
-&nbsp;
 <b class="nc">&nbsp;        return null;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public static &lt;V, E&gt; void initializePathDist(int numVerts, V[] pathKeys, E[] dist) {
-<b class="nc">&nbsp;        for (int i = 0; i &lt; numVerts; i++) {</b>
-<b class="nc">&nbsp;            dist[i] = null;</b>
-<b class="nc">&nbsp;            pathKeys[i] = null;</b>
-&nbsp;        }
+&nbsp;    public void doLogout() {
+<b class="nc">&nbsp;        authenticationRepository.doLogout();</b>
 &nbsp;    }
-&nbsp;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Shortest-path between a vertex and all other vertices
-&nbsp;     *
-&nbsp;     * @param g     graph
-&nbsp;     * @param vOrig start vertex
-&nbsp;     * @param ce    comparator between elements of type E
-&nbsp;     * @param sum   sum two elements of type E
-&nbsp;     * @param zero  neutral element of the sum in elements of type E
-&nbsp;     * @param paths returns all the minimum paths
-&nbsp;     * @param dists returns the corresponding minimum distances
-&nbsp;     * @return if vOrig exists in the graph true, false otherwise
-&nbsp;     */
-&nbsp;    @SuppressWarnings(&quot;unchecked&quot;)
-&nbsp;    public static &lt;V, E&gt; boolean shortestPaths(Graph&lt;V, E&gt; g, V vOrig,
-&nbsp;                                               Comparator&lt;E&gt; ce, BinaryOperator&lt;E&gt; sum, E zero,
-&nbsp;                                               ArrayList&lt;LinkedList&lt;V&gt;&gt; paths, ArrayList&lt;E&gt; dists) {
-&nbsp;
-<b class="nc">&nbsp;        if (!g.validVertex(vOrig)) {</b>
-<b class="nc">&nbsp;            return false;</b>
-&nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        paths.clear();</b>
-<b class="nc">&nbsp;        dists.clear();</b>
-&nbsp;
-<b class="nc">&nbsp;        int numVerts = g.numVertices();</b>
-<b class="nc">&nbsp;        boolean[] visited = new boolean[numVerts];</b>
-&nbsp;
-<b class="nc">&nbsp;        V[] pathKeys = (V[]) new Object[numVerts];</b>
-&nbsp;
-<b class="nc">&nbsp;        E[] dist = (E[]) new Object[numVerts];</b>
-&nbsp;
-<b class="nc">&nbsp;        initializePathDist(numVerts, pathKeys, dist);</b>
-&nbsp;
-<b class="nc">&nbsp;        shortestPathDijkstra(g, vOrig, ce, sum, zero, visited, pathKeys, dist);</b>
-&nbsp;
-<b class="nc">&nbsp;        dists.clear();</b>
-<b class="nc">&nbsp;        paths.clear();</b>
-<b class="nc">&nbsp;        for (int i = 0; i &lt; numVerts; i++) {</b>
-<b class="nc">&nbsp;            paths.add(null);</b>
-<b class="nc">&nbsp;            dists.add(null);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        for (V vDst : g.vertices()) {</b>
-<b class="nc">&nbsp;            int i = g.key(vDst);</b>
-<b class="nc">&nbsp;            if (dist[i] != null) {</b>
-<b class="nc">&nbsp;                LinkedList&lt;V&gt; shortPath = new LinkedList&lt;&gt;();</b>
-<b class="nc">&nbsp;                getPath(g, vOrig, vDst, pathKeys, shortPath);</b>
-<b class="nc">&nbsp;                paths.set(i, shortPath);</b>
-<b class="nc">&nbsp;                dists.set(i, dist[i]);</b>
-&nbsp;            }
-&nbsp;        }
-<b class="nc">&nbsp;        return true;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Extracts from pathKeys the minimum path between voInf and vdInf
-&nbsp;     * The path is constructed from the end to the beginning
-&nbsp;     *
-&nbsp;     * @param g        Graph instance
-&nbsp;     * @param vOrig    information of the Vertex origin
-&nbsp;     * @param vDest    information of the Vertex destination
-&nbsp;     * @param pathKeys minimum path vertices keys
-&nbsp;     * @param path     stack with the minimum path (correct order)
-&nbsp;     */
-&nbsp;    private static &lt;V, E&gt; void getPath(Graph&lt;V, E&gt; g, V vOrig, V vDest, V[] pathKeys, LinkedList&lt;V&gt; path) {
-&nbsp;
-<b class="nc">&nbsp;        if (vOrig.equals(vDest)) {</b>
-<b class="nc">&nbsp;            path.push(vDest);</b>
-&nbsp;        } else {
-<b class="nc">&nbsp;            path.push(vDest);</b>
-<b class="nc">&nbsp;            int keyVDest = g.key(vDest);</b>
-<b class="nc">&nbsp;            vDest = pathKeys[keyVDest];</b>
-<b class="nc">&nbsp;            getPath(g, vOrig, vDest, pathKeys, path);</b>
-&nbsp;        }
-&nbsp;
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Calculates the minimum distance graph using Kruskal. Time complexity of O(E*log(E)) where E are the number of
-&nbsp;     * Edges of the graph.
-&nbsp;     * @param g   initial graph
-&nbsp;     * @param ce  comparator between elements of type E
-&nbsp;     * @return the minimum distance graph
-&nbsp;     */
-&nbsp;    public static &lt;V, E&gt; MatrixGraph&lt;V, E&gt; minDistGraph(Graph&lt;V, E&gt; g, Comparator&lt;E&gt; ce) {
-<b class="nc">&nbsp;        return kruskal(g, ce);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    private static &lt;V, E&gt; MatrixGraph&lt;V, E&gt; kruskal(Graph&lt;V, E&gt; graph, Comparator&lt;E&gt; ce) {
-&nbsp;        // Grafo Vazio
-<b class="nc">&nbsp;        MatrixGraph&lt;V, E&gt; graphToReturn = new MatrixGraph&lt;&gt;(graph.isDirected());</b>
-&nbsp;
-&nbsp;        // Obtém todas as arestas do gráfico e ordena-as por peso
-<b class="nc">&nbsp;        List&lt;Edge&lt;V, E&gt;&gt; edges = (List&lt;Edge&lt;V, E&gt;&gt;) graph.edges();</b>
-<b class="nc">&nbsp;        edges.sort((e1, e2) -&gt; ce.compare(e1.getWeight(), e2.getWeight()));</b>
-&nbsp;
-&nbsp;        // Cria um mapa para guardar os componentes conectados
-<b class="nc">&nbsp;        Map&lt;V, Set&lt;V&gt;&gt; components = new HashMap&lt;&gt;();</b>
-<b class="nc">&nbsp;        for (V v : graph.vertices()) {</b>
-<b class="nc">&nbsp;            Set&lt;V&gt; component = new HashSet&lt;&gt;();</b>
-<b class="nc">&nbsp;            component.add(v);</b>
-<b class="nc">&nbsp;            components.put(v, component);</b>
-&nbsp;        }
-&nbsp;
-&nbsp;        // Itera sobre as arestas ordenadas
-<b class="nc">&nbsp;        for (Edge&lt;V, E&gt; edge : edges) {</b>
-&nbsp;            // Verifica se os vértices estão em diferentes componentes conectados
-<b class="nc">&nbsp;            if (!components.get(edge.getVOrig()).equals(components.get(edge.getVDest()))) {</b>
-&nbsp;                // Se estiverem, adiciona a aresta à MST e funde os componentes
-<b class="nc">&nbsp;                graphToReturn.addEdge(edge.getVOrig(), edge.getVDest(), edge.getWeight());</b>
-<b class="nc">&nbsp;                Set&lt;V&gt; mergedComponent = new HashSet&lt;&gt;();</b>
-<b class="nc">&nbsp;                mergedComponent.addAll(components.get(edge.getVOrig()));</b>
-<b class="nc">&nbsp;                mergedComponent.addAll(components.get(edge.getVDest()));</b>
-<b class="nc">&nbsp;                for (V v : mergedComponent) {</b>
-<b class="nc">&nbsp;                    components.put(v, mergedComponent);</b>
-&nbsp;                }
-&nbsp;            }
-&nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        return graphToReturn;</b>
-&nbsp;    }
-&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -478,7 +158,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-12 20:04</div>
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
 </div>
 </body>
 </html>
