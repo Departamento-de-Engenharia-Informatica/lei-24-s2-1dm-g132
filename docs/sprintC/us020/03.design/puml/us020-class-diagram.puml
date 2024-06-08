@@ -3,13 +3,21 @@ skinparam classAttributeIconSize 0
 
 class RegisterGreenSpaceController {
      + RegisterGreenSpaceController(GreenSpaceRepository)
-        + GreenSpace(name, type, area, adress)
+        + GreenSpace(name, type, area, adress,email)
 
 }
 
 
 class RegisterGreenSpaceUI {
-
+}
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+class UserSession
+{
+    + getUserEmail()
 }
 
 class GreenSpace
@@ -18,7 +26,8 @@ class GreenSpace
     - String Type
     - int area
     - int adress
-    + GreenSpace(name, type, area, adress)
+    - Email email
+    + GreenSpace(name, type, area, adress,email)
 }
 class Repositories {
     - Repositories()
@@ -39,7 +48,8 @@ class GreenSpaceDTO{
     - String Type
     - int area
     - int adress
-    + GreenSpaceDTO(name, type, area, adress)
+    - Email email
+    + GreenSpaceDTO(name, type, area, adress, email)
 }
 
 RegisterGreenSpaceUI ..> RegisterGreenSpaceController
@@ -50,7 +60,7 @@ RegisterGreenSpaceController ..> Repositories : repositories
 GreenSpaceMapper ..> GreenSpace
 GreenSpaceMapper ..> GreenSpaceDTO
 GreenSpaceRepository ..> GreenSpaceMapper : greenSpaceMapper
-
-'RegisterGreenSpaceController ..> GreenSpace : greenSpace
-
+RegisterGreenSpaceController ..> ApplicationSession
+ApplicationSession ..> UserSession : userSession
+ApplicationSession ..> ApplicationSession :getInstance
 @enduml
