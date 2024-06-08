@@ -23,7 +23,7 @@ public class AgendaTest {
     }
 
     @Test
-    void ensureGetToDoListEntriesWorks() {
+    void ensureGetAgendaEntriesWorks() {
         Agenda agenda = new Agenda();
 
         GreenSpace greenSpace1 = new GreenSpace("Jardim do morro", "Ponte D. Luís", 6, "garden", "gsm1@this.app");

@@ -24,6 +24,36 @@
         GSTask gsTask = new GSTask("Pruning Trees", "Prune the trees in the frontyard.", "Low", 2, greenSpace);
     }
 
+**Test 3:**
+
+	@Test
+    void setInvalidTitle()
+    {
+        GreenSpace greenSpace = new GreenSpace("Parque da águia", "Rua de Trás, 3666-389, Matosinhos", 5, "MediumSizedPark", "gsm1@this.app");
+        assertThrows(IllegalArgumentException.class,
+                () -> new GSTask("Pruning Trees***", "Prune the trees in the frontyard.", "Low", 2, greenSpace));
+    }
+
+**Test 4:**
+
+	@Test
+    void setInvalidDegreeOfUrgency()
+    {
+        GreenSpace greenSpace = new GreenSpace("Parque da águia", "Rua de Trás, 3666-389, Matosinhos", 5, "MediumSizedPark", "gsm1@this.app");
+        assertThrows(IllegalArgumentException.class,
+                () -> new GSTask("Pruning Trees", "Prune the trees in the frontyard.", "Lowi", 2, greenSpace));
+    }
+
+**Test 5:**
+
+	@Test
+    void setInvalidExpectedDuration()
+    {
+        GreenSpace greenSpace = new GreenSpace("Parque da águia", "Rua de Trás, 3666-389, Matosinhos", 5, "MediumSizedPark", "gsm1@this.app");
+        assertThrows(IllegalArgumentException.class,
+                () -> new GSTask("Pruning Trees", "Prune the trees in the frontyard.", "Low", -1, greenSpace));
+    }
+
 
 ## 5. Construction (Implementation)
 
@@ -174,11 +204,51 @@ this.status = GSTaskStatus.Pending;
 }
 ```
 
+```java
+private void setTitle(String title)
+{
+if (title.isBlank())
+{
+throw new IllegalArgumentException("Title is empty. Please enter a task title.");
+}
+
+        if (title.matches("[a-zA-Z ]*" )) {
+            this.title = title.trim();
+        } else {
+            throw new IllegalArgumentException("Title cannot contain special characters.");
+        }
+    }
+```
+
+```java
+private void setDegreeOfUrgency(String degreeOfUrgency)
+{
+if(degreeOfUrgency.equalsIgnoreCase(DegreeOfUrgency.Low.toString()))
+this.degreeOfUrgency = DegreeOfUrgency.Low;
+else if(degreeOfUrgency.equalsIgnoreCase(DegreeOfUrgency.Medium.toString()))
+this.degreeOfUrgency = DegreeOfUrgency.Medium;
+else if(degreeOfUrgency.equalsIgnoreCase(DegreeOfUrgency.High.toString()))
+this.degreeOfUrgency = DegreeOfUrgency.High;
+else throw new IllegalArgumentException("Invalid degree of urgency.");
+}
+```
+
+```java
+private void setExpectedDuration(int expectedDuration)
+{
+if (expectedDuration > 0) {
+this.expectedDuration = expectedDuration;
+} else {
+throw new IllegalArgumentException("Expected duration must be a positive integer.");
+}
+}
+```
+
 ## 6. Integration and Demo 
 
 * A new option on the GSM menu options was added.
 
-* For demo purposes some green space tasks are bootstrapped while system starts.
+* For demo purposes some green space tasks and green spaces are bootstrapped while system starts.
 
 
 ## 7. Observations
