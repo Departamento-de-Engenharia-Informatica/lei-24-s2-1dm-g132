@@ -12,20 +12,44 @@ import java.util.Properties;
  */
 public class GSTask implements Serializable {
 
+    /**
+     * The title of the task.
+     */
     private String title;
 
+    /**
+     * The description of the task.
+     */
     private String description;
 
+    /**
+     * The degree of urgency of the task (Low, Medium, High).
+     */
     private DegreeOfUrgency degreeOfUrgency;
 
+    /**
+     * The expected duration of the task in working hours.
+     */
     private int expectedDuration;
 
+    /**
+     * The GreenSpace to which the task is assigned.
+     */
     private GreenSpace greenSpace;
 
+    /**
+     * The status of the GSTask (Pending, Processed, Planned, Postponed, Canceled, Done).
+     */
     private GSTaskStatus status;
 
+    /**
+     * The starting date of the task.
+     */
     private Calendar startingDate;
 
+    /**
+     * The team assigned to the task.
+     */
     private Team assignedTeam;
 
     /**
