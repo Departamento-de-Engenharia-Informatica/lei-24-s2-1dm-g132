@@ -15,7 +15,7 @@ class AssignTeamUI
 
 }
 }
-
+Package Core{
 Package Controller {
 class AssignTeamController
 {
@@ -162,7 +162,7 @@ class TeamDto
 }
 }
 }
-
+}
 Package ExternalModules{
 class EmailThroughGmail
 {

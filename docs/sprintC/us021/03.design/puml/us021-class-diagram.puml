@@ -16,6 +16,7 @@ package UI {
     }
 }
 
+Package Core{
 package Controller {
     class AddEntryToDoController
     {
@@ -135,6 +136,7 @@ package DTO {
         + getDescription()
         + getDegreeOfUrgency()
         + getExpectedDuration()
+    }
     }
     }
 }

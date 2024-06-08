@@ -16,6 +16,7 @@ class AddEntryAgendaUI
 }
 }
 
+Package Core{
 Package Controller{
 class AddEntryAgendaController
 {
@@ -133,6 +134,7 @@ class TaskDto
     - int expectedDuration
     - Calendar startingDate
     + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace, startingDate)
+}
 }
 }
 }
