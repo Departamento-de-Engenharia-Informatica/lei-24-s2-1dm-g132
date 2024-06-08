@@ -38,7 +38,7 @@ As a Collaborator, I want to record the completion of a task.
 
 ### 1.4. Found out Dependencies
 
-* This US depends on the existence of a task attributed to the collaborator
+* There is a dependency on "US022 - Add a new entry in the agenda" as there must be at least one entry to be able to postpone it.
 
 ### 1.5 Input and Output Data
 
@@ -51,10 +51,11 @@ As a Collaborator, I want to record the completion of a task.
  
 **Output Data:**
 
+* List of skills
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us029-system-sequence-diagram.svg)
+![System Sequence Diagram](svg/us029-system-sequence-diagram.svg)
 
-### 1.7 Other Relevant Remarks
+

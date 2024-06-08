@@ -15,9 +15,9 @@ activate Employee
     Employee -> System: selects "Record the completion of a task" option
     activate System
 
-         System --> Employee: asks to choose a skill
+         System --> Employee: asks to choose a task
             deactivate System
-                Employee -> System: chooses skill from list
+                Employee -> System: chooses task from list
                     activate System
                        System --> Employee: asks for confirmation of completion of task
                                 deactivate System

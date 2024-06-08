@@ -4,24 +4,26 @@
 
 **Test 1:** Check that it is possible to complete an entry in the Agenda.
 
-	@Test
+    @Test
     public void ensureEntryCanBeCompleted() {
     Agenda agenda = new Agenda();
-    Task task = new Task("Task 1", "Description", "Informal", "Technical", 10, 100.0, new TaskCategory(), new Employee());
+    Task task = new Task("Ref001", "Description", "Informal", "Technical", 10, 100.0, new TaskCategory(), new Employee());
     agenda.addTask(task);
     agenda.completeTask(task);
     assertTrue(task.isCompleted());
     }
-	
 
-**Test 2:** Check that the agenda updates appropriately when a task is completed.
 
-	@Test
-    public void ensureAgendaUpdatesOnCompletion() {
+
+**Test 2:** Check that completing a task updates the completion status even if the task was already marked completed.
+
+     @Test
+    public void ensureCompletedTaskRemainsCompleted() {
     Agenda agenda = new Agenda();
-    Task task = new Task("Task 1", "Description", "Informal", "Technical", 10, 100.0, new TaskCategory(), new Employee());
+    Task task = new Task("Ref003", "Description", "Informal", "Technical", 10, 100.0, new TaskCategory(), new Employee());
     agenda.addTask(task);
-    agenda.completeTask(task);
+    agenda.completeTask(task); // First completion
+    agenda.completeTask(task); // Second completion
     assertTrue(task.isCompleted());
     }
 
@@ -35,7 +37,7 @@
 public Task completeTask(String taskReference) {
     Employee employee = getEmployeeFromSession();
     Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
-    Agenda agenda = organization.getAgenda();
+    Agenda agenda = new Agenda();
 
     Task task = agenda.getTaskByReference(taskReference)
             .orElseThrow(() -> new NoSuchElementException("Task with reference " + taskReference + " not found"));
@@ -45,15 +47,6 @@ public Task completeTask(String taskReference) {
     return task;
 }
 
-private Employee getEmployeeFromSession() {
-    // Method to get the current logged-in employee
-    // Implement according to your authentication system
-}
-
-private OrganizationRepository getOrganizationRepository() {
-    // Method to get the organization repository
-    // Implement according to your system structure
-}
 ```
 
 ### Class Agenda

@@ -1,0 +1,113 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+       title US029 - Record the completion of a task.
+
+autonumber
+
+
+participant ":CompleteTaskController" as CTRL
+participant "taskDto\n:TaskDto" as TaskDto
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSION
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "taskMapper\n:TaskMapper" as TaskMapper
+participant "task\n:Task" as task
+participant "taskList\n:List<Task>" as taskList
+participant "CollaboratorTaskList\n:List<Task>" as CollaboratorTasksList
+
+
+
+              -> CTRL : getTasks()
+             activate CTRL
+
+                  CTRL -> _APP: getInstance()
+                                      activate _APP
+                                          _APP -> CTRL: appSession
+                                      deactivate _APP
+
+                                      CTRL -> APP: getCurrentSession()
+                                      activate APP
+
+                                          APP --> CTRL: currentSession
+                                      deactivate APP
+
+                                      CTRL -> SESSION: email = getUserEmail()
+                                      activate SESSION
+
+                                          SESSION --> CTRL: email
+                                      deactivate SESSION
+
+                                  CTRL -> RepositorySingleton : getInstance()
+                                      activate RepositorySingleton
+
+                                          RepositorySingleton --> CTRL: repositories
+                                      deactivate RepositorySingleton
+
+                                      CTRL -> PLAT : getTasksRepository()
+                                      activate PLAT
+
+                                          PLAT --> CTRL : TaskRepository
+                                      deactivate PLAT
+
+                                       CTRL -> TaskRepository : getTasks(email)
+                                                          activate TaskRepository
+
+                                                              TaskRepository --> CollaboratorTasksList** : create()
+
+                                                              loop for each known Task
+                                                                  TaskRepository -> taskList : task = get(i)
+                                                                  activate taskList
+                                                                  deactivate taskList
+
+                                                                  TaskRepository -> task : Collaborator = hasUserEmail(email)
+                                                                  activate task
+                                                                  deactivate task
+
+                                                                  opt hasUserEmail
+                                                                      TaskRepository -> CollaboratorTasksList : add(task)
+                                                                      activate CollaboratorTasksList
+                                                                      deactivate CollaboratorTasksList
+                                                                  end opt
+
+                                                              end loop
+
+                                          TaskRepository --> CTRL : CollaboratorTasksListDto
+                                      deactivate TaskRepository
+
+                                      CTRL -> TaskMapper** : toDTO(CollaboratorTasksListDto)
+                                      activate TaskMapper
+
+                                          TaskMapper --> CollaboratorTasksListDto** : create()
+
+                                          loop for each object in CollaboratorTasksListDto
+                                              TaskMapper -> CollaboratorTasksList : obj = get(i)
+                                              activate CollaboratorTasksList
+
+                                                  deactivate CollaboratorTasksList
+
+                                              TaskMapper -> TaskMapper : objDto = toDTO(obj)
+                                              activate TaskMapper
+
+                                                  TaskMapper -> TaskDTO** :create(...)
+                                                  deactivate TaskMapper
+
+                                              TaskMapper -> CollaboratorTasksListDto : add(objDto)
+                                              activate CollaboratorTasksListDto
+
+                                                  deactivate CollaboratorTasksListDto
+
+                                              end loop
+
+                                          TaskMapper --> CTRL : CollaboratorTasksListDto
+                                          deactivate TaskMapper
+
+                     <-- CTRL : CollaboratorTasksListDto
+                     deactivate CTRL
+
+@enduml

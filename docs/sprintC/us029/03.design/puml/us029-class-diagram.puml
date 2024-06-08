@@ -12,12 +12,11 @@
 
        title US029 - Record the completion of a task.
 
-       class ChangeStatusUI {
+       class CompleteTaskUI {
        }
 
-       class ChangeStatusController {
+       class CompleteTaskController {
            + completeTaskController(taskRepository, greenSpaceRepository)
-           + getGreenSpaces()
            + List<GreenSpaceDTO> getGreenSpaces()
            + List<TaskDTO> getTasksByGreenSpace(greenSpaceDTO)
            + completeTask(taskDTO, newStatus)
@@ -85,10 +84,10 @@
            address
        }
 
-       ChangeStatusUI ..> ChangeStatusController
-       ChangeStatusController ...> Repositories: repositories
-       ChangeStatusController ..> TaskRepository: taskRepository
-       ChangeStatusController ..> GreenSpaceRepository: greenSpaceRepository
+       CompleteTaskUI ..> CompleteTaskController
+       CompleteTaskController ...> Repositories: repositories
+       CompleteTaskController ..> TaskRepository: taskRepository
+       CompleteTaskController ..> GreenSpaceRepository: greenSpaceRepository
 
        Repositories -> Repositories : instance
        Repositories ---> "1" TaskRepository: taskRepository

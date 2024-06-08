@@ -8,8 +8,8 @@ skinparam shadowing false
 autonumber
 
 actor "Collaborator" as Employee
-participant ":ChangeStatusUI" as UI
-participant ":ChangeStatusController" as CTRL
+participant ":CompleteTaskUI" as UI
+participant ":CompleteTaskController" as CTRL
 participant "taskRepository\n:TaskRepository" as TaskRepository
 
 activate Employee
@@ -17,39 +17,17 @@ activate Employee
     Employee -> UI : asks to change task status to complete
     activate UI
 
-    UI -> CTRL** : create
+  UI --> CTRL** : create()
+    UI -> CTRL : getTasks()
+                activate CTRL
+ ref over CTRL
+        Get Tasks by email
+    end ref
 
-
-
-
-
-
-
-
-
-    UI -> CTRL : getEmailCollaborator()
-    activate CTRL
-
-    ref over CTRL
-        Get Email
-    end
-
-    CTRL --> UI : email
-    deactivate CTRL
-
-    UI -> CTRL : getTasksByCollaborator(email)
-    activate CTRL
-
-    ref over CTRL
-         Get Tasks by Collaborator
-    end
-
-    CTRL --> UI : tasksByCollaborator
-    deactivate CTRL
-
-
-    UI --> Employee : shows list of own tasks
-    deactivate UI
+                        CTRL --> UI : CollaboratorTasksListDto
+                        deactivate CTRL
+       UI --> Employee : shows list of own tasks
+       deactivate UI
 
     Employee -> UI : selects a task
     activate UI
@@ -57,28 +35,29 @@ activate Employee
     UI --> Employee : requests confirmation of completion of task
     deactivate UI
 
-    Employee -> UI : confirms
-    activate UI
+   Employee -> UI : confirms
+       activate UI
+    UI -> CTRL : completeTask(taskDTO, newStatus)
+       activate CTRL
 
-    UI -> CTRL :            completeTask(taskDTO, newStatusnewStatus)
+       CTRL --> CTRL : validateNewStatus(newStatus)
+       CTRL -> TaskRepository :  completeTask(taskDTO, newStatus)
+       activate TaskRepository
 
-    activate CTRL
+       TaskRepository -> TaskDTO :  completeTask(taskDTO, newStatus)
+       activate TaskDTO
 
-    CTRL --> CTRL : validateNewStatus(newStatus)
-    CTRL -> TaskRepository :            completeTask(taskDTO, newStatus)
+       TaskDTO --> TaskRepository : taskDTO
+       deactivate TaskDTO
 
-    activate TaskRepository
+       TaskRepository --> CTRL : taskDTO
+       deactivate TaskRepository
 
-    TaskRepository -> TaskDto : status = newStatus
-    activate TaskDto
-    deactivate TaskDto
+       CTRL --> UI : taskDTO
+       deactivate CTRL
 
-    deactivate TaskRepository
-    deactivate CTRL
+       UI --> Employee : displays operation success
+       deactivate UI
 
-
-    UI --> Employee : displays operation success
-    deactivate UI
-
-deactivate Employee
+   deactivate Employee
 @enduml
