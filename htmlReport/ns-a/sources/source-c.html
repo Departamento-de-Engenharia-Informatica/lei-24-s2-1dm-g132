@@ -1,0 +1,216 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > ToDoList</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: ToDoList (pt.ipp.isep.dei.esoft.project.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ToDoList</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (6/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.repository;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.GSTask;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.GSTaskMapper;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.dto.GSTaskDTO;
+&nbsp;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;/**
+&nbsp; * Represents a ToDoList containing Green Space Tasks (GSTasks).
+&nbsp; */
+&nbsp;public class ToDoList implements Serializable {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * A list of GSTasks which consists of all the entries in the ToDoList.
+&nbsp;     */
+&nbsp;    private final List&lt;GSTask&gt; entriesList;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * A list of GSTasks representing the associated ToDo entries.
+&nbsp;     */
+&nbsp;    private List&lt;GSTask&gt; associatedToDoEntriesList;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new ToDoList object.
+&nbsp;     */
+<b class="fc">&nbsp;    public ToDoList() {</b>
+<b class="fc">&nbsp;        entriesList = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a new GSTask entry to the ToDoList based on the provided task DTO and selected green space.
+&nbsp;     *
+&nbsp;     * @param taskDTO           The GSTaskDTO representing the task to be added.
+&nbsp;     * @param selectedGreenSpace The GreenSpace associated with the task.
+&nbsp;     * @return An Optional containing the newly added GSTask if successful, otherwise empty.
+&nbsp;     */
+&nbsp;    public Optional&lt;GSTask&gt; addEntry(GSTaskDTO taskDTO, GreenSpace selectedGreenSpace)
+&nbsp;    {
+<b class="fc">&nbsp;        Optional&lt;GSTask&gt; optionalValue = Optional.empty();</b>
+&nbsp;
+<b class="fc">&nbsp;        GSTask task =  GSTaskMapper.toModel(taskDTO, selectedGreenSpace);</b>
+&nbsp;
+<b class="pc">&nbsp;        if(addTask(task))</b>
+&nbsp;        {
+<b class="fc">&nbsp;            optionalValue = Optional.of(task);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return optionalValue;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a GSTask to the ToDoList.
+&nbsp;     *
+&nbsp;     * @param task The GSTask to be added.
+&nbsp;     * @return True if the task was successfully added, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean addTask(GSTask task)
+&nbsp;    {
+<b class="fc">&nbsp;        return entriesList.add(task);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a list of GSTasks in the ToDoList that are pending and associated with the given email.
+&nbsp;     *
+&nbsp;     * @param email The email of the user requesting the ToDoList.
+&nbsp;     * @return A list of GSTask objects.
+&nbsp;     */
+&nbsp;    public List&lt;GSTask&gt; getToDoListEntries(String email)
+&nbsp;    {
+<b class="fc">&nbsp;        associatedToDoEntriesList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for(GSTask gSTask : entriesList)</b>
+&nbsp;        {
+<b class="pc">&nbsp;            if(gSTask.isPending() &amp;&amp; gSTask.hasUserEmail(email))</b>
+&nbsp;            {
+<b class="fc">&nbsp;                associatedToDoEntriesList.add(gSTask);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return associatedToDoEntriesList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a selected GSTask from the associated ToDo entries list by its index.
+&nbsp;     * Marks the task as processed.
+&nbsp;     *
+&nbsp;     * @param i The index of the selected task.
+&nbsp;     * @return A cloned instance of the selected GSTask.
+&nbsp;     */
+&nbsp;    public GSTask getSelectedTask(int i)
+&nbsp;    {
+<b class="fc">&nbsp;        GSTask selectedTask = associatedToDoEntriesList.get(i);</b>
+<b class="fc">&nbsp;        selectedTask.setProcessed();</b>
+<b class="fc">&nbsp;        return selectedTask.clone();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

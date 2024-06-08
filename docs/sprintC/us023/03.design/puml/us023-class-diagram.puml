@@ -70,6 +70,15 @@ class TaskDto
     + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace, startingDate)
 }
 
+class GreenSpaceDto
+{
+    - String name
+    - String type
+    - int area
+    - String address
+    + GreenSpaceDto(name, type, area, address)
+}
+
 class Task
 {
     - String title
@@ -178,10 +187,11 @@ TaskMapper ...> TaskDto
 TaskMapper ..> Task
 
 Task "*" --> "1" GreenSpace
-TaskDto "*" --> "1" GreenSpace
+TaskDto "*" --> "1" GreenSpaceDto
 
 TeamMapper ..> TeamDto
 TeamMapper ..> Team
+TaskMapper ..> GreenSpaceDto
 
 Task "*" --> "0..1" Team
 

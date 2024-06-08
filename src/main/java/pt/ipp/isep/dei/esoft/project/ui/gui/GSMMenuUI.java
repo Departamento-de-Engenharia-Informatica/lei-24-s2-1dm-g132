@@ -15,15 +15,29 @@ import pt.ipp.isep.dei.esoft.project.application.controller.authorization.Authen
 
 import java.io.IOException;
 
+/**
+ * Controller class for the Green Spaces Manager (GSM) menu user interface.
+ */
 public class GSMMenuUI {
 
+    /**
+     * The authentication controller for managing user authentication and session.
+     */
     private final AuthenticationController ctrl;
 
+    /**
+     * Constructor for GSMMenuUI class.
+     */
     public GSMMenuUI()
     {
         ctrl = new AuthenticationController();
     }
 
+    /**
+     * Logs out the user from the system and returns to the main menu.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void logout(ActionEvent actionEvent) {
         try{
@@ -56,6 +70,11 @@ public class GSMMenuUI {
         }
     }
 
+    /**
+     * Opens the Register Green Space user interface.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void openRegisterGreenSpace(ActionEvent actionEvent) {
         try{
@@ -87,6 +106,11 @@ public class GSMMenuUI {
         }
     }
 
+    /**
+     * Opens the Add Entry to To-Do List user interface.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void openAddEntryToDo(ActionEvent actionEvent) {
         try{
@@ -118,6 +142,11 @@ public class GSMMenuUI {
         }
     }
 
+    /**
+     * Opens the Add Entry to Agenda user interface.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void openAddEntryAgenda(ActionEvent actionEvent) {
         try{
@@ -149,6 +178,11 @@ public class GSMMenuUI {
         }
     }
 
+    /**
+     * Opens the Assign Team to Agenda Entry user interface.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void openAssignTeam(ActionEvent actionEvent) {
         try{

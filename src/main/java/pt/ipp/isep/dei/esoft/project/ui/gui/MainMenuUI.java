@@ -14,8 +14,16 @@ import javafx.stage.WindowEvent;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 
+/**
+ * Controller class for the Main Menu UI.
+ */
 public class MainMenuUI {
 
+    /**
+     * Opens the Developer Team UI when the corresponding button is clicked.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void openDevTeamUI(ActionEvent actionEvent) {
         try{
@@ -47,7 +55,11 @@ public class MainMenuUI {
         }
     }
 
-
+    /**
+     * Opens the Login UI when the corresponding button is clicked.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void openLoginUI(ActionEvent actionEvent) {
         try{

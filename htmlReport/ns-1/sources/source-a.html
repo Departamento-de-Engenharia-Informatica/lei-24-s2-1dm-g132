@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > Vehicle</title>
+  <title>Coverage Report > ListGreenSpacesController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.application.controller</a>
 </div>
 
-<h1>Coverage Summary for Class: Vehicle (pt.ipp.isep.dei.esoft.project.domain)</h1>
+<h1>Coverage Summary for Class: ListGreenSpacesController (pt.ipp.isep.dei.esoft.project.application.controller)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -45,7 +45,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">Vehicle</td>
+  <td class="name">ListGreenSpacesController</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -59,7 +59,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/23)
+    (0/3)
   </span>
 </td>
 <td class="coverageStat">
@@ -67,7 +67,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/8)
+    (0/2)
   </span>
 </td>
 <td class="coverageStat">
@@ -75,7 +75,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/38)
+    (0/6)
   </span>
 </td>
 </tr>
@@ -87,131 +87,33 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.application.controller;
 &nbsp;
-&nbsp;import java.util.Date;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.dto.GreenSpaceDTO;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 &nbsp;
-&nbsp;public class Vehicle {
-&nbsp;    public String Plate;
-&nbsp;    public String Model;
-&nbsp;    public String Brand;
-&nbsp;    public String Type;
-&nbsp;    public int Tare;
-&nbsp;    public int GrossWeight;
-&nbsp;    int CurrentKm;
-&nbsp;    public Date AcquisitionDate;
-&nbsp;    public Date RegistredDate;
-&nbsp;    public int MaintenanceCheckupFrequency;
+&nbsp;import java.util.List;
 &nbsp;
-<b class="nc">&nbsp;    public Vehicle(String Plate, String Model, String Brand, String Type, int Tare, int GrossWeight, int CurrentKm, Date AcquisitionDate, Date RegistredDate, int MaintenanceCheckupFrequency) {</b>
-<b class="nc">&nbsp;        this.Plate = Plate;</b>
-<b class="nc">&nbsp;        this.Model = Model;</b>
-<b class="nc">&nbsp;        this.Brand = Brand;</b>
-<b class="nc">&nbsp;        this.Type = Type;</b>
-<b class="nc">&nbsp;        this.Tare = Tare;</b>
-<b class="nc">&nbsp;        this.GrossWeight = GrossWeight;</b>
-<b class="nc">&nbsp;        this.CurrentKm = CurrentKm;</b>
-<b class="nc">&nbsp;        this.AcquisitionDate = AcquisitionDate;</b>
-<b class="nc">&nbsp;        this.RegistredDate = RegistredDate;</b>
-<b class="nc">&nbsp;        this.MaintenanceCheckupFrequency = MaintenanceCheckupFrequency;</b>
+&nbsp;public class ListGreenSpacesController {
+&nbsp;
+&nbsp;    private GreenSpaceRepository greenSpaceRepository;
+&nbsp;
+<b class="nc">&nbsp;    private ListGreenSpacesController() {</b>
+<b class="nc">&nbsp;        this.greenSpaceRepository = getGreenSpaceRepository();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public Date getAcquisitionDate() {
-<b class="nc">&nbsp;        return AcquisitionDate;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public int getCurrentKm() {
-<b class="nc">&nbsp;        return CurrentKm;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public int getGrossWeight() {
-<b class="nc">&nbsp;        return GrossWeight;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public Date getRegistredDate() {
-<b class="nc">&nbsp;        return RegistredDate;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public int getTare() {
-<b class="nc">&nbsp;        return Tare;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public String getBrand() {
-<b class="nc">&nbsp;        return Brand;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public String getModel() {
-<b class="nc">&nbsp;        return Model;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public String getPlate() {
-<b class="nc">&nbsp;        return Plate;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public String getType() {
-<b class="nc">&nbsp;        return Type;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setAcquisitionDate(Date acquisitionDate) {
-<b class="nc">&nbsp;        AcquisitionDate = acquisitionDate;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public int getMaintenanceCheckupFrequency() {
-<b class="nc">&nbsp;        return MaintenanceCheckupFrequency;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setBrand(String brand) {
-<b class="nc">&nbsp;        Brand = brand;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setCurrentKm(int currentKm) {
-<b class="nc">&nbsp;        CurrentKm = currentKm;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setGrossWeight(int grossWeight) {
-<b class="nc">&nbsp;        GrossWeight = grossWeight;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setMaintenanceCheckupFrequency(int maintenanceCheckupFrequency) {
-<b class="nc">&nbsp;        MaintenanceCheckupFrequency = maintenanceCheckupFrequency;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setModel(String model) {
-<b class="nc">&nbsp;        Model = model;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setPlate(String plate) {
-<b class="nc">&nbsp;        Plate = plate;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setRegistredDate(Date registredDate) {
-<b class="nc">&nbsp;        RegistredDate = registredDate;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setTare(int tare) {
-<b class="nc">&nbsp;        Tare = tare;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public void setType(String type) {
-<b class="nc">&nbsp;        Type = type;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    public Vehicle clone() {
-<b class="nc">&nbsp;        return new Vehicle(this.Plate, this.Model, this.Brand, this.Type, this.Tare, this.GrossWeight, this.CurrentKm, this.AcquisitionDate, this.RegistredDate, this.MaintenanceCheckupFrequency);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @Override
-&nbsp;    public boolean equals(Object o) {
-<b class="nc">&nbsp;        if (this == o) {</b>
-<b class="nc">&nbsp;            return true;</b>
+&nbsp;    private GreenSpaceRepository getGreenSpaceRepository() {
+<b class="nc">&nbsp;        if (greenSpaceRepository == null) {</b>
+<b class="nc">&nbsp;            greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();</b>
 &nbsp;        }
-<b class="nc">&nbsp;        if (o == null || getClass() != o.getClass()) {</b>
-<b class="nc">&nbsp;            return false;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        Vehicle vehicle = (Vehicle) o;</b>
-<b class="nc">&nbsp;        return Plate == vehicle.Plate;</b>
+<b class="nc">&nbsp;        return greenSpaceRepository;</b>
 &nbsp;    }
 &nbsp;
+&nbsp;
+&nbsp;    public List&lt;GreenSpaceDTO&gt; greenSpaces() {
+<b class="nc">&nbsp;        return greenSpaceRepository.getGreenSpaces();</b>
+&nbsp;    }
 &nbsp;}
 </code>
 </pre>
@@ -236,7 +138,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-12 20:04</div>
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
 </div>
 </body>
 </html>

@@ -22,30 +22,71 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Add Entry to To-Do List user interface.
+ */
 public class AddEntryToDoUI implements Initializable {
 
+    /**
+     * The controller responsible for managing the addition of tasks to the To-Do list.
+     */
     private final AddEntryToDoController ctrl;
 
+    /**
+     * Label to display information about the selected green space.
+     */
     @FXML
     private Label greenSpaceInfo;
+
+    /**
+     * Text area for entering the description of the task.
+     */
     @FXML
     private TextArea description;
+
+    /**
+     * Text field for entering the title of the task.
+     */
     @FXML
     private TextField title;
+
+    /**
+     * Choice box for selecting the degree of urgency of the task.
+     */
     @FXML
     private ChoiceBox<String> degreeOfUrgency;
+
+    /**
+     * Choice box for selecting the green space associated with the task.
+     */
     @FXML
     private ChoiceBox<String> greenSpace;
+
+    /**
+     * Text field for entering the expected duration of the task.
+     */
     @FXML
     private TextField duration;
 
+    /**
+     * Index of the selected green space in the choice box.
+     */
     private int selectedGreenSpaceIndex = -1;
 
+    /**
+     * Constructor for the AddEntryToDoUI class.
+     * Initializes the controller.
+     */
     public AddEntryToDoUI ()
     {
         ctrl = new AddEntryToDoController();
     }
 
+    /**
+     * Handles the action event for canceling the task entry and returning to the GSM menu.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void cancel(ActionEvent actionEvent) {
         try{
@@ -77,6 +118,11 @@ public class AddEntryToDoUI implements Initializable {
         }
     }
 
+    /**
+     * Handles the action event for submitting the task entry.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void submit(ActionEvent actionEvent) {
         try {
@@ -141,6 +187,12 @@ public class AddEntryToDoUI implements Initializable {
         }
     }
 
+    /**
+     * Initializes the choice boxes and populates the green space choice box with available options.
+     *
+     * @param url            The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources specific to this controller.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         degreeOfUrgency.getItems().add("Low");

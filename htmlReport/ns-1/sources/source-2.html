@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > Collaborator</title>
+  <title>Coverage Report > AddEntryToDoController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,15 +19,18 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.application.controller</a>
 </div>
 
-<h1>Coverage Summary for Class: Collaborator (pt.ipp.isep.dei.esoft.project.domain)</h1>
+<h1>Coverage Summary for Class: AddEntryToDoController (pt.ipp.isep.dei.esoft.project.application.controller)</h1>
 
 <table class="coverageStats">
-
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -42,143 +45,41 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">Collaborator</td>
+  <td class="name">AddEntryToDoController</td>
 <td class="coverageStat">
   <span class="percent">
-    90%
+    0%
   </span>
   <span class="absValue">
-    (18/20)
+    (0/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    96,8%
+    0%
   </span>
   <span class="absValue">
-    (60/62)
+    (0/7)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    95,3%
+    0%
   </span>
   <span class="absValue">
-    (122/128)
-  </span>
-</td>
-</tr>
-  <tr>
-    <td class="name">Collaborator$DocType</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (3/3)
+    (0/10)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    0%
   </span>
   <span class="absValue">
-    (3/3)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    91,7%
-  </span>
-  <span class="absValue">
-    (11/12)
-  </span>
-</td>
-  </tr>
-  <tr>
-    <td class="name">Collaborator$DocType$1</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (1/1)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (1/1)
-  </span>
-</td>
-  </tr>
-  <tr>
-    <td class="name">Collaborator$DocType$2</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (1/1)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (1/1)
-  </span>
-</td>
-  </tr>
-  <tr>
-    <td class="name">Collaborator$DocType$3</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (1/1)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    100%
-  </span>
-  <span class="absValue">
-    (1/1)
-  </span>
-</td>
-  </tr>
-<tr>
-  <td class="name"><strong>Total</strong></td>
-<td class="coverageStat">
-  <span class="percent">
-    92,3%
-  </span>
-  <span class="absValue">
-    (24/26)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    96,9%
-  </span>
-  <span class="absValue">
-    (63/65)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    95,1%
-  </span>
-  <span class="absValue">
-    (136/143)
+    (0/27)
   </span>
 </td>
 </tr>
+
 </table>
 
 <br/>
@@ -186,491 +87,148 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.application.controller;
 &nbsp;
-&nbsp;import java.util.ArrayList;
-&nbsp;import java.util.Calendar;
+&nbsp;import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.*;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.GreenSpaceMapper;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.dto.GSTaskDTO;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.dto.GreenSpaceDTO;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.GreenSpaceRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.ToDoList;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.serialization.ToDoListFile;
+&nbsp;
 &nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
 &nbsp;
 &nbsp;/**
-&nbsp; * Represents a collaborator in the system.
+&nbsp; * Controller class for adding entries to the to-do list.
+&nbsp; * Provides methods to interact with green spaces and the to-do list.
 &nbsp; */
-&nbsp;public class Collaborator {
+&nbsp;public class AddEntryToDoController {
 &nbsp;
 &nbsp;    /**
-&nbsp;     * The name of the collaborator.
+&nbsp;     * The repository instance used to manage green spaces.
 &nbsp;     */
-&nbsp;    private String name;
+&nbsp;    private GreenSpaceRepository greenSpaceRepository;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * The birthdate of the collaborator.
+&nbsp;     * The to-do list instance used to manage to-do list entries.
 &nbsp;     */
-&nbsp;    private Calendar birthdate;
+&nbsp;    private ToDoList toDoList;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * The admission date of the collaborator.
+&nbsp;     * The application session instance used to manage the current user session.
 &nbsp;     */
-&nbsp;    private Calendar admissionDate;
+&nbsp;    private ApplicationSession applicationSession;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * The address of the collaborator.
+&nbsp;     * The selected green space instance.
 &nbsp;     */
-&nbsp;    private String address;
+&nbsp;    private GreenSpace selectedGreenSpace;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * The phone number of the collaborator.
+&nbsp;     * The file instance used to manage the serialization of the to-do list.
 &nbsp;     */
-&nbsp;    private int phoneNumber;
+&nbsp;    private ToDoListFile toDoListFile;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * The email of the collaborator.
+&nbsp;     * Initializes a new instance of the AddEntryToDoController class.
+&nbsp;     * Initializes necessary repositories and files.
 &nbsp;     */
-&nbsp;    private String email;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * The taxpayer number of the collaborator.
-&nbsp;     */
-&nbsp;    private int taxpayerNumber;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * The identification document number of the collaborator.
-&nbsp;     */
-&nbsp;    private String identificationDocumentNumber;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * The identification document type of the collaborator.
-&nbsp;     */
-&nbsp;    private DocType identificationDocumentType;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * The job of the collaborator.
-&nbsp;     */
-&nbsp;    private Job job;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * The skills assigned to the collaborator.
-&nbsp;     */
-&nbsp;    private List&lt;Skill&gt; skills;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Enumeration representing different types of identification documents.
-&nbsp;     */
-<b class="fc">&nbsp;    private static enum DocType{</b>
-<b class="fc">&nbsp;        CC { @Override public String toString() { return &quot;CC&quot;; } },</b>
-<b class="fc">&nbsp;        BI { @Override public String toString() { return &quot;BI&quot;; } },</b>
-<b class="fc">&nbsp;        PASSPORT { @Override public String toString() { return &quot;Passport&quot;; } };</b>
-&nbsp;
-&nbsp;        /**
-&nbsp;         * Validates the identification number based on the document type.
-&nbsp;         *
-&nbsp;         * @param type   The type of identification document.
-&nbsp;         * @param number The identification number to validate.
-&nbsp;         * @return True if the number is valid for the given document type, false otherwise.
-&nbsp;         */
-&nbsp;        public static boolean isValidNumber(DocType type, String number) {
-<b class="pc">&nbsp;            switch (type) {</b>
-&nbsp;                case CC:
-<b class="fc">&nbsp;                    String ccPattern = &quot;\\d{8} \\d [A-Z]{2}\\d&quot;;</b>
-<b class="fc">&nbsp;                    return number.trim().matches(ccPattern);</b>
-&nbsp;                case BI:
-<b class="fc">&nbsp;                    String biPattern = &quot;\\d{8} \\d&quot;;</b>
-<b class="fc">&nbsp;                    return number.trim().matches(biPattern);</b>
-&nbsp;                case PASSPORT:
-<b class="fc">&nbsp;                    String passportPattern = &quot;[A-Z]{2}\\d{6}&quot;;</b>
-<b class="fc">&nbsp;                    return number.trim().matches(passportPattern);</b>
-&nbsp;                default:
-<b class="nc">&nbsp;                    return false;</b>
-&nbsp;            }
-&nbsp;        }
+&nbsp;    public AddEntryToDoController()
+<b class="nc">&nbsp;    {</b>
+<b class="nc">&nbsp;        getGreenSpaceRepository();</b>
+<b class="nc">&nbsp;        getToDoList();</b>
+<b class="nc">&nbsp;        getApplicationSession();</b>
+<b class="nc">&nbsp;        toDoListFile = new ToDoListFile();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Constructs a collaborator with the provided details.
+&nbsp;     * Retrieves the green space repository instance.
 &nbsp;     *
-&nbsp;     * @param name                        The name of the collaborator.
-&nbsp;     * @param birthdate                   The birthdate of the collaborator (format: year/month/day).
-&nbsp;     * @param admissionDate               The admission date of the collaborator (format: year/month/day).
-&nbsp;     * @param address                     The address of the collaborator (format: street, zipcode, city).
-&nbsp;     * @param phoneNumber                 The phone number of the collaborator.
-&nbsp;     * @param email                       The email of the collaborator.
-&nbsp;     * @param taxpayerNumber              The taxpayer number of the collaborator.
-&nbsp;     * @param identificationDocumentType  The type of identification document of the collaborator.
-&nbsp;     * @param identificationDocumentNumber The identification document number of the collaborator.
-&nbsp;     * @param job                         The job of the collaborator.
+&nbsp;     * @return The GreenSpaceRepository object.
 &nbsp;     */
-&nbsp;    public Collaborator(String name, String birthdate, String admissionDate, String address, int phoneNumber, String email,
-<b class="fc">&nbsp;                        int taxpayerNumber, String identificationDocumentType, String identificationDocumentNumber, Job job){</b>
-<b class="fc">&nbsp;        setName(name);</b>
-<b class="fc">&nbsp;        setBirthdate(birthdate);</b>
-<b class="fc">&nbsp;        setAdmissionDate(admissionDate);</b>
-<b class="fc">&nbsp;        setAddress(address);</b>
-<b class="fc">&nbsp;        setPhoneNumber(phoneNumber);</b>
-<b class="fc">&nbsp;        setEmail(email);</b>
-<b class="fc">&nbsp;        setTaxpayerNumber(taxpayerNumber);</b>
-<b class="fc">&nbsp;        setIdentificationDocumentType(identificationDocumentType);</b>
-<b class="fc">&nbsp;        setIdentificationDocumentNumber(identificationDocumentNumber);</b>
-<b class="fc">&nbsp;        this.job = job;</b>
-<b class="fc">&nbsp;        this.skills = new ArrayList&lt;&gt;();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Constructs a new collaborator with the provided details.
-&nbsp;     * @param name The name of the collaborator.
-&nbsp;     * @param birthdate The birthdate of the collaborator.
-&nbsp;     * @param admissionDate The admission date of the collaborator.
-&nbsp;     * @param address The address of the collaborator.
-&nbsp;     * @param phoneNumber The phone number of the collaborator.
-&nbsp;     * @param email The email address of the collaborator.
-&nbsp;     * @param taxpayerNumber The taxpayer number of the collaborator.
-&nbsp;     * @param identificationDocumentType The type of identification document.
-&nbsp;     * @param identificationDocumentNumber The identification document number.
-&nbsp;     * @param job The job of the collaborator.
-&nbsp;     * @param skills The skills of the collaborator.
-&nbsp;     */
-&nbsp;    public Collaborator(String name, Calendar birthdate, Calendar admissionDate, String address, int phoneNumber, String email,
-<b class="fc">&nbsp;                        int taxpayerNumber, DocType identificationDocumentType, String identificationDocumentNumber, Job job, List&lt;Skill&gt; skills){</b>
-<b class="fc">&nbsp;        setName(name);</b>
-<b class="fc">&nbsp;        this.birthdate = birthdate;</b>
-<b class="fc">&nbsp;        this.admissionDate = admissionDate;</b>
-<b class="fc">&nbsp;        setAddress(address);</b>
-<b class="fc">&nbsp;        setPhoneNumber(phoneNumber);</b>
-<b class="fc">&nbsp;        setEmail(email);</b>
-<b class="fc">&nbsp;        setTaxpayerNumber(taxpayerNumber);</b>
-<b class="fc">&nbsp;        this.identificationDocumentType = identificationDocumentType;</b>
-<b class="fc">&nbsp;        setIdentificationDocumentNumber(identificationDocumentNumber);</b>
-<b class="fc">&nbsp;        this.job = job;</b>
-<b class="fc">&nbsp;        this.skills = skills;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Gets the name of the collaborator.
-&nbsp;     * @return The name of the collaborator.
-&nbsp;     */
-&nbsp;    public String getName() {
-<b class="fc">&nbsp;        return name;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Gets the identification document number of the collaborator.
-&nbsp;     * @return The identification document number.
-&nbsp;     */
-&nbsp;    public String getIdentificationDocumentNumber() {
-<b class="fc">&nbsp;        return identificationDocumentNumber;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Gets the skills of the collaborator.
-&nbsp;     * @return The list of skills of the collaborator.
-&nbsp;     */
-&nbsp;    public List&lt;Skill&gt; getSkills() {
-<b class="fc">&nbsp;        return List.copyOf(skills);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the name of the collaborator.
-&nbsp;     * @param name The name to set.
-&nbsp;     * @throws IllegalArgumentException If the name contains numeric characters,
-&nbsp;     * or if it has more than 6 words, or if it&#39;s not correctly filled.
-&nbsp;     */
-&nbsp;    private void setName(String name) {
-&nbsp;
-<b class="fc">&nbsp;        if (name.matches(&quot;.*\\d.*&quot;)) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Name cannot contain numbers.&quot;);</b>
+&nbsp;    private GreenSpaceRepository getGreenSpaceRepository() {
+<b class="nc">&nbsp;        if (greenSpaceRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            greenSpaceRepository = repositories.getGreenSpaceRepository();</b>
 &nbsp;        }
+<b class="nc">&nbsp;        return greenSpaceRepository;</b>
+&nbsp;    }
 &nbsp;
-<b class="fc">&nbsp;        String trimmedName = name.trim();</b>
-&nbsp;
-<b class="fc">&nbsp;        int wordCount = trimmedName.isEmpty() ? 0 : trimmedName.split(&quot;\\s+&quot;).length;</b>
-&nbsp;
-<b class="fc">&nbsp;        if (wordCount &lt;= 6 &amp;&amp; wordCount &gt; 0) {</b>
-<b class="fc">&nbsp;            this.name = name;</b>
+&nbsp;    /**
+&nbsp;     * Retrieves the to-do list instance.
+&nbsp;     *
+&nbsp;     * @return The ToDoList object.
+&nbsp;     */
+&nbsp;    private ToDoList getToDoList() {
+<b class="nc">&nbsp;        if (toDoList == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            toDoList = repositories.getToDoList();</b>
 &nbsp;        }
-<b class="fc">&nbsp;        else if (wordCount == 0)</b>
+<b class="nc">&nbsp;        return toDoList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the application session instance.
+&nbsp;     *
+&nbsp;     * @return The ApplicationSession object.
+&nbsp;     */
+&nbsp;    private ApplicationSession getApplicationSession() {
+<b class="nc">&nbsp;        if (applicationSession == null) {</b>
+<b class="nc">&nbsp;            applicationSession = ApplicationSession.getInstance();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return applicationSession;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of green spaces associated with the current user session.
+&nbsp;     *
+&nbsp;     * @return A list of GreenSpaceDTO objects representing the green spaces.
+&nbsp;     */
+&nbsp;    public List&lt;GreenSpaceDTO&gt; getGreenSpaces(){
+<b class="nc">&nbsp;        String email = applicationSession.getCurrentSession().getUserEmail();</b>
+<b class="nc">&nbsp;        List&lt;GreenSpace&gt; associatedGreenSpacesList = greenSpaceRepository.getGreenSpaces(email);</b>
+<b class="nc">&nbsp;        List&lt;GreenSpaceDTO&gt; associatedGreenSpacesListDTO = GreenSpaceMapper.toDTO(associatedGreenSpacesList);</b>
+<b class="nc">&nbsp;        return associatedGreenSpacesListDTO;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Selects a green space from the list based on its index.
+&nbsp;     *
+&nbsp;     * @param i The index of the green space to be selected.
+&nbsp;     */
+&nbsp;    public void getSelectedGreenSpace(int i)
+&nbsp;    {
+<b class="nc">&nbsp;        selectedGreenSpace = greenSpaceRepository.getSelectedGreenSpace(i);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a task entry to the to-do list for the selected green space.
+&nbsp;     * Updates the to-do list file if the entry is successfully added.
+&nbsp;     *
+&nbsp;     * @param taskDto The GSTaskDTO object representing the task to be added.
+&nbsp;     * @return True if the entry is successfully added and file is updated, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean addEntry(GSTaskDTO taskDto)
+&nbsp;    {
+<b class="nc">&nbsp;        Optional&lt;GSTask&gt; newTask = Optional.empty();</b>
+&nbsp;
+<b class="nc">&nbsp;        newTask = toDoList.addEntry(taskDto, selectedGreenSpace);</b>
+&nbsp;
+<b class="nc">&nbsp;        if(newTask.isPresent())</b>
 &nbsp;        {
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Name wasn&#39;t correctly filled.&quot;);</b>
-&nbsp;        }
-&nbsp;        else {
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Name cannot have more than 6 words.&quot;);</b>
-&nbsp;        }
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the birthdate of the collaborator.
-&nbsp;     * @param birthdate The birthdate to set (in the format &quot;year/month/day&quot;).
-&nbsp;     * @throws IllegalArgumentException If the birthdate format is invalid,
-&nbsp;     * or if it contains non-numeric values,
-&nbsp;     * or if the collaborator is not at least 18 years old.
-&nbsp;     */
-&nbsp;    private void setBirthdate(String birthdate) {
-<b class="fc">&nbsp;        String[] parts = birthdate.trim().split(&quot;/&quot;);</b>
-&nbsp;
-<b class="fc">&nbsp;        if (parts.length != 3) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid birthdate format. Use year/month/day.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        for (String part : parts) {</b>
-<b class="fc">&nbsp;            if (!part.matches(&quot;\\d+&quot;)) {</b>
-<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Non-numeric value found in birthdate.&quot;);</b>
-&nbsp;            }
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        int year = Integer.parseInt(parts[0]);</b>
-<b class="fc">&nbsp;        int month = Integer.parseInt(parts[1]);</b>
-<b class="fc">&nbsp;        int day = Integer.parseInt(parts[2]);</b>
-&nbsp;
-<b class="fc">&nbsp;        Calendar cal = Calendar.getInstance();</b>
-<b class="fc">&nbsp;        cal.set(Calendar.YEAR, year);</b>
-<b class="fc">&nbsp;        cal.set(Calendar.MONTH, month - 1);</b>
-<b class="fc">&nbsp;        cal.set(Calendar.DAY_OF_MONTH, day);</b>
-&nbsp;
-<b class="fc">&nbsp;        Calendar currentDate = Calendar.getInstance();</b>
-&nbsp;
-<b class="fc">&nbsp;        currentDate.add(Calendar.YEAR, -18);</b>
-&nbsp;
-<b class="fc">&nbsp;        if(!cal.before(currentDate))</b>
-&nbsp;        {
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Collaborator must be at least 18 years old.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        this.birthdate = cal;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the admission date of the collaborator.
-&nbsp;     * @param admissionDate The admission date to set (in the format &quot;year/month/day&quot;).
-&nbsp;     * @throws IllegalArgumentException If the admission date format is invalid,
-&nbsp;     * or if it contains non-numeric values,
-&nbsp;     * or if the collaborator is not at least 18 years old at the time of admission.
-&nbsp;     */
-&nbsp;    private void setAdmissionDate(String admissionDate) {
-<b class="fc">&nbsp;        String[] parts = admissionDate.trim().split(&quot;/&quot;);</b>
-&nbsp;
-<b class="fc">&nbsp;        if (parts.length != 3) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid admission date format. Use year/month/day.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        for (String part : parts) {</b>
-<b class="fc">&nbsp;            if (!part.matches(&quot;\\d+&quot;)) {</b>
-<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Non-numeric value found in admission date.&quot;);</b>
-&nbsp;            }
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        int year = Integer.parseInt(parts[0]);</b>
-<b class="fc">&nbsp;        int month = Integer.parseInt(parts[1]);</b>
-<b class="fc">&nbsp;        int day = Integer.parseInt(parts[2]);</b>
-&nbsp;
-<b class="fc">&nbsp;        Calendar cal = Calendar.getInstance();</b>
-<b class="fc">&nbsp;        cal.set(Calendar.YEAR, year);</b>
-<b class="fc">&nbsp;        cal.set(Calendar.MONTH, month - 1);</b>
-<b class="fc">&nbsp;        cal.set(Calendar.DAY_OF_MONTH, day);</b>
-&nbsp;
-<b class="fc">&nbsp;        Calendar valDate = (Calendar) this.birthdate.clone();</b>
-&nbsp;
-<b class="fc">&nbsp;        valDate.add(Calendar.YEAR, +18);</b>
-&nbsp;
-<b class="fc">&nbsp;        if(cal.before(valDate))</b>
-&nbsp;        {
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Collaborator must be at least 18 years old at the time of admission.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        this.admissionDate = cal;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the address of the collaborator.
-&nbsp;     * @param address The address to set (formatted as &quot;street, zipcode, city&quot;).
-&nbsp;     * @throws IllegalArgumentException If the address format is invalid,
-&nbsp;     * or if the street, zipcode, or city are empty,
-&nbsp;     * or if the zipcode format is invalid.
-&nbsp;     */
-&nbsp;    private void setAddress(String address) {
-<b class="fc">&nbsp;        String[] components = address.trim().split(&quot;,&quot;);</b>
-&nbsp;
-<b class="fc">&nbsp;        if (components.length != 3) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid address format. Use street, zipcode, city.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        String street = components[0].trim();</b>
-<b class="fc">&nbsp;        String zipcode = components[1].trim();</b>
-<b class="fc">&nbsp;        String city = components[2].trim();</b>
-&nbsp;
-&nbsp;
-<b class="fc">&nbsp;        if (street.isEmpty()) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Street cannot be empty.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="pc">&nbsp;        if (zipcode.isEmpty() || !zipcode.matches(&quot;\\d{4}-\\d{3}&quot;)) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Zipcode must have the format &#39;0000-000&#39;.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="pc">&nbsp;        if (city.isEmpty()) {</b>
-<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;City cannot be empty.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        this.address = address;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the phone number of the collaborator.
-&nbsp;     * @param phoneNumber The phone number to set.
-&nbsp;     * @throws IllegalArgumentException If the phone number format is invalid.
-&nbsp;     */
-&nbsp;    private void setPhoneNumber(int phoneNumber) {
-<b class="fc">&nbsp;        String phoneNumberStr = String.valueOf(phoneNumber);</b>
-&nbsp;
-<b class="fc">&nbsp;        if (!phoneNumberStr.matches(&quot;(91|92|93|95|96)\\d{7}&quot;)) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid phone number format. Phone number must start with 91, 92, 93, 95, or 96 and have 9 digits.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        this.phoneNumber = phoneNumber;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the taxpayer number of the collaborator.
-&nbsp;     * @param taxpayerNumber The taxpayer number to set.
-&nbsp;     * @throws IllegalArgumentException If the taxpayer number format is invalid.
-&nbsp;     */
-&nbsp;    private void setTaxpayerNumber(int taxpayerNumber) {
-<b class="fc">&nbsp;        String taxpayerNumberStr = String.valueOf(taxpayerNumber);</b>
-&nbsp;
-<b class="fc">&nbsp;        if (!taxpayerNumberStr.matches(&quot;\\d{9}&quot;)) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid taxpayer number. Taxpayer number must have 9 digits.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        this.taxpayerNumber = taxpayerNumber;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the email address of the collaborator.
-&nbsp;     * @param email The email address to set.
-&nbsp;     * @throws IllegalArgumentException If the email address format is invalid.
-&nbsp;     */
-&nbsp;    private void setEmail(String email) {
-<b class="fc">&nbsp;        String emailRegex = &quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$&quot;;</b>
-<b class="fc">&nbsp;        if (!email.matches(emailRegex)) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid email address format.&quot;);</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        this.email = email;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the identification document type of the collaborator.
-&nbsp;     * @param identificationDocumentType The identification document type to set.
-&nbsp;     * @throws IllegalArgumentException If the identification document type is invalid.
-&nbsp;     */
-&nbsp;    private void setIdentificationDocumentType(String identificationDocumentType) {
-<b class="fc">&nbsp;        if(identificationDocumentType.equalsIgnoreCase(DocType.CC.toString()))</b>
-<b class="fc">&nbsp;            this.identificationDocumentType = DocType.CC;</b>
-<b class="fc">&nbsp;        else if(identificationDocumentType.equalsIgnoreCase(DocType.BI.toString()))</b>
-<b class="fc">&nbsp;            this.identificationDocumentType = DocType.BI;</b>
-<b class="fc">&nbsp;        else if(identificationDocumentType.equalsIgnoreCase(DocType.PASSPORT.toString()))</b>
-<b class="fc">&nbsp;            this.identificationDocumentType = DocType.PASSPORT;</b>
-<b class="fc">&nbsp;        else throw new IllegalArgumentException(&quot;Invalid document type.&quot;);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the identification document number of the collaborator.
-&nbsp;     * @param identificationDocumentNumber The identification document number to set.
-&nbsp;     * @throws IllegalArgumentException If the identification document number is invalid
-&nbsp;     * for the provided type.
-&nbsp;     */
-&nbsp;    private void setIdentificationDocumentNumber(String identificationDocumentNumber) {
-<b class="fc">&nbsp;        if(DocType.isValidNumber(identificationDocumentType, identificationDocumentNumber))</b>
-<b class="fc">&nbsp;            this.identificationDocumentNumber = identificationDocumentNumber;</b>
-&nbsp;        else
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid identification document number for the provided type.&quot;);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Assigns skills to the collaborator.
-&nbsp;     * @param selectedSkillsList The list of skills to assign.
-&nbsp;     * @return The updated collaborator.
-&nbsp;     * @throws IllegalArgumentException If all the provided skills are already assigned to the collaborator.
-&nbsp;     */
-&nbsp;    public Collaborator assignSkill(List&lt;Skill&gt; selectedSkillsList){
-<b class="fc">&nbsp;        boolean updated = false;</b>
-<b class="fc">&nbsp;        for(Skill skill: selectedSkillsList)</b>
-&nbsp;        {
-<b class="fc">&nbsp;            if(!this.skills.contains(skill))</b>
+<b class="nc">&nbsp;            if(!toDoListFile.save(toDoList))</b>
 &nbsp;            {
-<b class="fc">&nbsp;                this.skills.add(skill);</b>
-<b class="fc">&nbsp;                updated = true;</b>
+<b class="nc">&nbsp;                return false;</b>
 &nbsp;            }
 &nbsp;        }
-<b class="fc">&nbsp;        if(!updated)</b>
-&nbsp;        {
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Collaborator already had all the skills introduced&quot;);</b>
-&nbsp;        }
-<b class="fc">&nbsp;        return this;</b>
+&nbsp;
+<b class="nc">&nbsp;        return true;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Indicates whether some other object is &quot;equal to&quot; this collaborator.
-&nbsp;     * @param o The reference object with which to compare.
-&nbsp;     * @return true if this collaborator is the same as the o argument; false otherwise.
-&nbsp;     */
-&nbsp;    @Override
-&nbsp;    public boolean equals(Object o) {
-<b class="fc">&nbsp;        if (this == o) {</b>
-<b class="fc">&nbsp;            return true;</b>
-&nbsp;        }
-<b class="fc">&nbsp;        if (o == null || getClass() != o.getClass()) {</b>
-<b class="fc">&nbsp;            return false;</b>
-&nbsp;        }
-<b class="fc">&nbsp;        Collaborator collaborator = (Collaborator) o;</b>
-<b class="fc">&nbsp;        return identificationDocumentNumber.equalsIgnoreCase(collaborator.identificationDocumentNumber);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Checks if the collaborator has the same identification number as the provided one.
-&nbsp;     * @param collaboratorIdNumber The identification number to compare.
-&nbsp;     * @return True if the collaborator has the same identification number, false otherwise.
-&nbsp;     */
-&nbsp;    public boolean sameIdNumber(String collaboratorIdNumber){
-<b class="fc">&nbsp;        return this.identificationDocumentNumber.equalsIgnoreCase(collaboratorIdNumber);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Returns a new object that is a copy of this collaborator.
-&nbsp;     * @return A new Collaborator object that is a copy of this collaborator.
-&nbsp;     */
-&nbsp;    @Override
-&nbsp;    public Collaborator clone() {
-<b class="fc">&nbsp;        return new Collaborator(this.name, this.birthdate, this.admissionDate, this.address, this.phoneNumber, this.email,</b>
-&nbsp;                this.taxpayerNumber, this.identificationDocumentType, this.identificationDocumentNumber, this.job, new ArrayList&lt;&gt;(this.skills));
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Returns a string representation of the collaborator suitable for displaying in a team proposal context.
-&nbsp;     * @return The string representation of the collaborator for team proposal display.
-&nbsp;     */
-&nbsp;    public String toStringTeam() {
-<b class="nc">&nbsp;        return String.format(&quot;Collaborator: %s\n&quot; +</b>
-&nbsp;                        &quot;Skills: %s&quot;, this.name, this.skills);
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Returns a string representation of the Collaborator object.
-&nbsp;     * @return A string representation of the Collaborator object.
-&nbsp;     */
-&nbsp;    @Override
-&nbsp;    public String toString() {
-<b class="nc">&nbsp;        return String.format(&quot;Collaborator %s Data:\n&quot; +</b>
-&nbsp;                &quot;Birthdate: %d/%d/%d\n&quot; +
-&nbsp;                &quot;Admission Date: %d/%d/%d\n&quot; +
-&nbsp;                &quot;Address: %s\n&quot; +
-&nbsp;                &quot;Phone Number: %d\n&quot; +
-&nbsp;                &quot;Email: %s\n&quot; +
-&nbsp;                &quot;Taxpayer number: %d\n&quot; +
-&nbsp;                &quot;Identification Document Type: %s\n&quot; +
-&nbsp;                &quot;Identification Document Number: %s\n&quot; +
-&nbsp;                &quot;Job: %s\n&quot; +
-<b class="nc">&nbsp;                &quot;Skills: %s&quot;, this.name, this.birthdate.get(Calendar.YEAR), this.birthdate.get(Calendar.MONTH)+1, this.birthdate.get(Calendar.DAY_OF_MONTH),</b>
-<b class="nc">&nbsp;                                                    this.admissionDate.get(Calendar.YEAR), this.admissionDate.get(Calendar.MONTH)+1, this.admissionDate.get(Calendar.DAY_OF_MONTH),</b>
-<b class="nc">&nbsp;                                                    this.address, this.phoneNumber, this.email, this.taxpayerNumber, this.identificationDocumentType.toString(), this.identificationDocumentNumber,</b>
-&nbsp;                                                    this.job, this.skills);
-&nbsp;    }
 &nbsp;}
 </code>
 </pre>
@@ -695,7 +253,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-12 20:04</div>
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
 </div>
 </body>
 </html>

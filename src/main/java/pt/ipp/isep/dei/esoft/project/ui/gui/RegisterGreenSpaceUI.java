@@ -21,24 +21,54 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Register Green Space user interface.
+ */
 public class RegisterGreenSpaceUI implements Initializable {
 
+    /**
+     * The controller responsible for managing the registration of green spaces.
+     */
     private final RegisterGreenSpaceController ctrl;
 
+    /**
+     * Text field for entering the area of the green space.
+     */
     @FXML
     private TextField area;
+
+    /**
+     * Text field for entering the address of the green space.
+     */
     @FXML
     private TextField address;
+
+    /**
+     * Text field for entering the name of the green space.
+     */
     @FXML
     private TextField name;
+
+    /**
+     * Choice box for selecting the type of the green space.
+     */
     @FXML
     private ChoiceBox<String> type;
 
+    /**
+     * Constructor for RegisterGreenSpaceUI class.
+     * Initializes the controller.
+     */
     public RegisterGreenSpaceUI()
     {
         ctrl = new RegisterGreenSpaceController();
     }
 
+    /**
+     * Handles the action event for canceling the registration and returning to the GSM menu.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void cancel(ActionEvent actionEvent) {
         try{
@@ -70,6 +100,11 @@ public class RegisterGreenSpaceUI implements Initializable {
         }
     }
 
+    /**
+     * Handles the action event for submitting the green space registration.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void submit(ActionEvent actionEvent) {
         try {
@@ -131,6 +166,12 @@ public class RegisterGreenSpaceUI implements Initializable {
         }
     }
 
+    /**
+     * Initializes the choice box with predefined options for green space types.
+     *
+     * @param url            The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources specific to this controller.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         type.getItems().add("Garden");

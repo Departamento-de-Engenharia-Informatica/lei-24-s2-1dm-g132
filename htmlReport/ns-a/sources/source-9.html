@@ -1,0 +1,234 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > SkillRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: SkillRepository (pt.ipp.isep.dei.esoft.project.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SkillRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (27/27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;
+&nbsp;package pt.ipp.isep.dei.esoft.project.repository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Skill;
+&nbsp;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;import java.lang.IllegalArgumentException;
+&nbsp;
+&nbsp;public class SkillRepository implements Serializable {
+&nbsp;
+&nbsp;
+&nbsp;    private final List&lt;Skill&gt; skills;
+&nbsp;    private List&lt;Skill&gt; selectedSkillsList;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new SkillRepository object.
+&nbsp;     * Initializes the list of skills.
+&nbsp;     */
+<b class="fc">&nbsp;    public SkillRepository() {</b>
+<b class="fc">&nbsp;        skills = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a new skill to the repository.
+&nbsp;     * @param skill The skill to be added.
+&nbsp;     * @return An optional containing the newly added skill, or empty if the operation fails.
+&nbsp;     */
+&nbsp;    public Optional&lt;Skill&gt; add(Skill skill) {
+<b class="fc">&nbsp;        Optional&lt;Skill&gt; newSkill = Optional.empty();</b>
+<b class="fc">&nbsp;        boolean operationSuccess = false;</b>
+<b class="fc">&nbsp;        if (validateSkill(skill)) {</b>
+<b class="fc">&nbsp;            newSkill = Optional.of(skill.clone());</b>
+<b class="fc">&nbsp;            operationSuccess = skills.add(newSkill.get());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!operationSuccess) {</b>
+<b class="fc">&nbsp;            newSkill = Optional.empty();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return newSkill;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Validates a skill before adding it to the repository.
+&nbsp;     * @param skill The skill to be validated.
+&nbsp;     * @return True if the skill is valid and can be added, false otherwise.
+&nbsp;     */
+&nbsp;    private boolean validateSkill(Skill skill) {
+<b class="fc">&nbsp;        return !skills.contains(skill);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a list of all skills stored in the repository.
+&nbsp;     * @return A list of all skills.
+&nbsp;     */
+&nbsp;    public List&lt;Skill&gt; getSkills() {
+&nbsp;        // This is a defensive copy, so that the repository cannot be modified from the outside.
+<b class="fc">&nbsp;        return List.copyOf(skills);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a temporary list of skills by cloning the existing skills list.
+&nbsp;     *
+&nbsp;     * @return A new list containing clones of the skills from the original list.
+&nbsp;     */
+&nbsp;    public List&lt;Skill&gt; createTempSkillsList(){
+<b class="fc">&nbsp;        List&lt;Skill&gt; tempSkillsList = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (Skill skill : skills) {</b>
+<b class="fc">&nbsp;            tempSkillsList.add(skill.clone());</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return tempSkillsList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a new list to store selected skills.
+&nbsp;     */
+&nbsp;    public void createSelectedSkillsList() {
+<b class="fc">&nbsp;        selectedSkillsList = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a skill to the list of selected skills.
+&nbsp;     * @param name The name of the skill to be added.
+&nbsp;     */
+&nbsp;    public void addSelectedSkill(String name) {
+<b class="fc">&nbsp;        Skill skill = getSkillByName(name);</b>
+<b class="fc">&nbsp;        selectedSkillsList.add(skill);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a skill by its name.
+&nbsp;     * @param skillName The name of the skill to be retrieved.
+&nbsp;     * @return The skill with the specified name.
+&nbsp;     * @throws IllegalArgumentException If the skill with the specified name does not exist.
+&nbsp;     */
+&nbsp;    public Skill getSkillByName(String skillName) {
+<b class="fc">&nbsp;        Skill newSkill = new Skill(skillName);</b>
+<b class="fc">&nbsp;        Skill skill = null;</b>
+<b class="fc">&nbsp;        if (skills.contains(newSkill)) {</b>
+<b class="fc">&nbsp;            skill = skills.get(skills.indexOf(newSkill));</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (skill == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(</b>
+&nbsp;                    &quot;Skill requested for [&quot; + skillName + &quot;] does not exist.&quot;);
+&nbsp;        }
+<b class="fc">&nbsp;        return skill;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of selected skills.
+&nbsp;     * @return The list of selected skills.
+&nbsp;     */
+&nbsp;    public List&lt;Skill&gt; getSelectedSkillsList() {
+<b class="fc">&nbsp;        return selectedSkillsList;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

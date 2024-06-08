@@ -1,0 +1,197 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GSTaskMapper</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.mapper</a>
+</div>
+
+<h1>Coverage Summary for Class: GSTaskMapper (pt.ipp.isep.dei.esoft.project.mapper)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GSTaskMapper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16,7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    8,3%
+  </span>
+  <span class="absValue">
+    (1/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.mapper;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.GSTask;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.dto.GSTaskDTO;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.dto.GreenSpaceDTO;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Mapper class for converting GSTask entities and DTOs.
+&nbsp; * This class provides static methods to convert GSTask objects to GSTaskDTO objects
+&nbsp; * and vice versa.
+&nbsp; */
+<b class="nc">&nbsp;public class GSTaskMapper {</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts a GSTaskDTO to a GSTask entity.
+&nbsp;     *
+&nbsp;     * @param taskDTO The GSTaskDTO to convert.
+&nbsp;     * @param selectedGreenSpace The GreenSpace associated with the task.
+&nbsp;     * @return The corresponding GSTask entity.
+&nbsp;     */
+&nbsp;    public static GSTask toModel(GSTaskDTO taskDTO, GreenSpace selectedGreenSpace)
+&nbsp;    {
+<b class="fc">&nbsp;        return new GSTask(taskDTO.getTitle(), taskDTO.getDescription(), taskDTO.getDegreeOfUrgency(), taskDTO.getExpectedDuration(), selectedGreenSpace);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts a GSTask entity to a GSTaskDTO for To-Do list.
+&nbsp;     *
+&nbsp;     * @param gSTask The GSTask entity to convert.
+&nbsp;     * @return The corresponding GSTaskDTO object.
+&nbsp;     */
+&nbsp;    public static GSTaskDTO toDTOToDo(GSTask gSTask) {
+<b class="nc">&nbsp;        return new GSTaskDTO(gSTask.getTitle(), gSTask.getDescription(), gSTask.getDegreeOfUrgency(), gSTask.getExpectedDuration(), new GreenSpaceDTO(gSTask.getGreenSpace().getName(), gSTask.getGreenSpace().getAddress(), gSTask.getGreenSpace().getArea(), gSTask.getGreenSpace().getType()));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts a list of GSTask entities to a list of GSTaskDTOs for To-Do list.
+&nbsp;     *
+&nbsp;     * @param associatedToDoEntriesList The list of GSTask entities to convert.
+&nbsp;     * @return A list of GSTaskDTO objects corresponding to the input list.
+&nbsp;     */
+&nbsp;    public static List&lt;GSTaskDTO&gt; toDTOToDo(List&lt;GSTask&gt; associatedToDoEntriesList)
+&nbsp;    {
+<b class="nc">&nbsp;        List&lt;GSTaskDTO&gt; associatedToDoEntriesListDTO = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(GSTask gSTask : associatedToDoEntriesList)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            associatedToDoEntriesListDTO.add(toDTOToDo(gSTask));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return associatedToDoEntriesListDTO;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts a GSTask entity to a GSTaskDTO for the Agenda.
+&nbsp;     *
+&nbsp;     * @param gSTask The GSTask entity to convert.
+&nbsp;     * @return The corresponding GSTaskDTO object.
+&nbsp;     */
+&nbsp;    public static GSTaskDTO toDTOAgenda(GSTask gSTask) {
+<b class="nc">&nbsp;        return new GSTaskDTO(gSTask.getTitle(), gSTask.getDescription(), gSTask.getDegreeOfUrgency(), gSTask.getExpectedDuration(), new GreenSpaceDTO(gSTask.getGreenSpace().getName(), gSTask.getGreenSpace().getAddress(), gSTask.getGreenSpace().getArea(), gSTask.getGreenSpace().getType()), gSTask.getStartingDate());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts a list of GSTask entities to a list of GSTaskDTOs for the Agenda.
+&nbsp;     *
+&nbsp;     * @param freeAgendaEntriesList The list of GSTask entities to convert.
+&nbsp;     * @return A list of GSTaskDTO objects corresponding to the input list.
+&nbsp;     */
+&nbsp;    public static List&lt;GSTaskDTO&gt; toDTOAgenda(List&lt;GSTask&gt; freeAgendaEntriesList)
+&nbsp;    {
+<b class="nc">&nbsp;        List&lt;GSTaskDTO&gt; freeAgendaEntriesListDTO = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(GSTask gSTask : freeAgendaEntriesList)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            freeAgendaEntriesListDTO.add(toDTOAgenda(gSTask));</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return freeAgendaEntriesListDTO;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

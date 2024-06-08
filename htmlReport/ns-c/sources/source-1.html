@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Bootstrap</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: Bootstrap (pt.ipp.isep.dei.esoft.project.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Bootstrap</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/41)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.ui;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Employee;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Organization;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.OrganizationRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.TaskCategoryRepository;
+&nbsp;
+<b class="nc">&nbsp;public class Bootstrap implements Runnable {</b>
+&nbsp;
+&nbsp;    //Add some task categories to the repository as bootstrap
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        addTaskCategories();</b>
+<b class="nc">&nbsp;        addOrganization();</b>
+<b class="nc">&nbsp;        addUsers();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addOrganization() {
+&nbsp;        //TODO: add organizations bootstrap here
+&nbsp;        //get organization repository
+<b class="nc">&nbsp;        OrganizationRepository organizationRepository = Repositories.getInstance().getOrganizationRepository();</b>
+<b class="nc">&nbsp;        Organization organization = new Organization(&quot;This Company&quot;);</b>
+<b class="nc">&nbsp;        organization.addEmployee(new Employee(&quot;admin@this.app&quot;));</b>
+<b class="nc">&nbsp;        organization.addEmployee(new Employee(&quot;employee@this.app&quot;));</b>
+<b class="nc">&nbsp;        organization.addEmployee(new Employee(&quot;hrm@this.app&quot;));</b>
+<b class="nc">&nbsp;        organization.addEmployee(new Employee(&quot;vtf@this.app&quot;));</b>
+<b class="nc">&nbsp;        organization.addEmployee(new Employee(&quot;collaborator@this.app&quot;));</b>
+<b class="nc">&nbsp;        organization.addEmployee(new Employee(&quot;gsm@this.app&quot;));</b>
+<b class="nc">&nbsp;        organization.addEmployee(new Employee(&quot;gsu@this.app&quot;));</b>
+<b class="nc">&nbsp;        organization.addEmployee(new Employee(&quot;qam@this.app&quot;));</b>
+<b class="nc">&nbsp;        organizationRepository.add(organization);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addTaskCategories() {
+&nbsp;        //TODO: add bootstrap Task Categories here
+&nbsp;
+&nbsp;        //get task category repository
+<b class="nc">&nbsp;        TaskCategoryRepository taskCategoryRepository = Repositories.getInstance().getTaskCategoryRepository();</b>
+<b class="nc">&nbsp;        taskCategoryRepository.add(new TaskCategory(&quot;Analysis&quot;));</b>
+<b class="nc">&nbsp;        taskCategoryRepository.add(new TaskCategory(&quot;Design&quot;));</b>
+<b class="nc">&nbsp;        taskCategoryRepository.add(new TaskCategory(&quot;Implementation&quot;));</b>
+<b class="nc">&nbsp;        taskCategoryRepository.add(new TaskCategory(&quot;Development&quot;));</b>
+<b class="nc">&nbsp;        taskCategoryRepository.add(new TaskCategory(&quot;Testing&quot;));</b>
+<b class="nc">&nbsp;        taskCategoryRepository.add(new TaskCategory(&quot;Deployment&quot;));</b>
+<b class="nc">&nbsp;        taskCategoryRepository.add(new TaskCategory(&quot;Maintenance&quot;));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void addUsers() {
+&nbsp;        //TODO: add Authentication users here: should be created for each user in the organization
+<b class="nc">&nbsp;        AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE, AuthenticationController.ROLE_EMPLOYEE);</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM, AuthenticationController.ROLE_HRM);</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_VTF, AuthenticationController.ROLE_VTF);</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_COLLABORATOR, AuthenticationController.ROLE_COLLABORATOR);</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_GSM, AuthenticationController.ROLE_GSM);</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_GSU, AuthenticationController.ROLE_GSU);</b>
+<b class="nc">&nbsp;        authenticationRepository.addUserRole(AuthenticationController.ROLE_QAM, AuthenticationController.ROLE_QAM);</b>
+&nbsp;
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Main Administrator&quot;, &quot;admin@this.app&quot;, &quot;admin&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_ADMIN);
+&nbsp;
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Employee&quot;, &quot;employee@this.app&quot;, &quot;pwd&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_EMPLOYEE);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Human Resources Manager&quot;, &quot;hrm@this.app&quot;, &quot;pwd&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_HRM);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Vehicle and Equiment Fleet Manager&quot;, &quot;vtf@this.app&quot;, &quot;pwd&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_VTF);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Collaborator&quot;, &quot;collaborator@this.app&quot;, &quot;pwd&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_COLLABORATOR);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Green Spaces Manager1&quot;, &quot;gsm1@this.app&quot;, &quot;pwd&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_GSM);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Green Spaces Manager2&quot;, &quot;gsm2@this.app&quot;, &quot;pwd&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_GSM);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Green Spaces User&quot;, &quot;gsu@this.app&quot;, &quot;pwd&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_GSU);
+<b class="nc">&nbsp;        authenticationRepository.addUserWithRole(&quot;Software Quality Assessment Team Manager&quot;, &quot;qam@this.app&quot;, &quot;pwd&quot;,</b>
+&nbsp;                AuthenticationController.ROLE_QAM);
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

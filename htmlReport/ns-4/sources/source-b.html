@@ -1,0 +1,293 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Organization</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
+</div>
+
+<h1>Coverage Summary for Class: Organization (pt.ipp.isep.dei.esoft.project.domain)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Organization</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (44/44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Objects;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;public class Organization {
+&nbsp;    private final String vatNumber;
+&nbsp;    private final List&lt;Employee&gt; employees;
+&nbsp;    private final List&lt;Task&gt; tasks;
+&nbsp;    private String name;
+&nbsp;    private String website;
+&nbsp;    private String phone;
+&nbsp;    private String email;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method is the constructor of the organization.
+&nbsp;     *
+&nbsp;     * @param vatNumber The vat number of the organization. This is the identity of the organization, therefore it
+&nbsp;     *                  cannot be changed.
+&nbsp;     */
+<b class="fc">&nbsp;    public Organization(String vatNumber) {</b>
+<b class="fc">&nbsp;        this.vatNumber = vatNumber;</b>
+<b class="fc">&nbsp;        employees = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        tasks = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method checks if an employee works for the organization.
+&nbsp;     *
+&nbsp;     * @param employee The employee to be checked.
+&nbsp;     * @return True if the employee works for the organization.
+&nbsp;     */
+&nbsp;    public boolean employs(Employee employee) {
+<b class="fc">&nbsp;        return employees.contains(employee);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method creates a new task.
+&nbsp;     *
+&nbsp;     * @param reference            The reference of the task to be created.
+&nbsp;     * @param description          The description of the task to be created.
+&nbsp;     * @param informalDescription  The informal description of the task to be created.
+&nbsp;     * @param technicalDescription The technical description of the task to be created.
+&nbsp;     * @param duration             The duration of the task to be created.
+&nbsp;     * @param cost                 The cost of the task to be created.
+&nbsp;     * @param taskCategory         The task category of the task to be created.
+&nbsp;     * @param employee             The employee of the task to be created.
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public Optional&lt;Task&gt; createTask(String reference, String description, String informalDescription,
+&nbsp;                                     String technicalDescription, int duration, double cost,
+&nbsp;                                     TaskCategory taskCategory, Employee employee) {
+&nbsp;
+&nbsp;        //TODO: we could also check if the employee works for the organization before proceeding
+&nbsp;        //checkIfEmployeeWorksForOrganization(employee);
+&nbsp;
+&nbsp;        // When a Task is added, it should fail if the Task already exists in the list of Tasks.
+&nbsp;        // In order to not return null if the operation fails, we use the Optional class.
+<b class="fc">&nbsp;        Optional&lt;Task&gt; optionalValue = Optional.empty();</b>
+&nbsp;
+<b class="fc">&nbsp;        Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,</b>
+&nbsp;                taskCategory, employee);
+&nbsp;
+<b class="fc">&nbsp;        if (addTask(task)) {</b>
+<b class="fc">&nbsp;            optionalValue = Optional.of(task);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return optionalValue;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method adds a task to the list of tasks.
+&nbsp;     *
+&nbsp;     * @param task The task to be added.
+&nbsp;     * @return True if the task was added successfully.
+&nbsp;     */
+&nbsp;    private boolean addTask(Task task) {
+<b class="fc">&nbsp;        boolean success = false;</b>
+<b class="fc">&nbsp;        if (validate(task)) {</b>
+&nbsp;            // A clone of the task is added to the list of tasks, to avoid side effects and outside manipulation.
+<b class="fc">&nbsp;            success = tasks.add(task.clone());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method validates the task, checking for duplicates.
+&nbsp;     *
+&nbsp;     * @param task The task to be validated.
+&nbsp;     * @return True if the task is valid.
+&nbsp;     */
+&nbsp;    private boolean validate(Task task) {
+<b class="fc">&nbsp;        return tasksDoNotContain(task);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This method checks if the task is already in the list of tasks.
+&nbsp;     *
+&nbsp;     * @param task The task to be checked.
+&nbsp;     * @return True if the task is not in the list of tasks.
+&nbsp;     */
+&nbsp;    private boolean tasksDoNotContain(Task task) {
+<b class="fc">&nbsp;        return !tasks.contains(task);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * This methos checks if the organization has an employee with the given email.
+&nbsp;     *
+&nbsp;     * @param email The email to be checked.
+&nbsp;     * @return True if the organization has an employee with the given email.
+&nbsp;     */
+&nbsp;    public boolean anyEmployeeHasEmail(String email) {
+<b class="fc">&nbsp;        boolean result = false;</b>
+<b class="fc">&nbsp;        for (Employee employee : employees) {</b>
+<b class="fc">&nbsp;            if (employee.hasEmail(email)) {</b>
+<b class="fc">&nbsp;                result = true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return result;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o) {
+<b class="fc">&nbsp;        if (this == o) {</b>
+<b class="fc">&nbsp;            return true;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (!(o instanceof Organization)) {</b>
+<b class="fc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Organization that = (Organization) o;</b>
+<b class="fc">&nbsp;        return vatNumber.equals(that.vatNumber);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="fc">&nbsp;        return Objects.hash(vatNumber);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //add employee to organization
+&nbsp;    public boolean addEmployee(Employee employee) {
+<b class="fc">&nbsp;        boolean success = false;</b>
+<b class="fc">&nbsp;        if (validateEmployee(employee)) {</b>
+<b class="fc">&nbsp;            success = employees.add(employee);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean validateEmployee(Employee employee) {
+<b class="fc">&nbsp;        return employeesDoNotContain(employee);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean employeesDoNotContain(Employee employee) {
+<b class="fc">&nbsp;        return !employees.contains(employee);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Clone organization
+&nbsp;    public Organization clone() {
+<b class="fc">&nbsp;        Organization clone = new Organization(this.vatNumber);</b>
+<b class="fc">&nbsp;        clone.name = (this.name);</b>
+<b class="fc">&nbsp;        clone.website = (this.website);</b>
+<b class="fc">&nbsp;        clone.phone = (this.phone);</b>
+<b class="fc">&nbsp;        clone.email = (this.email);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (Employee in : this.employees) {</b>
+<b class="fc">&nbsp;            clone.employees.add(in.clone());</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        for (Task in : this.tasks) {</b>
+<b class="fc">&nbsp;            clone.tasks.add(in.clone());</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return clone;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

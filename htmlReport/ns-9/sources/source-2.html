@@ -1,0 +1,184 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GreenSpaceDTO</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.mapper.dto</a>
+</div>
+
+<h1>Coverage Summary for Class: GreenSpaceDTO (pt.ipp.isep.dei.esoft.project.mapper.dto)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GreenSpaceDTO</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.mapper.dto;
+&nbsp;
+&nbsp;/**
+&nbsp; * Data Transfer Object (DTO) for representing Green Spaces.
+&nbsp; * This class holds information about a Green Space, including its name, address, area, and type.
+&nbsp; */
+&nbsp;public class GreenSpaceDTO {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The name of the Green Space.
+&nbsp;     */
+&nbsp;    private String name;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The address of the Green Space.
+&nbsp;     */
+&nbsp;    private String address;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The area of the Green Space in hectares.
+&nbsp;     */
+&nbsp;    private int area;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The type of the Green Space.
+&nbsp;     */
+&nbsp;    private String  type;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a GreenSpaceDTO object with the provided parameters.
+&nbsp;     *
+&nbsp;     * @param name The name of the Green Space.
+&nbsp;     * @param address The address of the Green Space.
+&nbsp;     * @param area The area of the Green Space in square meters.
+&nbsp;     * @param type The type of the Green Space.
+&nbsp;     */
+<b class="nc">&nbsp;    public GreenSpaceDTO(String name, String address, int area, String type) {</b>
+<b class="nc">&nbsp;        this.name = name;</b>
+<b class="nc">&nbsp;        this.address = address;</b>
+<b class="nc">&nbsp;        this.area = area;</b>
+<b class="nc">&nbsp;        this.type = type;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the name of the Green Space.
+&nbsp;     *
+&nbsp;     * @return The name of the Green Space.
+&nbsp;     */
+&nbsp;    public String getName() {
+<b class="nc">&nbsp;        return name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the address of the Green Space.
+&nbsp;     *
+&nbsp;     * @return The address of the Green Space.
+&nbsp;     */
+&nbsp;    public String getAddress() {
+<b class="nc">&nbsp;        return address;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the area of the Green Space.
+&nbsp;     *
+&nbsp;     * @return The area of the Green Space in square meters.
+&nbsp;     */
+&nbsp;    public int getArea() {
+<b class="nc">&nbsp;        return area;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the type of the Green Space.
+&nbsp;     *
+&nbsp;     * @return The type of the Green Space.
+&nbsp;     */
+&nbsp;    public String getType() {
+<b class="nc">&nbsp;        return type;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

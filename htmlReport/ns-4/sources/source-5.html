@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > Repositories</title>
+  <title>Coverage Report > GSTask</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,18 +19,15 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository</a>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
 </div>
 
-<h1>Coverage Summary for Class: Repositories (pt.ipp.isep.dei.esoft.project.repository)</h1>
+<h1>Coverage Summary for Class: GSTask (pt.ipp.isep.dei.esoft.project.domain)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -45,41 +42,97 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">Repositories</td>
+  <td class="name">GSTask</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/1)
+    (20/20)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    85,7%
   </span>
   <span class="absValue">
-    (0/10)
+    (24/28)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    91,9%
   </span>
   <span class="absValue">
-    (0/2)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/22)
+    (68/74)
   </span>
 </td>
 </tr>
-
+  <tr>
+    <td class="name">GSTask$DegreeOfUrgency</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GSTask$GSTaskStatus</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (24/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85,7%
+  </span>
+  <span class="absValue">
+    (24/28)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (72/78)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -87,69 +140,365 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.repository;
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
 &nbsp;
-&nbsp;public class Repositories {
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;import java.io.InputStream;
+&nbsp;import java.io.Serializable;
+&nbsp;import java.util.Calendar;
+&nbsp;import java.util.Properties;
 &nbsp;
-&nbsp;    private static Repositories instance;
-&nbsp;    private final OrganizationRepository organizationRepository;
-&nbsp;    private final TaskCategoryRepository taskCategoryRepository;
-&nbsp;    private final AuthenticationRepository authenticationRepository;
-&nbsp;    private final WaterSuplyPointsCsvRepository waterSuplyPointsCsvRepository;
-&nbsp;    private final JobRepository jobRepository;
-&nbsp;    private final CollaboratorRepository collaboratorRepository;
-&nbsp;    private final SkillRepository skillRepository;
-&nbsp;    private final TeamRepository teamRepository;
+&nbsp;/**
+&nbsp; * Represents a Green Space Task (GSTask) in the system.
+&nbsp; * This class manages the details and lifecycle of a task assigned to a Green Space.
+&nbsp; */
+&nbsp;public class GSTask implements Serializable {
 &nbsp;
-<b class="nc">&nbsp;    private Repositories() {</b>
-<b class="nc">&nbsp;        organizationRepository = new OrganizationRepository();</b>
-<b class="nc">&nbsp;        taskCategoryRepository = new TaskCategoryRepository();</b>
-<b class="nc">&nbsp;        authenticationRepository = new AuthenticationRepository();</b>
-<b class="nc">&nbsp;        waterSuplyPointsCsvRepository = new WaterSuplyPointsCsvRepository(false);</b>
-<b class="nc">&nbsp;        jobRepository = new JobRepository();</b>
-<b class="nc">&nbsp;        collaboratorRepository = new CollaboratorRepository();</b>
-<b class="nc">&nbsp;        skillRepository = new SkillRepository();</b>
-<b class="nc">&nbsp;        teamRepository = new TeamRepository();</b>
+&nbsp;    /**
+&nbsp;     * The title of the task.
+&nbsp;     */
+&nbsp;    private String title;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The description of the task.
+&nbsp;     */
+&nbsp;    private String description;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The degree of urgency of the task (Low, Medium, High).
+&nbsp;     */
+&nbsp;    private DegreeOfUrgency degreeOfUrgency;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The expected duration of the task in working hours.
+&nbsp;     */
+&nbsp;    private int expectedDuration;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The GreenSpace to which the task is assigned.
+&nbsp;     */
+&nbsp;    private GreenSpace greenSpace;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The status of the GSTask (Pending, Processed, Planned, Postponed, Canceled, Done).
+&nbsp;     */
+&nbsp;    private GSTaskStatus status;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The starting date of the task.
+&nbsp;     */
+&nbsp;    private Calendar startingDate;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The team assigned to the task.
+&nbsp;     */
+&nbsp;    private Team assignedTeam;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Enum for the degree of urgency of a task.
+&nbsp;     */
+<b class="fc">&nbsp;    private enum DegreeOfUrgency {</b>
+<b class="fc">&nbsp;        Low, Medium, High</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public static Repositories getInstance() {
-<b class="nc">&nbsp;        if (instance == null) {</b>
-<b class="nc">&nbsp;            synchronized (Repositories.class) {</b>
-<b class="nc">&nbsp;                instance = new Repositories();</b>
-<b class="nc">&nbsp;            }</b>
+&nbsp;    /**
+&nbsp;     * Enum for the status of a GSTask.
+&nbsp;     */
+<b class="fc">&nbsp;    private enum GSTaskStatus {</b>
+<b class="fc">&nbsp;        Pending, Processed, Planned, Postponed, Canceled, Done</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new GSTask with the provided parameters.
+&nbsp;     *
+&nbsp;     * @param title The title of the task.
+&nbsp;     * @param description The description of the task.
+&nbsp;     * @param degreeOfUrgency The degree of urgency of the task (Low, Medium, High).
+&nbsp;     * @param expectedDuration The expected duration of the task in hours.
+&nbsp;     * @param selectedGreenSpace The GreenSpace to which the task is assigned.
+&nbsp;     */
+&nbsp;    public GSTask(String title, String description, String degreeOfUrgency, int expectedDuration, GreenSpace selectedGreenSpace)
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        setTitle(title);</b>
+<b class="fc">&nbsp;        this.description = description;</b>
+<b class="fc">&nbsp;        setDegreeOfUrgency(degreeOfUrgency);</b>
+<b class="fc">&nbsp;        setExpectedDuration(expectedDuration);</b>
+<b class="fc">&nbsp;        this.greenSpace = selectedGreenSpace;</b>
+<b class="fc">&nbsp;        this.status = GSTaskStatus.Pending;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the title of the task.
+&nbsp;     *
+&nbsp;     * @return The title of the task.
+&nbsp;     */
+&nbsp;    public String getTitle() {
+<b class="fc">&nbsp;        return title;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the description of the task.
+&nbsp;     *
+&nbsp;     * @return The description of the task.
+&nbsp;     */
+&nbsp;    public String getDescription() {
+<b class="fc">&nbsp;        return description;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the description of the task.
+&nbsp;     *
+&nbsp;     * @return The description of the task.
+&nbsp;     */
+&nbsp;    public String getDegreeOfUrgency() {
+<b class="fc">&nbsp;        return degreeOfUrgency.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the expected duration of the task.
+&nbsp;     *
+&nbsp;     * @return The expected duration of the task in hours.
+&nbsp;     */
+&nbsp;    public int getExpectedDuration() {
+<b class="fc">&nbsp;        return expectedDuration;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the GreenSpace to which the task is assigned.
+&nbsp;     *
+&nbsp;     * @return The GreenSpace object.
+&nbsp;     */
+&nbsp;    public GreenSpace getGreenSpace() {
+<b class="fc">&nbsp;        return greenSpace;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the starting date of the task.
+&nbsp;     *
+&nbsp;     * @return The starting date of the task.
+&nbsp;     */
+&nbsp;    public Calendar getStartingDate() {
+<b class="fc">&nbsp;        return startingDate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the status of the task.
+&nbsp;     *
+&nbsp;     * @return The status of the task.
+&nbsp;     */
+&nbsp;    public String getStatus() {
+<b class="fc">&nbsp;        return status.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the title of the task.
+&nbsp;     *
+&nbsp;     * @param title The title of the task.
+&nbsp;     * @throws IllegalArgumentException If the title is blank or contains special characters.
+&nbsp;     */
+&nbsp;    private void setTitle(String title)
+&nbsp;    {
+<b class="pc">&nbsp;        if (title.isBlank())</b>
+&nbsp;        {
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Title is empty. Please enter a task title.&quot;);</b>
 &nbsp;        }
-<b class="nc">&nbsp;        return instance;</b>
+&nbsp;
+<b class="fc">&nbsp;        if (title.matches(&quot;[a-zA-Z ]*&quot; )) {</b>
+<b class="fc">&nbsp;            this.title = title.trim();</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Title cannot contain special characters.&quot;);</b>
+&nbsp;        }
 &nbsp;    }
 &nbsp;
-&nbsp;    public OrganizationRepository getOrganizationRepository() {
-<b class="nc">&nbsp;        return organizationRepository;</b>
+&nbsp;    /**
+&nbsp;     * Sets the degree of urgency of the task.
+&nbsp;     *
+&nbsp;     * @param degreeOfUrgency The degree of urgency of the task (Low, Medium, High).
+&nbsp;     * @throws IllegalArgumentException If the degree of urgency is invalid.
+&nbsp;     */
+&nbsp;    private void setDegreeOfUrgency(String degreeOfUrgency)
+&nbsp;    {
+<b class="fc">&nbsp;        if(degreeOfUrgency.equalsIgnoreCase(DegreeOfUrgency.Low.toString()))</b>
+<b class="fc">&nbsp;            this.degreeOfUrgency = DegreeOfUrgency.Low;</b>
+<b class="fc">&nbsp;        else if(degreeOfUrgency.equalsIgnoreCase(DegreeOfUrgency.Medium.toString()))</b>
+<b class="fc">&nbsp;            this.degreeOfUrgency = DegreeOfUrgency.Medium;</b>
+<b class="pc">&nbsp;        else if(degreeOfUrgency.equalsIgnoreCase(DegreeOfUrgency.High.toString()))</b>
+<b class="nc">&nbsp;            this.degreeOfUrgency = DegreeOfUrgency.High;</b>
+<b class="fc">&nbsp;        else throw new IllegalArgumentException(&quot;Invalid degree of urgency.&quot;);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public TaskCategoryRepository getTaskCategoryRepository() {
-<b class="nc">&nbsp;        return taskCategoryRepository;</b>
+&nbsp;    /**
+&nbsp;     * Sets the expected duration of the task.
+&nbsp;     *
+&nbsp;     * @param expectedDuration The expected duration of the task in hours.
+&nbsp;     * @throws IllegalArgumentException If the expected duration is not a positive integer.
+&nbsp;     */
+&nbsp;    private void setExpectedDuration(int expectedDuration)
+&nbsp;    {
+<b class="fc">&nbsp;        if (expectedDuration &gt; 0) {</b>
+<b class="fc">&nbsp;            this.expectedDuration = expectedDuration;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Expected duration must be a positive integer.&quot;);</b>
+&nbsp;        }
 &nbsp;    }
 &nbsp;
-&nbsp;    public AuthenticationRepository getAuthenticationRepository() {
-<b class="nc">&nbsp;        return authenticationRepository;</b>
+&nbsp;    /**
+&nbsp;     * Sets the status of the task to &quot;Processed&quot;.
+&nbsp;     */
+&nbsp;    public void setProcessed()
+&nbsp;    {
+<b class="fc">&nbsp;        this.status = GSTaskStatus.Processed;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public WaterSuplyPointsCsvRepository getWaterSuplyPointsCsvRepository() {
-<b class="nc">&nbsp;        return waterSuplyPointsCsvRepository;</b>
+&nbsp;    /**
+&nbsp;     * Plans the task with the specified starting date.
+&nbsp;     *
+&nbsp;     * @param startingDate The starting date of the task in the format &quot;year/month/day&quot;.
+&nbsp;     * @throws IllegalArgumentException If the starting date format is invalid or the date is in the past.
+&nbsp;     */
+&nbsp;    public void plan(String startingDate)
+&nbsp;    {
+<b class="fc">&nbsp;        this.status = GSTaskStatus.Planned;</b>
+<b class="fc">&nbsp;        setStartingDate(startingDate);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public JobRepository getJobRepository() {
-<b class="nc">&nbsp;        return jobRepository;</b>
+&nbsp;    /**
+&nbsp;     * Sets the starting date of the task.
+&nbsp;     *
+&nbsp;     * @param startingDate The starting date of the task in the format &quot;year/month/day&quot;.
+&nbsp;     * @throws IllegalArgumentException If the starting date format is invalid, contains non-numeric characters,
+&nbsp;     *                                  or the date is in the past.
+&nbsp;     */
+&nbsp;    private void setStartingDate(String startingDate) {
+<b class="fc">&nbsp;        String[] parts = startingDate.trim().split(&quot;/&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (parts.length != 3) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid starting date format. Use year/month/day.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        for (String part : parts) {</b>
+<b class="fc">&nbsp;            if (!part.matches(&quot;\\d+&quot;)) {</b>
+<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Non-numeric value found in starting date.&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        int year = Integer.parseInt(parts[0]);</b>
+<b class="fc">&nbsp;        int month = Integer.parseInt(parts[1]);</b>
+<b class="fc">&nbsp;        int day = Integer.parseInt(parts[2]);</b>
+<b class="fc">&nbsp;        Calendar cal = Calendar.getInstance();</b>
+<b class="fc">&nbsp;        cal.set(Calendar.YEAR, year);</b>
+<b class="fc">&nbsp;        cal.set(Calendar.MONTH, month - 1);</b>
+<b class="fc">&nbsp;        cal.set(Calendar.DAY_OF_MONTH, day);</b>
+<b class="fc">&nbsp;        cal.set(Calendar.HOUR_OF_DAY, 0);</b>
+<b class="fc">&nbsp;        cal.set(Calendar.MINUTE, 0);</b>
+<b class="fc">&nbsp;        cal.set(Calendar.SECOND, 0);</b>
+<b class="fc">&nbsp;        cal.set(Calendar.MILLISECOND, 0);</b>
+&nbsp;
+<b class="fc">&nbsp;        Calendar currentDate = Calendar.getInstance();</b>
+&nbsp;
+<b class="fc">&nbsp;        if(cal.before(currentDate))</b>
+&nbsp;        {
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Task starting date must be after the current date.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        this.startingDate = cal;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public CollaboratorRepository getCollaboratorRepository() {
-<b class="nc">&nbsp;        return collaboratorRepository;</b>
+&nbsp;    /**
+&nbsp;     * Checks if the task is pending.
+&nbsp;     *
+&nbsp;     * @return True if the task is pending, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean isPending()
+&nbsp;    {
+<b class="fc">&nbsp;        return this.status.equals(GSTaskStatus.Pending);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public SkillRepository getSkillRepository(){
-<b class="nc">&nbsp;        return skillRepository;</b>
+&nbsp;    /**
+&nbsp;     * Checks if the GreenSpace associated with the task has the specified user email.
+&nbsp;     *
+&nbsp;     * @param email The email address to check.
+&nbsp;     * @return True if the GreenSpace has the specified email, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean hasUserEmail(String email)
+&nbsp;    {
+<b class="fc">&nbsp;        return this.greenSpace.hasUserEmail(email);</b>
 &nbsp;    }
 &nbsp;
-<b class="nc">&nbsp;    public TeamRepository getTeamRepository() {return teamRepository;}</b>
+&nbsp;    /**
+&nbsp;     * Checks if the task is assigned to a team.
+&nbsp;     *
+&nbsp;     * @return True if the task is assigned to a team, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean hasTeam()
+&nbsp;    {
+<b class="fc">&nbsp;        return this.assignedTeam != null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the task belongs to the specified team.
+&nbsp;     *
+&nbsp;     * @param selectedTeam The team to check against.
+&nbsp;     * @return True if the task belongs to the specified team, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean belongsToTeam(Team selectedTeam)
+&nbsp;    {
+<b class="fc">&nbsp;        if(this.assignedTeam == null)</b>
+<b class="fc">&nbsp;            return false;</b>
+&nbsp;        else
+<b class="fc">&nbsp;            return this.assignedTeam.equals(selectedTeam);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Assigns a team to the task and sends an email notification to the team members.
+&nbsp;     *
+&nbsp;     * @param selectedTeam The team to assign to the task.
+&nbsp;     * @return The updated GSTask object.
+&nbsp;     */
+&nbsp;    public GSTask assignTeam(Team selectedTeam) {
+<b class="fc">&nbsp;        this.assignedTeam = selectedTeam;</b>
+&nbsp;
+&nbsp;        InputStream inputStream;
+&nbsp;
+&nbsp;        try{
+<b class="fc">&nbsp;            Properties props = new Properties();</b>
+&nbsp;
+<b class="fc">&nbsp;            inputStream = getClass().getClassLoader().getResourceAsStream(&quot;config.properties&quot;);</b>
+<b class="pc">&nbsp;            if (inputStream != null) {</b>
+<b class="fc">&nbsp;                props.load(inputStream);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                throw new FileNotFoundException(&quot;property file not found in the classpath&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            String className = props.getProperty(&quot;EmailGenerator.Class&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;            Class&lt;?&gt; oClass = Class.forName(className);</b>
+&nbsp;
+<b class="fc">&nbsp;            EmailGenerator eg = (EmailGenerator) oClass.newInstance();</b>
+&nbsp;
+<b class="pc">&nbsp;            if(!eg.sendEmail(this.title, this.startingDate, this.assignedTeam))</b>
+&nbsp;            {
+<b class="nc">&nbsp;                System.out.println(&quot;Error sending email to collaborators.&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        catch (Exception e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Exception: &quot; + e);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return this;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates a clone of the current GSTask object.
+&nbsp;     *
+&nbsp;     * @return A new GSTask object with the same attributes as the original.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public GSTask clone()
+&nbsp;    {
+<b class="fc">&nbsp;        return new GSTask(this.title, this.description, this.degreeOfUrgency.toString(), this.expectedDuration, this.greenSpace);</b>
+&nbsp;    }
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -174,7 +523,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-12 20:04</div>
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
 </div>
 </body>
 </html>

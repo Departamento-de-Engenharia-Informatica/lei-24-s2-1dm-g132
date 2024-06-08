@@ -1,0 +1,255 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > CreateTaskUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.ui.console.menu.admin</a>
+</div>
+
+<h1>Coverage Summary for Class: CreateTaskUI (pt.ipp.isep.dei.esoft.project.ui.console.menu.admin)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CreateTaskUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/49)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.ui.console.menu.admin;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.application.controller.CreateTaskController;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Task;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;/**
+&nbsp; * Create Task UI (console). This option is only available for administrators for demonstration purposes.
+&nbsp; */
+&nbsp;public class CreateTaskUI implements Runnable {
+&nbsp;
+&nbsp;    private final CreateTaskController controller;
+&nbsp;    private String taskReference;
+&nbsp;    private String taskDescription;
+&nbsp;    private String taskInformalDescription;
+&nbsp;    private String taskTechnicalDescription;
+&nbsp;    private int taskDuration;
+&nbsp;    private double taskCost;
+&nbsp;    private String taskCategoryDescription;
+&nbsp;    private String empployeeEmail;
+&nbsp;
+<b class="nc">&nbsp;    public CreateTaskUI() {</b>
+<b class="nc">&nbsp;        controller = new CreateTaskController();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private CreateTaskController getController() {
+<b class="nc">&nbsp;        return controller;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void run() {
+<b class="nc">&nbsp;        System.out.println(&quot;\n\n--- Create Task ------------------------&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        taskCategoryDescription = displayAndSelectTaskCategory();</b>
+&nbsp;
+<b class="nc">&nbsp;        requestData();</b>
+&nbsp;
+<b class="nc">&nbsp;        submitData();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void submitData() {
+<b class="nc">&nbsp;        Optional&lt;Task&gt; task = getController().createTask(taskReference, taskDescription, taskInformalDescription,</b>
+&nbsp;                taskTechnicalDescription, taskDuration, taskCost, taskCategoryDescription);
+&nbsp;
+<b class="nc">&nbsp;        if (task.isPresent()) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;\nTask successfully created!&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            System.out.println(&quot;\nTask not created!&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void requestData() {
+&nbsp;
+&nbsp;        //Request the Task Reference from the console
+<b class="nc">&nbsp;        taskReference = requestTaskReference();</b>
+&nbsp;
+&nbsp;        //Request the Task Description from the console
+<b class="nc">&nbsp;        taskDescription = requestTaskDescription();</b>
+&nbsp;
+&nbsp;        //Request the Task Informal Description from the console
+<b class="nc">&nbsp;        taskInformalDescription = requestTaskInformalDescription();</b>
+&nbsp;
+&nbsp;        //Request the Task Technical Description from the console
+<b class="nc">&nbsp;        taskTechnicalDescription = requestTaskTechnicalDescription();</b>
+&nbsp;
+&nbsp;        //Request the Task Duration from the console
+<b class="nc">&nbsp;        taskDuration = requestTaskDuration();</b>
+&nbsp;
+&nbsp;        //Request the Task Cost from the console
+<b class="nc">&nbsp;        taskCost = requestTaskCost();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private double requestTaskCost() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Task Cost: &quot;);</b>
+<b class="nc">&nbsp;        return input.nextDouble();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private int requestTaskDuration() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Task Duration: &quot;);</b>
+<b class="nc">&nbsp;        return input.nextInt();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String requestTaskTechnicalDescription() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Task Technical Description: &quot;);</b>
+<b class="nc">&nbsp;        return input.nextLine();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String requestTaskInformalDescription() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Task Informal Description: &quot;);</b>
+<b class="nc">&nbsp;        return input.nextLine();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String requestTaskDescription() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Task Description: &quot;);</b>
+<b class="nc">&nbsp;        return input.nextLine();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String requestTaskReference() {
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Task Reference: &quot;);</b>
+<b class="nc">&nbsp;        return input.nextLine();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String displayAndSelectTaskCategory() {
+&nbsp;        //Display the list of task categories
+<b class="nc">&nbsp;        List&lt;TaskCategory&gt; taskCategories = controller.getTaskCategories();</b>
+&nbsp;
+<b class="nc">&nbsp;        int listSize = taskCategories.size();</b>
+<b class="nc">&nbsp;        int answer = -1;</b>
+&nbsp;
+<b class="nc">&nbsp;        Scanner input = new Scanner(System.in);</b>
+&nbsp;
+<b class="nc">&nbsp;        while (answer &lt; 1 || answer &gt; listSize) {</b>
+<b class="nc">&nbsp;            displayTaskCategoryOptions(taskCategories);</b>
+<b class="nc">&nbsp;            System.out.print(&quot;Select a task category: &quot;);</b>
+<b class="nc">&nbsp;            answer = input.nextInt();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        String description = taskCategories.get(answer - 1).getDescription();</b>
+<b class="nc">&nbsp;        return description;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void displayTaskCategoryOptions(List&lt;TaskCategory&gt; taskCategories) {
+&nbsp;        //display the task categories as a menu with number options to select
+<b class="nc">&nbsp;        int i = 1;</b>
+<b class="nc">&nbsp;        for (TaskCategory taskCategory : taskCategories) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;  &quot; + i + &quot; - &quot; + taskCategory.getDescription());</b>
+<b class="nc">&nbsp;            i++;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>
