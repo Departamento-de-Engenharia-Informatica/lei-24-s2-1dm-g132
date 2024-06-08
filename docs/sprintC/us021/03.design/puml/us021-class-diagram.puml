@@ -9,125 +9,138 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class AddEntryToDoUI
-{
+package UI {
+    class AddEntryToDoUI
+    {
 
+    }
 }
 
-class AddEntryToDoController
-{
-    + AddEntryToDoController()
-    + getGreenSpaces()
-    + getSelectedGreenSpace(i)
-    + addEntry(taskDto)
+package Controller {
+    class AddEntryToDoController
+    {
+        + AddEntryToDoController()
+        + getGreenSpaces()
+        + getSelectedGreenSpace(i)
+        + addEntry(taskDto)
+    }
 }
 
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
+package Domain {
+    package Repository{
+
+    class Repositories
+    {
+        - Repositories()
+        + getInstance() : Repositories
+        + getGreenSpaceRepository()
+        + getToDoList()
+    }
+
+    class GreenSpaceRepository
+        {
+            - List<GreenSpace> greenSpacesList
+            - List<GreenSpace> associatedGreenSpacesList
+            + getGreenSpaces(email)
+            + getSelectedGreenSpace(i)
+        }
+
+    class ToDoList
+    {
+        - add(createdTask)
+        + addEntry(taskDto, selectedGreenSpace)
+    }
+    }
+    package Model {
+    class UserSession
+    {
+        + getUserEmail()
+    }
+
+    class GreenSpace
+    {
+        - String name
+        - String type
+        - int area
+        - String address
+        - String gsmEmail
+        + hasUserEmail(email)
+    }
+
+    class Task
+    {
+        - String title
+        - String description
+        - int expectedDuration
+        - Calendar startingDate
+        + Task(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
+    }
+
+    enum DegreeOfUrgency
+    {
+        Low
+        Medium
+        High
+    }
+
+    enum TaskStatus
+    {
+        Pending
+        Processed
+        Planned
+        Postponed
+        Canceled
+        Done
+    }
+    class ApplicationSession
+    {
+        + static getInstance()
+        + getCurrentSession()
+    }
+    }
 }
 
-class Repositories
-{
-    - Repositories()
-    + getInstance() : Repositories
-    + getGreenSpaceRepository()
-    + getToDoList()
-}
+package Mapper {
+    class GreenSpaceMapper
+    {
+        - List<GreenSpaceDto> associatedGreenSpacesListDto
+        + toDTO(associatedGreenSpacesList)
+        - toDTO(obj)
+    }
 
-class UserSession
-{
-    + getUserEmail()
-}
+    class TaskMapper
+    {
+        + toModel(taskDto, selectedGreenSpace)
+    }
 
-class GreenSpaceRepository
-{
-    - List<GreenSpace> greenSpacesList
-    - List<GreenSpace> associatedGreenSpacesList
-    + getGreenSpaces(email)
-    + getSelectedGreenSpace(i)
-}
+package DTO {
+    class GreenSpaceDto
+        {
+            - String name
+            - String type
+            - int area
+            - String address
+            + GreenSpaceDto(name, type, area, address)
+        }
 
-class GreenSpace
-{
-    - String name
-    - String type
-    - int area
-    - String address
-    - String gsmEmail
-    + hasUserEmail(email)
-}
-
-class GreenSpaceMapper
-{
-    - List<GreenSpaceDto> associatedGreenSpacesListDto
-    + toDTO(associatedGreenSpacesList)
-    - toDTO(obj)
-}
-
-class GreenSpaceDto
-{
-    - String name
-    - String type
-    - int area
-    - String address
-    + GreenSpaceDto(name, type, area, address)
-}
-
-class ToDoList
-{
-    - add(createdTask)
-    + addEntry(taskDto, selectedGreenSpace)
-}
-
-class Task
-{
-    - String title
-    - String description
-    - int expectedDuration
-    - Calendar startingDate
-    + Task(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
-}
-
-enum DegreeOfUrgency
-{
-    Low
-    Medium
-    High
-}
-
-enum GSTaskStatus
-{
-    Pending
-    Processed
-    Planned
-    Postponed
-    Canceled
-    Done
-}
-
-class TaskMapper
-{
-    + toModel(taskDto, selectedGreenSpace)
-}
-
-class TaskDto
-{
-    - String title
-    - String description
-    - String degreeOfUrgency
-    - int expectedDuration
-    - Calendar startingDate
-    + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
-    + getTitle()
-    + getDescription()
-    + getDegreeOfUrgency()
-    + getExpectedDuration()
+    class TaskDto
+    {
+        - String title
+        - String description
+        - String degreeOfUrgency
+        - int expectedDuration
+        - Calendar startingDate
+        + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace)
+        + getTitle()
+        + getDescription()
+        + getDegreeOfUrgency()
+        + getExpectedDuration()
+    }
+    }
 }
 
 Task +-- DegreeOfUrgency
-Task +-- GSTaskStatus
+Task +-- TaskStatus
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
