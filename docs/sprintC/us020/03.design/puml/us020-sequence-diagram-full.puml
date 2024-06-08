@@ -8,13 +8,16 @@ autonumber
 actor "GSM" as GSM
 participant ":RegisterGreenSpaceUI" as UI
 participant ":RegisterGreenSpaceController" as CTRL
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSION
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "GreenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
 participant "GreenSpace\n:GreenSpace" as GreenSpace
 participant "GreenSpaceMapper\n:GreenSpaceMapper" as GreenSpaceMapper
 participant "GreenSpaceList\n:List<GreenSpace>" as GreenSpaceList
-participant "greenSpaceDto\n:GreenSpaceDto" as GreenSpaceDto
+
 
 activate GSM
 
@@ -38,21 +41,39 @@ activate GSM
 
         CTRL -> CTRL : getGreenSpaceByName(name)
 
+        CTRL -> _APP : getInstance()
+
+        activate _APP
+
+        _APP -> CTRL : appSession
+
+        deactivate _APP
+
+        CTRL -> APP : getCurrentSession()
+
+        activate APP
+
+        APP -> CTRL : currentSession
+
+        deactivate APP
+
+
+
         CTRL -> RepositorySingleton : getInstance()
 
         activate RepositorySingleton
 
-        RepositorySingleton -> CTRL : Repositories
+        RepositorySingleton -> CTRL : getGreenSpaceRepository()
 
         deactivate RepositorySingleton
 
-        CTRL -> PLAT : getGreenSpaceRepository()
+        CTRL -> PLAT : getGreenSpaceName()
 
-        activate PLAT
+                activate PLAT
 
-        PLAT -> CTRL : GreenSpaceRepository
+                PLAT -> CTRL : GreenSpaceName
 
-        deactivate PLAT
+                deactivate PLAT
 
         CTRL -> GreenSpaceRepository : getGreenSpaceByName(name)
 
@@ -65,6 +86,10 @@ activate GSM
         GreenSpaceList -> GreenSpaceRepository : GreenSpaceList
 
         deactivate GreenSpaceList
+
+        GreenSpaceRepository -> GreenSpaceList** : Create
+
+        loop for each greenSpace in GreenSpaceList
 
         GreenSpaceRepository -> GreenSpaceMapper : dtoGreenSpaces(GreenSpace)
 
@@ -85,6 +110,8 @@ activate GSM
        activate GreenSpaceList
 
        deactivate GreenSpaceList
+
+       end
 
        GreenSpaceMapper -> GreenSpaceRepository : greenSpacedto
 
@@ -120,3 +147,57 @@ activate GSM
         deactivate GSM
 
 @enduml
+        UI -> CTRL : getTasks(teamsDTO, startDate, endDate)
+            activate CTRL
+
+        CTRL -> TaskRepository : getTasks(teamsDTO, startDate, endDate)
+            activate TaskRepository
+
+            TaskRepository -> TasksList ** : create()
+            loop for each task
+                opt assignedTeam exists in teamsDTO
+                    TaskRepository -> Task : betweenDates(startDate, endDate)
+                    activate Task
+
+                    Task --> TaskRepository : true/false
+                    deactivate Task
+
+                    opt betweenDates == true
+                        TaskRepository -> TasksList : add(task)
+                        activate TasksList
+                        deactivate TasksList
+                    end opt
+
+                end opt
+
+            end loop
+
+            TaskRepository --> CTRL : tasks
+            deactivate TaskRepository
+
+        CTRL -> TaskMapper : toDTO(tasks)
+        activate TaskMapper
+
+        TaskMapper -> TasksListDTO ** : create()
+        loop for each task in TaskList
+        TaskMapper -> TasksList : obj = get(i)
+        activate TasksList
+        deactivate TasksList
+
+        TaskMapper -> TaskMapper : objDTO = toDTO(obj)
+        activate TaskMapper
+
+        TaskMapper -> TaskDTO ** : create(...)
+        deactivate TaskMapper
+
+        TaskMapper -> TasksListDTO : add(objDTO)
+        activate TasksListDTO
+        deactivate TasksListDTO
+
+        end loop
+
+        TaskMapper --> CTRL : tasksDTO
+        deactivate TaskMapper
+
+    CTRL --> UI : tasksDTO
+    deactivate CTRL

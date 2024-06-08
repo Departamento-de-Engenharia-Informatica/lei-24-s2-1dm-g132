@@ -9,6 +9,9 @@ autonumber
 actor "GSM" as GSM
 participant ":RegisterGreenSpaceUI" as UI
 participant ":RegisterGreenSpaceController" as CTRL
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSION
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "GreenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
@@ -35,17 +38,25 @@ activate GSM
 
     UI -> CTRL : getGreenSpacesList()
     activate CTRL
+    CTRL -> _APP : getInstance()
+    activate _APP
+    _APP -> CTRL : appSession
+    deactivate _APP
+    CTRL -> APP : getCurrentSession()
+    activate APP
+    APP -> CTRL : currentSession
+    deactivate APP
     CTRL -> RepositorySingleton : getInstance()
     activate RepositorySingleton
-    RepositorySingleton --> CTRL : repositories
-    deactivate RepositorySingleton
+    RepositorySingleton -> CTRL : repositories
+       deactivate RepositorySingleton
+       CTRL -> PLAT : getGreenSpaceRepository()
+         activate PLAT
+            PLAT --> CTRL : GreenSpaceRepository
+            deactivate PLAT
+            CTRL -> GreenSpaceRepository : getGreenSpaceList()
 
-    CTRL -> PLAT : getGreenSpaceRepository()
-    activate PLAT
-    PLAT --> CTRL : GreenSpaceRepository
-    deactivate PLAT
 
-    CTRL -> GreenSpaceRepository : getGreenSpaceList()
     activate GreenSpaceRepository
         GreenSpaceRepository -> GreenSpaceList : getGreenSpace()
 
@@ -54,6 +65,10 @@ activate GSM
         GreenSpaceList -> GreenSpaceRepository : GreenSpaceList
 
         deactivate GreenSpaceList
+
+        GreenSpaceRepository -> GreenSpaceList** : UpdateGreenSpaceList()
+
+        loop for each GreenSpace
 
         GreenSpaceRepository -> GreenSpaceMapper : dtoGreenSpaces(GreenSpace)
 
@@ -74,6 +89,8 @@ activate GSM
        activate GreenSpaceList
 
        deactivate GreenSpaceList
+
+       end
 
        GreenSpaceMapper -> GreenSpaceRepository : greenSpaceListdto
 
