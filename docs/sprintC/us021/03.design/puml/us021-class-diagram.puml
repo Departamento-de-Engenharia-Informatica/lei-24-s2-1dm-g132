@@ -158,7 +158,6 @@ ToDoList ..> TaskMapper
 
 TaskMapper ..> TaskDto
 TaskMapper ..> Task
-TaskDto "*" --> "1" GreenSpace
 
 GreenSpaceMapper ..> GreenSpaceDto
 GreenSpaceMapper ..> GreenSpace
