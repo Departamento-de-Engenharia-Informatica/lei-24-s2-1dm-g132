@@ -19,6 +19,7 @@ activate GSM
 
     GSM -> System : selects an entry
     activate System
+loop answer == yes
 
         System --> GSM : shows Vehicles list and asks to select vehicle
     deactivate System
@@ -30,13 +31,14 @@ activate GSM
 GSM -> System : answers yes or no
     activate System
 
-    opt answer is yes
-    System --> GSM : shows Vehicles list and asks to select vehicles
+loop answer == yes
+    System --> GSM : shows Vehicles list and asks to select vehicle
     deactivate System
 
     GSM -> System : selects a vehicle
     activate System
-    end opt
+
+end loop
         System --> GSM : displays operation success
     deactivate System
 

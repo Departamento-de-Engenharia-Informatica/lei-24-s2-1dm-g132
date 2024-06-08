@@ -13,97 +13,43 @@
 
 > "an employee has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities"
 
+>  The Agenda is made
+up of entries that relate to a task (which was previously in the To-Do List),
+the team that will carry out the task, the vehicles/equipment assigned to
+the task, expected duration, and the status (Planned, Postponed, Canceled,
+Done).
 
 **From the client clarifications:**
 
-> **Question:** Hello, I have some questions about the US01: Which information can be introduced to create a new skill?
-Which information is mandatory for creating a new skill?
-Which are the skills accepted? Or should we enable the HRM to introduce anything as a skill?
+> **Question:** should each GSM only be able to assign vehicles to its own entries or every GSM can assign vehicles to every entry, even if the green space associated with the task is not registered with their email?
 > 
-> **Answer:** The skill name;
-The skill name;
-All, it's up to HRM to decide. (special characters or algarisms should not be allowed in the skill name)
-
-
-> **Question:** Good Morning, client
-I wanted to ask a few question:
-Do I need to add skills  by writing them or can I just give a file with all of the skills?
-Does the HRM need to see the confirmation of the sucess of the operation and the skills added or just the sucess of the operation?
-Is there any other possible outcome like if the HMR does not put the requested data, do I need to ask the user to to register a diferent competence?
->  
-> **Answer:** Hi,
-Both are acceptable since the business the same the crucial difference resides in the UX.
-It will depend if you opt to insert one skil or a set of skils in a batch. Maybe some adaptation needed.
-This US is quite simple, atm a skill is simply a name.
-
-> **Question:** What criteria are necessary to register a skill? 
-What type of information does a skill have? When a skill that already exists is created, what should the system do?
-> 
-> **Answer:** The necessary criteria to register a skill include the skill's name, for example:
-pruner,
-heavy vehicle driver,
-phyto-pharmaceutical applicator.
-
-> **Question:**
-Dear client,
-The indentificator of the skill will be the name, or the system will generate authomatically and Id when the manager insert the name?
-> 
-> **Answer:** A skill is just a name, can be a composition os words like "Light Vehicle Driving Licence".
-I have no knowledge about systems IDs.
-
-> **Question:**
-Dear client, which is the difference between collaborator and employ? And employ could have skills? HRM, VFM, GSM and GSU are employers?
-> 
-> **Answer:**
-Employee and collaborator are synonyms.
-
-> **Question:**
-Hello,
-Should the system able the HRM to introduce multiple skills in one interaction before saving all of them?
-> 
-> **Answer:**
-Hi,
-it's not required to do so.
-
-
-
-> **Question:** Where do you want the jobs and skills to be stored and validated?
-
-Do you which to have a skill and job repository or do you want them to be stored in the organization?
-
-
-> 
-> **Answer:**
-Hello,
-the business rules regarding skills and stored were already provided in this forum;
-
-I have no knowledge about repositories.
+> **Answer:** For the sake of simplicity, you can assume that GSM will only manage its Agenda Entries.
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* **AC2:** The name of the skill must be filled in
-* **AC3:** The name of the skill cannot have special characters
+
 ### 1.4. Found out Dependencies
 
-* There are no dependencies
+* There is a dependency on "US022 - Add a new entry in the agenda" as there must be at least one entry to be able to assign vehicles to it.
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
 
-  * name of skill
-
 * Selected data:
+  * a vehicle
+  * an entry from the Agenda
 
 
 **Output Data:**
-
+* List of agenda entries
+* List of vehicles
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram.svg)
+![System Sequence Diagram](svg/us026-system-sequence-diagram.svg)
 
 ### 1.7 Other Relevant Remarks

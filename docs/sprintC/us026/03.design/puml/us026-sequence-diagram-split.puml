@@ -194,87 +194,92 @@ activate UI
 
     CTRL --> UI : vehiclesListDto
     deactivate CTRL
-UI --> GSM : shows Vehicles list and asks to select desired vehicles
-            deactivate UI
-  loop until user selects option 0
-        GSM -> UI : selects a Vehicle
-        activate UI
+  UI --> GSM : shows Vehicles list and asks to select a vehicle
+           deactivate UI
+           GSM -> UI : selects a Vehicle
+           activate UI
 
-            UI -> CTRL : assignVehicle(i)
-            activate CTRL
+           loop until user selects no
 
-                CTRL -> VehicleRepository : getSelectedVehicle(i)
-                activate VehicleRepository
+               UI -> CTRL : assignVehicle(i)
+               activate CTRL
 
-                    VehicleRepository -> vehiclesList : get(i)
-                    activate vehiclesList
+                   CTRL -> VehicleRepository : getSelectedVehicle(i)
+                   activate VehicleRepository
 
-                        vehiclesList --> VehicleRepository : getSelectedVehicle
-                    deactivate vehiclesList
+                       VehicleRepository -> vehiclesList : get(i)
+                       activate vehiclesList
 
-                    VehicleRepository --> CTRL : selectedVehicle
-                    deactivate VehicleRepository
+                           vehiclesList --> VehicleRepository : getSelectedVehicle
+                       deactivate vehiclesList
 
-                    CTRL -> Agenda : possible = checkVehicleSchedule(selectedVehicle, selectedTask)
-                    activate Agenda
+                       VehicleRepository --> CTRL : selectedVehicle
+                       deactivate VehicleRepository
 
-                        Agenda --> vehicleSchedule** : create()
+                       CTRL -> Agenda : possible = checkVehicleSchedule(selectedVehicle, selectedTask)
+                       activate Agenda
 
-                        loop for each known Task
+                           Agenda --> vehicleSchedule** : create()
 
-                            Agenda -> EntriesList : entry = get(i)
-                            activate EntriesList
-                            deactivate EntriesList
+                           loop for each known Task
 
-                            Agenda -> Task : result = belongsToVehicle(selectedVehicle)
-                            activate Task
-                            deactivate Task
+                               Agenda -> EntriesList : entry = get(i)
+                               activate EntriesList
+                               deactivate EntriesList
 
-                            opt result == true
+                               Agenda -> Task : result = belongsToVehicle(selectedVehicle)
+                               activate Task
+                               deactivate Task
 
-                                Agenda -> vehicleSchedule : add(entry)
-                                activate vehicleSchedule
-                                deactivate vehicleSchedule
+                               opt result == true
 
-                            end opt
+                                   Agenda -> vehicleSchedule : add(entry)
+                                   activate vehicleSchedule
+                                   deactivate vehicleSchedule
 
-                        end loop
+                               end opt
 
-                        loop for each object in vehicleSchedule
+                           end loop
 
-                            Agenda -> vehicleSchedule : obj = get(i)
-                            activate vehicleSchedule
-                            deactivate vehicleSchedule
+                           loop for each object in vehicleSchedule
 
-                            Agenda -> Task : obj.hasConflict(selectedTask)
-                            activate Task
-                            deactivate Task
+                               Agenda -> vehicleSchedule : obj = get(i)
+                               activate vehicleSchedule
+                               deactivate vehicleSchedule
 
-                        end loop
+                               Agenda -> Task : obj.hasConflict(selectedTask)
+                               activate Task
+                               deactivate Task
 
-                    deactivate Agenda
+                           end loop
 
-                    opt possible == true
+                       deactivate Agenda
 
-                    CTRL -> Agenda : assignVehicle(selectedTask, selectedVehicle)
-                    activate Agenda
+                       opt possible == true
 
-                        Agenda -> Task : selectedTask.assignVehicle(selectedVehicle)
-                        activate Task
+                       CTRL -> Agenda : assignVehicle(selectedTask, selectedVehicle)
+                       activate Agenda
 
-                            Task --> Agenda : selectedTask
-                            deactivate Task
+                           Agenda -> Task : selectedTask.assignVehicle(selectedVehicle)
+                           activate Task
 
-                        Agenda --> CTRL : selectedTask
-                        deactivate Agenda
+                               Task --> Agenda : selectedTask
+                               deactivate Task
 
-                        end opt
+                           Agenda --> CTRL : selectedTask
+                           deactivate Agenda
 
-                    CTRL --> UI : selectedTask
-                    deactivate CTRL
-end opt
-                UI --> GSM : displays operation success
+                       end opt
 
-        deactivate GSM
+                   CTRL --> UI : selectedTask
+                   deactivate CTRL
 
+
+                   UI --> GSM : Ask user if they want to add another vehicle
+                   GSM -> UI : User response (yes/no)
+
+           end loop
+                              UI --> GSM : displays operation success
+
+           deactivate GSM
 @enduml

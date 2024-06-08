@@ -2,59 +2,101 @@
 
 ## 4. Tests 
 
-**Test 1:** Check that it is not possible to create an instance of the Task class with null values. 
+**Test 1:** Check that a vehicle can be assigned to an Agenda entry.
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureNullIsNotAllowed() {
-		Task instance = new Task(null, null, null, null, null, null, null);
-	}
-	
+	@Test
+    public void ensureVehicleCanBeAssignedToAgendaEntry() {
+    Agenda agenda = new Agenda();
+    Vehicle vehicle = new Vehicle("ABC-123", "Sedan", "Toyota", "Camry");
+    agenda.assignVehicle(vehicle);
 
-**Test 2:** Check that it is not possible to create an instance of the Task class with a reference containing less than five chars - AC2. 
+    assertTrue(agenda.getVehicles().contains(vehicle));
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-		public void ensureReferenceMeetsAC2() {
-		Category cat = new Category(10, "Category 10");
-		
-		Task instance = new Task("Ab1", "Task Description", "Informal Data", "Technical Data", 3, 3780, cat);
-	}
 
-_It is also recommended to organize this content by subsections._ 
+
+**Test 2:** Check that multiple vehicles can be assigned to an
+
+    @Test
+    public void ensureMultipleVehiclesCanBeAssignedToAgendaEntry() {
+    Agenda agenda = new Agenda();
+    Vehicle vehicle1 = new Vehicle("ABC-123", "Sedan", "Toyota", "Camry");
+    Vehicle vehicle2 = new Vehicle("XYZ-789", "SUV", "Ford", "Explorer");
+
+    agenda.assignVehicle(vehicle1);
+    agenda.assignVehicle(vehicle2);
+    
+    assertTrue(agenda.getVehicles().contains(vehicle1));
+    assertTrue(agenda.getVehicles().contains(vehicle2));
+    assertEquals(2, agenda.getVehicles().size());
+    }
+
+**Test 3:** Check that assigning a null vehicle throws an exception.
+   
+    @Test(expected = IllegalArgumentException.class)
+    public void ensureNullVehicleCannotBeAssignedToAgendaEntry() {
+    Agenda agenda = new Agenda();
+    agenda.assignVehicle(null);
+    }
+**Test 4:** Check that the same vehicle cannot be assigned multiple times.
+
+    @Test(expected = IllegalArgumentException.class)    
+    public void ensureSameVehicleCannotBeAssignedMultipleTimes() {
+    Agenda agenda = new Agenda();
+    Vehicle vehicle = new Vehicle("ABC-123", "Sedan", "Toyota", "Camry");
+
+    agenda.assignVehicle(vehicle);
+    agenda.assignVehicle(vehicle); // This should throw an exception
+    }
+
 
 
 ## 5. Construction (Implementation)
 
-### Class CreateTaskController 
+### Class ChangeStatusController
 
 ```java
-public Task createTask(String reference, String description, String informalDescription, String technicalDescription,
-                       Integer duration, Double cost, String taskCategoryDescription) {
+public Task completeTask(String taskReference) {
+    Employee employee = getEmployeeFromSession();
+    Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
+    Agenda agenda = organization.getAgenda();
 
-	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
+    Task task = agenda.getTaskByReference(taskReference)
+            .orElseThrow(() -> new NoSuchElementException("Task with reference " + taskReference + " not found"));
 
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
+    agenda.completeTask(task);
 
-	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
-    
-	return newTask;
+    return task;
+}
+
+private Employee getEmployeeFromSession() {
+    // Method to get the current logged-in employee
+    // Implement according to your authentication system
+}
+
+private OrganizationRepository getOrganizationRepository() {
+    // Method to get the organization repository
+    // Implement according to your system structure
 }
 ```
 
-### Class Organization
+### Class Agenda
 
 ```java
-public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                 String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
-    
-    Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
+ public Agenda() {
+    entriesList = new ArrayList<>();
+}
 
-    addTask(task);
-        
-    return task;
+public Optional<GSTask> addEntry(GSTask selectedTaskClone, String startingDate)
+{
+    Optional<GSTask> optionalValue = Optional.empty();
+
+    if(addTask(selectedTaskClone, startingDate))
+    {
+        optionalValue = Optional.of(selectedTaskClone);
+    }
+
+    return optionalValue;
 }
 ```
 

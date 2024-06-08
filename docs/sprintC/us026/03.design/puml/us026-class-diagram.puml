@@ -103,7 +103,7 @@ class VehicleRepository
 {
     - List<Vehicle> vehiclesList
     + getVehicles()
-    + getSelectedVehicle(i)
+    + getSelectedVehicle(plate)
 }
 
 class VehicleMapper
@@ -121,7 +121,7 @@ class VehicleDto
 
 class Vehicle
 {
-    - List<Vehicle> vehicles
+    - String Plate
 }
 
 class GreenSpace
