@@ -21,19 +21,42 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * LoginUI is the controller class responsible for handling the actions and events
+ * related to the login screen.
+ */
 public class LoginUI {
+
+    /**
+     * The TextField where the user enters their email or username for login.
+     */
     @FXML
     private TextField id;
+
+    /**
+     * The PasswordField where the user enters their password for login.
+     */
     @FXML
     private PasswordField pwd;
 
+    /**
+     * The AuthenticationController responsible for handling the authentication process.
+     */
     private final AuthenticationController ctrl;
 
+    /**
+     * Constructs a new LoginUI object.
+     */
     public LoginUI()
     {
         ctrl = new AuthenticationController();
     }
 
+    /**
+     * Handles the login action event.
+     *
+     * @param actionEvent The ActionEvent triggered by the login button.
+     */
     @FXML
     public void doLogin(ActionEvent actionEvent) {
         boolean success = login();
@@ -55,6 +78,11 @@ public class LoginUI {
         }
     }
 
+    /**
+     * Handles the go back action event.
+     *
+     * @param actionEvent The ActionEvent triggered by the go back button.
+     */
     @FXML
     public void goBack(ActionEvent actionEvent) {
         try{
@@ -86,6 +114,11 @@ public class LoginUI {
         }
     }
 
+    /**
+     * Attempts to login with the credentials provided.
+     *
+     * @return True if the login was successful, false otherwise.
+     */
     private boolean login() {
         String email = id.getText();
         String password = pwd.getText();
@@ -100,6 +133,12 @@ public class LoginUI {
         return success;
     }
 
+    /**
+     * Displays a dialog to select the user role from the available roles.
+     *
+     * @param roles The list of available user roles.
+     * @return The selected UserRoleDTO if a role is chosen, null otherwise.
+     */
     private UserRoleDTO selectsRole(List<UserRoleDTO> roles) {
         if (roles.size() == 1)
             return roles.get(0);
@@ -107,6 +146,12 @@ public class LoginUI {
             return (UserRoleDTO) Utils.showAndSelectOne(roles, "Select the role you want to adopt in this session:");
     }
 
+    /**
+     * Redirects to the appropriate UI based on the selected user role.
+     *
+     * @param role         The selected user role.
+     * @param actionEvent  The ActionEvent triggered by the login button.
+     */
     private void redirectToRoleUI(UserRoleDTO role, ActionEvent actionEvent) {
         if (role.getId().compareTo("GREEN_SPACES_MANAGER") == 0) {
             try{

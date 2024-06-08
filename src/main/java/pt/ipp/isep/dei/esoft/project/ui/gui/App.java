@@ -13,8 +13,17 @@ import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 
 import java.io.IOException;
 
+/**
+ * Main application class for the Green Spaces App.
+ */
 public class App extends Application {
 
+    /**
+     * Starts the Green Spaces App.
+     *
+     * @param stage The primary stage for the application.
+     * @throws IOException If there is an error loading the main menu FXML file.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         Bootstrap bootstrap = new Bootstrap();
@@ -45,6 +54,11 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Main method to launch the application.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         launch();
     }

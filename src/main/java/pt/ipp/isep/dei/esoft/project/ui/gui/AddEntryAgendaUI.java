@@ -21,24 +21,53 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Add Entry to Agenda user interface.
+ */
 public class AddEntryAgendaUI implements Initializable {
 
+    /**
+     * The controller responsible for managing the addition of entries to the agenda.
+     */
     private final AddEntryAgendaController ctrl;
 
+    /**
+     * Choice box for selecting a to-do list entry to be added to the agenda.
+     */
     @FXML
     private ChoiceBox<String> toDoListEntry;
+
+    /**
+     * Label to display information about the selected to-do list entry.
+     */
     @FXML
     private Label toDoListEntryInfo;
+
+    /**
+     * Text field for entering the starting date of the agenda entry.
+     */
     @FXML
     private TextField startingDate;
 
+    /**
+     * Index of the selected to-do list entry in the choice box.
+     */
     private int selectedEntryIndex = -1;
 
+    /**
+     * Constructor for the AddEntryAgendaUI class.
+     * Initializes the controller.
+     */
     public AddEntryAgendaUI()
     {
         ctrl = new AddEntryAgendaController();
     }
 
+    /**
+     * Handles the action event for canceling the agenda entry and returning to the GSM menu.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void cancel(ActionEvent actionEvent) {
         try{
@@ -70,6 +99,11 @@ public class AddEntryAgendaUI implements Initializable {
         }
     }
 
+    /**
+     * Handles the action event for submitting the agenda entry.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void submit(ActionEvent actionEvent) {
         try {
@@ -130,6 +164,12 @@ public class AddEntryAgendaUI implements Initializable {
         }
     }
 
+    /**
+     * Initializes the choice boxes and populates the to-do list entry choice box with available options.
+     *
+     * @param url            The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources specific to this controller.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<GSTaskDTO> gsTaskDTOList = ctrl.getTodoListEntries();

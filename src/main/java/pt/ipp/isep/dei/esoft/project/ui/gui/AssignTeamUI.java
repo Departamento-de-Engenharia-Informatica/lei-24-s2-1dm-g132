@@ -27,28 +27,64 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Assign Team to Agenda Entry user interface.
+ */
 public class AssignTeamUI implements Initializable {
 
+    /**
+     * The controller responsible for managing the assignment of teams to agenda entries.
+     */
     private final AssignTeamController ctrl;
 
+    /**
+     * Choice box for selecting a team to assign to the agenda entry.
+     */
     @FXML
     private ChoiceBox<String> team;
+
+    /**
+     * Choice box for selecting an agenda entry to which the team will be assigned.
+     */
     @FXML
     private ChoiceBox<String> agendaEntry;
+
+    /**
+     * Label to display information about the selected team.
+     */
     @FXML
     private Label teamInfo;
+
+    /**
+     * Label to display information about the selected agenda entry.
+     */
     @FXML
     private Label agendaEntryInfo;
 
+    /**
+     * Index of the selected agenda entry in the choice box.
+     */
     private int selectedEntryIndex = -1;
 
+    /**
+     * Index of the selected team in the choice box.
+     */
     private int selectedTeamIndex = -1;
 
+    /**
+     * Constructor for the AssignTeamUI class.
+     * Initializes the controller.
+     */
     public AssignTeamUI()
     {
         ctrl = new AssignTeamController();
     }
 
+    /**
+     * Handles the action event for canceling the team assignment and returning to the GSM menu.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void cancel(ActionEvent actionEvent) {
         try{
@@ -80,6 +116,11 @@ public class AssignTeamUI implements Initializable {
         }
     }
 
+    /**
+     * Handles the action event for submitting the team assignment.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void submit(ActionEvent actionEvent) {
         try {
@@ -138,6 +179,12 @@ public class AssignTeamUI implements Initializable {
         }
     }
 
+    /**
+     * Initializes the choice boxes and populates them with the available options (agenda entries and teams).
+     *
+     * @param url            The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources specific to this controller.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<GSTaskDTO> gsTaskDTOList = ctrl.getAgendaEntries();

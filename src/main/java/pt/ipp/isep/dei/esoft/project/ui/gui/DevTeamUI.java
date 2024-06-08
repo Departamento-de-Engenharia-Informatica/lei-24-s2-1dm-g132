@@ -14,8 +14,16 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
+/**
+ * Controller class for the Developer Team UI.
+ */
 public class DevTeamUI {
 
+    /**
+     * Handles the action when the "Go Back" button is clicked.
+     *
+     * @param actionEvent The action event that triggered this method.
+     */
     @FXML
     public void goBack(ActionEvent actionEvent) {
         try{
