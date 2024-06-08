@@ -14,23 +14,21 @@ participant "taskRepository\n:TaskRepository" as TaskRepository
 
 activate Employee
 
-    Employee -> UI : asks to postpone an entry in the agenda
+    Employee -> UI : asks to cancel an entry in the agenda
     activate UI
+  UI --> CTRL** : create()
+     UI -> CTRL : getGreenSpaces()
+      activate CTRL
 
-    UI -> CTRL** : create
+      ref over CTRL
+          Get Green Spaces
+      end ref
 
-                UI -> CTRL : getGreenSpaces()
-                activate CTRL
+      CTRL --> UI : GSMGreenSpacesListDto
+      deactivate CTRL
 
-                    ref over CTRL
-                        Get Green Spaces
-                    end
-
-                    CTRL --> UI : greenSpaces
-                deactivate CTRL
-
-    UI --> Employee : shows list of green spaces to select one
-    deactivate UI
+      UI --> Employee : shows list of green spaces to select one
+      deactivate UI
 
     Employee -> UI : selects the green space
     activate UI
@@ -48,23 +46,30 @@ activate Employee
     UI --> Employee : shows list of entries in the agenda of the selected green space
     deactivate UI
 
-    Employee -> UI : selects one entry to cancel
-    activate UI
+    Employee -> UI : selects one entry
+        activate UI
 
-    UI -> CTRL : cancelEntry(task)
-    activate CTRL
+        UI -> CTRL : cancelEntry(taskDTO)
+        activate CTRL
 
-    CTRL -> TaskRepository : cancelEntry(task)
-    activate TaskRepository
+        CTRL --> CTRL : validateNewStatus(newStatus)
+        CTRL -> TaskRepository : cancelEntry(taskDTO)
+        activate TaskRepository
 
-    TaskRepository --> CTRL : entry
-    deactivate TaskRepository
+        TaskRepository -> TaskDTO : cancelEntry(taskDTO)
+        activate TaskDTO
 
-    CTRL --> UI : entry
-    deactivate CTRL
+        TaskDTO --> TaskRepository : taskDTO
+        deactivate TaskDTO
 
-    UI --> Employee : displays operation success
-    deactivate UI
+        TaskRepository --> CTRL : taskDTO
+        deactivate TaskRepository
 
-deactivate Employee
+        CTRL --> UI : taskDTO
+        deactivate CTRL
+
+        UI --> Employee : displays operation success
+        deactivate UI
+
+    deactivate Employee
 @enduml

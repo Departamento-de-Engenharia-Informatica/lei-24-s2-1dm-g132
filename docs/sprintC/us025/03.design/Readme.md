@@ -1,4 +1,4 @@
-# US024 - postpone an entry in the agenda
+# US025 - Cancel an entry in the agenda
 
 ## 3. Design - User Story Realization 
 
@@ -10,7 +10,8 @@
 |                | ...coordinating the US?                                          | CancelEntryController | Pure Fabrication, Controller             |
 |                | ...obtaining the green spaces list?                              | GreenSpaceRepository  | Pure Fabrication, Information Expert     |
 | Step 2         | ...displaying green spaces list?                                 | CancelEntryUI         | Pure Fabrication                         |
-| Step 3         | ...obtaining tasks by green space?                               | TaskRepository        | Pure Fabrication, Information Expert     |
+| Step 3         | ...saving the selected entry?                                    | PostponeEntryUI       | Pure Fabrication                          |   
+|                | ...obtaining tasks by green space?                               | Agenda                | Pure Fabrication, Information Expert     |
 | Step 4         | ...displaying entries in the agenda of the selected green space? | CancelEntryUI         | Pure Fabrication                         |
 | Step 5         | ...saving the change of status?                                  | TaskRepository        | Pure Fabrication,  Information Expert    |              
 | Step 6         | ...informing operation success?                                  | CancelEntryUI         | Pure Fabrication                         |
@@ -28,20 +29,16 @@ Other software classes (i.e. Pure Fabrication) identified:
 * CancelEntryController
 * TaskRepository
 * GreenSpaceRepository
+* Agenda
 
 ## 3.2. Sequence Diagram (SD)
 
 ### Full Diagram
 
-This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
 ![US04 - Sequence Diagram - Full](svg/us025-sequence-diagram-full.svg)
 
 ### Split Diagrams
-
-The following diagram shows the same sequence of interactions between the classes involved in the realization of this user story, but it is split in partial diagrams to better illustrate the interactions between the classes.
-
-It uses Interaction Occurrence (a.k.a. Interaction Use).
 
 ![US04 - Sequence Diagram - split](svg/us025-sequence-diagram-split.svg)
 

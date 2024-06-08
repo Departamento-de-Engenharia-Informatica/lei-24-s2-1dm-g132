@@ -12,8 +12,26 @@ participant ":CancelEntryUI" as UI
 participant ":CancelEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSION
+participant ":Repositories" as RepositorySingleton
 participant "greenSpaceRepository\n:GreenSpaceRepository" as GreenSpaceRepository
+participant "greenSpacesList\n:List<GreenSpace>" as greenSpacesList
+participant "greenSpaceMapper\n:GreenSpaceMapper" as GreenSpaceMapper
+participant "greenSpace\n:GreenSpace" as greenSpace
+participant "GSMGreenSpacesList\n:List<GreenSpace>" as GSMGreenSpacesList
+participant "GSMGreenSpacesListDto\n:List<GreenSpaceDto>" as GSMGreenSpacesListDto
+participant "greenSpaceDTO\n:GreenSpaceDTO" as greenSpaceDTO
+participant "taskMapper\n:TaskMapper" as TaskMapper
+participant "agenda\n:Agenda" as Agenda
+participant "entriesList\n:List<Task>" as entriesList
+participant "tasksListByGreenSpace\n:List<Task>" as tasksListByGreenSpace
+participant "task\n:Task" as task
+participant "tasksListByGreenSpaceDTO\n:List<TaskDTO>" as tasksListByGreenSpaceDTO
 participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "taskDTO\n:TaskDTO" as TaskDTO
+
 
 activate Employee
 
@@ -24,7 +42,22 @@ activate Employee
 
                 UI -> CTRL : getGreenSpaces()
                 activate CTRL
+CTRL -> _APP: getInstance()
+            activate _APP
+                _APP -> CTRL: appSession
+            deactivate _APP
 
+            CTRL -> APP: getCurrentSession()
+            activate APP
+
+                APP --> CTRL: currentSession
+            deactivate APP
+
+            CTRL -> SESSION: email = getUserEmail()
+                activate SESSION
+
+                SESSION --> CTRL: email
+            deactivate SESSION
                     CTRL -> RepositorySingleton : getInstance()
                     activate RepositorySingleton
 
@@ -37,14 +70,61 @@ activate Employee
                         PLAT --> CTRL: greenSpaceRepository
                     deactivate PLAT
 
-                    CTRL -> GreenSpaceRepository : getGreenSpaces()
-                    activate GreenSpaceRepository
+                     CTRL -> GreenSpaceRepository : getGreenSpaces(email)
+                                        activate GreenSpaceRepository
 
-                        GreenSpaceRepository --> CTRL : greenSpaces
-                    deactivate GreenSpaceRepository
+                                            GreenSpaceRepository --> GSMGreenSpacesList** : create()
 
-                    CTRL --> UI : greenSpaces
-                deactivate CTRL
+                                            loop for each known Green Space
+                                                GreenSpaceRepository -> greenSpacesList : greenSpace = get(i)
+                                                activate greenSpacesList
+                                                deactivate greenSpacesList
+
+                                                GreenSpaceRepository -> greenSpace : GSM = hasUserEmail(email)
+                                                activate greenSpace
+                                                deactivate greenSpace
+
+                                                opt hasUserEmail
+                                                    GreenSpaceRepository -> GSMGreenSpacesList : add(greenSpace)
+                                                    activate GSMGreenSpacesList
+                                                    deactivate GSMGreenSpacesList
+                                                end opt
+
+                                            end loop
+
+                                            GreenSpaceRepository --> CTRL : GSMGreenSpacesList
+                                        deactivate GreenSpaceRepository
+
+                                        CTRL -> GreenSpaceMapper : toDTO(GSMGreenSpacesList)
+                                        activate GreenSpaceMapper
+
+                                            GreenSpaceMapper --> GSMGreenSpacesListDto** : create()
+
+                                            loop for each object in GSMGreenSpacesList
+                                                GreenSpaceMapper -> GSMGreenSpacesList : obj = get(i)
+                                                activate GSMGreenSpacesList
+
+                                                    deactivate GSMGreenSpacesList
+
+                                                GreenSpaceMapper -> GreenSpaceMapper : objDto = toDTO(obj)
+                                                activate GreenSpaceMapper
+
+                                                    GreenSpaceMapper -> greenSpaceDTO** :create(...)
+                                                    deactivate GreenSpaceMapper
+
+                                                GreenSpaceMapper -> GSMGreenSpacesListDto : add(objDto)
+                                                activate GSMGreenSpacesListDto
+
+                                                    deactivate GSMGreenSpacesListDto
+
+                                                end loop
+
+                                            GreenSpaceMapper --> CTRL : GSMGreenSpacesListDto
+                                            deactivate GreenSpaceMapper
+
+                                        CTRL --> UI : GSMGreenSpacesListDto
+                                        deactivate CTRL
+
 
     UI --> Employee : shows list of green spaces to select one
     deactivate UI
@@ -53,51 +133,96 @@ activate Employee
     activate UI
 
         UI -> CTRL : getTasksByGreenSpace(greenSpace)
-        activate CTRL
+           activate CTRL
 
-            CTRL -> RepositorySingleton : getInstance()
-            activate RepositorySingleton
+                   CTRL -> PLAT : getAgenda()
+                   activate PLAT
 
-            RepositorySingleton --> CTRL: repositories
-            deactivate RepositorySingleton
+                   PLAT --> CTRL : agenda
+                   deactivate PLAT
 
-            CTRL -> PLAT : getTaskRepository()
-            activate PLAT
+                   CTRL -> Agenda : getAgendaTasks(greenSpace)
+                   activate Agenda
 
-            PLAT --> CTRL: taskRepository
-            deactivate PLAT
+                   Agenda --> tasksListByGreenSpace** : create()
 
-            CTRL -> TaskRepository : getTasksByGreenSpace(greenSpace)
-            activate TaskRepository
+                   loop for each known task
 
-            TaskRepository --> TaskRepository : getTasksUndone()
+                   Agenda -> entriesList : task = get(i)
+                   activate entriesList
+                   deactivate entriesList
 
-            TaskRepository --> CTRL : tasksByGreenSpace
-            deactivate TaskRepository
+                   Agenda -> task : taskGreenSpace = greenSpace
+                   activate task
+                   deactivate task
 
-            CTRL --> UI : tasksByGreenSpace
-        deactivate CTRL
+                   opt greenSpace == true
+                   Agenda -> tasksListByGreenSpace : add(entry)
+                   activate tasksListByGreenSpace
+                   deactivate tasksListByGreenSpace
+                   end opt
 
-    UI --> Employee : shows list of entries in the agenda of the selected green space
-    deactivate UI
+                   end loop
 
-    Employee -> UI : selects one entry to cancel
-    activate UI
+                   Agenda --> CTRL : tasksListByGreenSpace
+                   deactivate Agenda
 
-    UI -> CTRL : cancelEntry(task)
-    activate CTRL
+                   CTRL -> TaskMapper : toDTO(entriesList)
+                   activate TaskMapper
 
-    CTRL -> TaskRepository : cancelEntry(task)
-    activate TaskRepository
+                   TaskMapper --> tasksListByGreenSpaceDTO** : create()
 
-    TaskRepository --> CTRL : entry
-    deactivate TaskRepository
+                   loop for each task in tasksListByGreenSpace
 
-    CTRL --> UI : entry
-    deactivate CTRL
+                   TaskMapper -> tasksListByGreenSpace : obj = get(i)
+                   activate tasksListByGreenSpace
+                   deactivate tasksListByGreenSpace
 
-    UI --> Employee : displays operation success
-    deactivate UI
+                   TaskMapper -> TaskMapper : objDto = toDTO(obj)
+                   activate TaskMapper
 
-deactivate Employee
+                   TaskMapper -> TaskDTO** : create(...)
+                   deactivate TaskMapper
+
+                   TaskMapper -> tasksListByGreenSpaceDTO : add(objDto)
+                   activate tasksListByGreenSpaceDTO
+                   deactivate tasksListByGreenSpaceDTO
+
+                   end loop
+
+                   TaskMapper --> CTRL : tasksListByGreenSpaceDTO
+                   deactivate TaskMapper
+
+                   CTRL --> UI : tasksListByGreenSpaceDTO
+                   deactivate CTRL
+
+           UI --> Employee : shows list of entries in the agenda of the selected green space
+           deactivate UI
+
+   Employee -> UI : selects one entry
+           activate UI
+
+           UI -> CTRL : cancelEntry(taskDTO)
+           activate CTRL
+
+           CTRL --> CTRL : validateNewStatus(newStatus)
+           CTRL -> TaskRepository : cancelEntry(taskDTO)
+           activate TaskRepository
+
+           TaskRepository -> TaskDTO : cancelEntry(taskDTO)
+           activate TaskDTO
+
+           TaskDTO --> TaskRepository : taskDTO
+           deactivate TaskDTO
+
+           TaskRepository --> CTRL : taskDTO
+           deactivate TaskRepository
+
+           CTRL --> UI : taskDTO
+           deactivate CTRL
+
+           UI --> Employee : displays operation success
+           deactivate UI
+
+       deactivate Employee
 @enduml

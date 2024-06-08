@@ -15,56 +15,91 @@ class CancelEntryUI {
 }
 
 class CancelEntryController {
-    + postponeEntryController(taskRepository, greenSpaceRepository)
+    + cancelEntryController(taskRepository, greenSpaceRepository)
     + getGreenSpaces()
-    + getTasksByGreenSpace(greenSpace)
-    + postponeEntry(task, newDate)
-}
-
-class Task {
-    title
-    description
-    degreeOfUrgency
-    expectedDuration
-    status
-    startingDate
-}
-
-class GreenSpace {
-    name
-    area
-    type
-    address
-}
-
-class Repositories {
-    - Repositories()
-    + getInstance() : Repositories
-    + getGreenSpaceRepository()
-    + getTaskRepository()
-}
-
-class TaskRepository {
     + getTasksByGreenSpace(greenSpace)
     + cancelEntry(task)
 }
 
-class GreenSpaceRepository {
-    + getGreenSpaces()
-}
+class Repositories {
+     - Repositories()
+     + getInstance() : Repositories
+     + getGreenSpaceRepository()
+     + getTaskRepository()
+ }
 
+ class TaskRepository {
+     + getTasksByGreenSpace(greenSpace)
+     + toDTO(tasks)
+     + cancelEntry(task)
+ }
 
-CancelEntryUI ..> CancelEntryController
-CancelEntryController ...> Repositories: repositories
-CancelEntryController ..> TaskRepository: taskRepository
-CancelEntryController ..> GreenSpaceRepository: greenSpaceRepository
+ class GreenSpaceRepository {
+     + List<GreenSpace> getGreenSpaces()
+     + toDTO(greenSpaces)
 
-Repositories -> Repositories : instance
-Repositories ---> "1" TaskRepository: taskRepository
-Repositories ---> "1" GreenSpaceRepository: greenSpaceRepository
+ }
 
-TaskRepository --> Task: tasks
-GreenSpaceRepository --> GreenSpace: green spaces
+ class GreenSpaceMapper {
+     + List<GreenSpaceDTO> toDTO(List<GreenSpace> greenSpaces)
+     + GreenSpaceDTO toDTO(GreenSpace greenSpace)
+ }
+
+ class TaskMapper {
+     + List<TaskDTO> toDTO(List<Task> tasks)
+     + TaskDTO toDTO(Task task)
+ }
+
+ class GreenSpaceDTO {
+     name
+     area
+     type
+     address
+ }
+
+ class TaskDTO {
+     title
+     description
+     degreeOfUrgency
+     expectedDuration
+     status
+     startingDate
+ }
+
+ class Task {
+     title
+     description
+     degreeOfUrgency
+     expectedDuration
+     status
+     startingDate
+ }
+
+ class GreenSpace {
+     name
+     area
+     type
+     address
+ }
+
+ CancelEntryUI ..> CancelEntryController
+ CancelEntryController ...> Repositories: repositories
+ CancelEntryController ..> TaskRepository: taskRepository
+ CancelEntryController ..> GreenSpaceRepository: greenSpaceRepository
+
+ Repositories -> Repositories : instance
+ Repositories ---> "1" TaskRepository: taskRepository
+ Repositories ---> "1" GreenSpaceRepository: greenSpaceRepository
+
+ TaskRepository --> Task: tasks
+ GreenSpaceRepository --> GreenSpace: green spaces
+
+ TaskRepository ..> TaskMapper
+ TaskMapper ..> TaskDTO
+ TaskMapper ..> Task
+ GreenSpaceRepository ..> GreenSpaceMapper
+ GreenSpaceMapper ..> GreenSpaceDTO
+ GreenSpaceMapper ..> GreenSpace
 
 
 @enduml

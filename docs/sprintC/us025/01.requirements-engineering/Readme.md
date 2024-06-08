@@ -19,6 +19,11 @@ As a GSM, I want to cancel an entry in the Agenda.
 >
 > **Answer:** no
 
+> **Question:** When the GSM wants to cancel a task, this task can only be canceled if its status is PLANNED or POSTPONED, correct?
+> 
+> **Answer:**
+No, just planned because if there is a Postponed entry then there is also an Planned Entry with the new date.
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** A canceled task should not be deleted but rather change its state.

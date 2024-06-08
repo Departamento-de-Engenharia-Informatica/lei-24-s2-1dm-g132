@@ -42,7 +42,7 @@ _It is also recommended to organize this content by subsections._
 ### Class CancelEntryController 
 
 ```java
-    public Task cancelTask(String taskReference) {
+    public Task cancelEntry(String taskReference) {
         Employee employee = getEmployeeFromSession();
         Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
         Agenda agenda = organization.getAgenda();
@@ -59,28 +59,20 @@ _It is also recommended to organize this content by subsections._
 ### Class Agenda
 
 ```java
- private List<Task> tasks = new ArrayList<>();
-
-public Optional<Task> getTaskByReference(String reference) {
-    return tasks.stream()
-            .filter(task -> task.getReference().equals(reference))
-            .findFirst();
+ public Agenda() {
+    entriesList = new ArrayList<>();
 }
 
-public void addTask(Task task) {
-    tasks.add(task);
-}
+public Optional<GSTask> addEntry(GSTask selectedTaskClone, String startingDate)
+{
+    Optional<GSTask> optionalValue = Optional.empty();
 
-public void cancelTask(Task task) {
-    if (task.isCancelled()) {
-        throw new IllegalStateException("Task is already cancelled");
+    if(addTask(selectedTaskClone, startingDate))
+    {
+        optionalValue = Optional.of(selectedTaskClone);
     }
-    task.cancel();
-    tasks.remove(task); // If you want to remove the task from the list
-}
 
-public List<Task> getTasks() {
-    return new ArrayList<>(tasks);
+    return optionalValue;
 }
 
 ```
