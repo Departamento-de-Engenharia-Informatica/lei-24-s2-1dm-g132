@@ -176,6 +176,16 @@
         assertEquals("Processed", gsTask.getStatus());
     }
 
+**Test 12:**
+
+	@Test
+    void ensureCloneWorks() {
+        GreenSpace greenSpace = new GreenSpace("Parque da águia", "Rua de Trás, 3666-389, Matosinhos", 5, "MediumSizedPark", "gsm1@this.app");
+        GSTask gsTask = new GSTask("Pruning Trees", "Prune the trees in the frontyard.", "Low", 2, greenSpace);
+
+        GSTask clone = gsTask.clone();
+    }
+
 ## 5. Construction (Implementation)
 
 ### Class AddEntryAgendaController
