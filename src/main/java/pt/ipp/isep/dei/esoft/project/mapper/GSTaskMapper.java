@@ -24,7 +24,8 @@ public class GSTaskMapper {
      */
     public static GSTask toModel(GSTaskDTO taskDTO, GreenSpace selectedGreenSpace)
     {
-        return new GSTask(taskDTO.getTitle(), taskDTO.getDescription(), taskDTO.getDegreeOfUrgency(), taskDTO.getExpectedDuration(), selectedGreenSpace);
+        return new GSTask(taskDTO.getTitle(), taskDTO.getDescription(), taskDTO.getDegreeOfUrgency(),
+                taskDTO.getExpectedDuration(), selectedGreenSpace);
     }
 
     /**
@@ -34,7 +35,10 @@ public class GSTaskMapper {
      * @return The corresponding GSTaskDTO object.
      */
     public static GSTaskDTO toDTOToDo(GSTask gSTask) {
-        return new GSTaskDTO(gSTask.getTitle(), gSTask.getDescription(), gSTask.getDegreeOfUrgency(), gSTask.getExpectedDuration(), new GreenSpaceDTO(gSTask.getGreenSpace().getName(), gSTask.getGreenSpace().getAddress(), gSTask.getGreenSpace().getArea(), gSTask.getGreenSpace().getType()));
+        return new GSTaskDTO(gSTask.getTitle(), gSTask.getDescription(), gSTask.getDegreeOfUrgency(),
+                gSTask.getExpectedDuration(), new GreenSpaceDTO(gSTask.getGreenSpace().getName(),
+                gSTask.getGreenSpace().getAddress(), gSTask.getGreenSpace().getArea(),
+                gSTask.getGreenSpace().getType()));
     }
 
     /**
@@ -60,7 +64,10 @@ public class GSTaskMapper {
      * @return The corresponding GSTaskDTO object.
      */
     public static GSTaskDTO toDTOAgenda(GSTask gSTask) {
-        return new GSTaskDTO(gSTask.getTitle(), gSTask.getDescription(), gSTask.getDegreeOfUrgency(), gSTask.getExpectedDuration(), new GreenSpaceDTO(gSTask.getGreenSpace().getName(), gSTask.getGreenSpace().getAddress(), gSTask.getGreenSpace().getArea(), gSTask.getGreenSpace().getType()), gSTask.getStartingDate());
+        return new GSTaskDTO(gSTask.getTitle(), gSTask.getDescription(), gSTask.getDegreeOfUrgency(),
+                gSTask.getExpectedDuration(), new GreenSpaceDTO(gSTask.getGreenSpace().getName(),
+                gSTask.getGreenSpace().getAddress(), gSTask.getGreenSpace().getArea(),
+                gSTask.getGreenSpace().getType()), gSTask.getStartingDate());
     }
 
     /**

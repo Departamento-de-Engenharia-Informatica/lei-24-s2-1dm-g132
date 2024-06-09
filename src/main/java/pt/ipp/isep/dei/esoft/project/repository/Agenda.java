@@ -1,13 +1,18 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.GSTask;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
+import pt.ipp.isep.dei.esoft.project.mapper.GSTaskMapper;
+import pt.ipp.isep.dei.esoft.project.mapper.dto.GSTaskDTO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Represents an agenda that manages a list of Green Space Tasks (GSTasks).
@@ -192,5 +197,25 @@ public class Agenda implements Serializable {
         optionalValue = Optional.of(selectedTask.assignTeam(selectedTeam));
 
         return optionalValue;
+    }
+
+    /**
+     * Return a list of all assigned tasks to a collaborator.
+     * The method does not return a list of DTO because the mapper class and the dto class itself was not implemented correctly.
+     * @param email
+     * @return list of GSTask
+     */
+    public List<GSTask> getTasksByCollaborator(String email) {
+        List<GSTask> listToReturn = new ArrayList<>();
+
+        for (GSTask gsTask : entriesList){
+            for (Collaborator a : gsTask.getAssignedTeam().getCollaborators()){
+                if (a.getEmail().equals(email)){
+                    listToReturn.add(gsTask);
+                    break;
+                }
+            }
+        }
+        return listToReturn;
     }
 }

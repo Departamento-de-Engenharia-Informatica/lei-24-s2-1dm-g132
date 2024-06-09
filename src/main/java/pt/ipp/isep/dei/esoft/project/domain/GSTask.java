@@ -357,4 +357,7 @@ public class GSTask implements Serializable {
         return new GSTask(this.title, this.description, this.degreeOfUrgency.toString(), this.expectedDuration, this.greenSpace);
     }
 
+    public Team getAssignedTeam() {
+        return assignedTeam;
+    }
 }
