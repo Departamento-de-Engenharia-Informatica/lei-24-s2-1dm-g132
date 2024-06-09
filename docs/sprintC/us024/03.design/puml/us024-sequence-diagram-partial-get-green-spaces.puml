@@ -77,10 +77,7 @@ activate CTRL
 
            end loop
 
-           GreenSpaceRepository --> CTRL : GSMGreenSpacesList
-           deactivate GreenSpaceRepository
-
-           CTRL -> GreenSpaceMapper : toDTO(GSMGreenSpacesList)
+           GreenSpaceRepository -> GreenSpaceMapper : toDTO(GSMGreenSpacesList)
            activate GreenSpaceMapper
 
            GreenSpaceMapper --> GSMGreenSpacesListDto** : create()
@@ -104,8 +101,11 @@ activate CTRL
 
            end loop
 
-           GreenSpaceMapper --> CTRL : GSMGreenSpacesListDto
+           GreenSpaceMapper --> GreenSpaceRepository : GSMGreenSpacesListDto
            deactivate GreenSpaceMapper
+
+           GreenSpaceRepository --> CTRL : GSMGreenSpacesListDto
+           deactivate GreenSpaceRepository
 
 
 end group

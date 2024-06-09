@@ -17,7 +17,7 @@ class PostponeEntryUI {
 class PostponeEntryController {
     + postponeEntryController(taskRepository, greenSpaceRepository)
     + List<GreenSpaceDTO> getGreenSpaces()
-    + List<TaskDTO> getTasksByGreenSpace(greenSpace)
+    + List<GSTaskDTO> getTasksByGreenSpace(greenSpace)
     + postponeEntry(taskDTO, newDate)
 
 }
@@ -29,7 +29,7 @@ class Repositories {
     + getTaskRepository()
 }
 
-class TaskRepository {
+class Agenda {
     + getTasksByGreenSpace(greenSpace)
     + toDTO(tasks)
     + postponeEntry(task, newDate)
@@ -46,9 +46,9 @@ class GreenSpaceMapper {
     + GreenSpaceDTO toDTO(GreenSpace greenSpace)
 }
 
-class TaskMapper {
-    + List<TaskDTO> toDTO(List<Task> tasks)
-    + TaskDTO toDTO(Task task)
+class GSTaskMapper {
+    + List<GSTaskDTO> toDTO(List<Task> tasks)
+    + GSTaskDTO toDTO(Task task)
 }
 
 class GreenSpaceDTO {
@@ -58,7 +58,7 @@ class GreenSpaceDTO {
     address
 }
 
-class TaskDTO {
+class GSTaskDTO {
     title
     description
     degreeOfUrgency
@@ -67,7 +67,7 @@ class TaskDTO {
     startingDate
 }
 
-class Task {
+class GSTask {
     title
     description
     degreeOfUrgency
@@ -85,19 +85,19 @@ class GreenSpace {
 
 PostponeEntryUI ..> PostponeEntryController
 PostponeEntryController ...> Repositories: repositories
-PostponeEntryController ..> TaskRepository: taskRepository
+PostponeEntryController ..> Agenda: taskRepository
 PostponeEntryController ..> GreenSpaceRepository: greenSpaceRepository
 
 Repositories -> Repositories : instance
-Repositories ---> "1" TaskRepository: taskRepository
+Repositories ---> "1" Agenda: taskRepository
 Repositories ---> "1" GreenSpaceRepository: greenSpaceRepository
 
-TaskRepository --> Task: tasks
+Agenda --> GSTask: tasks
 GreenSpaceRepository --> GreenSpace: green spaces
 
-TaskRepository ..> TaskMapper
-TaskMapper ..> TaskDTO
-TaskMapper ..> Task
+Agenda ..> GSTaskMapper
+GSTaskMapper ..> GSTaskDTO
+GSTaskMapper ..> GSTask
 GreenSpaceRepository ..> GreenSpaceMapper
 GreenSpaceMapper ..> GreenSpaceDTO
 GreenSpaceMapper ..> GreenSpace

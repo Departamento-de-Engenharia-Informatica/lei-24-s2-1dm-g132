@@ -5,13 +5,13 @@ skinparam shadowing false
 
 participant ":PostponeEntryController" as CTRL
 participant "repositories\n:Repositories" as PLAT
-participant "taskMapper\n:TaskMapper" as TaskMapper
 participant "agenda\n:Agenda" as Agenda
-participant "entriesList\n:List<Task>" as entriesList
-participant "tasksListByGreenSpace\n:List<Task>" as tasksListByGreenSpace
-participant "task\n:Task" as task
-participant "tasksListByGreenSpaceDTO\n:List<TaskDTO>" as tasksListByGreenSpaceDTO
-participant "taskDTO\n:TaskDTO" as TaskDTO
+participant "GSTaskMapper\n:GSTaskMapper" as TaskMapper
+participant "entriesList\n:List<GSTask>" as entriesList
+participant "tasksListByGreenSpace\n:List<GSTask>" as tasksListByGreenSpace
+participant "GSTask\n:GSTask" as GSTask
+participant "tasksListByGreenSpaceDTO\n:List<GSTaskDTO>" as tasksListByGreenSpaceDTO
+participant "GSTaskDTO\n:GSTaskDTO" as GSTaskDTO
 
 autonumber 30
 -> CTRL : getTasksByGreenSpace(greenSpace)
@@ -31,15 +31,15 @@ activate CTRL
 
            Agenda --> tasksListByGreenSpace** : create()
 
-           loop for each known task
+           loop for each known GSTask
 
-           Agenda -> entriesList : task = get(i)
+           Agenda -> entriesList : GSTask = get(i)
            activate entriesList
            deactivate entriesList
 
-           Agenda -> task : taskGreenSpace = greenSpace
-           activate task
-           deactivate task
+           Agenda -> GSTask : taskGreenSpace = greenSpace
+           activate GSTask
+           deactivate GSTask
 
            opt greenSpace == true
            Agenda -> tasksListByGreenSpace : add(entry)
@@ -49,15 +49,12 @@ activate CTRL
 
            end loop
 
-           Agenda --> CTRL : tasksListByGreenSpace
-           deactivate Agenda
-
-           CTRL -> TaskMapper : toDTO(entriesList)
+           Agenda -> TaskMapper : toDTO(entriesList)
            activate TaskMapper
 
            TaskMapper --> tasksListByGreenSpaceDTO** : create()
 
-           loop for each task in tasksListByGreenSpace
+           loop for each GSTask in tasksListByGreenSpace
 
            TaskMapper -> tasksListByGreenSpace : obj = get(i)
            activate tasksListByGreenSpace
@@ -66,7 +63,7 @@ activate CTRL
            TaskMapper -> TaskMapper : objDto = toDTO(obj)
            activate TaskMapper
 
-           TaskMapper -> TaskDTO** : create(...)
+           TaskMapper -> GSTaskDTO** : create(...)
            deactivate TaskMapper
 
            TaskMapper -> tasksListByGreenSpaceDTO : add(objDto)
@@ -75,8 +72,11 @@ activate CTRL
 
            end loop
 
-           TaskMapper --> CTRL : tasksListByGreenSpaceDTO
+           TaskMapper --> Agenda : tasksListByGreenSpaceDTO
            deactivate TaskMapper
+
+           Agenda --> CTRL : tasksListByGreenSpaceDTO
+           deactivate Agenda
 
 end group
 autonumber 46
