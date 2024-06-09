@@ -6,12 +6,12 @@ skinparam shadowing false
 participant ":ConsultTasksController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskRepository\n:TaskRepository" as TaskRepository
-participant "taskMapper\n:TaskMapper" as TaskMapper
-participant "task\n:Task" as Task
-participant "tasksList\n:List<Task>" as TasksList
-participant "tasksList\n:List<TaskDTO>" as TasksListDTO
-participant "taskDTO\n:TaskDTO" as TaskDTO
+participant "agenda\n:Agenda" as Agenda
+participant "taskMapper\n:GSTaskMapper" as TaskMapper
+participant "task\n:GSTask" as Task
+participant "tasksList\n:List<GSTask>" as TasksList
+participant "tasksList\n:List<GSTaskDTO>" as TasksListDTO
+participant "taskDTO\n:GSTaskDTO" as TaskDTO
 
 autonumber 34
 -> CTRL : getTasks(teamsDTO, startDate, endDate)
@@ -20,20 +20,20 @@ autonumber 34.1
 
 activate CTRL
     group Get Tasks By Date Range
-           CTRL -> TaskRepository : getTasks(teamsDTO, startDate, endDate)
-           activate TaskRepository
+           CTRL -> Agenda : getTasks(teamsDTO, startDate, endDate)
+           activate Agenda
 
-           TaskRepository -> TasksList ** : create()
+           Agenda -> TasksList ** : create()
            loop for each task
                opt assignedTeam exists in teamsDTO
-                   TaskRepository -> Task : betweenDates(startDate, endDate)
+                   Agenda -> Task : betweenDates(startDate, endDate)
                    activate Task
 
-                   Task --> TaskRepository : true/false
+                   Task --> Agenda : true/false
                    deactivate Task
 
                    opt betweenDates == true
-                       TaskRepository -> TasksList : add(task)
+                       Agenda -> TasksList : add(task)
                        activate TasksList
                        deactivate TasksList
                    end opt
@@ -42,7 +42,7 @@ activate CTRL
 
            end loop
 
-       TaskRepository -> TaskMapper : toDTO(tasks)
+       Agenda -> TaskMapper : toDTO(tasks)
        activate TaskMapper
 
        TaskMapper -> TasksListDTO ** : create()
@@ -63,11 +63,11 @@ activate CTRL
 
        end loop
 
-       TaskMapper --> TaskRepository : tasksDTO
+       TaskMapper --> Agenda : tasksDTO
        deactivate TaskMapper
 
-       TaskRepository --> CTRL : tasksDTO
-       deactivate TaskRepository
+       Agenda --> CTRL : tasksDTO
+       deactivate Agenda
 
 end group
 autonumber 48

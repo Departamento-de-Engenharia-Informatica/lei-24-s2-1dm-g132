@@ -21,12 +21,12 @@ participant "teamsList\n:List<Team>" as TeamsList
 participant "teamMapper\n:TeamMapper" as TeamMapper
 participant "teamsList\n:List<TeamDTO>" as TeamsListDTO
 participant "teamDTO\n:TeamDTO" as TeamDTO
-participant "taskRepository\n:TaskRepository" as TaskRepository
-participant "task\n:Task" as Task
-participant "tasksList\n:List<Task>" as TasksList
-participant "taskMapper\n:TaskMapper" as TaskMapper
-participant "tasksList\n:List<TaskDTO>" as TasksListDTO
-participant "taskDTO\n:TaskDTO" as TaskDTO
+participant "agenda\n:Agenda" as Agenda
+participant "task\n:GSTask" as Task
+participant "tasksList\n:List<GSTask>" as TasksList
+participant "taskMapper\n:GSTaskMapper" as TaskMapper
+participant "tasksList\n:List<GSTaskDTO>" as TasksListDTO
+participant "taskDTO\n:GSTaskDTO" as TaskDTO
 
 activate Employee
 
@@ -137,20 +137,20 @@ activate Employee
         UI -> CTRL : getTasks(teamsDTO, startDate, endDate)
             activate CTRL
 
-        CTRL -> TaskRepository : getTasks(teamsDTO, startDate, endDate)
-            activate TaskRepository
+        CTRL -> Agenda : getTasks(teamsDTO, startDate, endDate)
+            activate Agenda
 
-            TaskRepository -> TasksList ** : create()
+            Agenda -> TasksList ** : create()
             loop for each task
                 opt assignedTeam exists in teamsDTO
-                    TaskRepository -> Task : betweenDates(startDate, endDate)
+                    Agenda -> Task : betweenDates(startDate, endDate)
                     activate Task
 
-                    Task --> TaskRepository : true/false
+                    Task --> Agenda : true/false
                     deactivate Task
 
                     opt betweenDates == true
-                        TaskRepository -> TasksList : add(task)
+                        Agenda -> TasksList : add(task)
                         activate TasksList
                         deactivate TasksList
                     end opt
@@ -159,7 +159,7 @@ activate Employee
 
             end loop
 
-        TaskRepository -> TaskMapper : toDTO(tasks)
+        Agenda -> TaskMapper : toDTO(tasks)
         activate TaskMapper
 
         TaskMapper -> TasksListDTO ** : create()
@@ -180,11 +180,11 @@ activate Employee
 
         end loop
 
-        TaskMapper --> TaskRepository : tasksDTO
+        TaskMapper --> Agenda : tasksDTO
         deactivate TaskMapper
 
-        TaskRepository --> CTRL : tasksDTO
-        deactivate TaskRepository
+        Agenda --> CTRL : tasksDTO
+        deactivate Agenda
 
     CTRL --> UI : tasksDTO
     deactivate CTRL
@@ -199,11 +199,11 @@ activate Employee
         UI -> CTRL : getStatusList()
         activate CTRL
 
-        CTRL -> TaskRepository : getStatusList()
-        activate TaskRepository
+        CTRL -> Agenda : getStatusList()
+        activate Agenda
 
-        TaskRepository --> CTRL : statusList
-        deactivate TaskRepository
+        Agenda --> CTRL : statusList
+        deactivate Agenda
 
         CTRL --> UI : statusList
         deactivate CTRL
