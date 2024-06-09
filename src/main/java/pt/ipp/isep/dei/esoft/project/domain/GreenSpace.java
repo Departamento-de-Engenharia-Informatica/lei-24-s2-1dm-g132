@@ -1,8 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
-import pt.ipp.isep.dei.esoft.project.application.session.UserSession;
-
 import java.io.Serializable;
 import java.lang.IllegalArgumentException;
 
@@ -62,11 +59,11 @@ public class GreenSpace implements Serializable {
     }
 
     public void setType(String type) {
-        if(type.equalsIgnoreCase(GreenSpaceType.garden.toString()))
+        if(type.replaceAll("\\s+","").equalsIgnoreCase(GreenSpaceType.garden.toString()))
             this.type = GreenSpaceType.garden;
-        else if(type.equalsIgnoreCase(GreenSpaceType.mediumSizedPark.toString()))
+        else if(type.replaceAll("\\s+","").equalsIgnoreCase(GreenSpaceType.mediumSizedPark.toString()))
             this.type = GreenSpaceType.mediumSizedPark;
-        else if(type.equalsIgnoreCase(GreenSpaceType.largeSizedPark.toString()))
+        else if(type.replaceAll("\\s+","").equalsIgnoreCase(GreenSpaceType.largeSizedPark.toString()))
             this.type = GreenSpaceType.largeSizedPark;
         else throw new IllegalArgumentException("Invalid green space type.");
     }

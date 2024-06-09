@@ -5,35 +5,281 @@ skinparam shadowing false
 
 autonumber
 
-'hide footbox
-participant ":RegisterSkillController" as CTRL
+actor "Green Space Manager" as GSM
+participant ":AssignTeamUI" as UI
+participant ":AssignTeamController" as CTRL
+
+activate GSM
+
+GSM -> UI : asks to assign a Vehicle to an entry in the Agenda
+activate UI
+
+    UI --> CTRL** : create()
+    UI -> CTRL : getAgendaEntries()
+    activate CTRL
+    ref over CTRL
+        Get Agenda Entries
+    end
+
+    CTRL --> UI : freeAgendaEntriesListDto
+    deactivate CTRL
+UI --> GSM : shows entries from the Agenda and asks to select one
+deactivate UI
+
+GSM -> UI : selects an entry
+activate UI
+
+    UI -> CTRL : getSelectedTask(i)
+    activate CTRL
+    ref over CTRL
+        Get Selected Entry
+    end
+
+    CTRL --> UI : vehiclesListDto
+    deactivate CTRL
+UI --> GSM : shows Vehicles list and asks to select vehicles
+deactivate UI
+
+loop while user says yes
+
+    GSM -> UI : selects a Vehicle
+    activate UI
+
+        UI -> CTRL : assignVehicle(i)
+        activate CTRL
+
+            CTRL -> VehicleRepository : getSelectedVehicle(i)
+            activate VehicleRepository
+
+                VehicleRepository -> vehiclesList : get(i)
+                activate vehiclesList
+
+                    vehiclesList --> VehicleRepository : getSelectedVehicle
+                deactivate vehiclesList
+
+                VehicleRepository --> CTRL : selectedVehicle
+            deactivate VehicleRepository
+
+            CTRL -> Agenda : possible = checkVehicleSchedule(selectedVehicle, selectedTask)
+            activate Agenda
+
+                Agenda --> vehicleSchedule** : create()
+
+                loop for each known Task
+
+                    Agenda -> EntriesList : entry = get(i)
+                    activate EntriesList
+                    deactivate EntriesList
+
+                    Agenda -> Task : result = belongsToVehicle(selectedVehicle)
+                    activate Task
+                    deactivate Task
+
+                    opt result == true
+
+                        Agenda -> vehicleSchedule : add(entry)
+                        activate vehicleSchedule
+                        deactivate vehicleSchedule
+
+                    end opt
+
+                end loop
+
+                loop for each object in vehicleSchedule
+
+                    Agenda -> vehicleSchedule : obj = get(i)
+                    activate vehicleSchedule
+                    deactivate vehicleSchedule
+
+                    Agenda -> Task : obj.hasConflict(selectedTask)
+                    activate Task
+                    deactivate Task
+
+                end loop
+
+            deactivate Agenda
+
+            opt possible == true
+
+                CTRL -> Agenda : assignVehicle(selectedTask, selectedVehicle)
+                activate Agenda
+
+                    Agenda -> Task : selectedTask.assignVehicle(selectedVehicle)
+                    activate Task
+
+                        Task --> Agenda : selectedTask
+                        deactivate Task
+
+                    Agenda --> CTRL : selectedTask
+                    deactivate Agenda
+
+            end opt
+
+        CTRL --> UI : selectedTask
+        deactivate CTRL
+    UI --> GSM : displays operation success
+    deactivate UI
+
+    GSM -> UI : asks if the user wants to add another vehicle
+    activate UI
+
+    UI --> GSM : user response (yes/no)
+    deactivate UI
+
+end loop
+
+GSM -> UI : confirms no more vehicles to add
+activate UI
+
+UI -> CTRL : finalizeAssignment(selectedTask)
+activate CTRL
+
+    CTRL -> Agenda : finalizeAssignment(selectedTask)
+    activate Agenda
+
+        Agenda -> Task : selectedTask.finalize()
+        activate Task
+
+            Task --> Agenda : finalization confirmed
+            deactivate Task
+
+        Agenda --> CTRL : finalization confirmed
+        deactivate Agenda
+
+CTRL --> UI : finalization confirmed
+deactivate CTRL
+
+UI --> GSM : displays finalization success
+deactivate UI
+
+deactivate GSM
+
+@enduml
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Green Space Manager" as GSM
+participant ":AssignTeamUI" as UI
+participant ":AssignTeamController" as CTRL
+
+activate GSM
+
+GSM -> UI : asks to assign a Vehicle to an entry in the Agenda
+activate UI
+
+    UI --> CTRL** : create()
+    UI -> CTRL : getAgendaEntries()
+    activate CTRL
+    ref over CTRL
+        Get Agenda Entries
+    end
+
+    CTRL --> UI : freeAgendaEntriesListDto
+    deactivate CTRL
+UI --> GSM : shows entries from the Agenda and asks to select one
+deactivate UI
+
+GSM -> UI : selects an entry
+activate UI
+
+    UI -> CTRL : getSelectedTask(i)
+    activate CTRL
+    ref over CTRL
+        Get Selected Entry
+    end
+
+    CTRL --> UI : vehiclesListDto
+    deactivate CTRL
+  UI --> GSM : shows Vehicles list and asks to select a vehicle
+           deactivate UI
+           GSM -> UI : selects a Vehicle
+           activate UI
+
+           loop until user selects no
+
+               UI -> CTRL : assignVehicle(i)
+               activate CTRL
+
+                   CTRL -> VehicleRepository : getSelectedVehicle(i)
+                   activate VehicleRepository
+
+                       VehicleRepository -> vehiclesList : get(i)
+                       activate vehiclesList
+
+                           vehiclesList --> VehicleRepository : getSelectedVehicle
+                       deactivate vehiclesList
+
+                       VehicleRepository --> CTRL : selectedVehicle
+                       deactivate VehicleRepository
+
+                       CTRL -> Agenda : possible = checkVehicleSchedule(selectedVehicle, selectedTask)
+                       activate Agenda
+
+                           Agenda --> vehicleSchedule** : create()
+
+                           loop for each known Task
+
+                               Agenda -> EntriesList : entry = get(i)
+                               activate EntriesList
+                               deactivate EntriesList
+
+                               Agenda -> Task : result = belongsToVehicle(selectedVehicle)
+                               activate Task
+                               deactivate Task
+
+                               opt result == true
+
+                                   Agenda -> vehicleSchedule : add(entry)
+                                   activate vehicleSchedule
+                                   deactivate vehicleSchedule
+
+                               end opt
+
+                           end loop
+
+                           loop for each object in vehicleSchedule
+
+                               Agenda -> vehicleSchedule : obj = get(i)
+                               activate vehicleSchedule
+                               deactivate vehicleSchedule
+
+                               Agenda -> Task : obj.hasConflict(selectedTask)
+                               activate Task
+                               deactivate Task
+
+                           end loop
+
+                       deactivate Agenda
+
+                       opt possible == true
+
+                       CTRL -> Agenda : assignVehicle(selectedTask, selectedVehicle)
+                       activate Agenda
+
+                           Agenda -> Task : selectedTask.assignVehicle(selectedVehicle)
+                           activate Task
+
+                               Task --> Agenda : selectedTask
+                               deactivate Task
+
+                           Agenda --> CTRL : selectedTask
+                           deactivate Agenda
+
+                       end opt
+
+                   CTRL --> UI : selectedTask
+                   deactivate CTRL
 
 
+                   UI --> GSM : Ask user if they want to add another vehicle
+                   GSM -> UI : User response (yes/no)
 
+           end loop
+                              UI --> GSM : displays operation success
 
-
-                 -> CTRL : registerSkill (skill name)
-            activate CTRL
-    group Create Skill
-
-                                        CTRL -> CTRL: addSkill(skill)
-
-                                                                           activate CTRL
-                                                                               CTRL -> CTRL: validateSkill(skill)
-                                                                               activate CTRL
-                                                                                   CTRL --> CTRL
-                                                                               deactivate CTRL
-
-                                                                               CTRL --> CTRL
-                                                                               deactivate CTRL
-                                                                               end
-
-             <-- CTRL : Skill
-            deactivate CTRL
-
-
-
-
-
-
+           deactivate GSM
 @enduml

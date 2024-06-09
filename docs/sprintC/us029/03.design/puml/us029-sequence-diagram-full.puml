@@ -3,86 +3,117 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title US024 - Postpone an entry in the agenda
+       title US029 - Record the completion of a task.
 
 autonumber
 
 actor "Collaborator" as Employee
-participant ":ChangeStatusUI" as UI
-participant ":ChangeStatusController" as CTRL
-participant ":Repositories" as RepositorySingleton
+participant ":CompleteTaskUI" as UI
+participant ":CompleteTaskController" as CTRL
 participant "taskDto\n:TaskDto" as TaskDto
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
-participant "taskDTO\n:TaskDTO" as TaskDTO
 participant "currentSession\n:UserSession" as SESSION
+participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "taskMapper\n:TaskMapper" as TaskMapper
+participant "task\n:Task" as task
+participant "taskList\n:List<Task>" as taskList
+participant "CollaboratorTaskList\n:List<Task>" as CollaboratorTasksList
 
 activate Employee
 
     Employee -> UI : asks to change task status to complete
     activate UI
 
-    UI -> CTRL** : create
- UI -> CTRL : getEmailCollaborator()
-    activate CTRL
+     UI --> CTRL** : create()
+             UI -> CTRL : getTasks()
+             activate CTRL
 
-    CTRL -> _APP : getInstance()
-    activate _APP
+                 CTRL -> _APP: getInstance()
+                     activate _APP
+                         _APP -> CTRL: appSession
+                     deactivate _APP
 
-    _APP --> CTRL : appSession
-    deactivate _APP
+                     CTRL -> APP: getCurrentSession()
+                     activate APP
 
-    CTRL -> APP : getCurrentSession()
-    activate APP
+                         APP --> CTRL: currentSession
+                     deactivate APP
 
-    APP --> CTRL : currentSession
-    deactivate APP
+                     CTRL -> SESSION: email = getUserEmail()
+                     activate SESSION
 
-    CTRL -> SESSION : email = getUser(email)
-    activate SESSION
+                         SESSION --> CTRL: email
+                     deactivate SESSION
 
-    SESSION --> CTRL : email
-    deactivate SESSION
+                 CTRL -> RepositorySingleton : getInstance()
+                     activate RepositorySingleton
 
-    CTRL --> UI : email
-    deactivate CTRL
+                         RepositorySingleton --> CTRL: repositories
+                     deactivate RepositorySingleton
 
-    UI -> CTRL : getTasksByCollaborator(email)
-    activate CTRL
+                     CTRL -> PLAT : getTasksRepository()
+                     activate PLAT
 
-    CTRL -> RepositorySingleton : getInstance()
-    activate RepositorySingleton
+                         PLAT --> CTRL : TaskRepository
+                     deactivate PLAT
 
-    RepositorySingleton --> CTRL: repositories
-    deactivate RepositorySingleton
+                      CTRL -> TaskRepository : getTasks(email)
+                                         activate TaskRepository
 
-    CTRL -> PLAT : getTaskRepository()
-    activate PLAT
+                                             TaskRepository --> CollaboratorTasksList** : create()
 
-    PLAT --> CTRL: taskRepository
-    deactivate PLAT
+                                             loop for each known Task
+                                                 TaskRepository -> taskList : task = get(i)
+                                                 activate taskList
+                                                 deactivate taskList
 
-    CTRL -> TaskRepository : getTasksByCollaborator(email)
-    activate TaskRepository
-    TaskRepository -> TaskRepository : getTasksByCollaborator(email)
-    activate TaskRepository
-    loop for each task
-    TaskRepository -> TaskDTO : hasCollaboratorEmail(email)
-    activate TaskDTO
-    TaskDTO --> TaskRepository : true/false
-    deactivate TaskDTO
-    end
-    TaskRepository --> TaskRepository : tasksByCollaborator
-    deactivate TaskRepository
+                                                 TaskRepository -> task : Collaborator = hasUserEmail(email)
+                                                 activate task
+                                                 deactivate task
 
+                                                 opt hasUserEmail
+                                                     TaskRepository -> CollaboratorTasksList : add(task)
+                                                     activate CollaboratorTasksList
+                                                     deactivate CollaboratorTasksList
+                                                 end opt
 
-    TaskRepository --> CTRL : tasksByCollaborator
-    deactivate TaskRepository
+                                             end loop
 
-    CTRL --> UI : tasksByCollaborator
-    deactivate CTRL
+                         TaskRepository --> CTRL : CollaboratorTasksListDto
+                     deactivate TaskRepository
+
+                     CTRL -> TaskMapper** : toDTO(CollaboratorTasksListDto)
+                     activate TaskMapper
+
+                         TaskMapper --> CollaboratorTasksListDto** : create()
+
+                         loop for each object in CollaboratorTasksListDto
+                             TaskMapper -> CollaboratorTasksList : obj = get(i)
+                             activate CollaboratorTasksList
+
+                                 deactivate CollaboratorTasksList
+
+                             TaskMapper -> TaskMapper : objDto = toDTO(obj)
+                             activate TaskMapper
+
+                                 TaskMapper -> TaskDTO** :create(...)
+                                 deactivate TaskMapper
+
+                             TaskMapper -> CollaboratorTasksListDto : add(objDto)
+                             activate CollaboratorTasksListDto
+
+                                 deactivate CollaboratorTasksListDto
+
+                             end loop
+
+                         TaskMapper --> CTRL : CollaboratorTasksListDto
+                         deactivate TaskMapper
+
+                     CTRL --> UI : CollaboratorTasksListDto
+                     deactivate CTRL
     UI --> Employee : shows list of own tasks
     deactivate UI
 
@@ -94,23 +125,24 @@ activate Employee
 
     Employee -> UI : confirms
     activate UI
-
-    UI -> CTRL :            completeTask(taskDTO, newStatusnewStatus)
-
+ UI -> CTRL : completeTask(taskDTO, newStatus)
     activate CTRL
 
     CTRL --> CTRL : validateNewStatus(newStatus)
-    CTRL -> TaskRepository :            completeTask(taskDTO, newStatus)
-
+    CTRL -> TaskRepository :  completeTask(taskDTO, newStatus)
     activate TaskRepository
 
-    TaskRepository -> TaskDto : status = newStatus
-    activate TaskDto
-    deactivate TaskDto
+    TaskRepository -> TaskDTO :  completeTask(taskDTO, newStatus)
+    activate TaskDTO
 
+    TaskDTO --> TaskRepository : taskDTO
+    deactivate TaskDTO
+
+    TaskRepository --> CTRL : taskDTO
     deactivate TaskRepository
-    deactivate CTRL
 
+    CTRL --> UI : taskDTO
+    deactivate CTRL
 
     UI --> Employee : displays operation success
     deactivate UI

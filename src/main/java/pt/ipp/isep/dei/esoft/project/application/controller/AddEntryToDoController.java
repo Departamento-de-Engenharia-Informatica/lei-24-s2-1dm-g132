@@ -13,31 +13,39 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Controller class responsible for handling operations related to the addition of entries to teh To-Do List.
+ * Controller class for adding entries to the to-do list.
+ * Provides methods to interact with green spaces and the to-do list.
  */
 public class AddEntryToDoController {
 
     /**
-     * The green space repository needed for the operations of this class.
+     * The repository instance used to manage green spaces.
      */
     private GreenSpaceRepository greenSpaceRepository;
 
     /**
-     * The To-Do List needed for the operations of this class.
+     * The to-do list instance used to manage to-do list entries.
      */
     private ToDoList toDoList;
 
     /**
-     * The Application Session needed for the operations of this class.
+     * The application session instance used to manage the current user session.
      */
     private ApplicationSession applicationSession;
 
+    /**
+     * The selected green space instance.
+     */
     private GreenSpace selectedGreenSpace;
 
+    /**
+     * The file instance used to manage the serialization of the to-do list.
+     */
     private ToDoListFile toDoListFile;
 
     /**
-     * Constructs a new AddEntryToDoController object.
+     * Initializes a new instance of the AddEntryToDoController class.
+     * Initializes necessary repositories and files.
      */
     public AddEntryToDoController()
     {
@@ -73,6 +81,11 @@ public class AddEntryToDoController {
         return toDoList;
     }
 
+    /**
+     * Retrieves the application session instance.
+     *
+     * @return The ApplicationSession object.
+     */
     private ApplicationSession getApplicationSession() {
         if (applicationSession == null) {
             applicationSession = ApplicationSession.getInstance();
@@ -80,17 +93,34 @@ public class AddEntryToDoController {
         return applicationSession;
     }
 
+    /**
+     * Retrieves the list of green spaces associated with the current user session.
+     *
+     * @return A list of GreenSpaceDTO objects representing the green spaces.
+     */
     public List<GreenSpaceDTO> getGreenSpaces(){
         String email = applicationSession.getCurrentSession().getUserEmail();
         return greenSpaceRepository.getGreenSpaces(email);
     }
 
+    /**
+     * Selects a green space from the list based on its index.
+     *
+     * @param i The index of the green space to be selected.
+     */
     public void getSelectedGreenSpace(int i)
     {
         selectedGreenSpace = greenSpaceRepository.getSelectedGreenSpace(i);
     }
 
-    public Optional<GSTask> addEntry(GSTaskDTO taskDto)
+    /**
+     * Adds a task entry to the to-do list for the selected green space.
+     * Updates the to-do list file if the entry is successfully added.
+     *
+     * @param taskDto The GSTaskDTO object representing the task to be added.
+     * @return True if the entry is successfully added and file is updated, false otherwise.
+     */
+    public boolean addEntry(GSTaskDTO taskDto)
     {
         Optional<GSTask> newTask = Optional.empty();
 
@@ -100,11 +130,11 @@ public class AddEntryToDoController {
         {
             if(!toDoListFile.save(toDoList))
             {
-                System.out.println("Error while saving To-Do List in external file!");
+                return false;
             }
         }
 
-        return newTask;
+        return true;
     }
 
 }

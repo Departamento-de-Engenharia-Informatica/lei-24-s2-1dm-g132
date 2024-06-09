@@ -1,33 +1,180 @@
 @startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
 skinparam classAttributeIconSize 0
 
-class CreateSkillController {
-    +registerSkill(name)
-}
+'left to right direction
 
-
-class CreateSkillUI {
-
-}
-
-class Skill
+class AssignVehicleUI
 {
-    - name
-    + Skill(name)
+
 }
-class Repositories {
+
+class AssignVehicleController
+{
+    + AssignVehicleController()
+    + getAgendaEntries()
+    + getSelectedTask(i)
+    + assignVehicle(i)
+}
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class Repositories
+{
     - Repositories()
     + getInstance() : Repositories
-    + getSkillRepository()
+    + getAgenda()
+    + getVehicleRepository()
 }
 
-class SkillRepository {
-   + add(skill)
+class UserSession
+{
+    + getUserEmail()
 }
-CreateSkillUI ..> CreateSkillController
-CreateSkillController ..> Repositories : repositories
 
-Repositories ..> SkillRepository : skillRepository
-SkillRepository ..> Skill : skill
+class Agenda
+{
+    - List<Task> entriesList
+    - List<Task> freeAgendaEntriesList
+    - List<Task> vehicleSchedule
+    + getAgendaEntries(email)
+    + getSelectedTask(i)
+    + checkVehicleSchedule(selectedVehicle, selectedTask)
+    + assignVehicle(selectedTask, selectedVehicle)
+}
+
+class TaskMapper
+{
+    - List<TaskDto> freeAgendaEntriesListDto
+    + toDTO(freeAgendaEntriesList)
+    - toDTO(obj)
+}
+
+class TaskDto
+{
+    - String title
+    - String description
+    - String degreeOfUrgency
+    - int expectedDuration
+    - Calendar startingDate
+    + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace, startingDate)
+}
+
+class Task
+{
+    - String title
+    - String description
+    - int expectedDuration
+    - Calendar startingDate
+    + hasVehicle()
+    + hasUserEmail(email)
+    + isAssignedVehicle(selectedVehicle)
+    + hasConflict(selectedTask)
+    + assignVehicle(selectedVehicle))
+}
+
+enum DegreeOfUrgency
+{
+    Low
+    Medium
+    High
+}
+
+enum GSTaskStatus
+{
+    Pending
+    Processed
+    Planned
+    Postponed
+    Canceled
+    Done
+}
+
+class VehicleRepository
+{
+    - List<Vehicle> vehiclesList
+    + getVehicles()
+    + getSelectedVehicle(plate)
+}
+
+class VehicleMapper
+{
+    - List<VehicleDto> vehiclesListDto
+    + toDTO(vehiclesList)
+    - toDTO(obj)
+}
+
+class VehicleDto
+{
+    - List<Vehicle> vehicles
+    + VehicleDto(vehicles)
+}
+
+class Vehicle
+{
+    - String Plate
+}
+
+class GreenSpace
+{
+    - String name
+    - String type
+    - int area
+    - String address
+    - String gsmEmail
+    + hasUserEmail(email)
+}
+
+
+
+
+
+Task +-- DegreeOfUrgency
+Task +-- GSTaskStatus
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+AssignVehicleUI .> AssignVehicleController
+
+AssignVehicleController .> Repositories : repositories
+
+Repositories --> "1" VehicleRepository
+Repositories --> "1" Agenda
+
+AssignVehicleController ..> ApplicationSession
+AssignVehicleController ..> UserSession
+ApplicationSession --> "1" UserSession : userSession
+AssignVehicleController ..> Agenda : agenda
+AssignVehicleController ..> VehicleRepository : teamRepository
+AssignVehicleController ..> TaskMapper
+AssignVehicleController ..> VehicleMapper
+
+Agenda "1" --> "*" Task
+VehicleRepository "1" ---> "*" Vehicle
+
+TaskMapper ...> TaskDto
+TaskMapper ..> Task
+
+Task "*" --> "1" GreenSpace
+TaskDto "*" --> "1" GreenSpace
+
+VehicleMapper ..> VehicleDto
+VehicleMapper ..> Vehicle
+
+Task "*" --> "0..1" Vehicle
+
+
+
+
 
 @enduml

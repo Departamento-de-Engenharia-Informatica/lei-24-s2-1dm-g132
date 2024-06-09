@@ -1,0 +1,211 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > CollaboratorRepositoryFile</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository.serialization</a>
+</div>
+
+<h1>Coverage Summary for Class: CollaboratorRepositoryFile (pt.ipp.isep.dei.esoft.project.repository.serialization)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CollaboratorRepositoryFile</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    57,1%
+  </span>
+  <span class="absValue">
+    (4/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    42,1%
+  </span>
+  <span class="absValue">
+    (8/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.repository.serialization;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
+&nbsp;
+&nbsp;import java.io.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * Class responsible for reading and saving {@link CollaboratorRepository} objects to and from a file.
+&nbsp; * The class provides methods to read and save the repository data using serialization.
+&nbsp; */
+&nbsp;public class CollaboratorRepositoryFile {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The default file name used for storing the collaborator repository.
+&nbsp;     */
+&nbsp;    public static final String FILE_NAME = &quot;CollaboratorRepository.ltf&quot;;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new CollaboratorRepositoryFile object.
+&nbsp;     */
+<b class="fc">&nbsp;    public CollaboratorRepositoryFile() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Reads the collaborator repository from the default file.
+&nbsp;     *
+&nbsp;     * @return The {@link CollaboratorRepository} object read from the file. If the file does not exist or an error occurs, a new empty {@link CollaboratorRepository} is returned.
+&nbsp;     */
+&nbsp;    public CollaboratorRepository read() {
+<b class="fc">&nbsp;        return read(FILE_NAME);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Reads the collaborator repository from a specified file name.
+&nbsp;     *
+&nbsp;     * @param fileName The name of the file to read the collaborator repository from.
+&nbsp;     * @return The {@link CollaboratorRepository} object read from the file. If the file does not exist or an error occurs, a new empty {@link CollaboratorRepository} is returned.
+&nbsp;     */
+&nbsp;    public CollaboratorRepository read(String fileName) {
+<b class="fc">&nbsp;        return read(new File(fileName));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Reads the collaborator repository from a specified file.
+&nbsp;     *
+&nbsp;     * @param file The file to read the collaborator repository from.
+&nbsp;     * @return The {@link CollaboratorRepository} object read from the file. If the file does not exist or an error occurs, a new empty {@link CollaboratorRepository} is returned.
+&nbsp;     */
+&nbsp;    public CollaboratorRepository read(File file) {
+&nbsp;        CollaboratorRepository collaboratorRepository;
+&nbsp;        try {
+<b class="fc">&nbsp;            ObjectInputStream in = new ObjectInputStream(</b>
+&nbsp;                    new FileInputStream(file));
+&nbsp;            try {
+<b class="fc">&nbsp;                collaboratorRepository = (CollaboratorRepository) in.readObject();</b>
+&nbsp;            } finally {
+<b class="fc">&nbsp;                in.close();</b>
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;            return collaboratorRepository;</b>
+<b class="nc">&nbsp;        } catch (IOException | ClassNotFoundException ex) {</b>
+<b class="nc">&nbsp;            return new CollaboratorRepository();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Saves the collaborator repository to the default file.
+&nbsp;     *
+&nbsp;     * @param collaboratorRepository The {@link CollaboratorRepository} object to save.
+&nbsp;     * @return {@code true} if the collaborator repository was successfully saved; {@code false} otherwise.
+&nbsp;     */
+&nbsp;    public boolean save(CollaboratorRepository collaboratorRepository) {
+<b class="nc">&nbsp;        return save(FILE_NAME, collaboratorRepository);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Saves the collaborator repository to a specified file name.
+&nbsp;     *
+&nbsp;     * @param fileName The name of the file to save the collaborator repository to.
+&nbsp;     * @param collaboratorRepository The {@link CollaboratorRepository} object to save.
+&nbsp;     * @return {@code true} if the collaborator repository was successfully saved; {@code false} otherwise.
+&nbsp;     */
+&nbsp;    public boolean save(String fileName, CollaboratorRepository collaboratorRepository) {
+<b class="nc">&nbsp;        return save(new File(fileName), collaboratorRepository);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Saves the collaborator repository to a specified file.
+&nbsp;     *
+&nbsp;     * @param file The file to save the collaborator repository to.
+&nbsp;     * @param collaboratorRepository The {@link CollaboratorRepository} object to save.
+&nbsp;     * @return {@code true} if the collaborator repository was successfully saved; {@code false} otherwise.
+&nbsp;     */
+&nbsp;    public boolean save(File file, CollaboratorRepository collaboratorRepository) {
+&nbsp;        try {
+<b class="nc">&nbsp;            ObjectOutputStream out = new ObjectOutputStream(</b>
+&nbsp;                    new FileOutputStream(file));
+&nbsp;            try {
+<b class="nc">&nbsp;                out.writeObject(collaboratorRepository);</b>
+&nbsp;            } finally {
+<b class="nc">&nbsp;                out.close();</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            return true;</b>
+<b class="nc">&nbsp;        } catch (IOException ex) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

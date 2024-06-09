@@ -1,4 +1,4 @@
-# US 26 - Assign  vehicles to the Agenda
+# US026 -  Assign vehicles to the Agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

@@ -3,40 +3,83 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant ":PostponeEntryController" as CTRL
-participant ":Repositories" as RepositorySingleton
+participant ":CancelEntryController" as CTRL
 participant "repositories\n:Repositories" as PLAT
-participant "TaskRepository" as TaskRepository
+participant "taskMapper\n:TaskMapper" as TaskMapper
+participant "agenda\n:Agenda" as Agenda
+participant "entriesList\n:List<Task>" as entriesList
+participant "tasksListByGreenSpace\n:List<Task>" as tasksListByGreenSpace
+participant "task\n:Task" as task
+participant "tasksListByGreenSpaceDTO\n:List<TaskDTO>" as tasksListByGreenSpaceDTO
+participant "taskDTO\n:TaskDTO" as TaskDTO
 
-autonumber 13
+autonumber 30
 -> CTRL : getTasksByGreenSpace(greenSpace)
 
-autonumber 13.1
+autonumber 30.1
 
 activate CTRL
     group Get Tasks By Green Space
-           CTRL -> RepositorySingleton : getInstance()
-           activate RepositorySingleton
-
-           RepositorySingleton --> CTRL: repositories
-           deactivate RepositorySingleton
-
-           CTRL -> PLAT : getTaskRepository()
+           CTRL -> PLAT : getAgenda()
            activate PLAT
 
-           PLAT --> CTRL: taskRepository
+           PLAT --> CTRL : agenda
            deactivate PLAT
 
-           CTRL -> TaskRepository : getTasksByGreenSpace(greenSpace)
-           activate TaskRepository
+           CTRL -> Agenda : getAgendaTasks(greenSpace)
+           activate Agenda
 
-           TaskRepository --> TaskRepository : getTasksUndone()
+           Agenda --> tasksListByGreenSpace** : create()
 
-           TaskRepository --> CTRL : tasksByGreenSpace
-           deactivate TaskRepository
+           loop for each known task
+
+           Agenda -> entriesList : task = get(i)
+           activate entriesList
+           deactivate entriesList
+
+           Agenda -> task : taskGreenSpace = greenSpace
+           activate task
+           deactivate task
+
+           opt greenSpace == true
+           Agenda -> tasksListByGreenSpace : add(entry)
+           activate tasksListByGreenSpace
+           deactivate tasksListByGreenSpace
+           end opt
+
+           end loop
+
+           Agenda --> CTRL : tasksListByGreenSpace
+           deactivate Agenda
+
+           CTRL -> TaskMapper : toDTO(entriesList)
+           activate TaskMapper
+
+           TaskMapper --> tasksListByGreenSpaceDTO** : create()
+
+           loop for each task in tasksListByGreenSpace
+
+           TaskMapper -> tasksListByGreenSpace : obj = get(i)
+           activate tasksListByGreenSpace
+           deactivate tasksListByGreenSpace
+
+           TaskMapper -> TaskMapper : objDto = toDTO(obj)
+           activate TaskMapper
+
+           TaskMapper -> TaskDTO** : create(...)
+           deactivate TaskMapper
+
+           TaskMapper -> tasksListByGreenSpaceDTO : add(objDto)
+           activate tasksListByGreenSpaceDTO
+           deactivate tasksListByGreenSpaceDTO
+
+           end loop
+
+           TaskMapper --> CTRL : tasksListByGreenSpaceDTO
+           deactivate TaskMapper
 
 end group
-autonumber 14
-<-- CTRL : tasksByGreenSpaces
+autonumber 46
+<-- CTRL : tasksListByGreenSpaceDTO
 
 @enduml

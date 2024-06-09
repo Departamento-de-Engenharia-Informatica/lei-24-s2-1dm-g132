@@ -98,7 +98,7 @@ public class SkillRepositoryTest {
 
         SkillRepository skillRepository = new SkillRepository();
 
-        Skill skill1 = new Skill("Podar árvores");
+        Skill skill1 = new Skill("Podar arvores");
         Skill skill2 = new Skill("Conduzir pesados");
 
         skillRepository.add(skill1);

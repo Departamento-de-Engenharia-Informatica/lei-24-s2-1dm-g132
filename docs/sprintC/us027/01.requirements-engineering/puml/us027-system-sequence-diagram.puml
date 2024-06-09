@@ -24,6 +24,8 @@ activate GSM
     end
 
     System --> GSM : produces a list of the Green Spaces
+    GSM --> System : requests to sort the list of Green Spaces in two specific ways
+    System --> GSM : produces the sorted list of Green Spaces
     deactivate System
 
 @enduml

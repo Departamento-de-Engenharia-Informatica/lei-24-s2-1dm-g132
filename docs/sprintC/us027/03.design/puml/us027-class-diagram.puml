@@ -14,6 +14,12 @@ class GreenSpace {
   - String adress
   - String type
   - Int area
+  - Email email
+}
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
 }
 
 class GreenSpacedto {
@@ -21,6 +27,7 @@ class GreenSpacedto {
   - String adress
   - String type
   - Int area
+  - Email email
 }
 
 class GreenSpaceMapper {
@@ -63,6 +70,8 @@ GreenSpaceRepository "1" -> "*" GreenSpace : GreenSpace
 ListGreenSpacesController ..> GreenSpaceMapper: greenSpaceMapper
 GreenSpaceMapper ..> GreenSpacedto
 GreenSpaceMapper ..> GreenSpace
+ListGreenSpacesController ..> ApplicationSession
+ApplicationSession ..> ApplicationSession: getinstance
 
 
 

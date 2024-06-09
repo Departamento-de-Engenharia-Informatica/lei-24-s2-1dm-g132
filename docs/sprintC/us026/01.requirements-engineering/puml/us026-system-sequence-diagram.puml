@@ -3,33 +3,43 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - US 026
-
+title System Sequence Diagram (SSD) - US026
 autonumber
 
-actor "GSM" as GSM
+actor "Green\nSpaces\nManager" as GSM
 participant ":System" as System
 
 activate GSM
 
-    GSM -> System: selects "Assign  vehicles to the Agenda" option
+    GSM -> System : asks to assign vehicle(s) to an entry in the Agenda
     activate System
 
-         System --> GSM: request vehicle plate
-            deactivate System
-                GSM -> System: enters vehicle plate
-                    activate System
-                       System --> GSM: asks for date
+        System --> GSM : shows entries from the Agenda and asks to select one
+    deactivate System
 
-                                deactivate System
+    GSM -> System : selects an entry
+    activate System
+loop answer == yes
 
-                                                GSM -> System: enters date
-                                                       activate System
-                                    System -> GSM: asks to validate data
+        System --> GSM : shows Vehicles list and asks to select vehicle
+    deactivate System
 
-                                    deactivate System
-                                                                           GSM --> System: confirms data
-                                                                                    activate System
-                                                                                      System -> GSM: shows operation success
-                                                                                      deactivate System
+    GSM -> System : selects vehicle
+    activate System
+       System --> GSM : asks if user wants to select more vehicles
+        deactivate System
+GSM -> System : answers yes or no
+    activate System
+
+loop answer == yes
+    System --> GSM : shows Vehicles list and asks to select vehicle
+    deactivate System
+
+    GSM -> System : selects a vehicle
+    activate System
+
+end loop
+        System --> GSM : displays operation success
+    deactivate System
+
 @enduml

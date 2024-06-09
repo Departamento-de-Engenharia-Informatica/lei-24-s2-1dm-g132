@@ -79,6 +79,6 @@ That's a matter of UX/UI, each dev team can decide about it.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One]!
+![us020-system-sequence-diagram.svg](svg%2Fus020-system-sequence-diagram.svg)
 
 ### 1.7 Other Relevant Remarks

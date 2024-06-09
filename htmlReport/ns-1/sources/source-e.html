@@ -1,0 +1,210 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RegisterJobController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.application.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: RegisterJobController (pt.ipp.isep.dei.esoft.project.application.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RegisterJobController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;/**
+&nbsp;
+&nbsp; This class represents the controller for registering a new job.
+&nbsp; It interacts with the job repository to store and retrieve job information.
+&nbsp; */
+&nbsp;package pt.ipp.isep.dei.esoft.project.application.controller;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.Job;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.serialization.JobRepositoryFile;
+&nbsp;
+&nbsp;import java.lang.IllegalArgumentException;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controller class for registering jobs.
+&nbsp; * Provides methods to interact with the job repository and to register new jobs.
+&nbsp; */
+&nbsp;public class RegisterJobController {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The job repository instance used to manage jobs.
+&nbsp;     */
+&nbsp;    private JobRepository jobRepository;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The file instance used to manage the serialization of the job repository.
+&nbsp;     */
+&nbsp;    private JobRepositoryFile jobRepositoryFile;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new RegisterJobController object.
+&nbsp;     * Initializes the job repository by obtaining it from the Repositories singleton instance.
+&nbsp;     */
+<b class="nc">&nbsp;    public RegisterJobController() {</b>
+<b class="nc">&nbsp;        getJobRepository();</b>
+<b class="nc">&nbsp;        jobRepositoryFile = new JobRepositoryFile();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new RegisterJobController object with a specified job repository.
+&nbsp;     * @param jobRepository The job repository to be used by the controller.
+&nbsp;     */
+<b class="nc">&nbsp;    public RegisterJobController(JobRepository jobRepository) {</b>
+<b class="nc">&nbsp;        this.jobRepository = jobRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the job repository, either by initializing it from the Repositories singleton instance
+&nbsp;     * or using the one provided in the constructor.
+&nbsp;     * @return The job repository.
+&nbsp;     */
+&nbsp;    private JobRepository getJobRepository() {
+<b class="nc">&nbsp;        if (jobRepository == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            jobRepository = repositories.getJobRepository();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return jobRepository;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of jobs from the job repository.
+&nbsp;     * @return The list of jobs.
+&nbsp;     */
+&nbsp;    public List&lt;Job&gt; getJobs() {
+<b class="nc">&nbsp;        JobRepository jobRepository = getJobRepository();</b>
+<b class="nc">&nbsp;        return jobRepository.getJobs();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Registers a new job with the given name.
+&nbsp;     * Validates the input name and adds the job to the repository.
+&nbsp;     * @param name The name of the job to be registered.
+&nbsp;     * @return The newly created job.
+&nbsp;     * @throws IllegalArgumentException If the name is null or empty.
+&nbsp;     */
+&nbsp;    public Job registerJob(String name) {
+<b class="nc">&nbsp;        if (name == null || name.isEmpty()) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Job name cannot be null or empty&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        JobRepository jobRepository = getJobRepository();</b>
+<b class="nc">&nbsp;        Job newJob = new Job(name);</b>
+<b class="nc">&nbsp;        jobRepository.add(newJob);</b>
+<b class="nc">&nbsp;        if(!jobRepositoryFile.save(jobRepository))</b>
+&nbsp;        {
+<b class="nc">&nbsp;            System.out.println(&quot;Error while saving Job Repository in external file!&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return newJob;</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

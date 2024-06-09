@@ -6,7 +6,6 @@ import pt.ipp.isep.dei.esoft.project.repository.JobRepository;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.serialization.CollaboratorRepositoryFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +24,9 @@ public class RegisterCollaboratorController {
      */
     private CollaboratorRepository collaboratorRepository;
 
+    /**
+     * The file instance used to manage the serialization of the collaborator repository.
+     */
     private CollaboratorRepositoryFile collaboratorRepositoryFile;
 
     /**

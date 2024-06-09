@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > Team</title>
+  <title>Coverage Report > ImportWaterSupplyPointsCsvController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.application.controller</a>
 </div>
 
-<h1>Coverage Summary for Class: Team (pt.ipp.isep.dei.esoft.project.domain)</h1>
+<h1>Coverage Summary for Class: ImportWaterSupplyPointsCsvController (pt.ipp.isep.dei.esoft.project.application.controller)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -45,37 +45,37 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">Team</td>
+  <td class="name">ImportWaterSupplyPointsCsvController</td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    0%
   </span>
   <span class="absValue">
-    (1/1)
+    (0/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    80%
+    0%
   </span>
   <span class="absValue">
-    (4/5)
+    (0/3)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    80%
+    0%
   </span>
   <span class="absValue">
-    (8/10)
+    (0/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    73,3%
+    0%
   </span>
   <span class="absValue">
-    (11/15)
+    (0/7)
   </span>
 </td>
 </tr>
@@ -87,82 +87,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.application.controller;
 &nbsp;
-&nbsp;import java.util.List;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.WaterSupplyPointsRepository;
 &nbsp;
-&nbsp;/**
-&nbsp; * Represents a team in the system.
-&nbsp; */
-&nbsp;public class Team {
+&nbsp;public class ImportWaterSupplyPointsCsvController {
+&nbsp;    private WaterSupplyPointsRepository waterSupplyPointsRepository;
 &nbsp;
-&nbsp;    /**
-&nbsp;     * The list of collaborators in which the team consists.
-&nbsp;     */
-&nbsp;    private List&lt;Collaborator&gt; collaborators;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Initializes a new instance of Team with the provided list of collaborators.
-&nbsp;     *
-&nbsp;     * @param collaborators The list of collaborators in the team.
-&nbsp;     */
-&nbsp;    public Team(List&lt;Collaborator&gt; collaborators)
-<b class="fc">&nbsp;    {</b>
-<b class="fc">&nbsp;        this.collaborators = collaborators;</b>
+<b class="nc">&nbsp;    public ImportWaterSupplyPointsCsvController() {</b>
+<b class="nc">&nbsp;        getWaterSuplyPointsCsvRepository();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Removes unavailable collaborators that are already on the team.
-&nbsp;     *
-&nbsp;     * @param tempCollaboratorsList The list of collaborators from which the unavailable collaborators are going to be removed.
-&nbsp;     */
-&nbsp;    public void removeUnavailableCollaborators(List&lt;Collaborator&gt; tempCollaboratorsList){
-<b class="fc">&nbsp;        for(Collaborator collaborator: collaborators){</b>
-<b class="fc">&nbsp;            tempCollaboratorsList.remove(collaborator);</b>
+&nbsp;    private WaterSupplyPointsRepository getWaterSuplyPointsCsvRepository() {
+<b class="nc">&nbsp;        if (waterSupplyPointsRepository == null){</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+&nbsp;
+<b class="nc">&nbsp;            waterSupplyPointsRepository = repositories.getWaterSupplyPointsRepository();</b>
 &nbsp;        }
+<b class="nc">&nbsp;        return waterSupplyPointsRepository;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Checks if this team is equal to another object.
-&nbsp;     *
-&nbsp;     * @param o The object to compare.
-&nbsp;     * @return True if the object is a Team and has the same collaborators, otherwise false.
-&nbsp;     */
-&nbsp;    @Override
-&nbsp;    public boolean equals(Object o) {
-<b class="fc">&nbsp;        if (this == o) {</b>
-<b class="fc">&nbsp;            return true;</b>
-&nbsp;        }
-<b class="fc">&nbsp;        if (o == null || getClass() != o.getClass()) {</b>
-<b class="fc">&nbsp;            return false;</b>
-&nbsp;        }
-<b class="fc">&nbsp;        Team team = (Team) o;</b>
-<b class="fc">&nbsp;        return this.collaborators.equals(team.collaborators);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Creates a shallow copy of this team.
-&nbsp;     *
-&nbsp;     * @return A new Team instance with the same collaborators.
-&nbsp;     */
-&nbsp;    @Override
-&nbsp;    public Team clone() {
-<b class="fc">&nbsp;        return new Team(this.collaborators);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Returns a string representation of the team.
-&nbsp;     *
-&nbsp;     * @return A string containing the names and skills of the team&#39;s collaborators.
-&nbsp;     */
-&nbsp;    @Override
-&nbsp;    public String toString() {
-<b class="nc">&nbsp;        String printTeam = &quot;Team:&quot;;</b>
-<b class="nc">&nbsp;        for(Collaborator collaborator : collaborators)</b>
-&nbsp;        {
-<b class="nc">&nbsp;            printTeam = String.format(&quot;%s\n%s: %s&quot;, printTeam,  collaborator.getName(), collaborator.getSkills());</b>
-&nbsp;        }
-<b class="nc">&nbsp;        return printTeam;</b>
+&nbsp;    public boolean loadGraph(String filePath){
+<b class="nc">&nbsp;        return waterSupplyPointsRepository.loadGraph(filePath);</b>
 &nbsp;    }
 &nbsp;}
 </code>
@@ -188,7 +135,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-12 20:04</div>
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
 </div>
 </body>
 </html>

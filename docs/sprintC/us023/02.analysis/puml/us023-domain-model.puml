@@ -33,11 +33,12 @@ class GreenSpace {
     area
     type
     address
+    gsmEmail
 }
 
 GSM "1" - "*" Team : assigns >
 
-Team "1" -- "*" Task : is assigned to >
+Team "0..1" -- "*" Task : is assigned to >
 
 Task "*" -- "1" Agenda : belongs to >
 

@@ -38,7 +38,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="60.0" prefWidth="365.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#doLogin" text="Login">
+            <Button mnemonicParsing="false" onAction="#goBack" text="Cancel">
                <font>
                   <Font size="20.0" />
                </font>
@@ -46,7 +46,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#goBack" text="Cancel">
+            <Button mnemonicParsing="false" onAction="#doLogin" text="Login">
                <font>
                   <Font size="20.0" />
                </font>

@@ -1,0 +1,78 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":AssignVehicleController" as CTRL
+participant "agenda:\nAgenda" as Agenda
+participant "freeAgendaEntriesList\nList<Task>" as freeAgendaEntriesList
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+participant "vehiclesList\n:List<Vehicle>" as vehiclesList
+participant ":VehicleMapper" as VehicleMapper
+participant "vehiclesListDto\n:List<VehicleDto>" as vehiclesListDto
+participant "objDto\n:VehicleDto" as vehicleDto
+
+             -> CTRL : getSelectedTask(i)
+            activate CTRL
+
+                CTRL -> Agenda : getSelectedTask(i)
+                activate Agenda
+
+                    Agenda -> freeAgendaEntriesList : get(i)
+                    activate freeAgendaEntriesList
+
+                        freeAgendaEntriesList --> Agenda : selectedTask
+                    deactivate freeAgendaEntriesList
+
+                    Agenda --> CTRL : selectedTask
+                    deactivate Agenda
+
+                    CTRL -> PLAT : getVehicleRepository()
+                    activate PLAT
+
+                        PLAT --> CTRL : vehiclerepository()
+                    deactivate PLAT
+
+                    CTRL -> VehicleRepository : getVehicles()
+                    activate VehicleRepository
+
+                        VehicleRepository --> CTRL : vehiclesList
+                    deactivate VehicleRepository
+
+                CTRL -> VehicleMapper : toDTO(vehicles list)
+                activate VehicleMapper
+
+                    VehicleMapper --> vehiclesListDto** : create()
+
+                    loop for each object in vehiclesList
+
+                        VehicleMapper -> vehiclesList : obj = get(i)
+                        activate vehiclesList
+                        deactivate vehiclesList
+
+
+                        VehicleMapper -> VehicleMapper : objDto = toDTO(obj)
+                        activate VehicleMapper
+
+                            VehicleMapper -> vehicleDto** :create(...)
+                            deactivate VehicleMapper
+
+                        VehicleMapper -> vehiclesListDto : add(objDto)
+                        activate vehiclesListDto
+
+                            deactivate vehiclesListDto
+
+                        end loop
+
+                    VehicleMapper --> CTRL : vehiclesListDto
+                    deactivate VehicleMapper
+
+                <-- CTRL : vehiclesListDto
+                deactivate CTRL
+
+
+@enduml

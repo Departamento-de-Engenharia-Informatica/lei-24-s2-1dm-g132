@@ -9,11 +9,15 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
+Package UI {
 class AddEntryAgendaUI
 {
 
 }
+}
 
+Package Core{
+Package Controller{
 class AddEntryAgendaController
 {
     + AddEntryAgendaController()
@@ -21,24 +25,16 @@ class AddEntryAgendaController
     + getSelectedTask(i)
     + addEntry(startingDate)
 }
-
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
 }
 
+Package Domain{
+Package Repository{
 class Repositories
 {
     - Repositories()
     + getInstance() : Repositories
     + getToDoList()
     + getAgenda()
-}
-
-class UserSession
-{
-    + getUserEmail()
 }
 
 class ToDoList
@@ -49,6 +45,27 @@ class ToDoList
     + getSelectedTask(i)
 }
 
+class Agenda
+{
+    + addEntry(startingDate, selectedTaskClone)
+    - add(selectedTaskClone)
+}
+}
+
+Package Model{
+
+class ApplicationSession
+{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession
+{
+    + getUserEmail()
+}
+
+
 class GreenSpace
 {
     - String name
@@ -57,23 +74,6 @@ class GreenSpace
     - String address
     - String gsmEmail
     + hasUserEmail(email)
-}
-
-class TaskMapper
-{
-    - List<TaskDto> associatedToDoEntriesListDto
-    + toDTO(associatedToDoEntriesList)
-    - toDTO(obj)
-}
-
-class TaskDto
-{
-    - String title
-    - String description
-    - String degreeOfUrgency
-    - int expectedDuration
-    - Calendar startingDate
-    + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace, startingDate)
 }
 
 class Task
@@ -95,7 +95,7 @@ enum DegreeOfUrgency
     High
 }
 
-enum GSTaskStatus
+enum TaskStatus
 {
     Pending
     Processed
@@ -104,15 +104,43 @@ enum GSTaskStatus
     Canceled
     Done
 }
+}
+}
 
-class Agenda
+Package Mapper{
+
+class TaskMapper
 {
-    + addEntry(startingDate, selectedTaskClone)
-    - add(selectedTaskClone)
+    - List<TaskDto> associatedToDoEntriesListDto
+    + toDTO(associatedToDoEntriesList)
+    - toDTO(obj)
+}
+
+Package DTO{
+class GreenSpaceDto
+{
+    - String name
+    - String type
+    - int area
+    - String address
+    + GreenSpaceDto(name, type, area, address)
+}
+
+class TaskDto
+{
+    - String title
+    - String description
+    - String degreeOfUrgency
+    - int expectedDuration
+    - Calendar startingDate
+    + TaskDto(title, description, degreeOfUrgency, expectedDuration, selectedGreenSpace, startingDate)
+}
+}
+}
 }
 
 Task +-- DegreeOfUrgency
-Task +-- GSTaskStatus
+Task +-- TaskStatus
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
@@ -134,10 +162,11 @@ ToDoList "1" --> "*" Task
 Agenda "1" --> "*" Task
 
 Task "*" --> "1" GreenSpace
-TaskDto "*" --> "1" GreenSpace
+TaskDto "*" --> "1" GreenSpaceDto
 
 TaskMapper ..> TaskDto
 TaskMapper ..> Task
+TaskMapper ..> GreenSpaceDto
 
 ApplicationSession --> "1" UserSession : userSession
 

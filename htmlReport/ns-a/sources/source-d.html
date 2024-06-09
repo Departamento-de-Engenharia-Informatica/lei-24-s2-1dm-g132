@@ -1,0 +1,231 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > WaterSupplyPointsRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: WaterSupplyPointsRepository (pt.ipp.isep.dei.esoft.project.repository)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WaterSupplyPointsRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    10%
+  </span>
+  <span class="absValue">
+    (1/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    3,9%
+  </span>
+  <span class="absValue">
+    (2/51)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.repository;
+&nbsp;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.GraphPngAndCsvGenerator;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Edge;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;public class WaterSupplyPointsRepository {
+&nbsp;
+&nbsp;    // Para já, considerei que cada edge é uma String e o custo é um Double, podem mudar mais tarde se for o caso.
+&nbsp;    private MatrixGraph&lt;Vertice, Double&gt; csvGraph;
+&nbsp;
+<b class="fc">&nbsp;    public WaterSupplyPointsRepository(boolean directed) {</b>
+<b class="fc">&nbsp;        csvGraph = new MatrixGraph&lt;&gt;(directed);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addEdge(String ori, String dest, Double weight) {
+<b class="nc">&nbsp;        return addEdge(new Vertice(ori), new Vertice(dest), weight);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean addEdge(Vertice ori, Vertice dest, Double weight) {
+<b class="nc">&nbsp;        return csvGraph.addEdge(ori, dest, weight);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getEdge(Vertice ori, Vertice dest) {
+<b class="nc">&nbsp;        Double temp = csvGraph.edge(ori, dest).getWeight();</b>
+<b class="nc">&nbsp;        if (temp != null) {</b>
+<b class="nc">&nbsp;            return temp;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public MatrixGraph&lt;Vertice, Double&gt; getCsvGraphCopy() {
+<b class="nc">&nbsp;        return csvGraph.clone();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean loadGraph(String filePath) {
+&nbsp;        try {
+<b class="nc">&nbsp;            if (csvGraph.numEdges() != 0) {</b>
+<b class="nc">&nbsp;                csvGraph = new MatrixGraph&lt;&gt;(csvGraph.isDirected());</b>
+&nbsp;            }
+<b class="nc">&nbsp;            File file = new File(filePath);</b>
+<b class="nc">&nbsp;            csvGraph.setName(file.getName());</b>
+<b class="nc">&nbsp;            if (!file.getName().endsWith(&quot;csv&quot;)) {</b>
+<b class="nc">&nbsp;                if (file.getName().endsWith(&quot;png&quot;)) {</b>
+<b class="nc">&nbsp;                    return false;</b>
+&nbsp;                }
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;Invalid File Format! Should be &lt;.csv&gt;&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            Scanner scanner = new Scanner(file);</b>
+<b class="nc">&nbsp;            while (scanner.hasNext()) {</b>
+<b class="nc">&nbsp;                String line = scanner.nextLine();</b>
+<b class="nc">&nbsp;                String separator = getSeparator(line);</b>
+<b class="nc">&nbsp;                String[] args = line.split(separator);</b>
+<b class="nc">&nbsp;                if (args.length != 3) {</b>
+<b class="nc">&nbsp;                    throw new RuntimeException(&quot;Invalid Entry: &lt;&quot; + line + &quot;&gt;, Should be &lt;arg, arg, arg&quot;);</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    String ori = args[0].strip();</b>
+<b class="nc">&nbsp;                    String dest = args[1].strip();</b>
+<b class="nc">&nbsp;                    double weight = Double.parseDouble(args[2].strip());</b>
+<b class="nc">&nbsp;                    addEdge(ori, dest, weight);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            scanner.close();</b>
+<b class="nc">&nbsp;        } catch (FileNotFoundException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String getSeparator(String line) {
+<b class="nc">&nbsp;        if (line.contains(&quot;;&quot;)) {</b>
+<b class="nc">&nbsp;            return &quot;;&quot;;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return &quot;,&quot;;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getMinimalCostGraph() {
+<b class="nc">&nbsp;        MatrixGraph&lt;Vertice, Double&gt; graph = Algorithms.minDistGraph(getCsvGraphCopy(), Double::compareTo);</b>
+<b class="nc">&nbsp;        graph.setName(getCsvGraphCopy().getName());</b>
+&nbsp;
+<b class="nc">&nbsp;        generateFilesFromGraph(getCsvGraphCopy(), &quot;FullGraph.png&quot;);</b>
+<b class="nc">&nbsp;        if (!graph.isDirected()) {</b>
+<b class="nc">&nbsp;            generateFilesFromGraph(removeDups(graph), &quot;MinimalCostGraph.png&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            generateFilesFromGraph(graph, &quot;MinimalCostGraph.png&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private MatrixGraph&lt;Vertice, Double&gt; removeDups(MatrixGraph&lt;Vertice, Double&gt; graph) {
+<b class="nc">&nbsp;        MatrixGraph&lt;Vertice, Double&gt; newGraph = new MatrixGraph&lt;&gt;(graph.isDirected());</b>
+<b class="nc">&nbsp;        newGraph.setName(graph.getName());</b>
+<b class="nc">&nbsp;        for (Edge&lt;Vertice, Double&gt; edge : graph.edges()) {</b>
+<b class="nc">&nbsp;            if (newGraph.edge(edge.getVOrig(), edge.getVDest()) == null &amp;&amp;</b>
+<b class="nc">&nbsp;                    newGraph.edge(edge.getVDest(), edge.getVOrig()) == null) {</b>
+<b class="nc">&nbsp;                newGraph.addEdge(edge.getVOrig(), edge.getVDest(), edge.getWeight());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return newGraph;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean generateFilesFromGraph(MatrixGraph&lt;Vertice, Double&gt; graph, String fileName) {
+<b class="nc">&nbsp;        String outputFolder = &quot;output&quot; + File.separator + &quot;us13&quot;;</b>
+<b class="nc">&nbsp;        return GraphPngAndCsvGenerator.generate(graph, fileName, outputFolder);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
+</div>
+</body>
+</html>

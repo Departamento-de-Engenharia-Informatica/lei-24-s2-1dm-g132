@@ -25,6 +25,9 @@ public class AssignSkillsController {
      */
     private SkillRepository skillRepository;
 
+    /**
+     * The file instance used to manage the serialization of the collaborator repository.
+     */
     private CollaboratorRepositoryFile collaboratorRepositoryFile;
 
     /**

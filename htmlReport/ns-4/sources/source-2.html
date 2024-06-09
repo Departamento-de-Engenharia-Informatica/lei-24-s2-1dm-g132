@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > CollaboratorRepository</title>
+  <title>Coverage Report > AsymptoticBehaviorAnalyser</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,18 +19,15 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">pt.ipp.isep.dei.esoft.project.repository</a>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
 </div>
 
-<h1>Coverage Summary for Class: CollaboratorRepository (pt.ipp.isep.dei.esoft.project.repository)</h1>
+<h1>Coverage Summary for Class: AsymptoticBehaviorAnalyser (pt.ipp.isep.dei.esoft.project.domain)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -45,41 +42,97 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">CollaboratorRepository</td>
+  <td class="name">AsymptoticBehaviorAnalyser</td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    0%
   </span>
   <span class="absValue">
-    (1/1)
+    (0/10)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    0%
   </span>
   <span class="absValue">
-    (10/10)
+    (0/38)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    84,6%
+    0%
   </span>
   <span class="absValue">
-    (22/26)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    93%
-  </span>
-  <span class="absValue">
-    (40/43)
+    (0/116)
   </span>
 </td>
 </tr>
-
+  <tr>
+    <td class="name">AsymptoticBehaviorAnalyser$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AsymptoticBehaviorAnalyser$ExecutionTimeInfo</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/38)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/127)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -87,203 +140,247 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.repository;
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
 &nbsp;
-&nbsp;import pt.ipp.isep.dei.esoft.project.domain.*;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Vertice;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.matrix.MatrixGraph;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.WaterSupplyPointsRepository;
 &nbsp;
-&nbsp;import java.util.ArrayList;
-&nbsp;import java.util.List;
-&nbsp;import java.util.Optional;
+&nbsp;import java.io.*;
+&nbsp;import java.util.*;
 &nbsp;
-&nbsp;/**
-&nbsp; * Repository class responsible for managing collaborator data.
-&nbsp; */
-&nbsp;public class CollaboratorRepository {
+<b class="nc">&nbsp;public class AsymptoticBehaviorAnalyser {</b>
 &nbsp;
-&nbsp;    /**
-&nbsp;     * A list of collaborators which consists of all the registered collaborators.
-&nbsp;     */
-&nbsp;    private final List&lt;Collaborator&gt; collaborators;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * A temporary list of collaborators for collaborator selection.
-&nbsp;     */
-&nbsp;    private List&lt;Collaborator&gt; tempCollaboratorsList;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Constructs a new CollaboratorRepository object.
-&nbsp;     */
-<b class="fc">&nbsp;    public CollaboratorRepository() {</b>
-<b class="fc">&nbsp;        collaborators = new ArrayList&lt;&gt;();</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Registers a new collaborator with the provided details.
-&nbsp;     *
-&nbsp;     * @param name                        The name of the collaborator.
-&nbsp;     * @param birthdate                   The birthdate of the collaborator.
-&nbsp;     * @param admissionDate               The admission date of the collaborator.
-&nbsp;     * @param address                     The address of the collaborator.
-&nbsp;     * @param phoneNumber                 The phone number of the collaborator.
-&nbsp;     * @param email                       The email of the collaborator.
-&nbsp;     * @param taxpayerNumber              The taxpayer number of the collaborator.
-&nbsp;     * @param identificationDocumentType  The type of identification document of the collaborator.
-&nbsp;     * @param identificationDocumentNumber The identification document number of the collaborator.
-&nbsp;     * @param job                         The job of the collaborator.
-&nbsp;     * @return An Optional containing the newly registered collaborator, if registration was successful.
-&nbsp;     */
-&nbsp;    public Optional&lt;Collaborator&gt; registerCollaborator(String name, String birthdate, String admissionDate,
-&nbsp;                                                       String address, int phoneNumber, String email, int taxpayerNumber,
-&nbsp;                                                       String identificationDocumentType, String identificationDocumentNumber, Job job) {
-&nbsp;
-&nbsp;
-<b class="fc">&nbsp;        Optional&lt;Collaborator&gt; optionalValue = Optional.empty();</b>
-&nbsp;
-<b class="fc">&nbsp;        Collaborator collaborator = new Collaborator(name, birthdate, admissionDate, address, phoneNumber, email, taxpayerNumber,</b>
-&nbsp;                identificationDocumentType, identificationDocumentNumber, job);
-&nbsp;
-<b class="fc">&nbsp;        if (addCollaborator(collaborator)) {</b>
-<b class="fc">&nbsp;            optionalValue = Optional.of(collaborator);</b>
+&nbsp;    public boolean start(String folderPath) {
+<b class="nc">&nbsp;        File folder = new File(folderPath);</b>
+<b class="nc">&nbsp;        if (!folder.isDirectory()) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid folder path!: &quot; + folderPath);</b>
 &nbsp;        }
-<b class="fc">&nbsp;        return optionalValue;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Assigns skills to a collaborator.
-&nbsp;     *
-&nbsp;     * @param collaborator         The collaborator to assign skills to.
-&nbsp;     * @param selectedSkillsList   The list of skills to assign.
-&nbsp;     * @return An Optional containing the updated collaborator with assigned skills.
-&nbsp;     */
-&nbsp;    public Optional&lt;Collaborator&gt; assignSkill(Collaborator collaborator, List&lt;Skill&gt; selectedSkillsList){
-&nbsp;        Optional&lt;Collaborator&gt; optionalValue;
-&nbsp;
-<b class="fc">&nbsp;        optionalValue = Optional.of(collaborator.assignSkill(selectedSkillsList));</b>
-&nbsp;
-<b class="fc">&nbsp;        return optionalValue;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Adds a collaborator to the repository if it passes validation.
-&nbsp;     *
-&nbsp;     * @param collaborator The collaborator to be added.
-&nbsp;     * @return True if the collaborator was successfully added, false otherwise.
-&nbsp;     */
-&nbsp;    private boolean addCollaborator(Collaborator collaborator) {
-<b class="fc">&nbsp;        boolean success = false;</b>
-<b class="fc">&nbsp;        if (validate(collaborator)) {</b>
-<b class="fc">&nbsp;            success = collaborators.add(collaborator.clone());</b>
-&nbsp;        }
-<b class="fc">&nbsp;        return success;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Validates if a collaborator can be added to the repository.
-&nbsp;     *
-&nbsp;     * @param collaborator The collaborator to be validated.
-&nbsp;     * @return True if the collaborator can be added, false otherwise.
-&nbsp;     */
-&nbsp;    private boolean validate(Collaborator collaborator) {
-<b class="fc">&nbsp;        return collaboratorsDoNotContain(collaborator);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Checks if the repository already contains a collaborator with the same details.
-&nbsp;     *
-&nbsp;     * @param collaborator The collaborator to check.
-&nbsp;     * @return True if the repository does not contain the collaborator, false otherwise.
-&nbsp;     */
-&nbsp;    private boolean collaboratorsDoNotContain(Collaborator collaborator) {
-<b class="fc">&nbsp;        return !collaborators.contains(collaborator);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Retrieves a defensive copy of the list of collaborators.
-&nbsp;     *
-&nbsp;     * @return A list of Collaborator objects.
-&nbsp;     */
-&nbsp;    public List&lt;Collaborator&gt; getCollaborators() {
-<b class="fc">&nbsp;        return List.copyOf(collaborators);</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Retrieves a collaborator by their identification number.
-&nbsp;     *
-&nbsp;     * @param collaboratorIdNumber The identification number of the collaborator.
-&nbsp;     * @return The Collaborator object corresponding to the provided identification number.
-&nbsp;     * @throws RuntimeException if the collaborator is not found.
-&nbsp;     */
-&nbsp;    public Collaborator getCollaboratorByIdNumber(String collaboratorIdNumber){
-<b class="fc">&nbsp;        for(Collaborator collaborator: collaborators)</b>
-&nbsp;        {
-<b class="fc">&nbsp;            if(collaborator.sameIdNumber(collaboratorIdNumber))</b>
-&nbsp;            {
-<b class="fc">&nbsp;                return collaborator;</b>
+<b class="nc">&nbsp;        File [] fileArr = folder.listFiles(new FileFilter() {</b>
+&nbsp;            @Override
+&nbsp;            public boolean accept(File pathname) {
+<b class="nc">&nbsp;                return pathname.getName().endsWith(&quot;.csv&quot;);</b>
 &nbsp;            }
+&nbsp;        });
+<b class="nc">&nbsp;        if (fileArr == null) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Folder is empty&quot;);</b>
+<b class="nc">&nbsp;        } else if (fileArr.length != 30) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Folder does not have 30 files!&quot;);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            List&lt;File&gt; fileList = new ArrayList&lt;&gt;(List.of(fileArr));</b>
+<b class="nc">&nbsp;            fileList.sort(Comparator.comparing(File::getName, new IntuitiveStringComparator&lt;&gt;()));</b>
+<b class="nc">&nbsp;            return readCsvs(fileList);</b>
 &nbsp;        }
-<b class="fc">&nbsp;        throw new RuntimeException(&quot;Collaborator not found.&quot;);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Creates a temporary list of collaborators, which can be used for operations such as team generation.
-&nbsp;     *
-&nbsp;     * @return A list of Collaborator objects.
-&nbsp;     */
-&nbsp;    public List&lt;Collaborator&gt; createTempCollaboratorsList(){
-<b class="fc">&nbsp;        tempCollaboratorsList = new ArrayList&lt;&gt;();</b>
-&nbsp;
-<b class="fc">&nbsp;        for (Collaborator collaborator : collaborators) {</b>
-<b class="fc">&nbsp;            tempCollaboratorsList.add(collaborator.clone());</b>
-&nbsp;        }
-&nbsp;
-<b class="fc">&nbsp;        return tempCollaboratorsList;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Generates a team of collaborators based on selected skills and team size constraints.
-&nbsp;     *
-&nbsp;     * @param selectedSkillsList The list of skills required for the team.
-&nbsp;     * @param minTeamSize        The minimum size of the team.
-&nbsp;     * @param maxTeamSize        The maximum size of the team.
-&nbsp;     * @return A list of Collaborator objects representing the proposed team.
-&nbsp;     * @throws IllegalArgumentException if not all required skills are covered or if there are insufficient collaborators to form the team.
-&nbsp;     */
-&nbsp;    public List&lt;Collaborator&gt; generateTeam(List&lt;Skill&gt; selectedSkillsList, int minTeamSize, int maxTeamSize){
-<b class="fc">&nbsp;        List&lt;Collaborator&gt; teamProposal = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;        List&lt;Skill&gt; skillsNeeded = new ArrayList&lt;&gt;(selectedSkillsList); // Copy of the selectedSkillsList</b>
-&nbsp;
-<b class="fc">&nbsp;        for (Collaborator collaborator : tempCollaboratorsList) {</b>
-<b class="fc">&nbsp;            for (Skill skill : collaborator.getSkills()) {</b>
-<b class="pc">&nbsp;                if (skillsNeeded.contains(skill)) {</b>
-<b class="pc">&nbsp;                    if(!teamProposal.contains(collaborator))</b>
-&nbsp;                    {
-<b class="fc">&nbsp;                        teamProposal.add(collaborator); // Add collaborator to the team</b>
-&nbsp;                    }
-<b class="fc">&nbsp;                    skillsNeeded.remove(skill); // Reduce the quantity needed for this skill</b>
+&nbsp;    private boolean readCsvs(List&lt;File&gt; fileList) {
+<b class="nc">&nbsp;        File folder = fileList.get(0).getParentFile().getAbsoluteFile();</b>
+<b class="nc">&nbsp;        List&lt;ExecutionTimeInfo&gt; executionTimeInfoList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        String fileName = &quot;&quot;;</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            for (File file : fileList) {</b>
+<b class="nc">&nbsp;                fileName = file.getName();</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Reading file: &quot; + fileName);</b>
+<b class="nc">&nbsp;                WaterSupplyPointsRepository tempRepo = new WaterSupplyPointsRepository(true);</b>
+<b class="nc">&nbsp;                if (tempRepo.loadGraph(file.getAbsolutePath())) {</b>
+<b class="nc">&nbsp;                    long begining = System.currentTimeMillis();</b>
+<b class="nc">&nbsp;                    MatrixGraph&lt;Vertice, Double&gt; graph = Algorithms.minDistGraph(tempRepo.getCsvGraphCopy(), Comparator.naturalOrder());</b>
+<b class="nc">&nbsp;                    long end = System.currentTimeMillis();</b>
+<b class="nc">&nbsp;                    ExecutionTimeInfo executionTimeInfo = new ExecutionTimeInfo(</b>
+&nbsp;                            fileName,
+<b class="nc">&nbsp;                            graph.numEdges(),</b>
+<b class="nc">&nbsp;                            graph.numVertices(),</b>
+&nbsp;                            end - begining);
+<b class="nc">&nbsp;                    executionTimeInfoList.add(executionTimeInfo);</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    throw new RuntimeException(&quot;Error parsing file! &quot; + file.getAbsolutePath());</b>
 &nbsp;                }
 &nbsp;            }
+<b class="nc">&nbsp;        } catch (IllegalArgumentException illegalArgumentException) {</b>
+<b class="nc">&nbsp;            System.out.println(illegalArgumentException.getMessage() + &quot;. &quot; + fileName);</b>
+<b class="nc">&nbsp;        } catch (OutOfMemoryError outOfMemoryError) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Out of memory! File: &quot; + fileName);</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
 &nbsp;        }
 &nbsp;
-<b class="fc">&nbsp;        tempCollaboratorsList.removeAll(teamProposal);</b>
+<b class="nc">&nbsp;        generateFiles(executionTimeInfoList);</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
 &nbsp;
-&nbsp;        // Check if all required skills are covered by the team
-<b class="fc">&nbsp;        if (!skillsNeeded.isEmpty()) {</b>
-<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Cannot generate team. Not all required skills are covered.&quot;);</b>
+&nbsp;    private boolean generateFiles(List&lt;ExecutionTimeInfo&gt; executionTimeInfoList) {
+<b class="nc">&nbsp;        File baseFolder = new File(getDesktopPath());</b>
+<b class="nc">&nbsp;        if (setup(baseFolder)) {</b>
+<b class="nc">&nbsp;            String header = &quot;File Name;Edges;Vertices;Execution Time (ms)\n&quot;;</b>
+<b class="nc">&nbsp;            return generateCsv(executionTimeInfoList, baseFolder, header) &amp;&amp; generateGraphPng(executionTimeInfoList, baseFolder);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            return false;</b>
 &nbsp;        }
+&nbsp;    }
 &nbsp;
-&nbsp;        // Adjust team size if necessary
-<b class="fc">&nbsp;        while (teamProposal.size() &lt; minTeamSize) {</b>
-<b class="pc">&nbsp;            if (tempCollaboratorsList.isEmpty()) {</b>
-<b class="fc">&nbsp;                throw new IllegalArgumentException(&quot;Cannot generate team. Insufficient collaborators.&quot;);</b>
+&nbsp;    private boolean setup(File baseFolder) {
+<b class="nc">&nbsp;        String outputFolderPath = baseFolder.getAbsolutePath() + File.separator + &quot;output&quot; + File.separator + &quot;us14&quot;;</b>
+<b class="nc">&nbsp;        File outputFolder = new File(outputFolderPath);</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            if (!outputFolder.exists()) {</b>
+<b class="nc">&nbsp;                boolean ok = outputFolder.mkdirs();</b>
+<b class="nc">&nbsp;                if (!ok) {</b>
+<b class="nc">&nbsp;                    throw new RuntimeException(&quot;Error creating &quot; + outputFolderPath);</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;Created: &quot; + outputFolderPath);</b>
+&nbsp;                }
+&nbsp;            } else {
+<b class="nc">&nbsp;                if (outputFolder.listFiles() != null) {</b>
+<b class="nc">&nbsp;                    for (File a : outputFolder.listFiles()) {</b>
+<b class="nc">&nbsp;                        boolean ok = a.delete();</b>
+<b class="nc">&nbsp;                        if (!ok) {</b>
+<b class="nc">&nbsp;                            throw new RuntimeException(&quot;Error deleting &quot; + a.getAbsolutePath() +</b>
+&nbsp;                                    &quot;\nMaybe check if the file is open by another program...&quot;);
+&nbsp;                        } else {
+<b class="nc">&nbsp;                            System.out.println(&quot;Deleted: &quot; + a.getAbsolutePath());</b>
+&nbsp;                        }
+&nbsp;                    }
+&nbsp;                }
 &nbsp;            }
-<b class="nc">&nbsp;            Collaborator collaboratorToAdd = tempCollaboratorsList.remove(0); // Remove collaborator from the beginning of the list</b>
-<b class="nc">&nbsp;            teamProposal.add(collaboratorToAdd);</b>
+<b class="nc">&nbsp;        } catch (Exception exception) {</b>
+<b class="nc">&nbsp;            exception.printStackTrace();</b>
 &nbsp;        }
-<b class="pc">&nbsp;        while (teamProposal.size() &gt; maxTeamSize) {</b>
-<b class="nc">&nbsp;            teamProposal.remove(teamProposal.size() - 1); // Remove collaborators if team size exceeds maxTeamSize</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean generateCsv(List&lt;ExecutionTimeInfo&gt; executionTimeInfoList, File baseFolder, String header) {
+<b class="nc">&nbsp;        String outputFolderPath = baseFolder.getAbsolutePath() + File.separator + &quot;output&quot; + File.separator + &quot;us14&quot;;</b>
+<b class="nc">&nbsp;        String csvPath = outputFolderPath + File.separator + &quot;AsymptoticBehavior.csv&quot;;</b>
+<b class="nc">&nbsp;        File csvFile = new File(csvPath);</b>
+<b class="nc">&nbsp;        try (PrintWriter writer = new PrintWriter(new FileWriter(csvFile))) {</b>
+<b class="nc">&nbsp;            writer.write(header);</b>
+<b class="nc">&nbsp;            for (ExecutionTimeInfo a : executionTimeInfoList) {</b>
+<b class="nc">&nbsp;                writer.write(a.getFilename() + &quot;;&quot; + a.getNumEdges() + &quot;;&quot; + a.getNumVertices() + &quot;;&quot; + a.getExecutionTime() + &quot;\n&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        openFile(csvPath);</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean generateGraphPng(List&lt;ExecutionTimeInfo&gt; executionTimeInfos, File baseFolder) {
+<b class="nc">&nbsp;        String outputFolderPath = baseFolder.getAbsolutePath() + File.separator + &quot;output&quot; + File.separator + &quot;us14&quot;;</b>
+<b class="nc">&nbsp;        String imagePath = outputFolderPath + File.separator + &quot;AsymptoticBehaviorGraph.png&quot;;</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;Generating Graph PNG...&quot;);</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            File tempFile = File.createTempFile(&quot;gnuplot-data&quot;, &quot;txt&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;            try (PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {</b>
+<b class="nc">&nbsp;                for (ExecutionTimeInfo entry : executionTimeInfos) {</b>
+<b class="nc">&nbsp;                    writer.println(entry.numEdges + &quot; &quot; + entry.getExecutionTime());</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;            ProcessBuilder processBuilder = new ProcessBuilder(&quot;gnuplot&quot;);</b>
+<b class="nc">&nbsp;            processBuilder.redirectErrorStream(true);</b>
+<b class="nc">&nbsp;            Process process = processBuilder.start();</b>
+&nbsp;
+<b class="nc">&nbsp;            try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(process.getOutputStream()))) {</b>
+<b class="nc">&nbsp;                writer.println(&quot;set terminal pngcairo&quot;);</b>
+<b class="nc">&nbsp;                writer.println(&quot;set output &#39;&quot; + imagePath + &quot;&#39;&quot;);</b>
+<b class="nc">&nbsp;                writer.println(&quot;set title &#39;Execution Time vs Input Size&#39;&quot;);</b>
+<b class="nc">&nbsp;                writer.println(&quot;set xlabel &#39;Input Size (edges)&#39;&quot;);</b>
+<b class="nc">&nbsp;                writer.println(&quot;set ylabel &#39;Execution Time (ms)&#39;&quot;);</b>
+<b class="nc">&nbsp;                writer.println(&quot;plot &#39;&quot; + tempFile.getAbsolutePath() + &quot;&#39; using 1:2 with lines title &#39;Data&#39;&quot;);</b>
+<b class="nc">&nbsp;            }</b>
+&nbsp;
+<b class="nc">&nbsp;            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {</b>
+&nbsp;                String line;
+<b class="nc">&nbsp;                while ((line = reader.readLine()) != null) {</b>
+<b class="nc">&nbsp;                    System.out.println(line);</b>
+&nbsp;                }
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            process.waitFor();</b>
+&nbsp;
+<b class="nc">&nbsp;            openFile(imagePath);</b>
+<b class="nc">&nbsp;        } catch (Exception exception) {</b>
+<b class="nc">&nbsp;            exception.printStackTrace();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static int extractNumericValue(String fileName) {
+&nbsp;        // Extract the numeric part (e.g., &quot;file11&quot; -&gt; 11)
+<b class="nc">&nbsp;        String numericPart = fileName.replaceAll(&quot;[^0-9]&quot;, &quot;&quot;);</b>
+<b class="nc">&nbsp;        return Integer.parseInt(numericPart);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private boolean openFile(String filePath) {
+&nbsp;
+&nbsp;        try {
+&nbsp;            String command;
+&nbsp;
+&nbsp;            // Check the operating system
+<b class="nc">&nbsp;            String os = System.getProperty(&quot;os.name&quot;).toLowerCase();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (os.contains(&quot;win&quot;)) {</b>
+&nbsp;                // Windows
+<b class="nc">&nbsp;                command = &quot;cmd.exe /c start &quot;;</b>
+<b class="nc">&nbsp;            } else if (os.contains(&quot;nix&quot;) || os.contains(&quot;nux&quot;) || os.contains(&quot;mac&quot;)) {</b>
+&nbsp;                // Unix or Linux or Mac
+<b class="nc">&nbsp;                command = &quot;open &quot;;</b>
+&nbsp;            } else {
+&nbsp;                // Unsupported OS
+<b class="nc">&nbsp;                System.out.println(&quot;Unsupported operating system.&quot;);</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;
+&nbsp;            // Execute the command
+<b class="nc">&nbsp;            Runtime runtime = Runtime.getRuntime();</b>
+<b class="nc">&nbsp;            Process process2 = runtime.exec(command + filePath);</b>
+<b class="nc">&nbsp;            process2.waitFor();</b>
+<b class="nc">&nbsp;            return true;</b>
+<b class="nc">&nbsp;        }catch (Exception e){</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private String getDesktopPath() {
+&nbsp;        try {
+<b class="nc">&nbsp;            return System.getProperty(&quot;user.home&quot;) + File.separator + &quot;Desktop&quot;;</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return &quot;&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static class ExecutionTimeInfo {
+&nbsp;        protected String filename;
+&nbsp;        protected int numEdges;
+&nbsp;        protected int numVertices;
+&nbsp;        protected long executionTime;
+&nbsp;
+<b class="nc">&nbsp;        public ExecutionTimeInfo(String filename, int numEdges, int numVertices, long executionTime) {</b>
+<b class="nc">&nbsp;            this.filename = filename;</b>
+<b class="nc">&nbsp;            this.numEdges = numEdges;</b>
+<b class="nc">&nbsp;            this.numVertices = numVertices;</b>
+<b class="nc">&nbsp;            this.executionTime = executionTime;</b>
 &nbsp;        }
 &nbsp;
-<b class="fc">&nbsp;        return teamProposal;</b>
+&nbsp;        public String getFilename() {
+<b class="nc">&nbsp;            return filename;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public int getNumEdges() {
+<b class="nc">&nbsp;            return numEdges;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public int getNumVertices() {
+<b class="nc">&nbsp;            return numVertices;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public long getExecutionTime() {
+<b class="nc">&nbsp;            return executionTime;</b>
+&nbsp;        }
 &nbsp;    }
 &nbsp;}
 </code>
@@ -309,7 +406,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-12 20:04</div>
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
 </div>
 </body>
 </html>

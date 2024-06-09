@@ -77,6 +77,12 @@ public class TeamRepository implements Serializable {
         return List.copyOf(teams);
     }
 
+    /**
+     * Retrieves a selected team from the list of teams by its index.
+     *
+     * @param i the index of the team
+     * @return the selected team
+     */
     public Team getSelectedTeam(int i)
     {
         return teams.get(i);

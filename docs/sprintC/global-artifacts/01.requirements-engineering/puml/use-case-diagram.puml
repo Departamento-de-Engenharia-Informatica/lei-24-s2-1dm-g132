@@ -4,8 +4,9 @@ left to right direction
 
 actor "Human Resources Manager" as HRM
 actor "Vehicle and Equipment Fleet Manager" as VFM
-actor "Green Space Manager" as GSM
+actor "Green Spaces Manager" as GSM
 actor "Software Quality Assessment Team Manager" as QAM
+actor "Collaborator" as Collab
 
 
 rectangle GreenSpaceManagement {
@@ -21,11 +22,23 @@ rectangle GreenSpaceManagement {
   GSM --> (UC 010 - List which piece/s of equipment is are used in each day)
   GSM --> (UC 011 - Collect data from the user portal about the use of the park)
   GSM --> (UC 012 - Import a .csv file)
-  GSM --> (UC 013 -  Apply an algorithm to find the cheapest way to connect all points)
-  QAM --> (UC 014 - run tests to observe the asymptotic behavior of the execution time of the US13  algorithm)
-
-
-
+  GSM --> (UC 013 - Apply an algorithm to find the cheapest way to connect all points)
+  QAM --> (UC 014 - Run tests to observe the asymptotic behavior of the execution time of the US13 algorithm)
+  GSM --> (UC 015 - Predict the average monthly cost that will be paid for water consumption in a new park)
+  QAM --> (UC 016 - Determine the best line that fits the data of US014)
+  GSM --> (UC 017 - Place signs to evacuate, in case of emergency, park users to an Assembly Point)
+  GSM --> (UC 018 - Place signs to evacuate, in case of emergency, park users to one of the several Assembly Points)
+  QAM --> (UC 019 - Conclude about the worst-case time complexity of the procedures developed in US13, US17, and US18)
+  GSM --> (UC 020 - Register a green space)
+  GSM --> (UC 021 - Add a new entry to the To-Do List)
+  GSM --> (UC 022 - Add a new entry in the Agenda)
+  GSM --> (UC 023 - Assign a Team to an entry in the Agenda)
+  GSM --> (UC 024 - Postpone an entry in the agenda)
+  GSM --> (UC 025 - Cancel an entry in the agenda)
+  GSM --> (UC 026 - Assign vehicles to the Agenda)
+  GSM --> (UC 027 - List all green spaces managed by GSM)
+  Collab --> (UC 028 - Consult the tasks assigned to a collaborator between two dates)
+  Collab --> (UC 029 - Record the completion of a task)
 }
 
 @enduml

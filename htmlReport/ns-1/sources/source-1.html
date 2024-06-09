@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > AsymptoticBehaviorAnalyser</title>
+  <title>Coverage Report > AddEntryAgendaController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">pt.ipp.isep.dei.esoft.project.domain</a>
+    <a href="../index.html">pt.ipp.isep.dei.esoft.project.application.controller</a>
 </div>
 
-<h1>Coverage Summary for Class: AsymptoticBehaviorAnalyser (pt.ipp.isep.dei.esoft.project.domain)</h1>
+<h1>Coverage Summary for Class: AddEntryAgendaController (pt.ipp.isep.dei.esoft.project.application.controller)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -45,7 +45,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">AsymptoticBehaviorAnalyser</td>
+  <td class="name">AddEntryAgendaController</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -67,7 +67,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/42)
+    (0/12)
   </span>
 </td>
 <td class="coverageStat">
@@ -75,7 +75,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/108)
+    (0/30)
   </span>
 </td>
 </tr>
@@ -87,204 +87,156 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.domain;
+<code class="sourceCode" id="sourceCode">&nbsp;package pt.ipp.isep.dei.esoft.project.application.controller;
 &nbsp;
-&nbsp;import pt.ipp.isep.dei.esoft.project.domain.graph.Algorithms;
-&nbsp;import pt.ipp.isep.dei.esoft.project.repository.WaterSupplyPointsRepository;
+&nbsp;import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
+&nbsp;import pt.ipp.isep.dei.esoft.project.domain.GSTask;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.GSTaskMapper;
+&nbsp;import pt.ipp.isep.dei.esoft.project.mapper.dto.GSTaskDTO;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Agenda;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.ToDoList;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.serialization.AgendaFile;
+&nbsp;import pt.ipp.isep.dei.esoft.project.repository.serialization.ToDoListFile;
 &nbsp;
-&nbsp;import java.io.*;
-&nbsp;import java.util.*;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
 &nbsp;
-&nbsp;public class AsymptoticBehaviorAnalyser {
-&nbsp;    public String desktopPath;
-&nbsp;    private final String folderPath;
-<b class="nc">&nbsp;    private final String folderName = &quot;output&quot;;</b>
+&nbsp;/**
+&nbsp; * Controller class for adding entries to the agenda.
+&nbsp; * Provides methods to interact with the to-do list and agenda, and to add new entries.
+&nbsp; */
+&nbsp;public class AddEntryAgendaController {
 &nbsp;
-<b class="nc">&nbsp;    public AsymptoticBehaviorAnalyser() {</b>
-<b class="nc">&nbsp;        getDesktopPath();</b>
-<b class="nc">&nbsp;        this.folderPath = desktopPath + File.separator + folderName;</b>
+&nbsp;    /**
+&nbsp;     * The to-do list instance used to manage to-do list entries.
+&nbsp;     */
+&nbsp;    private ToDoList toDoList;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The application session instance used to manage the current user session.
+&nbsp;     */
+&nbsp;    private ApplicationSession applicationSession;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The agenda instance used to manage agenda entries.
+&nbsp;     */
+&nbsp;    private Agenda agenda;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * A clone of the selected task from the to-do list.
+&nbsp;     */
+&nbsp;    private GSTask selectedTaskClone;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The file instance used to manage the serialization of the to-do list.
+&nbsp;     */
+&nbsp;    private ToDoListFile toDoListFile;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The file instance used to manage the serialization of the agenda.
+&nbsp;     */
+&nbsp;    private AgendaFile agendaFile;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initializes a new instance of the AddEntryAgendaController class.
+&nbsp;     * Initializes necessary repositories and files.
+&nbsp;     */
+&nbsp;    public AddEntryAgendaController()
+<b class="nc">&nbsp;    {</b>
+<b class="nc">&nbsp;        getToDoList();</b>
+<b class="nc">&nbsp;        getApplicationSession();</b>
+<b class="nc">&nbsp;        getAgenda();</b>
+<b class="nc">&nbsp;        toDoListFile = new ToDoListFile();</b>
+<b class="nc">&nbsp;        agendaFile = new AgendaFile();</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    private void getDesktopPath() {
-&nbsp;        try {
-<b class="nc">&nbsp;            this.desktopPath = System.getProperty(&quot;user.home&quot;) + File.separator + &quot;Desktop&quot;;</b>
-<b class="nc">&nbsp;        } catch (Exception e) {</b>
-<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;    /**
+&nbsp;     * Retrieves the to-do list instance.
+&nbsp;     *
+&nbsp;     * @return The ToDoList object.
+&nbsp;     */
+&nbsp;    private ToDoList getToDoList() {
+<b class="nc">&nbsp;        if (toDoList == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            toDoList = repositories.getToDoList();</b>
 &nbsp;        }
+<b class="nc">&nbsp;        return toDoList;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public Map&lt;String, Long&gt; startTest(List&lt;Integer&gt; listOfSizes, int iterations) throws IOException {
-<b class="nc">&nbsp;        Map&lt;String, Long&gt; finalMap = new HashMap&lt;&gt;();</b>
-&nbsp;        Map&lt;String, Long&gt; iterationMap;
-<b class="nc">&nbsp;        for (int i = 0; i &lt; iterations; i++) {</b>
-<b class="nc">&nbsp;            System.out.println(&quot;Iteration: &quot; + (i + 1));</b>
-<b class="nc">&nbsp;            System.out.println(&quot;Generating test CSV&#39;s...&quot;);</b>
-<b class="nc">&nbsp;            if (!generateCsvs(listOfSizes)) {</b>
-<b class="nc">&nbsp;                return null;</b>
-&nbsp;            } else {
-<b class="nc">&nbsp;                System.out.println(&quot;Analyzing...&quot;);</b>
-<b class="nc">&nbsp;                iterationMap = readCsvs();</b>
-&nbsp;            }
-<b class="nc">&nbsp;            for (Map.Entry&lt;String, Long&gt; a : iterationMap.entrySet()) {</b>
-<b class="nc">&nbsp;                if (!finalMap.containsKey(a.getKey())){</b>
-<b class="nc">&nbsp;                    finalMap.put(a.getKey(), a.getValue());</b>
-&nbsp;                } else {
-<b class="nc">&nbsp;                    finalMap.replace(a.getKey(), finalMap.get(a.getKey()) + a.getValue());</b>
-&nbsp;                }
-&nbsp;            }
+&nbsp;    /**
+&nbsp;     * Retrieves the application session instance.
+&nbsp;     *
+&nbsp;     * @return The ApplicationSession object.
+&nbsp;     */
+&nbsp;    private ApplicationSession getApplicationSession() {
+<b class="nc">&nbsp;        if (applicationSession == null) {</b>
+<b class="nc">&nbsp;            applicationSession = ApplicationSession.getInstance();</b>
 &nbsp;        }
-<b class="nc">&nbsp;        for (Map.Entry&lt;String, Long&gt; a : finalMap.entrySet()){</b>
-<b class="nc">&nbsp;            finalMap.replace(a.getKey(), a.getValue()/5);</b>
-&nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        return finalMap;</b>
+<b class="nc">&nbsp;        return applicationSession;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    private Map&lt;String, Long&gt; readCsvs() {
-<b class="nc">&nbsp;        File folder = new File(folderPath);</b>
-<b class="nc">&nbsp;        if (!folder.isDirectory()) {</b>
-<b class="nc">&nbsp;            throw new RuntimeException(&quot;Inválid path to the folder&quot;);</b>
+&nbsp;    /**
+&nbsp;     * Retrieves the agenda instance.
+&nbsp;     *
+&nbsp;     * @return The Agenda object.
+&nbsp;     */
+&nbsp;    private Agenda getAgenda() {
+<b class="nc">&nbsp;        if (agenda == null) {</b>
+<b class="nc">&nbsp;            Repositories repositories = Repositories.getInstance();</b>
+<b class="nc">&nbsp;            agenda = repositories.getAgenda();</b>
 &nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        Map&lt;String, Long&gt; mapToReturn = new HashMap&lt;&gt;();</b>
-<b class="nc">&nbsp;        File[] files = folder.listFiles();</b>
-<b class="nc">&nbsp;        String fileName = &quot;&quot;;</b>
-&nbsp;        try {
-<b class="nc">&nbsp;            for (File file : files) {</b>
-<b class="nc">&nbsp;                fileName = file.getName();</b>
-<b class="nc">&nbsp;                WaterSuplyPointsCsvRepository tempRepo = new WaterSuplyPointsCsvRepository(true);</b>
-<b class="nc">&nbsp;                if (tempRepo.loadGraph(file.getAbsolutePath())){</b>
-<b class="nc">&nbsp;                    long begining = System.currentTimeMillis();</b>
-<b class="nc">&nbsp;                    Algorithms.minDistGraph(tempRepo.getCsvGraphCopy(), Comparator.naturalOrder());</b>
-<b class="nc">&nbsp;                    long end = System.currentTimeMillis();</b>
-<b class="nc">&nbsp;                    mapToReturn.put(file.getName(), (end - begining));</b>
-&nbsp;                } else {
-&nbsp;
-&nbsp;                }
-&nbsp;            }
-<b class="nc">&nbsp;        }catch (IllegalArgumentException illegalArgumentException){</b>
-<b class="nc">&nbsp;            System.out.println(illegalArgumentException.getMessage() + &quot;. &quot; + fileName);</b>
-&nbsp;        }
-<b class="nc">&nbsp;        catch (OutOfMemoryError outOfMemoryError) {</b>
-<b class="nc">&nbsp;            System.out.println(&quot;Out of memory! File: &quot; + fileName);</b>
-<b class="nc">&nbsp;        } catch (Exception e) {</b>
-<b class="nc">&nbsp;            e.printStackTrace();</b>
-&nbsp;        }
-<b class="nc">&nbsp;        return mapToReturn;</b>
+<b class="nc">&nbsp;        return agenda;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    private String getRandomIntInString() {
-<b class="nc">&nbsp;        Random rand = new Random();</b>
-&nbsp;        // inteiro random entre 1 e 100000
-<b class="nc">&nbsp;        return String.valueOf((rand.nextInt((100000 - 1) + 1) + 1));</b>
+&nbsp;    /**
+&nbsp;     * Retrieves the list of to-do list entries for the current user session.
+&nbsp;     *
+&nbsp;     * @return A list of GSTaskDTO objects representing the to-do list entries.
+&nbsp;     */
+&nbsp;    public List&lt;GSTaskDTO&gt; getTodoListEntries()
+&nbsp;    {
+<b class="nc">&nbsp;        String email = applicationSession.getCurrentSession().getUserEmail();</b>
+<b class="nc">&nbsp;        List&lt;GSTask&gt; associatedToDoEntriesList = toDoList.getToDoListEntries(email);</b>
+<b class="nc">&nbsp;        List&lt;GSTaskDTO&gt; associatedToDoEntriesListDTO = GSTaskMapper.toDTOToDo(associatedToDoEntriesList);</b>
+<b class="nc">&nbsp;        return associatedToDoEntriesListDTO;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    private boolean generateCsvs(List&lt;Integer&gt; listOfSizes) throws IOException {
-<b class="nc">&nbsp;        File folder = new File(desktopPath, folderName);</b>
-&nbsp;
-&nbsp;        try {
-<b class="nc">&nbsp;            if (!folder.exists()) { // Check if the folder doesn&#39;t already exist</b>
-<b class="nc">&nbsp;                boolean created = folder.mkdir(); // Create the folder</b>
-<b class="nc">&nbsp;                if (!created) {</b>
-<b class="nc">&nbsp;                    throw new RuntimeException(&quot;Failed to create the folder: &quot; + folderName);</b>
-&nbsp;                }
-&nbsp;            }
-<b class="nc">&nbsp;        } catch (Exception exception) {</b>
-<b class="nc">&nbsp;            exception.printStackTrace();</b>
-&nbsp;        }
-&nbsp;
-<b class="nc">&nbsp;        boolean status = false;</b>
-<b class="nc">&nbsp;        for (Integer inputSize : listOfSizes) {</b>
-<b class="nc">&nbsp;            String csvFile = folderPath + File.separator + inputSize.toString() + &quot;inputSizeCSV.csv&quot;;</b>
-<b class="nc">&nbsp;            File file = new File(csvFile);</b>
-&nbsp;            // Check if the file exists
-<b class="nc">&nbsp;            if (file.exists()) {</b>
-&nbsp;                // Attempt to delete the file
-<b class="nc">&nbsp;                if (!file.delete()) {</b>
-<b class="nc">&nbsp;                    String message = file.exists() ? &quot;is in use by another app&quot; : &quot;does not exist&quot;;</b>
-<b class="nc">&nbsp;                    throw new IOException(&quot;Cannot delete file &quot;+ file.getName() +&quot; , because file &quot; + message + &quot;.&quot;);</b>
-&nbsp;                }
-&nbsp;            }
-<b class="nc">&nbsp;            String header = &quot;Water Point X, Water Point Y, Distance\n&quot;;</b>
-<b class="nc">&nbsp;            try (FileWriter writer = new FileWriter(csvFile, true)) {</b>
-<b class="nc">&nbsp;                writer.write(header);</b>
-<b class="nc">&nbsp;                for (int i = 0; i &lt; inputSize; i++) {</b>
-<b class="nc">&nbsp;                    String line = getRandomIntInString() + &quot;, &quot; + getRandomIntInString() + &quot;, &quot; + getRandomIntInString() + &quot;\n&quot;;</b>
-<b class="nc">&nbsp;                    writer.write(line);</b>
-&nbsp;                }
-<b class="nc">&nbsp;                status = true;</b>
-<b class="nc">&nbsp;            } catch (Exception exception) {</b>
-<b class="nc">&nbsp;                exception.printStackTrace();</b>
-&nbsp;            }
-&nbsp;        }
-<b class="nc">&nbsp;        return status;</b>
+&nbsp;    /**
+&nbsp;     * Selects a task from the to-do list based on its index.
+&nbsp;     *
+&nbsp;     * @param i The index of the task to be selected.
+&nbsp;     */
+&nbsp;    public void getSelectedTask(int i)
+&nbsp;    {
+<b class="nc">&nbsp;        selectedTaskClone = toDoList.getSelectedTask(i);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public boolean generateGraph(List&lt;Map.Entry&lt;String, Long&gt;&gt; entryList) {
-<b class="nc">&nbsp;        System.out.println(&quot;Generating Graph...&quot;);</b>
-&nbsp;        try {
-<b class="nc">&nbsp;            File tempFile = File.createTempFile(&quot;gnuplot-data&quot;, &quot;txt&quot;);</b>
+&nbsp;    /**
+&nbsp;     * Adds an entry to the agenda with the specified starting date.
+&nbsp;     * Updates the to-do list and agenda files if the entry is successfully added.
+&nbsp;     *
+&nbsp;     * @param startingDate The starting date for the agenda entry.
+&nbsp;     * @return True if the entry is successfully added and files are updated, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean addEntry(String startingDate)
+&nbsp;    {
+<b class="nc">&nbsp;        Optional&lt;GSTask&gt; updatedTask = Optional.empty();</b>
 &nbsp;
-<b class="nc">&nbsp;            try (PrintWriter writer = new PrintWriter(new FileWriter(tempFile))){</b>
-<b class="nc">&nbsp;                for (Map.Entry&lt;String, Long&gt; entry : entryList){</b>
-<b class="nc">&nbsp;                    writer.println(entry.getKey() + &quot; &quot; + entry.getValue());</b>
-&nbsp;                }
-<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;        updatedTask = agenda.addEntry(selectedTaskClone, startingDate);</b>
 &nbsp;
-<b class="nc">&nbsp;            ProcessBuilder processBuilder = new ProcessBuilder(&quot;gnuplot&quot;);</b>
-<b class="nc">&nbsp;            processBuilder.redirectErrorStream(true);</b>
-<b class="nc">&nbsp;            Process process = processBuilder.start();</b>
-&nbsp;
-<b class="nc">&nbsp;            try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(process.getOutputStream()))){</b>
-<b class="nc">&nbsp;                writer.println(&quot;set terminal pngcairo&quot;);</b>
-<b class="nc">&nbsp;                writer.println(&quot;set output &#39;&quot;+folderPath + File.separator + &quot;graph.png&#39;&quot;);</b>
-<b class="nc">&nbsp;                writer.println(&quot;set title &#39;Execution Time vs Input Size&#39;&quot;);</b>
-<b class="nc">&nbsp;                writer.println(&quot;set xlabel &#39;Input Size (edges)&#39;&quot;);</b>
-<b class="nc">&nbsp;                writer.println(&quot;set ylabel &#39;Execution Time (ms)&#39;&quot;);</b>
-<b class="nc">&nbsp;                writer.println(&quot;plot &#39;&quot; + tempFile.getAbsolutePath() + &quot;&#39; using 1:2 with lines title &#39;Data&#39;&quot;);</b>
-<b class="nc">&nbsp;            }</b>
-&nbsp;
-<b class="nc">&nbsp;            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {</b>
-&nbsp;                String line;
-<b class="nc">&nbsp;                while ((line = reader.readLine()) != null) {</b>
-<b class="nc">&nbsp;                    System.out.println(line);</b>
-&nbsp;                }
-<b class="nc">&nbsp;            }</b>
-<b class="nc">&nbsp;            process.waitFor();</b>
-&nbsp;
-&nbsp;            try {
-&nbsp;                String command;
-&nbsp;
-&nbsp;                // Check the operating system
-<b class="nc">&nbsp;                String os = System.getProperty(&quot;os.name&quot;).toLowerCase();</b>
-&nbsp;
-<b class="nc">&nbsp;                if (os.contains(&quot;win&quot;)) {</b>
-&nbsp;                    // Windows
-<b class="nc">&nbsp;                    command = &quot;cmd.exe /c start &quot;;</b>
-<b class="nc">&nbsp;                } else if (os.contains(&quot;nix&quot;) || os.contains(&quot;nux&quot;) || os.contains(&quot;mac&quot;)) {</b>
-&nbsp;                    // Unix or Linux or Mac
-<b class="nc">&nbsp;                    command = &quot;open &quot;;</b>
-&nbsp;                } else {
-&nbsp;                    // Unsupported OS
-<b class="nc">&nbsp;                    System.out.println(&quot;Unsupported operating system.&quot;);</b>
-<b class="nc">&nbsp;                    return false;</b>
-&nbsp;                }
-&nbsp;
-&nbsp;                // Path to the image file
-<b class="nc">&nbsp;                String imagePath = folderPath + File.separator + &quot;graph.png&quot;;;</b>
-&nbsp;
-&nbsp;                // Execute the command
-<b class="nc">&nbsp;                Runtime runtime = Runtime.getRuntime();</b>
-<b class="nc">&nbsp;                Process process2 = runtime.exec(command + imagePath);</b>
-<b class="nc">&nbsp;                process2.waitFor();</b>
-<b class="nc">&nbsp;            } catch (IOException | InterruptedException e) {</b>
-<b class="nc">&nbsp;                e.printStackTrace();</b>
+<b class="nc">&nbsp;        if(updatedTask.isPresent())</b>
+&nbsp;        {
+<b class="nc">&nbsp;            if(!toDoListFile.save(toDoList))</b>
+&nbsp;            {
+<b class="nc">&nbsp;                return false;</b>
 &nbsp;            }
-&nbsp;
-&nbsp;
-<b class="nc">&nbsp;        }catch (Exception exception){</b>
-<b class="nc">&nbsp;            exception.printStackTrace();</b>
+<b class="nc">&nbsp;            if(!agendaFile.save(agenda))</b>
+&nbsp;            {
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
 &nbsp;        }
+&nbsp;
 <b class="nc">&nbsp;        return true;</b>
 &nbsp;    }
 &nbsp;}
@@ -311,7 +263,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-12 20:04</div>
+    <div style="float:right;">generated on 2024-06-08 18:46</div>
 </div>
 </body>
 </html>

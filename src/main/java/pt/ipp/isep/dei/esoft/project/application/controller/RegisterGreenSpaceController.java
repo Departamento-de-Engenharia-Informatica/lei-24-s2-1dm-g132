@@ -12,7 +12,7 @@ public class RegisterGreenSpaceController {
 
     private GreenSpaceRepositoryFile greenSpaceRepositoryFile;
 
-    private RegisterGreenSpaceController() {
+    public RegisterGreenSpaceController() {
         this.greenSpaceRepository = getGreenSpaceRepository();
         this.greenSpaceRepositoryFile = new GreenSpaceRepositoryFile();
     }
@@ -32,7 +32,7 @@ public class RegisterGreenSpaceController {
         }
         if(!greenSpaceRepositoryFile.save(greenSpaceRepository))
         {
-            System.out.println("Error while saving Green Space Repository in external file!");
+            return false;
         }
         return true;
     }
