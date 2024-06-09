@@ -38,8 +38,15 @@ public class GreenSpaceRepository implements Serializable {
     }
 
     public List<GreenSpaceDTO> getGreenSpaces(String email) {
+        associatedGreenSpacesList = new ArrayList<>();
         return greenSpaces.stream()
-                .filter(greenSpace -> greenSpace.hasUserEmail(email))
+                .filter(greenSpace -> {
+                    boolean hasEmail = greenSpace.hasUserEmail(email);
+                    if (hasEmail){
+                        associatedGreenSpacesList.add(greenSpace);
+                    }
+                    return hasEmail;
+                })
                 .map(GreenSpaceMapper::toDTO)
                 .collect(Collectors.toList());
     }
