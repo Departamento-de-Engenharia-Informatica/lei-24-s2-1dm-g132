@@ -105,7 +105,7 @@ activate GSM
 
     UI --> GSM : shows list of GreenSpaces
     deactivate UI
-    GSM -> UI : chose one of the sorting options
+    GSM -> UI : asks to sort the list of GreenSpaces
     activate UI
     UI -> CTRL : sortGreenSpacesList(option)
         activate CTRL

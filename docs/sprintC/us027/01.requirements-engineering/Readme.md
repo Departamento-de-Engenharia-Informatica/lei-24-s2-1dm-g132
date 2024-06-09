@@ -50,6 +50,6 @@
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram - Alternative One]
+![us027-system-sequence-diagram-US027.svg](svg%2Fus027-system-sequence-diagram-US027.svg)
 
 ### 1.7 Other Relevant Remarks
