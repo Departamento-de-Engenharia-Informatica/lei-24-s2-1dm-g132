@@ -22,7 +22,7 @@ public class ListGreenSpacesController {
     }
 
 
-    public List<GreenSpaceDTO> greenSpaces() {
-        return greenSpaceRepository.getGreenSpaces();
+    public List<GreenSpaceDTO> greenSpaces(String email) {
+        return greenSpaceRepository.getGreenSpaces(email);
     }
 }

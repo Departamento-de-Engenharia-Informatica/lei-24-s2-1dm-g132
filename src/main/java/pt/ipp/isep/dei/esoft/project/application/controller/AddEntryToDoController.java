@@ -2,7 +2,6 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.*;
-import pt.ipp.isep.dei.esoft.project.mapper.GreenSpaceMapper;
 import pt.ipp.isep.dei.esoft.project.mapper.dto.GSTaskDTO;
 import pt.ipp.isep.dei.esoft.project.mapper.dto.GreenSpaceDTO;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
@@ -83,9 +82,7 @@ public class AddEntryToDoController {
 
     public List<GreenSpaceDTO> getGreenSpaces(){
         String email = applicationSession.getCurrentSession().getUserEmail();
-        List<GreenSpace> associatedGreenSpacesList = greenSpaceRepository.getGreenSpaces(email);
-        List<GreenSpaceDTO> associatedGreenSpacesListDTO = GreenSpaceMapper.toDTO(associatedGreenSpacesList);
-        return associatedGreenSpacesListDTO;
+        return greenSpaceRepository.getGreenSpaces(email);
     }
 
     public void getSelectedGreenSpace(int i)
