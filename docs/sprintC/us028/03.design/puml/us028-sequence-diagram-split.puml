@@ -10,7 +10,7 @@ autonumber
 actor "Collaborator" as Employee
 participant ":ConsultTasksUI" as UI
 participant ":ConsultTasksController" as CTRL
-participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "agenda\n:Agenda" as Agenda
 
 activate Employee
 
@@ -71,11 +71,11 @@ activate Employee
         UI -> CTRL : getStatusList()
         activate CTRL
 
-        CTRL -> TaskRepository : getStatusList()
-        activate TaskRepository
+        CTRL -> Agenda : getStatusList()
+        activate Agenda
 
-        TaskRepository --> CTRL : statusList
-        deactivate TaskRepository
+        Agenda --> CTRL : statusList
+        deactivate Agenda
 
         CTRL --> UI : statusList
         deactivate CTRL

@@ -10,7 +10,7 @@ class ConsultTasksUI {
 class ConsultTasksController {
     + consultTasksController(taskRepository)
     + getEmailCollaborator()
-    + List<TaskDTO> getTasks(email, startDate, endDate)
+    + List<GSTaskDTO> getTasks(email, startDate, endDate)
     + getStatusList()
     + consultTasksByStatus(tasksDTO)
 }
@@ -22,7 +22,7 @@ class Repositories {
     + getTaskRepository()
 }
 
-class TaskRepository {
+class Agenda {
     + getTasksByCollaborator(email)
     + getStatusList()
     + toDTO(tasks)
@@ -30,12 +30,12 @@ class TaskRepository {
     + consultTasks(tasksDTO)
 }
 
-class TaskMapper {
-    + List<TaskDTO> toDTO(List<Task> tasks)
-    + TaskDTO toDTO(Task task)
+class GSTaskMapper {
+    + List<TGSaskDTO> toDTO(List<GSTask> tasks)
+    + GSTaskDTO toDTO(GSTask task)
 }
 
-class TaskDTO {
+class GSTaskDTO {
     title
     description
     degreeOfUrgency
@@ -44,7 +44,7 @@ class TaskDTO {
     startingDate
 }
 
-class Task {
+class GSTask {
     title
     description
     degreeOfUrgency
@@ -55,11 +55,11 @@ class Task {
 
 ConsultTasksUI ..> ConsultTasksController
 ConsultTasksController ..> Repositories : repositories
-ConsultTasksController ..> TaskRepository : taskRepository
-Repositories ---> "1" TaskRepository: taskRepository
-TaskRepository --> Task: tasks
+ConsultTasksController ..> Agenda : taskRepository
+Repositories ---> "1" Agenda: taskRepository
+Agenda --> GSTask: tasks
 
-TaskRepository ..> TaskMapper
-TaskMapper ..> TaskDTO
-TaskMapper ..> Task
+Agenda ..> GSTaskMapper
+GSTaskMapper ..> GSTaskDTO
+GSTaskMapper ..> GSTask
 @enduml
