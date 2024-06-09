@@ -10,7 +10,7 @@ public class ListGreenSpacesController {
 
     private GreenSpaceRepository greenSpaceRepository;
 
-    private ListGreenSpacesController() {
+    public ListGreenSpacesController() {
         this.greenSpaceRepository = getGreenSpaceRepository();
     }
 

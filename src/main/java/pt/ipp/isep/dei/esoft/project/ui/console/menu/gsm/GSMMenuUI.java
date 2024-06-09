@@ -14,10 +14,11 @@ public class GSMMenuUI implements Runnable{
     @Override
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("Import csv file with water supply", new ImportWaterSupplyPointsCsvUI()));
-        options.add(new MenuItem("Calculate minimum accumulated cost", new MinimalAcumulatedCostGraphUI()));
-        options.add(new MenuItem("Import csv file with meeting points", new ImportMeetingPointsCsvUI()));
-        options.add(new MenuItem("Place signs to evacuate park users to an assembly point and to one of the several meeting points", new ShortestPathsToMeetingPointUI()));
+        options.add(new MenuItem("MDISC - Import csv file with water supply", new ImportWaterSupplyPointsCsvUI()));
+        options.add(new MenuItem("MDISC - Calculate minimum accumulated cost", new MinimalAcumulatedCostGraphUI()));
+        options.add(new MenuItem("MDISC - Import csv file with meeting points", new ImportMeetingPointsCsvUI()));
+        options.add(new MenuItem("MDISC - Place signs to evacuate park users to an assembly point and to one of the several meeting points", new ShortestPathsToMeetingPointUI()));
+        options.add(new MenuItem("List All GreenSpaces Managed by Me", new ListGreenSpacesUI()));
 
 
         int option = 0;
