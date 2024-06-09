@@ -42,10 +42,7 @@ activate CTRL
 
            end loop
 
-           TaskRepository --> CTRL : tasks
-           deactivate TaskRepository
-
-       CTRL -> TaskMapper : toDTO(tasks)
+       TaskRepository -> TaskMapper : toDTO(tasks)
        activate TaskMapper
 
        TaskMapper -> TasksListDTO ** : create()
@@ -66,8 +63,11 @@ activate CTRL
 
        end loop
 
-       TaskMapper --> CTRL : tasksDTO
+       TaskMapper --> TaskRepository : tasksDTO
        deactivate TaskMapper
+
+       TaskRepository --> CTRL : tasksDTO
+       deactivate TaskRepository
 
 end group
 autonumber 48

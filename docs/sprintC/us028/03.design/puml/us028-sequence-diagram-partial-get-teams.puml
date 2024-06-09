@@ -51,10 +51,7 @@ activate CTRL
 
                end loop
 
-               TeamRepository --> CTRL : teams
-               deactivate TeamRepository
-
-           CTRL -> TeamMapper : toDTO(teams)
+           TeamRepository -> TeamMapper : toDTO(teams)
                activate TeamMapper
 
                TeamMapper -> TeamsListDTO ** : create()
@@ -75,8 +72,11 @@ activate CTRL
 
                end loop
 
-               TeamMapper --> CTRL : teamsDTO
+               TeamMapper --> TeamRepository : teamsDTO
                deactivate TeamMapper
+
+               TeamRepository --> CTRL : teamsDTO
+               deactivate TeamRepository
 
 end group
 autonumber 33

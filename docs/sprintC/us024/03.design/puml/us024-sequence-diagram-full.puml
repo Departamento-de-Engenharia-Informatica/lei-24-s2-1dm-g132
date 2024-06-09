@@ -22,14 +22,13 @@ participant "greenSpace\n:GreenSpace" as greenSpace
 participant "GSMGreenSpacesList\n:List<GreenSpace>" as GSMGreenSpacesList
 participant "GSMGreenSpacesListDto\n:List<GreenSpaceDto>" as GSMGreenSpacesListDto
 participant "greenSpaceDTO\n:GreenSpaceDTO" as greenSpaceDTO
-participant "taskMapper\n:TaskMapper" as TaskMapper
 participant "agenda\n:Agenda" as Agenda
-participant "entriesList\n:List<Task>" as entriesList
-participant "tasksListByGreenSpace\n:List<Task>" as tasksListByGreenSpace
+participant "GSTaskMapper\n:GSTaskMapper" as TaskMapper
+participant "entriesList\n:List<GSTask>" as entriesList
+participant "tasksListByGreenSpace\n:List<GSTask>" as tasksListByGreenSpace
 participant "task\n:Task" as task
-participant "tasksListByGreenSpaceDTO\n:List<TaskDTO>" as tasksListByGreenSpaceDTO
-participant "taskRepository\n:TaskRepository" as TaskRepository
-participant "taskDTO\n:TaskDTO" as TaskDTO
+participant "tasksListByGreenSpaceDTO\n:List<GSTaskDTO>" as tasksListByGreenSpaceDTO
+participant "GSTaskDTO\n:GSTaskDTO" as TaskDTO
 
 
 activate Employee
@@ -92,10 +91,7 @@ activate Employee
 
                         end loop
 
-                        GreenSpaceRepository --> CTRL : GSMGreenSpacesList
-                    deactivate GreenSpaceRepository
-
-                    CTRL -> GreenSpaceMapper : toDTO(GSMGreenSpacesList)
+                    GreenSpaceRepository -> GreenSpaceMapper : toDTO(GSMGreenSpacesList)
                     activate GreenSpaceMapper
 
                         GreenSpaceMapper --> GSMGreenSpacesListDto** : create()
@@ -119,8 +115,11 @@ activate Employee
 
                             end loop
 
-                        GreenSpaceMapper --> CTRL : GSMGreenSpacesListDto
+                        GreenSpaceMapper --> GreenSpaceRepository : GSMGreenSpacesListDto
                         deactivate GreenSpaceMapper
+
+                    GreenSpaceRepository --> CTRL : GSMGreenSpacesListDto
+                    deactivate GreenSpaceRepository
 
                     CTRL --> UI : GSMGreenSpacesListDto
                     deactivate CTRL
@@ -163,10 +162,7 @@ activate Employee
 
             end loop
 
-            Agenda --> CTRL : tasksListByGreenSpace
-            deactivate Agenda
-
-            CTRL -> TaskMapper : toDTO(entriesList)
+            Agenda -> TaskMapper : toDTO(entriesList)
             activate TaskMapper
 
             TaskMapper --> tasksListByGreenSpaceDTO** : create()
@@ -189,8 +185,11 @@ activate Employee
 
             end loop
 
-            TaskMapper --> CTRL : tasksListByGreenSpaceDTO
+            TaskMapper --> Agenda : tasksListByGreenSpaceDTO
             deactivate TaskMapper
+
+            Agenda --> CTRL : tasksListByGreenSpaceDTO
+            deactivate Agenda
 
             CTRL --> UI : tasksListByGreenSpaceDTO
             deactivate CTRL
@@ -211,17 +210,17 @@ activate Employee
     activate CTRL
 
     CTRL --> CTRL : validateNewDate(newDate)
-    CTRL -> TaskRepository : postponeEntry(taskDTO, newDate)
-    activate TaskRepository
+    CTRL -> Agenda : postponeEntry(taskDTO, newDate)
+    activate Agenda
 
-    TaskRepository -> TaskDTO : postponeEntry(taskDTO, newDate)
+    Agenda -> TaskDTO : postponeEntry(taskDTO, newDate)
     activate TaskDTO
 
-    TaskDTO --> TaskRepository : taskDTO
+    TaskDTO --> Agenda : taskDTO
     deactivate TaskDTO
 
-    TaskRepository --> CTRL : taskDTO
-    deactivate TaskRepository
+    Agenda --> CTRL : taskDTO
+    deactivate Agenda
 
     CTRL --> UI : taskDTO
     deactivate CTRL

@@ -10,8 +10,8 @@ autonumber
 actor "GSM" as Employee
 participant ":PostponeEntryUI" as UI
 participant ":PostponeEntryController" as CTRL
-participant "taskRepository\n:TaskRepository" as TaskRepository
-participant "taskDTO\n:TaskDTO" as TaskDTO
+participant "agenda\n:Agenda" as Agenda
+participant "GSTaskDTO\n:GSTaskDTO" as TaskDTO
 
 
 activate Employee
@@ -62,17 +62,17 @@ activate Employee
     activate CTRL
 
     CTRL --> CTRL : validateNewDate(newDate)
-    CTRL -> TaskRepository : postponeEntry(taskDTO, newDate)
-    activate TaskRepository
+    CTRL -> Agenda : postponeEntry(taskDTO, newDate)
+    activate Agenda
 
-    TaskRepository -> TaskDTO : postponeEntry(taskDTO, newDate)
+    Agenda -> TaskDTO : postponeEntry(taskDTO, newDate)
     activate TaskDTO
 
-    TaskDTO --> TaskRepository : taskDTO
+    TaskDTO --> Agenda : taskDTO
     deactivate TaskDTO
 
-    TaskRepository --> CTRL : taskDTO
-    deactivate TaskRepository
+    Agenda --> CTRL : taskDTO
+    deactivate Agenda
 
     CTRL --> UI : taskDTO
     deactivate CTRL
