@@ -104,11 +104,7 @@ activate Employee
             end opt
 
             end loop
-
-            TeamRepository --> CTRL : teams
-            deactivate TeamRepository
-
-        CTRL -> TeamMapper : toDTO(teams)
+        TeamRepository -> TeamMapper : toDTO(teams)
             activate TeamMapper
 
             TeamMapper -> TeamsListDTO ** : create()
@@ -129,8 +125,11 @@ activate Employee
 
             end loop
 
-            TeamMapper --> CTRL : teamsDTO
+            TeamMapper --> TeamRepository : teamsDTO
             deactivate TeamMapper
+
+            TeamRepository --> CTRL : teamsDTO
+            deactivate TeamRepository
 
         CTRL --> UI : teamsDTO
         deactivate CTRL
@@ -160,10 +159,7 @@ activate Employee
 
             end loop
 
-            TaskRepository --> CTRL : tasks
-            deactivate TaskRepository
-
-        CTRL -> TaskMapper : toDTO(tasks)
+        TaskRepository -> TaskMapper : toDTO(tasks)
         activate TaskMapper
 
         TaskMapper -> TasksListDTO ** : create()
@@ -184,8 +180,11 @@ activate Employee
 
         end loop
 
-        TaskMapper --> CTRL : tasksDTO
+        TaskMapper --> TaskRepository : tasksDTO
         deactivate TaskMapper
+
+        TaskRepository --> CTRL : tasksDTO
+        deactivate TaskRepository
 
     CTRL --> UI : tasksDTO
     deactivate CTRL
